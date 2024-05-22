@@ -5,7 +5,6 @@ import PushNotificationButton from './components/PushNotificationButton';
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Hello</Text>
       <PushNotificationButton />
       <StatusBar style="auto" />
     </View>
