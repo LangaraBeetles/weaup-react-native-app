@@ -15,7 +15,10 @@ or
 ```bash
 yarn ios
 ```
-
+or
+```bash
+yarn start
+```
 
 ## Build
 https://docs.expo.dev/build/setup/

@@ -2929,6 +2929,13 @@ expo-modules-core@1.12.11:
   dependencies:
     invariant "^2.2.4"
 
+expo-sensors@^13.0.7:
+  version "13.0.7"
+  resolved "https://registry.yarnpkg.com/expo-sensors/-/expo-sensors-13.0.7.tgz#f869971704ed9b1768cbf45e5653dccbf82e3f77"
+  integrity sha512-jMDb/Om7VS27kTkcCSJnzHPsBxR3IILr5qPlIruyZYmKZGJ1TSCMyATMY90iMzK/2HwO2dTaAtLLm2B/Ph+XkQ==
+  dependencies:
+    invariant "^2.2.4"
+
 expo-status-bar@~1.12.1:
   version "1.12.1"
   resolved "https://registry.yarnpkg.com/expo-status-bar/-/expo-status-bar-1.12.1.tgz#52ce594aab5064a0511d14375364d718ab78aa66"
