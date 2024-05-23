@@ -29,7 +29,7 @@ yarn expo login -u YOUR_USERNAME -p YOUR_PASSWORD
 https://docs.expo.dev/build/setup/
 
 ```bash
-yarn global add eas-cli
+npm install -g eas-cli
 ```
 
 ```bash
