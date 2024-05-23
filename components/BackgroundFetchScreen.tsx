@@ -13,7 +13,7 @@ export default function BackgroundFetchScreen(props: any) {
   // Note: This does NOT need to be in the global scope and CAN be used in your React components!
   async function registerBackgroundFetchAsync() {
     return BackgroundFetch.registerTaskAsync(BACKGROUND_FETCH_TASK, {
-      minimumInterval: 1 * 60, // task will fire 1 minute after app is backgrounded
+      minimumInterval: 15 * 60, // task will fire 15 minute after app is backgrounded
       stopOnTerminate: false, // android only,
       startOnBoot: true, // android only
     });
