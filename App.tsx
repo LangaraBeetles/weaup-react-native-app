@@ -1,10 +1,12 @@
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import BackgroundFetch from "react-native-background-fetch";
+import { View, Text, StyleSheet } from "react-native";
+import { StatusBar } from "expo-status-bar";
 
 const App = () => {
-  useEffect(() => {
-    // Configure BackgroundFetch.
+  const [counter, setCounter] = useState(0);
 
+  useEffect(() => {
     const configureBackgroundFetch = async () => {
       BackgroundFetch.configure(
         {
@@ -20,10 +22,12 @@ const App = () => {
           requiresStorageNotLow: false, // Default
         },
         async (taskId) => {
+          setCounter((prevCounter) => prevCounter + 1);
           console.log("[js] Received background-fetch event: ", taskId);
+          // Simulate a background task
+          const now = new Date();
+          console.log(`BackgroundFetch task running at ${now.toISOString()}`);
           // Required: Signal completion of your task to native code
-          // If you fail to do this, the OS can terminate your app
-          // or assign battery-blame for consuming too much background-time
           BackgroundFetch.finish(taskId);
         },
         (error) => {
@@ -50,7 +54,22 @@ const App = () => {
     configureBackgroundFetch();
   }, []);
 
-  return null;
+  return (
+    <View style={styles.container}>
+      <Text>Background Fetch Example</Text>
+      <Text>Counter: {counter}</Text>
+      <StatusBar style="auto" />
+    </View>
+  );
 };
 
 export default App;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
