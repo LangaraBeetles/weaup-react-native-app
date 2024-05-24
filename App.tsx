@@ -1,20 +1,23 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from "react";
+import { Button, Text, View } from "react-native";
+import HeadphoneMotionManager from "./src/modules/HeadphoneMotionManager";
 
 export default function App() {
+  const [pitch, setPitch] = useState<number | null>(null);
+
+  const startMotionUpdates = () => {
+    HeadphoneMotionManager.startUpdates();
+  };
+
+  const stopMotionUpdates = () => {
+    HeadphoneMotionManager.stopUpdates();
+  };
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View>
+      <Button title="Start Motion Updates" onPress={startMotionUpdates} />
+      <Button title="Stop Motion Updates" onPress={stopMotionUpdates} />
+      {pitch !== null && <Text>Pitch: {pitch}</Text>}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

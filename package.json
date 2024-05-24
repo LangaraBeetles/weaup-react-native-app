@@ -4,11 +4,12 @@
   "main": "expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web"
   },
   "dependencies": {
+    "@react-native/metro-config": "^0.74.83",
     "expo": "~51.0.8",
     "expo-status-bar": "~1.12.1",
     "react": "18.2.0",
