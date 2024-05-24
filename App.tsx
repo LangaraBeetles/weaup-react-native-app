@@ -1,20 +1,56 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { useEffect } from "react";
+import BackgroundFetch from "react-native-background-fetch";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+const App = () => {
+  useEffect(() => {
+    // Configure BackgroundFetch.
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+    const configureBackgroundFetch = async () => {
+      BackgroundFetch.configure(
+        {
+          minimumFetchInterval: 15, // <-- minutes (15 is minimum allowed)
+          // Android options
+          forceAlarmManager: false, // <-- Set true to bypass JobScheduler.
+          stopOnTerminate: false,
+          startOnBoot: true,
+          requiredNetworkType: BackgroundFetch.NETWORK_TYPE_NONE, // Default
+          requiresCharging: false, // Default
+          requiresDeviceIdle: false, // Default
+          requiresBatteryNotLow: false, // Default
+          requiresStorageNotLow: false, // Default
+        },
+        async (taskId) => {
+          console.log("[js] Received background-fetch event: ", taskId);
+          // Required: Signal completion of your task to native code
+          // If you fail to do this, the OS can terminate your app
+          // or assign battery-blame for consuming too much background-time
+          BackgroundFetch.finish(taskId);
+        },
+        (error) => {
+          console.log("[js] RNBackgroundFetch failed to start", error);
+        }
+      );
+
+      // Optional: Query the authorization status.
+      BackgroundFetch.status((status) => {
+        switch (status) {
+          case BackgroundFetch.STATUS_RESTRICTED:
+            console.log("BackgroundFetch restricted");
+            break;
+          case BackgroundFetch.STATUS_DENIED:
+            console.log("BackgroundFetch denied");
+            break;
+          case BackgroundFetch.STATUS_AVAILABLE:
+            console.log("BackgroundFetch is enabled");
+            break;
+        }
+      });
+    };
+
+    configureBackgroundFetch();
+  }, []);
+
+  return null;
+};
+
+export default App;

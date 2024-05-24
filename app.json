@@ -13,7 +13,11 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.alignmend"
+      "bundleIdentifier": "com.alignmend",
+      "infoPlist": {
+        "UIBackgroundModes": ["fetch", "processing"],
+        "BGTaskSchedulerPermittedIdentifiers": ["com.transistorsoft.fetch"]
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -30,6 +34,7 @@
         "projectId": "b61aa28d-218d-4007-b696-97c4a2208074"
       }
     },
-    "owner": "beetles"
+    "owner": "beetles",
+    "plugins": ["react-native-background-fetch"]
   }
 }
