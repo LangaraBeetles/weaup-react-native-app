@@ -6,52 +6,40 @@ import { StatusBar } from "expo-status-bar";
 const App = () => {
   const [counter, setCounter] = useState(0);
 
-  useEffect(() => {
-    const configureBackgroundFetch = async () => {
-      BackgroundFetch.configure(
+  const initBackgroundFetch = async () => {
+    try {
+      const status: number = await BackgroundFetch.configure(
         {
-          minimumFetchInterval: 15, // <-- minutes (15 is minimum allowed)
-          // Android options
-          forceAlarmManager: false, // <-- Set true to bypass JobScheduler.
+          minimumFetchInterval: 15, // 15 minutes minimum
           stopOnTerminate: false,
+          enableHeadless: true,
           startOnBoot: true,
-          requiredNetworkType: BackgroundFetch.NETWORK_TYPE_NONE, // Default
-          requiresCharging: false, // Default
-          requiresDeviceIdle: false, // Default
-          requiresBatteryNotLow: false, // Default
-          requiresStorageNotLow: false, // Default
+          forceAlarmManager: false,
+          requiresCharging: false,
+          requiresDeviceIdle: false,
+          requiresBatteryNotLow: false,
+          requiresStorageNotLow: false,
         },
-        async (taskId) => {
+        async (taskId: string) => {
+          //This is the background fetch callback
           setCounter((prevCounter) => prevCounter + 1);
-          console.log("[js] Received background-fetch event: ", taskId);
-          // Simulate a background task
-          const now = new Date();
-          console.log(`BackgroundFetch task running at ${now.toISOString()}`);
-          // Required: Signal completion of your task to native code
+          console.log("[BackgroundFetch] taskId", taskId);
           BackgroundFetch.finish(taskId);
         },
-        (error) => {
-          console.log("[js] RNBackgroundFetch failed to start", error);
+        (taskId: string) => {
+          console.log("[Fetch] TIMEOUT taskId:", taskId);
+          BackgroundFetch.finish(taskId);
         }
       );
+      console.log("BackgroundFetch configured successfully:", status);
+    } catch (error) {
+      console.error("BackgroundFetch configuration error:", error);
+    }
+  };
 
-      // Optional: Query the authorization status.
-      BackgroundFetch.status((status) => {
-        switch (status) {
-          case BackgroundFetch.STATUS_RESTRICTED:
-            console.log("BackgroundFetch restricted");
-            break;
-          case BackgroundFetch.STATUS_DENIED:
-            console.log("BackgroundFetch denied");
-            break;
-          case BackgroundFetch.STATUS_AVAILABLE:
-            console.log("BackgroundFetch is enabled");
-            break;
-        }
-      });
-    };
 
-    configureBackgroundFetch();
+  useEffect(() => {
+    initBackgroundFetch();
   }, []);
 
   return (
