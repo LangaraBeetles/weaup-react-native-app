@@ -2,6 +2,7 @@
   "expo": {
     "name": "beetles-mobile",
     "slug": "alignmend",
+    "scheme": "alginmend-scheme",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -30,6 +31,9 @@
         "projectId": "b61aa28d-218d-4007-b696-97c4a2208074"
       }
     },
-    "owner": "beetles"
+    "owner": "beetles",
+    "plugins": [
+      "expo-router"
+    ]
   }
 }
