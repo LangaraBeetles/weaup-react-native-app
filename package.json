@@ -10,8 +10,13 @@
     "web": "expo start --web"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@react-native-async-storage/async-storage": "^1.23.1",
     "babel-plugin-module-resolver": "^5.0.2",
+=======
+    "@gluestack-style/react": "^1.0.56",
+    "@gluestack-ui/themed": "^1.1.26",
+>>>>>>> bab4f92 (feat: install gluestack)
     "expo": "~51.0.8",
     "expo-constants": "~16.0.1",
     "expo-linking": "~6.3.1",
@@ -21,7 +26,11 @@
     "react-native": "0.74.1",
     "react-native-safe-area-context": "4.10.1",
     "react-native-screens": "3.31.1",
+<<<<<<< HEAD
     "zustand": "^4.5.2"
+=======
+    "react-native-svg": "13.4.0"
+>>>>>>> bab4f92 (feat: install gluestack)
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
