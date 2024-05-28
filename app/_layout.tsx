@@ -1,5 +1,5 @@
 import { GluestackUIProvider } from "@gluestack-ui/themed";
-import { Stack } from "expo-router";
+import { Stack } from "expo-router/stack";
 
 const RootLayout = () => {
   return (
