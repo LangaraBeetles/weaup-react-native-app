@@ -11,6 +11,10 @@ To just start the Expo server
 ```bash
 yarn start
 ```
+To clear the cache and start the Expo server
+```bash
+yarn restart
+```
 or with the Android emulator
 ```bash
 yarn android
@@ -51,6 +55,14 @@ eas build --platform all
 
 ## Important Links
 
-https://blog.expo.dev/the-new-expo-cli-f4250d8e3421
+- https://blog.expo.dev/the-new-expo-cli-f4250d8e3421
 
-https://docs.expo.dev/eas/
+- https://docs.expo.dev/eas/
+
+#### Relative paths
+- https://www.npmjs.com/package/babel-plugin-module-resolver
+- https://www.npmjs.com/package/@babel/plugin-transform-react-jsx-source
+
+> To add more relative paths, update the files: 
+> - tsconfig.json
+> - babel.config.js
