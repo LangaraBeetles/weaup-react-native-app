@@ -1,4 +1,5 @@
-import { Box, Text } from "@gluestack-ui/themed";
+import { Box } from "@gluestack-ui/themed";
+import { Text } from "react-native";
 
 const ProfileScreen = () => {
   return (

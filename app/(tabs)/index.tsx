@@ -1,5 +1,12 @@
-import { View, Text, Button } from "react-native";
-import { useUser } from "@state/useUser";
+import { StyleSheet, View, Text, Button } from "react-native";
+import { globalStyles } from "../../src/styles/globalStyles";
+
+const styles = StyleSheet.create({
+  text: {
+    ...globalStyles,
+    padding: 10,
+  },
+});
 
 const HomePage = () => {
   const userName = useUser((state) => state.user.name);
