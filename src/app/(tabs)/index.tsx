@@ -1,5 +1,5 @@
 import { StyleSheet, View, Text, Button } from "react-native";
-import { globalStyles } from "../../src/styles/globalStyles";
+import { globalStyles } from "../../styles/globalStyles";
 import { useUser } from "@state/useUser";
 import { Box } from "@gluestack-ui/themed";
 
