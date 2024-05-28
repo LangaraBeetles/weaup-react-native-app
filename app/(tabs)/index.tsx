@@ -34,7 +34,7 @@ const HomePage = () => {
 
   return (
     <View>
-      <Text>Home Page text</Text>
+      <Text style={styles.text}>Home Page text</Text>
       {!!userName && <Text>Hello {userName}!</Text>}
 
       <Button title="Update name" onPress={onNameChange}></Button>
