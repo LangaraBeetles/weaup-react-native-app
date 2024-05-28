@@ -54,3 +54,11 @@ eas build --platform all
 https://blog.expo.dev/the-new-expo-cli-f4250d8e3421
 
 https://docs.expo.dev/eas/
+
+Relative paths
+https://www.npmjs.com/package/babel-plugin-module-resolver
+https://www.npmjs.com/package/@babel/plugin-transform-react-jsx-source
+
+To add more relative paths, update the files: 
+tsconfig.json
+babel.config.js
