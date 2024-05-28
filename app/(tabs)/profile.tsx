@@ -1,10 +1,10 @@
-import { View, Text } from "react-native";
+import { Box, Text } from "@gluestack-ui/themed";
 
 const ProfileScreen = () => {
   return (
-    <View>
+    <Box>
       <Text>Profile Page text</Text>
-    </View>
+    </Box>
   );
 };
 

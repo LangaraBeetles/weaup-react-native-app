@@ -1,10 +1,10 @@
-import { View, Text } from "react-native";
+import { Box, Text } from "@gluestack-ui/themed";
 
 const AnalyticsScreen = () => {
   return (
-    <View>
+    <Box>
       <Text>Analytics Page text</Text>
-    </View>
+    </Box>
   );
 };
 

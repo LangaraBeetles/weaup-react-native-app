@@ -1,10 +1,10 @@
-import { View, Text } from "react-native";
+import { Box, Text } from "@gluestack-ui/themed";
 
 const ChallengeScreen = () => {
   return (
-    <View>
+    <Box>
       <Text>Challenge Page text</Text>
-    </View>
+    </Box>
   );
 };
 
