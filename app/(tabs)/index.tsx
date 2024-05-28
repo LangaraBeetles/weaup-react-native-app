@@ -1,5 +1,6 @@
 import { StyleSheet, View, Text, Button } from "react-native";
 import { globalStyles } from "../../src/styles/globalStyles";
+import { useUser } from "@state/useUser";
 
 const styles = StyleSheet.create({
   text: {
