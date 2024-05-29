@@ -1,5 +1,14 @@
-import { View, Text, Button } from "react-native";
+import { StyleSheet, View, Text, Button } from "react-native";
+import { globalStyles } from "../../styles/globalStyles";
 import { useUser } from "@state/useUser";
+import { Box } from "@gluestack-ui/themed";
+
+const styles = StyleSheet.create({
+  text: {
+    ...globalStyles,
+    padding: 10,
+  },
+});
 
 const HomePage = () => {
   const userName = useUser((state) => state.user.name);
@@ -25,14 +34,14 @@ const HomePage = () => {
   };
 
   return (
-    <View>
-      <Text>Home Page text</Text>
+    <Box>
+      <Text style={styles.text}>Home Page text</Text>
       {!!userName && <Text>Hello {userName}!</Text>}
 
       <Button title="Update name" onPress={onNameChange}></Button>
 
       <Button title="Clear name" onPress={onNameClear}></Button>
-    </View>
+    </Box>
   );
 };
 
