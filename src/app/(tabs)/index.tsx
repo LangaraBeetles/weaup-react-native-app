@@ -2,6 +2,7 @@ import { StyleSheet, View, Text, Button } from "react-native";
 import { globalStyles } from "../../styles/globalStyles";
 import { useUser } from "@state/useUser";
 import { Box } from "@gluestack-ui/themed";
+import { useBackgroundTasks } from "@src/components/providers/BackgroundTasksProvider";
 
 const styles = StyleSheet.create({
   text: {
@@ -13,6 +14,8 @@ const styles = StyleSheet.create({
 const HomePage = () => {
   const userName = useUser((state) => state.user.name);
   const setAuth = useUser((state) => state.setAuth);
+
+  const { isTrackingEnabled, setTrackingEnabled } = useBackgroundTasks();
 
   //TODO: remove this function
   const onNameChange = () => {
@@ -37,6 +40,7 @@ const HomePage = () => {
     <Box>
       <Text style={styles.text}>Home Page text</Text>
       {!!userName && <Text>Hello {userName}!</Text>}
+      <Text>Background counter: </Text>
 
       <Button title="Update name" onPress={onNameChange}></Button>
 

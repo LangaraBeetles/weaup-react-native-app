@@ -14,7 +14,11 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.alignmend"
+      "bundleIdentifier": "com.alignmend",
+      "infoPlist": {
+        "UIBackgroundModes": ["fetch", "processing"],
+        "BGTaskSchedulerPermittedIdentifiers": ["com.transistorsoft.fetch"]
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -32,8 +36,6 @@
       }
     },
     "owner": "beetles",
-    "plugins": [
-      "expo-router"
-    ]
+    "plugins": ["expo-router", "react-native-background-fetch"]
   }
 }
