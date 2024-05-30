@@ -16,42 +16,52 @@ const BackgroundTasksProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [isTrackingEnabled, setTrackingEnabled] = useState<boolean>(false);
 
-  //   const initBackgroundFetch = async () => {
-  //     try {
-  //       const status: number = await BackgroundFetch.configure(
-  //         {
-  //           minimumFetchInterval: 15, // 15 minutes minimum
-  //           stopOnTerminate: false,
-  //           enableHeadless: true,
-  //           startOnBoot: true,
-  //           forceAlarmManager: false,
-  //           requiresCharging: false,
-  //           requiresDeviceIdle: false,
-  //           requiresBatteryNotLow: false,
-  //           requiresStorageNotLow: false,
-  //         },
-  //         async (taskId: string) => {
-  //           //This is the background fetch callback
-  //           setCounter((prevCounter) => prevCounter + 1);
-  //           console.log("[BackgroundFetch] taskId", taskId);
-  //           BackgroundFetch.finish(taskId);
-  //         },
-  //         (taskId: string) => {
-  //           console.log("[Fetch] TIMEOUT taskId:", taskId);
-  //           BackgroundFetch.finish(taskId);
-  //         }
-  //       );
-  //       console.log("BackgroundFetch configured successfully:", status);
-  //     } catch (error) {
-  //       console.error("BackgroundFetch configuration error:", error);
-  //     }
-  //   };
+    const initBackgroundFetch = async () => {
+      try {
+        const status: number = await BackgroundFetch.configure(
+          {
+            minimumFetchInterval: 15, // 15 minutes minimum
+            stopOnTerminate: false,
+            enableHeadless: true,
+            startOnBoot: true,
+            forceAlarmManager: false,
+            requiresCharging: false,
+            requiresDeviceIdle: false,
+            requiresBatteryNotLow: false,
+            requiresStorageNotLow: false,
+          },
+          async (taskId: string) => {
+            //This is the background fetch callback
+            setCounter((prevCounter) => prevCounter + 1);
+            console.log("[BackgroundFetch] taskId", taskId);
+            BackgroundFetch.finish(taskId);
+          },
+          (taskId: string) => {
+            console.log("[Fetch] TIMEOUT taskId:", taskId);
+            BackgroundFetch.finish(taskId);
+          }
+        );
+        console.log("BackgroundFetch configured successfully:", status);
+      } catch (error) {
+        console.error("BackgroundFetch configuration error:", error);
+      }
+    };
+
+    const handle = (value: boolean)=>{
+        setTrackingEnabled(value)
+
+        if(value){
+            initBackgroundFetch()
+        }else{
+            stop()
+        }
+    }
 
   return (
     <BackgroundTasksContext.Provider
       value={{
         isTrackingEnabled,
-        setTrackingEnabled,
+        setTrackingEnabled: handle,
       }}
     >
       {children}
