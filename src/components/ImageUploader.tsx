@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Button, Image, View, StyleSheet } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { displayFile, uploadFile} from '@src/services/fileStorage'
+import { uploadFile} from '@src/services/fileStorage'
+import { Buffer } from 'buffer';
 
 export default function ImageUploader() {
   const [image, setImage] = useState("");
@@ -20,13 +21,9 @@ export default function ImageUploader() {
       const fileData = result.assets[0].base64!;
 
       //TODO: Update to call service
-      uploadFile(fileName, fileData)
+      uploadFile(fileName, Buffer.from(fileData, 'base64'))
         .then((result) => {
-            displayFile(result.Key)
-                .then((img) =>{ setImage("data:image/png;base64," + img.Body); })
-                .catch(err => {
-                  console.log(err);
-                })
+          setImage(result.Location);
       })
       .catch((uploadError) => console.log(uploadError));
     }

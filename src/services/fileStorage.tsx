@@ -5,12 +5,13 @@
 **********************************/
 
 import AWS from 'aws-sdk'
+import config from '@src/config'
+import { Blob } from 'aws-sdk/lib/dynamodb/document_client';
 
-//check clickup for the credentials
-const bucketName = '';
-const accessKeyId =  '';
-const secretAccessKey = '';
-const region = '';
+const bucketName = config.S3.bucketName;
+const accessKeyId =  config.S3.accessKeyId;
+const secretAccessKey = config.S3.secretAccessKey;
+const region = config.S3.region;
 
 AWS.config.update({
   accessKeyId: accessKeyId,
@@ -21,7 +22,7 @@ AWS.config.update({
 const s3 = new AWS.S3();
 
 
-export const uploadFile = (fileName: string, filePath: string) => { 
+export const uploadFile = (fileName: string, filePath: Blob) => { 
   const params = {
     Bucket: bucketName, 
     Key: fileName,
