@@ -3,6 +3,7 @@ import { globalStyles } from "../../styles/globalStyles";
 import { useUser } from "@state/useUser";
 import { Box } from "@gluestack-ui/themed";
 import { Redirect } from "expo-router";
+import { useBackgroundTasks } from "@src/components/providers/BackgroundTasksProvider";
 
 const styles = StyleSheet.create({
   text: {
@@ -15,6 +16,8 @@ const HomePage = () => {
   const isSetupComplete = useUser((state) => state.isSetupComplete);
   const userName = useUser((state) => state.user.name);
   const setAuth = useUser((state) => state.setAuth);
+
+  const { isTrackingEnabled, setTrackingEnabled } = useBackgroundTasks();
 
   //TODO: remove this function
   const onNameChange = () => {
@@ -43,6 +46,7 @@ const HomePage = () => {
     <Box>
       <Text style={styles.text}>Home Page text</Text>
       {!!userName && <Text>Hello {userName}!</Text>}
+      <Text>Background counter: </Text>
 
       <Button title="Update name" onPress={onNameChange}></Button>
 
