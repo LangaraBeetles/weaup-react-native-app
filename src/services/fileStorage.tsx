@@ -1,9 +1,3 @@
-/**********************************
-  
- TODO: Will be moved to backend
-
-**********************************/
-
 import AWS from 'aws-sdk'
 import config from '@src/config'
 import { Blob } from 'aws-sdk/lib/dynamodb/document_client';
@@ -22,11 +16,11 @@ AWS.config.update({
 const s3 = new AWS.S3();
 
 
-export const uploadFile = (fileName: string, filePath: Blob) => { 
+export const uploadFile = (fileName: string, body: Blob) => { 
   const params = {
     Bucket: bucketName, 
     Key: fileName,
-    Body: filePath,
+    Body: body
   };
 
   return s3.upload(params).promise();

@@ -19,9 +19,9 @@ export default function ImageUploader() {
     if (!result.canceled) {
       const fileName = result.assets[0].fileName!;
       const fileData = result.assets[0].base64!;
+      const body = Buffer.from(fileData, 'base64');
 
-      //TODO: Update to call service
-      uploadFile(fileName, Buffer.from(fileData, 'base64'))
+      uploadFile(fileName, body)
         .then((result) => {
           setImage(result.Location);
       })
