@@ -4,13 +4,11 @@ import BackgroundFetch from "react-native-background-fetch";
 
 type ContextState = {
   isTrackingEnabled: boolean;
-  counter: number;
   setTrackingEnabled?: (value: boolean) => void;
 };
 
 const initialState: ContextState = {
   isTrackingEnabled: false,
-  counter: 0,
 };
 
 const BackgroundTasksContext = createContext<ContextState>(initialState);
@@ -19,9 +17,6 @@ const BackgroundTasksProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [isTrackingEnabled, setTrackingEnabled] = useState<boolean>(false);
-
-  const [status, setStatus] = useState(-1);
-  const [counter, setCounter] = useState(0);
 
   useEffect(() => {
     initBackgroundFetch();
@@ -44,15 +39,14 @@ const BackgroundTasksProvider: React.FC<{ children: React.ReactNode }> = ({
           requiresStorageNotLow: false, // Default
         },
         async (taskId: string) => {
-        //Callback for the background task:
+          //TODO: add callback for the background task:
+          
           console.log("[BackgroundFetch] taskId", taskId);
-          setCounter((prevCounter) => prevCounter + 1);
+
           // Finish.
           BackgroundFetch.finish(taskId);
         },
         (taskId: string) => {
-          // Oh No!  Our task took too long to complete and the OS has signalled
-          // that this task must be finished immediately.
           console.log("[Fetch] TIMEOUT taskId:", taskId);
           BackgroundFetch.finish(taskId);
         }
@@ -62,7 +56,6 @@ const BackgroundTasksProvider: React.FC<{ children: React.ReactNode }> = ({
       console.error("BackgroundFetch configuration error:", error);
     }
 
-    setStatus(status);
     setTrackingEnabled(true);
   };
 
@@ -76,13 +69,11 @@ const BackgroundTasksProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
-
   return (
     <BackgroundTasksContext.Provider
       value={{
         isTrackingEnabled,
         setTrackingEnabled: onClickToggleEnabled,
-        counter,
       }}
     >
       {children}

@@ -17,7 +17,9 @@ const HomePage = () => {
   const userName = useUser((state) => state.user.name);
   const setAuth = useUser((state) => state.setAuth);
 
-  const { isTrackingEnabled, setTrackingEnabled, counter } = useBackgroundTasks();
+  //TODO: add rest of the params
+  const { isTrackingEnabled, setTrackingEnabled } =
+    useBackgroundTasks();
 
   //TODO: remove this function
   const onNameChange = () => {
@@ -47,18 +49,10 @@ const HomePage = () => {
     }
   };
 
-  const showStatus = () => {
-    Alert.alert(
-      "BackgroundFetch Status",
-      `Tracking is ${isTrackingEnabled ? "enabled" : "disabled"}`
-    );
-  };
-
   return (
     <Box>
       <Text style={styles.text}>Home Page text</Text>
       {!!userName && <Text>Hello {userName}!</Text>}
-      <Text>Background counter: {counter}</Text>
 
       <Button title="Update name" onPress={onNameChange}></Button>
 
@@ -73,8 +67,6 @@ const HomePage = () => {
         }
         onPress={toggleBackgroundFetch}
       />
-
-      <Button title="Show BackgroundFetch Status" onPress={showStatus} />
     </Box>
   );
 };
