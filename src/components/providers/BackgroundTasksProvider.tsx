@@ -1,5 +1,4 @@
 import { createContext, useContext, useEffect, useState } from "react";
-
 import BackgroundFetch from "react-native-background-fetch";
 
 type ContextState = {
