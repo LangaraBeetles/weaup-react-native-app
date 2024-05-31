@@ -55,7 +55,6 @@ const BackgroundTasksProvider: React.FC<{ children: React.ReactNode }> = ({
       console.error("BackgroundFetch configuration error:", error);
     }
 
-    setTrackingEnabled(true);
   };
 
   const onClickToggleEnabled = (value: boolean) => {
