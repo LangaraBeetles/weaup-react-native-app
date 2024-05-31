@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, Button } from "react-native";
+import { StyleSheet, View, Text, Button, Alert } from "react-native";
 import { globalStyles } from "../../styles/globalStyles";
 import { useUser } from "@state/useUser";
 import { Box } from "@gluestack-ui/themed";
@@ -17,7 +17,7 @@ const HomePage = () => {
   const userName = useUser((state) => state.user.name);
   const setAuth = useUser((state) => state.setAuth);
 
-  const { isTrackingEnabled, setTrackingEnabled } = useBackgroundTasks();
+  const { isTrackingEnabled, setTrackingEnabled, counter } = useBackgroundTasks();
 
   //TODO: remove this function
   const onNameChange = () => {
@@ -41,16 +41,40 @@ const HomePage = () => {
   if (!isSetupComplete) {
     return <Redirect href="/setup/start" />;
   }
+  const toggleBackgroundFetch = () => {
+    if (setTrackingEnabled) {
+      setTrackingEnabled(!isTrackingEnabled);
+    }
+  };
+
+  const showStatus = () => {
+    Alert.alert(
+      "BackgroundFetch Status",
+      `Tracking is ${isTrackingEnabled ? "enabled" : "disabled"}`
+    );
+  };
 
   return (
     <Box>
       <Text style={styles.text}>Home Page text</Text>
       {!!userName && <Text>Hello {userName}!</Text>}
-      <Text>Background counter: </Text>
+      <Text>Background counter: {counter}</Text>
 
       <Button title="Update name" onPress={onNameChange}></Button>
 
       <Button title="Reset setup" onPress={onNameClear}></Button>
+      <Button title="Clear name" onPress={onNameClear}></Button>
+
+      <Button
+        title={
+          isTrackingEnabled
+            ? "Disable Background Fetch"
+            : "Enable Background Fetch"
+        }
+        onPress={toggleBackgroundFetch}
+      />
+
+      <Button title="Show BackgroundFetch Status" onPress={showStatus} />
     </Box>
   );
 };
