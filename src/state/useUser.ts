@@ -4,6 +4,9 @@ import { create } from "zustand";
 import { UserType } from "@interfaces/user.types";
 
 type UserState = {
+  isSetupComplete: boolean;
+  completeSetup: () => void;
+
   isAuth: boolean;
   user: UserType;
   greeting: () => string;
@@ -22,13 +25,20 @@ export const useUser = create<UserState>()(
   devtools(
     persist(
       (set, get) => ({
+        isSetupComplete: false,
+        completeSetup: () => set({ isSetupComplete: true }),
         isAuth: false,
         user: userInitialState,
         greeting: () => `Hello ${get().user.name}!`,
         setAuth: (isAuth: boolean, user: UserType) =>
           isAuth
             ? set({ isAuth: true, user })
-            : set({ isAuth: false, user: userInitialState }),
+            : set({
+                isAuth: false,
+                user: userInitialState,
+                isSetupComplete: false,
+                // TODO: temporarily setting this to false
+              }),
         setDailyGoal: (newDailyGoal: number) =>
           set((state: { isAuth: boolean; user: UserType }) => ({
             ...state,

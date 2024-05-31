@@ -2,6 +2,7 @@ import { StyleSheet, View, Text, Button } from "react-native";
 import { globalStyles } from "../../styles/globalStyles";
 import { useUser } from "@state/useUser";
 import { Box } from "@gluestack-ui/themed";
+import { Redirect } from "expo-router";
 
 const styles = StyleSheet.create({
   text: {
@@ -11,6 +12,7 @@ const styles = StyleSheet.create({
 });
 
 const HomePage = () => {
+  const isSetupComplete = useUser((state) => state.isSetupComplete);
   const userName = useUser((state) => state.user.name);
   const setAuth = useUser((state) => state.setAuth);
 
@@ -33,6 +35,10 @@ const HomePage = () => {
     });
   };
 
+  if (!isSetupComplete) {
+    return <Redirect href="/setup/start" />;
+  }
+
   return (
     <Box>
       <Text style={styles.text}>Home Page text</Text>
@@ -40,7 +46,7 @@ const HomePage = () => {
 
       <Button title="Update name" onPress={onNameChange}></Button>
 
-      <Button title="Clear name" onPress={onNameClear}></Button>
+      <Button title="Reset setup" onPress={onNameClear}></Button>
     </Box>
   );
 };
