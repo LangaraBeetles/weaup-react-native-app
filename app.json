@@ -34,6 +34,12 @@
     "owner": "beetles",
     "plugins": [
       "expo-router"
-    ]
+    ],
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/b61aa28d-218d-4007-b696-97c4a2208074"
+    }
   }
 }
