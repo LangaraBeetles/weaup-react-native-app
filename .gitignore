@@ -15,6 +15,7 @@ web-build/
 *.p12
 *.key
 *.mobileprovision
+android/
 
 # Metro
 .metro-health-check*
@@ -27,6 +28,9 @@ yarn-error.*
 # macOS
 .DS_Store
 *.pem
+
+# Windows
+%ProgramData%
 
 # local env files
 .env*.local

@@ -52,6 +52,16 @@ eas build --platform ios
 eas build --platform all
 ```
 
+## Re-build
+
+If you're developing locally:
+```bash
+npx expo prebuild
+```
+If you're using Expo EAS:
+```bash
+eas build --profile development --platform android
+```
 
 ## Important Links
 

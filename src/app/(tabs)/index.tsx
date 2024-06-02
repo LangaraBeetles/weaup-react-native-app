@@ -1,8 +1,9 @@
-import { StyleSheet, View, Text, Button } from "react-native";
+import { StyleSheet, View, Text, Button, Alert } from "react-native";
 import { globalStyles } from "../../styles/globalStyles";
 import { useUser } from "@state/useUser";
 import { Box } from "@gluestack-ui/themed";
 import { Redirect } from "expo-router";
+import { useBackgroundTasks } from "@src/components/providers/BackgroundTasksProvider";
 
 const styles = StyleSheet.create({
   text: {
@@ -15,6 +16,10 @@ const HomePage = () => {
   const isSetupComplete = useUser((state) => state.isSetupComplete);
   const userName = useUser((state) => state.user.name);
   const setAuth = useUser((state) => state.setAuth);
+
+  //TODO: add rest of the params
+  const { isTrackingEnabled, setTrackingEnabled } =
+    useBackgroundTasks();
 
   //TODO: remove this function
   const onNameChange = () => {
@@ -38,6 +43,11 @@ const HomePage = () => {
   if (!isSetupComplete) {
     return <Redirect href="/setup/start" />;
   }
+  const toggleBackgroundFetch = () => {
+    if (setTrackingEnabled) {
+      setTrackingEnabled(!isTrackingEnabled);
+    }
+  };
 
   return (
     <Box>
@@ -47,6 +57,16 @@ const HomePage = () => {
       <Button title="Update name" onPress={onNameChange}></Button>
 
       <Button title="Reset setup" onPress={onNameClear}></Button>
+      <Button title="Clear name" onPress={onNameClear}></Button>
+
+      <Button
+        title={
+          isTrackingEnabled
+            ? "Disable Background Fetch"
+            : "Enable Background Fetch"
+        }
+        onPress={toggleBackgroundFetch}
+      />
     </Box>
   );
 };
