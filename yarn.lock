@@ -2736,6 +2736,7 @@ __metadata:
     "@babel/core": "npm:^7.20.0"
     "@types/react": "npm:~18.2.45"
     expo: "npm:~51.0.8"
+    expo-av: "npm:^14.0.5"
     expo-device: "npm:^6.0.2"
     expo-notifications: "npm:^0.28.3"
     expo-permissions: "npm:^14.4.0"
@@ -3931,6 +3932,15 @@ __metadata:
   peerDependencies:
     expo: "*"
   checksum: 10c0/c7b57b4d44a94ffede570c13956cc6005f595b9c40bcc22fdf03a8a2fd9597da6ea7e84691c46a90d777bf0cb8a0ae4908ecc8fa27913b47e3975faeced0445d
+  languageName: node
+  linkType: hard
+
+"expo-av@npm:^14.0.5":
+  version: 14.0.5
+  resolution: "expo-av@npm:14.0.5"
+  peerDependencies:
+    expo: "*"
+  checksum: 10c0/f76ff7f76a0cd0d92004a351725c4e14a8fad1d0754e7a1e77012290e1e942354be4782ecf1359af10985482cece787fe8b63978c7a27f31053cd6cbdf350480
   languageName: node
   linkType: hard
 

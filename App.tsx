@@ -1,11 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import PushNotificationButton from './components/PushNotificationButton';
+import AudioNotificationButton from './components/AudioNotificationButton';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <PushNotificationButton />
+      <AudioNotificationButton />
       <StatusBar style="auto" />
     </View>
   );
