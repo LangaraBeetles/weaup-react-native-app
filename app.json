@@ -18,7 +18,8 @@
       "infoPlist": {
         "UIBackgroundModes": ["fetch", "processing"],
         "BGTaskSchedulerPermittedIdentifiers": ["com.transistorsoft.fetch"]
-      }
+      },
+      "minSdkVersion": "15.0"
     },
     "android": {
       "adaptiveIcon": {
@@ -35,7 +36,19 @@
         "projectId": "b61aa28d-218d-4007-b696-97c4a2208074"
       }
     },
-    "owner": "beetles",
-    "plugins": ["expo-router", "react-native-background-fetch"]
+    "plugins": [
+      "expo-router",
+      "react-native-background-fetch",
+      [
+        "expo-build-properties",
+        {
+          "android": {},
+          "ios": {
+            "deploymentTarget": "15.0"
+          }
+        }
+      ]
+    ],
+    "owner": "beetles"
   }
 }

@@ -63,6 +63,29 @@ If you're using Expo EAS:
 eas build --profile development --platform android
 ```
 
+
+## Native IOS Module
+```bash
+npx create-react-native-library@latest ios-headphone-motion
+```
+
+```bash
+yarn
+```
+
+```bash
+cd ios
+```
+
+```bash
+pod install
+```
+
+```bash
+yarn ios --device
+```
+
+
 ## Important Links
 
 - https://blog.expo.dev/the-new-expo-cli-f4250d8e3421
@@ -76,3 +99,33 @@ eas build --profile development --platform android
 > To add more relative paths, update the files: 
 > - tsconfig.json
 > - babel.config.js
+
+
+## Headphone Motion Module
+
+Documentation: https://github.com/XHMM/react-native-headphone-motion
+
+These are the steps I followed to create the module
+```
+npx expo prebuild --clean
+
+npx create-react-native-library@latest ios-headphone-motion
+
+yarn install
+
+npx expo install expo-build-properties # to define the minimum development target for ios, it must be 15^
+
+
+```
+
+These are the commands to run the app
+```
+npx pod-install
+
+yarn ios --device
+```
+
+I created a new command to achieve the same
+```
+yarn ios:pods
+```
