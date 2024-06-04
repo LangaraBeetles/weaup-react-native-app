@@ -1,12 +1,12 @@
 import { Box } from "@gluestack-ui/themed";
 import { Text } from "react-native";
 
-const ChallengeScreen = () => {
+const TogetherScreen = () => {
   return (
     <Box>
-      <Text>Challenge Page text</Text>
+      <Text>Together Page text</Text>
     </Box>
   );
 };
 
-export default ChallengeScreen;
+export default TogetherScreen;

@@ -8,12 +8,12 @@ const TabsLayout = () => {
         options={{ headerTitle: "Home Page", title: "Home" }}
       />
       <Tabs.Screen
-        name="analytics"
-        options={{ headerTitle: "Analytics", title: "Analytics" }}
+        name="Together"
+        options={{ headerTitle: "Together", title: "Together" }}
       />
       <Tabs.Screen
-        name="challenge"
-        options={{ headerTitle: "Challenge", title: "Challenge" }}
+        name="analytics"
+        options={{ headerTitle: "Analytics", title: "Analytics" }}
       />
       <Tabs.Screen
         name="profile"

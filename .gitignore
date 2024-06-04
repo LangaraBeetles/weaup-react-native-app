@@ -40,3 +40,5 @@ yarn-error.*
 
 #config
 config.ts
+
+/ios
