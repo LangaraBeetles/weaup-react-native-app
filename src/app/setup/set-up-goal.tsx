@@ -26,7 +26,7 @@ const SetUpGoalScreen = () => {
               </Text>
             </VStack>
 
-            <Button title="I’m all set" onPress={next} />
+            <Button title="I’m all set" onPress={next} type={{type: "primary", size:"l"}}/>
           </VStack>
         </Center>
       </Main>

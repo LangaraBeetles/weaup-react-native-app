@@ -22,7 +22,7 @@ const SetupPages = () => {
               </Text>
             </VStack>
 
-            <Button title="Start the Journey" onPress={next} />
+            <Button title="Start the Journey" onPress={next} type={{type: "primary", size:"l"}}/>
 
             <Text>I have read and agree Agreement and Privacy.</Text>
           </VStack>

@@ -1,12 +1,11 @@
 export const globalStyles = {
   fontFamily: "sans-serif",
   fontSize: 16,
-  color: "#FF0000",
   colors: {
-    primary: "#667080",
-    secondary: "#EEF1F4",
+    primary: "#000",
+    secondary: "#A4B1C5",
     tertiary: "#EEF1F4",
     white: "#FFFFFF",
-    anotations: "#F6CA56",
+    anotations: "#54715B",
   } 
 };

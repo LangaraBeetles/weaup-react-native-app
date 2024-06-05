@@ -36,6 +36,17 @@
       }
     },
     "owner": "beetles",
-    "plugins": ["expo-router", "react-native-background-fetch"]
+    "plugins": [
+      ["expo-router"],
+      ["react-native-background-fetch"],
+      [
+        "expo-font",
+        {
+          "fonts": {
+            "Inter_600SemiBold": "./node_modules/@expo-google-fonts/inter/Inter_600SemiBold.ttf"
+          }
+        }
+      ]
+    ]
   }
 }
