@@ -1,9 +1,10 @@
-import { StyleSheet, View, Text, Button, Alert } from "react-native";
+import { StyleSheet, View, Text, Alert } from "react-native";
 import { globalStyles } from "../../styles/globalStyles";
 import { useUser } from "@state/useUser";
 import { Box } from "@gluestack-ui/themed";
 import { Redirect } from "expo-router";
 import { useBackgroundTasks } from "@src/components/providers/BackgroundTasksProvider";
+import Button from '@src/components/ui/Button';
 
 import DeviceMotionView from "@src/components/ui/DeviceMotionView";
 

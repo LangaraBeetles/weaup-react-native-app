@@ -14,8 +14,11 @@ const Button: React.FC<{ title: string; onPress?: () => void }> = ({
 
 const styles = StyleSheet.create({
   button: {
-    padding: 12,
-    borderRadius: 16,
+    height: 48,
+    minWidth: 180,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 6,
     backgroundColor: "gray",
   },
   text: {
