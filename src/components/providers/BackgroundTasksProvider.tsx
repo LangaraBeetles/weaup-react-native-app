@@ -1,5 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import BackgroundFetch from "react-native-background-fetch";
+import { _subscribe, _unsubscribe } from "@src/modules/MotionReader"
+import { DeviceMotion } from 'expo-sensors';
 
 type ContextState = {
   isTrackingEnabled: boolean;
@@ -25,7 +27,7 @@ const BackgroundTasksProvider: React.FC<{ children: React.ReactNode }> = ({
     try {
       const status: number = await BackgroundFetch.configure(
         {
-          minimumFetchInterval: 15, // <-- minutes (15 is minimum allowed)
+          minimumFetchInterval: 1, // <-- minutes (15 is minimum allowed)
           stopOnTerminate: false,
           enableHeadless: true,
           startOnBoot: true,
@@ -39,7 +41,14 @@ const BackgroundTasksProvider: React.FC<{ children: React.ReactNode }> = ({
         },
         async (taskId: string) => {
           //TODO: add callback for the background task:
-          
+          // console.log(DeviceMotion)
+          _subscribe()
+          .then(() => {
+            setTimeout(() => {
+              console.log("timer");
+              _unsubscribe();
+            }, 5);
+          });
           console.log("[BackgroundFetch] taskId", taskId);
 
           // Finish.
