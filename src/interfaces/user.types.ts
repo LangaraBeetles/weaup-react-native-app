@@ -4,3 +4,10 @@ export type UserType = {
   name: string;
   dailyGoal: number; // out of 100
 };
+
+export enum TrackingModeEnum {
+  PHONE = "PHONE",
+  EARBUDS = "EARBUDS",
+}
+
+export type TrackingModeType = `${TrackingModeEnum}`;

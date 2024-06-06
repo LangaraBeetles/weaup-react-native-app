@@ -1,25 +1,19 @@
-import { StyleSheet, View, Text, Button, Alert } from "react-native";
+import { StyleSheet, Text, Button } from "react-native";
 import { globalStyles } from "../../styles/globalStyles";
 import { useUser } from "@state/useUser";
 import { Box } from "@gluestack-ui/themed";
 import { Redirect } from "expo-router";
 import { useBackgroundTasks } from "@src/components/providers/BackgroundTasksProvider";
-
-const styles = StyleSheet.create({
-  text: {
-    ...globalStyles,
-    padding: 10,
-  },
-});
+import { useEffect } from "react";
 
 const HomePage = () => {
   const isSetupComplete = useUser((state) => state.isSetupComplete);
   const userName = useUser((state) => state.user.name);
   const setAuth = useUser((state) => state.setAuth);
+  const mode = useUser((state) => state.mode);
 
   //TODO: add rest of the params
-  const { isTrackingEnabled, setTrackingEnabled } =
-    useBackgroundTasks();
+  const { isTrackingEnabled, setTrackingEnabled } = useBackgroundTasks();
 
   //TODO: remove this function
   const onNameChange = () => {
@@ -40,14 +34,15 @@ const HomePage = () => {
     });
   };
 
-  if (!isSetupComplete) {
-    return <Redirect href="/setup/start" />;
-  }
   const toggleBackgroundFetch = () => {
     if (setTrackingEnabled) {
       setTrackingEnabled(!isTrackingEnabled);
     }
   };
+
+  if (!isSetupComplete) {
+    return <Redirect href="/setup/start" />;
+  }
 
   return (
     <Box>
@@ -70,5 +65,12 @@ const HomePage = () => {
     </Box>
   );
 };
+
+const styles = StyleSheet.create({
+  text: {
+    ...globalStyles,
+    padding: 10,
+  },
+});
 
 export default HomePage;
