@@ -5,23 +5,17 @@ import { Box, HStack, SafeAreaView } from "@gluestack-ui/themed";
 import { Redirect } from "expo-router";
 import { useBackgroundTasks } from "@src/components/providers/BackgroundTasksProvider";
 import Button from '@src/components/ui/Button';
-
 import DeviceMotionView from "@src/components/ui/DeviceMotionView";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SessionStatesEnum } from "@src/interfaces/session.types";
-
-const styles = StyleSheet.create({
-  text: {
-    ...globalStyles,
-    padding: 10,
-  },
-});
+import Timer from "@src/components/ui/Timer";
 
 const HomePage = () => {
   const isSetupComplete = useUser((state) => state.isSetupComplete);
   const userName = useUser((state) => state.user.name);
   const setAuth = useUser((state) => state.setAuth);
   const [sessionState, setSessionState] = useState(SessionStatesEnum.STOP);
+  const [timeInSeconds, setTimeInSeconds] = useState(-1);
 
   //TODO: add rest of the params
   const { isTrackingEnabled, setTrackingEnabled } = useBackgroundTasks();
@@ -58,13 +52,46 @@ const HomePage = () => {
     setSessionState(SessionStatesEnum.INIT);
   };
 
-  const onCancelSession = () => {
-    setSessionState(SessionStatesEnum.STOP);
-  };
-
   const onStartSession = () => {
     setSessionState(SessionStatesEnum.START);
+    //TODO: stop real time tracking
+    setTimeInSeconds(3600);
   };
+
+  const onCancelSession = () => {
+    setSessionState(SessionStatesEnum.STOP);
+    //TODO: start real time tracking
+    //TODO: discard session data
+  };
+
+  const onStopSession = () => {
+    setSessionState(SessionStatesEnum.STOP);
+    //TODO: start real time tracking
+    //TODO: save session data
+  };
+
+  const SetTimer = ({ onStartSession }: { onStartSession: () => void }) => (
+    <Box>
+      <HStack>
+        <Text>Hours: 1</Text>
+        <Text>Minutes: 1</Text>
+      </HStack>
+      <Button title="Start Session" onPress={onStartSession} type={{type: "primary", size:"s"}}></Button>
+      <Button title="X" onPress={onCancelSession} type={{type: "primary", size:"s"}}></Button>
+    </Box>
+  );
+
+  useEffect(() => {
+    if (sessionState === SessionStatesEnum.START && timeInSeconds === -1) {
+      //When timer runs out, stop the session
+      onStopSession();
+    } else if (sessionState === SessionStatesEnum.START && timeInSeconds > 0) {
+      const timer = setInterval(() => {
+        setTimeInSeconds(timeInSeconds - 1);
+      }, 1000);
+      return () => clearInterval(timer);
+    }
+  }, [timeInSeconds, sessionState === SessionStatesEnum.PAUSE]);
 
   return (
     <Box>
@@ -88,17 +115,26 @@ const HomePage = () => {
 
       <Button title="Start Session" onPress={onInitSession} type={{type: "primary", size:"l"}}></Button>
       {sessionState === SessionStatesEnum.INIT && (
-        <Box>
-          <HStack>
-            <Text>Hours: 1</Text>
-            <Text>Minutes: 1</Text>
-          </HStack>
-          <Button title="Start Session" onPress={onStartSession} type={{type: "primary", size:"l"}}></Button>
-          <Button title="X" onPress={onCancelSession} type={{type: "primary", size:"l"}}></Button>
-        </Box>
+        <SetTimer onStartSession={onStartSession} />
+      )}
+      {sessionState === SessionStatesEnum.START && (
+        <Timer
+          timeInSeconds={timeInSeconds}
+          handlePause={() => {}}
+          handleReset={() => {}}
+          isPaused={() => false}
+          handleStop={() => {}}
+        />
       )}
     </Box>
   );
 };
+
+const styles = StyleSheet.create({
+  text: {
+    ...globalStyles,
+    padding: 10,
+  },
+});
 
 export default HomePage;
