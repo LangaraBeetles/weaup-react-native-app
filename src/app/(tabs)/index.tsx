@@ -5,6 +5,8 @@ import { Box } from "@gluestack-ui/themed";
 import { Redirect } from "expo-router";
 import { useBackgroundTasks } from "@src/components/providers/BackgroundTasksProvider";
 
+import DeviceMotionView from "@src/components/ui/DeviceMotionView";
+
 const styles = StyleSheet.create({
   text: {
     ...globalStyles,
@@ -62,11 +64,12 @@ const HomePage = () => {
       <Button
         title={
           isTrackingEnabled
-            ? "Disable Background Fetch"
-            : "Enable Background Fetch"
+            ? "Disable Tracking"
+            : "Enable Tracking"
         }
         onPress={toggleBackgroundFetch}
       />
+      <DeviceMotionView/>
     </Box>
   );
 };
