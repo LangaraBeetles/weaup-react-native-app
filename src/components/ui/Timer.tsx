@@ -32,7 +32,7 @@ const Timer: React.FC<{
       <TimerDisplay timeInSeconds={timeInSeconds} />
       {/* TODO: remove Pause / Resume button */}
       <Button title={isPaused ? "Resume" : "Pause"} onPress={handlePause} />
-      <Button title="Stop" onPress={handleStop} />
+      <Button title="Stop tracking" onPress={handleStop} />
     </View>
   );
 };

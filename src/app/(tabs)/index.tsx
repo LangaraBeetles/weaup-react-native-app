@@ -155,8 +155,10 @@ const HomePage = () => {
         onPress={toggleBackgroundFetch}
         type={{type: "secondary", size:"s"}}
       />
+      {timerState === TimerStatesEnum.STOPPED && (
+        <Button title="Start a session" onPress={onInitSession} type={{type: "primary", size:"l"}}></Button>
+      )}
 
-      <Button title="Start Session" onPress={onInitSession} type={{type: "primary", size:"l"}}></Button>
       {sessionState === SessionStatesEnum.INIT && (
         <SetTimer onStartSession={onStartSession} />
       )}
