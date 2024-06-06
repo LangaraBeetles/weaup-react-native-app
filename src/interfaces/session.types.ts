@@ -6,4 +6,13 @@ export enum SessionStatesEnum {
   INIT = "INIT",
 }
 
-export type SessionStatesType = `${SessionStatesEnum}`;
+export enum TimerStatesEnum {
+  RUNNING = "RUNNING",
+  PAUSED = "PAUSED",
+  STOPPED = "STOPPED",
+}
+
+export type SessionStatesType = {
+  SessionStatesEnum: `${SessionStatesEnum}`;
+  TimerStatesEnum: `${TimerStatesEnum}`;
+};

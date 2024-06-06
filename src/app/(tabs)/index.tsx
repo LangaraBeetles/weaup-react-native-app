@@ -1,13 +1,17 @@
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, Modal, View } from "react-native";
 import { globalStyles } from "../../styles/globalStyles";
 import { useUser } from "@state/useUser";
-import { Box, HStack, SafeAreaView, set } from "@gluestack-ui/themed";
+import { Box, HStack } from "@gluestack-ui/themed";
 import { Redirect } from "expo-router";
 import { useBackgroundTasks } from "@src/components/providers/BackgroundTasksProvider";
 import Button from '@src/components/ui/Button';
 import DeviceMotionView from "@src/components/ui/DeviceMotionView";
+
 import { useEffect, useState } from "react";
-import { SessionStatesEnum } from "@src/interfaces/session.types";
+import {
+  SessionStatesEnum,
+  TimerStatesEnum,
+} from "@src/interfaces/session.types";
 import Timer from "@src/components/ui/Timer";
 
 const HomePage = () => {
@@ -15,7 +19,9 @@ const HomePage = () => {
   const userName = useUser((state) => state.user.name);
   const setAuth = useUser((state) => state.setAuth);
   const [sessionState, setSessionState] = useState(SessionStatesEnum.STOP);
+  const [timerState, setTimerState] = useState(TimerStatesEnum.STOPPED);
   const [timeInSeconds, setTimeInSeconds] = useState(-1);
+  const [modalVisible, setModalVisible] = useState(false);
 
   //TODO: add rest of the params
   const { isTrackingEnabled, setTrackingEnabled } = useBackgroundTasks();
@@ -54,6 +60,7 @@ const HomePage = () => {
 
   const onStartSession = () => {
     setSessionState(SessionStatesEnum.START);
+    setTimerState(TimerStatesEnum.RUNNING);
     //TODO: stop real time tracking
     //TODO: set time in seconds from the setTimer component
     setTimeInSeconds(3600);
@@ -63,20 +70,17 @@ const HomePage = () => {
   };
 
   const onCancelSession = () => {
-    setSessionState(SessionStatesEnum.STOP);
+    setSessionState(SessionStatesEnum.CANCEL);
+    setTimerState(TimerStatesEnum.STOPPED);
     setTimeInSeconds(-1);
     //TODO: start real time tracking
     //TODO: discard session data
   };
 
   const onStopSession = () => {
-    setSessionState(SessionStatesEnum.STOP);
-    //TODO: save session data
-    //TODO: Show session summary
-    alert("Session Summary");
-    //Reset the timer
-    setTimeInSeconds(-1);
-    //TODO: start real time tracking
+    setSessionState(SessionStatesEnum.PAUSE);
+    setTimerState(TimerStatesEnum.PAUSED);
+    setModalVisible(true);
   };
 
   const onPauseSession = () => {
@@ -85,6 +89,30 @@ const HomePage = () => {
         ? SessionStatesEnum.PAUSE
         : SessionStatesEnum.START
     );
+
+    setTimerState((prevState) =>
+      prevState === TimerStatesEnum.RUNNING
+        ? TimerStatesEnum.PAUSED
+        : TimerStatesEnum.RUNNING
+    );
+  };
+
+  const handleContinue = () => {
+    setModalVisible(false);
+    setSessionState(SessionStatesEnum.START);
+    setTimerState(TimerStatesEnum.RUNNING);
+  };
+
+  const handleEndSession = () => {
+    setModalVisible(false);
+    setSessionState(SessionStatesEnum.STOP);
+    setTimerState(TimerStatesEnum.STOPPED);
+    //TODO: save session data
+    //TODO: Show session summary
+    alert("Here is your session summary!");
+    //Reset the timer
+    setTimeInSeconds(-1);
+    //TODO: start real time tracking
   };
 
   const SetTimer = ({ onStartSession }: { onStartSession: () => void }) => (
@@ -114,10 +142,9 @@ const HomePage = () => {
       <Text style={styles.text}>Home Page text</Text>
       {!!userName && <Text>Hello {userName}!</Text>}
 
-      <Button title="Update name" onPress={onNameChange} type={{type: "primary", size:"s"}}></Button>
-
+      <Button title="Update name" onPress={onNameChange} type={{type: "primary", size:"l"}}></Button>
       <Button title="Reset setup" onPress={onNameClear} type={{type: "primary", size:"l"}}></Button>
-      <Button title="Clear name" onPress={onNameClear} type={{type: "secondary", size:"l"}}></Button>
+      <Button title="Clear name" onPress={onNameClear} type={{type: "primary", size:"l"}}></Button>
 
       <Button
         title={
@@ -139,9 +166,24 @@ const HomePage = () => {
           timeInSeconds={timeInSeconds}
           handlePause={onPauseSession}
           handleStop={onStopSession}
-          isPaused={sessionState === SessionStatesEnum.PAUSE}
+          isPaused={timerState === TimerStatesEnum.PAUSED}
         />
       )}
+
+      <Modal
+        transparent={true}
+        visible={modalVisible}
+        animationType="slide"
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalBackground}>
+          <View style={styles.modalContainer}>
+            <Text>Are you sure you want to end the session?</Text>
+            <Button title="Continue" onPress={handleContinue} type={{type: "primary", size:"l"}} />
+            <Button title="End Session" onPress={handleEndSession} type={{type: "primary", size:"l"}} />
+          </View>
+        </View>
+      </Modal>
     </Box>
   );
 };
@@ -150,6 +192,19 @@ const styles = StyleSheet.create({
   text: {
     ...globalStyles,
     padding: 10,
+  },
+  modalBackground: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContainer: {
+    width: 300,
+    padding: 20,
+    backgroundColor: "white",
+    borderRadius: 10,
+    alignItems: "center",
   },
 });
 
