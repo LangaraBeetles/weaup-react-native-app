@@ -57,6 +57,9 @@ const HomePage = () => {
     //TODO: stop real time tracking
     //TODO: set time in seconds from the setTimer component
     setTimeInSeconds(3600);
+    //TODO: function to check posture every second
+    //if posture is okay ➝ save it to the local state and show the image animation
+    //if posture is bad ➝ save it to the local state and show the image animation
   };
 
   const onCancelSession = () => {
@@ -69,7 +72,8 @@ const HomePage = () => {
   const onStopSession = () => {
     setSessionState(SessionStatesEnum.STOP);
     //TODO: save session data
-    alert("Session stopped");
+    //TODO: Show session summary
+    alert("Session Summary");
     //Reset the timer
     setTimeInSeconds(-1);
     //TODO: start real time tracking
