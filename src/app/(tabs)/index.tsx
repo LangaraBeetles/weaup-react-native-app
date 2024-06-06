@@ -4,7 +4,9 @@ import { useUser } from "@state/useUser";
 import { Box } from "@gluestack-ui/themed";
 import { Redirect } from "expo-router";
 import { useBackgroundTasks } from "@src/components/providers/BackgroundTasksProvider";
+
 import DeviceMotionView from "@src/components/ui/DeviceMotionView";
+
 const styles = StyleSheet.create({
   text: {
     ...globalStyles,

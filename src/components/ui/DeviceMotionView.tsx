@@ -5,7 +5,7 @@ import { useBackgroundTasks } from "@src/components/providers/BackgroundTasksPro
 import * as Haptics from "expo-haptics";
 
 export default function DeviceMotionView() {
-    const [{beta, gamma, alpha }, setRotationData] = useState({beta: 0, gamma: 0, alpha: 0 });
+    const [{beta, gamma }, setRotationData] = useState({beta: 0, gamma: 0});
     const [orientation, setOrientation] = useState(0);
     const [notification, setNotification] = useState(false);
     const showNotification = () => setNotification(true);
@@ -60,6 +60,7 @@ export default function DeviceMotionView() {
         return  orientation == 0 && inBadPostureRange(beta) ||
                 orientation != 0 && inBadPostureRange(gamma)
     }
+    
     const inBadPostureRange = (data: number) => {
         return data > 1.4 || data < 1
     }
