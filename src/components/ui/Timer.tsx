@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
 
 const MINUTE_IN_SECONDS = 60;
@@ -23,17 +24,14 @@ const TimerDisplay: React.FC<{ timeInSeconds: number }> = ({
 const Timer: React.FC<{
   timeInSeconds: number;
   handlePause: () => void;
-  handleReset: () => void;
-  isPaused: () => void;
   handleStop: () => void;
-}> = ({ timeInSeconds, handlePause, handleReset, isPaused, handleStop }) => {
+  isPaused: boolean;
+}> = ({ timeInSeconds, handlePause, handleStop, isPaused }) => {
   return (
     <View style={styles.container}>
       <TimerDisplay timeInSeconds={timeInSeconds} />
-      {/* TODO: remove pause/resume button */}
-      <Button title={isPaused() ? "Resume" : "Pause"} onPress={handlePause} />
-      {/* TODO: remove reset button */}
-      <Button title="Reset" onPress={handleReset} />
+      {/* TODO: remove Pause / Resume button */}
+      <Button title={isPaused ? "Resume" : "Pause"} onPress={handlePause} />
       <Button title="Stop" onPress={handleStop} />
     </View>
   );

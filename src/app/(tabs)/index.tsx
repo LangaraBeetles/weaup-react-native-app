@@ -1,7 +1,7 @@
 import { StyleSheet, Text } from "react-native";
 import { globalStyles } from "../../styles/globalStyles";
 import { useUser } from "@state/useUser";
-import { Box, HStack, SafeAreaView } from "@gluestack-ui/themed";
+import { Box, HStack, SafeAreaView, set } from "@gluestack-ui/themed";
 import { Redirect } from "expo-router";
 import { useBackgroundTasks } from "@src/components/providers/BackgroundTasksProvider";
 import Button from '@src/components/ui/Button';
@@ -55,19 +55,32 @@ const HomePage = () => {
   const onStartSession = () => {
     setSessionState(SessionStatesEnum.START);
     //TODO: stop real time tracking
+    //TODO: set time in seconds from the setTimer component
     setTimeInSeconds(3600);
   };
 
   const onCancelSession = () => {
     setSessionState(SessionStatesEnum.STOP);
+    setTimeInSeconds(-1);
     //TODO: start real time tracking
     //TODO: discard session data
   };
 
   const onStopSession = () => {
     setSessionState(SessionStatesEnum.STOP);
-    //TODO: start real time tracking
     //TODO: save session data
+    alert("Session stopped");
+    //Reset the timer
+    setTimeInSeconds(-1);
+    //TODO: start real time tracking
+  };
+
+  const onPauseSession = () => {
+    setSessionState((prevState) =>
+      prevState === SessionStatesEnum.START
+        ? SessionStatesEnum.PAUSE
+        : SessionStatesEnum.START
+    );
   };
 
   const SetTimer = ({ onStartSession }: { onStartSession: () => void }) => (
@@ -83,15 +96,14 @@ const HomePage = () => {
 
   useEffect(() => {
     if (sessionState === SessionStatesEnum.START && timeInSeconds === -1) {
-      //When timer runs out, stop the session
       onStopSession();
     } else if (sessionState === SessionStatesEnum.START && timeInSeconds > 0) {
       const timer = setInterval(() => {
-        setTimeInSeconds(timeInSeconds - 1);
+        setTimeInSeconds((prevTime) => prevTime - 1);
       }, 1000);
       return () => clearInterval(timer);
     }
-  }, [timeInSeconds, sessionState === SessionStatesEnum.PAUSE]);
+  }, [timeInSeconds, sessionState]);
 
   return (
     <Box>
@@ -117,13 +129,13 @@ const HomePage = () => {
       {sessionState === SessionStatesEnum.INIT && (
         <SetTimer onStartSession={onStartSession} />
       )}
-      {sessionState === SessionStatesEnum.START && (
+      {(sessionState === SessionStatesEnum.START ||
+        sessionState === SessionStatesEnum.PAUSE) && (
         <Timer
           timeInSeconds={timeInSeconds}
-          handlePause={() => {}}
-          handleReset={() => {}}
-          isPaused={() => false}
-          handleStop={() => {}}
+          handlePause={onPauseSession}
+          handleStop={onStopSession}
+          isPaused={sessionState === SessionStatesEnum.PAUSE}
         />
       )}
     </Box>
