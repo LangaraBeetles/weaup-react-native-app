@@ -1,18 +1,18 @@
-import { StyleSheet, Text, Modal, View } from "react-native";
-import { globalStyles } from "../../styles/globalStyles";
+import React, { useState,useEffect } from "react";
+
+import { StyleSheet, Text, Alert,TextInput,Modal, View} from "react-native";
+import { globalStyles } from "@src/styles/globalStyles";
 import { useUser } from "@state/useUser";
 import { Box, HStack } from "@gluestack-ui/themed";
 import { Redirect } from "expo-router";
-import { useBackgroundTasks } from "@src/components/providers/BackgroundTasksProvider";
 import Button from '@src/components/ui/Button';
 import DeviceMotionView from "@src/components/ui/DeviceMotionView";
-
-import { useEffect, useState } from "react";
-import {
-  SessionStatesEnum,
-  TimerStatesEnum,
-} from "@src/interfaces/session.types";
 import Timer from "@src/components/ui/Timer";
+
+import { SessionStatesEnum, TimerStatesEnum } from "@src/interfaces/session.types";
+
+import { useBackgroundTasks } from "@src/components/providers/BackgroundTasksProvider";
+import { usePushNotifications } from "@src/components/providers/PushNotificationsProvider";
 
 const HomePage = () => {
   const isSetupComplete = useUser((state) => state.isSetupComplete);
@@ -26,7 +26,9 @@ const HomePage = () => {
   //TODO: add rest of the params
   const { isTrackingEnabled, setTrackingEnabled } = useBackgroundTasks();
 
-  //TODO: remove this function
+  const { sendPushNotification } = usePushNotifications();
+  const [notificationText, setNotificationText] = useState<string>("");
+
   const onNameChange = () => {
     setAuth(true, {
       deviceIds: ["1"],
@@ -48,6 +50,7 @@ const HomePage = () => {
   if (!isSetupComplete) {
     return <Redirect href="/setup/start" />;
   }
+
   const toggleBackgroundFetch = () => {
     if (setTrackingEnabled) {
       setTrackingEnabled(!isTrackingEnabled);
@@ -136,6 +139,21 @@ const HomePage = () => {
       return () => clearInterval(timer);
     }
   }, [timeInSeconds, sessionState]);
+  const handleSendNotification = async () => {
+    if (sendPushNotification) {
+      try {
+        await sendPushNotification({  //Call sendPushNotification with this params to get the notification
+          title: 'Devs say', //We can change the title here
+          body: notificationText, //this will be the message to send
+        });
+      } catch (error) {
+        console.error('Error sending push notification:', error);
+        Alert.alert('Error', 'Failed to send push notification.');
+      }
+    } else {
+      Alert.alert('Error', 'Push notification service is not available.');
+    }
+  };
 
   return (
     <Box>
@@ -187,6 +205,19 @@ const HomePage = () => {
         </View>
       </Modal>
       <DeviceMotionView />
+      <DeviceMotionView/>
+
+      <TextInput
+        style={styles.input}
+        placeholder="Enter notification text"
+        value={notificationText}
+        onChangeText={setNotificationText}
+      />
+      <Button
+        title="Send Notification"
+        onPress={handleSendNotification}
+        type={{type: "secondary", size:"l"}}
+      />
     </Box>
   );
 };
@@ -208,6 +239,13 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 10,
     alignItems: "center",
+  },
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    marginVertical: 10,
   },
 });
 
