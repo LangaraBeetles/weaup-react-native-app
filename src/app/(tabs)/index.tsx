@@ -1,9 +1,10 @@
-import { StyleSheet, View, Text, Button, Alert } from "react-native";
+import { StyleSheet, View, Text, Alert } from "react-native";
 import { globalStyles } from "../../styles/globalStyles";
 import { useUser } from "@state/useUser";
 import { Box } from "@gluestack-ui/themed";
 import { Redirect } from "expo-router";
 import { useBackgroundTasks } from "@src/components/providers/BackgroundTasksProvider";
+import Button from '@src/components/ui/Button';
 
 import DeviceMotionView from "@src/components/ui/DeviceMotionView";
 
@@ -56,10 +57,10 @@ const HomePage = () => {
       <Text style={styles.text}>Home Page text</Text>
       {!!userName && <Text>Hello {userName}!</Text>}
 
-      <Button title="Update name" onPress={onNameChange}></Button>
+      <Button title="Update name" onPress={onNameChange} type={{type: "primary", size:"s"}}></Button>
 
-      <Button title="Reset setup" onPress={onNameClear}></Button>
-      <Button title="Clear name" onPress={onNameClear}></Button>
+      <Button title="Reset setup" onPress={onNameClear} type={{type: "primary", size:"l"}}></Button>
+      <Button title="Clear name" onPress={onNameClear} type={{type: "secondary", size:"l"}}></Button>
 
       <Button
         title={
@@ -68,6 +69,7 @@ const HomePage = () => {
             : "Enable Tracking"
         }
         onPress={toggleBackgroundFetch}
+        type={{type: "secondary", size:"s"}}
       />
       <DeviceMotionView/>
     </Box>

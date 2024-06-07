@@ -36,6 +36,9 @@
       }
     },
     "owner": "beetles",
-    "plugins": ["expo-router", "react-native-background-fetch"]
+    "plugins": [
+      ["expo-router"],
+      ["react-native-background-fetch"]
+    ]
   }
 }

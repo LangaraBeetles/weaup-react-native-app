@@ -22,7 +22,7 @@ const EnableNotificationsScreen = () => {
               </Text>
             </VStack>
 
-            <Button title="Allow Notification" onPress={next} />
+            <Button title="Allow Notification" onPress={next} type={{type: "primary", size:"l"}}/>
           </VStack>
         </Center>
       </Main>

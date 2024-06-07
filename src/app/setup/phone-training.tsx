@@ -22,7 +22,7 @@ const PhoneTrainingScreen = () => {
               </Text>
             </VStack>
 
-            <Button title="Continue" onPress={next} />
+            <Button title="Continue" onPress={next} type={{type: "primary", size:"l"}}/>
           </VStack>
         </Center>
       </Main>
