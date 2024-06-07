@@ -7,5 +7,6 @@ export const globalStyles = {
     tertiary: "#EEF1F4",
     white: "#FFFFFF",
     anotations: "#54715B",
-  } 
+  },
+  notificationLightColor: "#FF231F7C",
 };

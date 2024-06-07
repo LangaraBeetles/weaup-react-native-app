@@ -1,18 +1,20 @@
+import React, { useState,useEffect } from "react";
+
 import { StyleSheet, Text, Modal, View } from "react-native";
-import { globalStyles } from "../../styles/globalStyles";
-import { useUser } from "@state/useUser";
 import { Box, HStack } from "@gluestack-ui/themed";
 import { Redirect } from "expo-router";
-import { useBackgroundTasks } from "@src/components/providers/BackgroundTasksProvider";
-import Button from '@src/components/ui/Button';
+import Button from "@src/components/ui/Button";
 import DeviceMotionView from "@src/components/ui/DeviceMotionView";
-
-import { useEffect, useState } from "react";
-import {
-  SessionStatesEnum,
-  TimerStatesEnum,
-} from "@src/interfaces/session.types";
 import Timer from "@src/components/ui/Timer";
+
+import { SessionStatesEnum, TimerStatesEnum } from "@src/interfaces/session.types";
+
+import { useUser } from "@state/useUser";
+
+import { useBackgroundTasks } from "@src/components/providers/BackgroundTasksProvider";
+import { usePushNotifications } from "@src/components/providers/PushNotificationsProvider";
+
+import { globalStyles } from "@src/styles/globalStyles";
 
 const HomePage = () => {
   const isSetupComplete = useUser((state) => state.isSetupComplete);
@@ -26,7 +28,8 @@ const HomePage = () => {
   //TODO: add rest of the params
   const { isTrackingEnabled, setTrackingEnabled } = useBackgroundTasks();
 
-  //TODO: remove this function
+  const { sendPushNotification } = usePushNotifications();
+
   const onNameChange = () => {
     setAuth(true, {
       deviceIds: ["1"],
@@ -48,6 +51,7 @@ const HomePage = () => {
   if (!isSetupComplete) {
     return <Redirect href="/setup/start" />;
   }
+
   const toggleBackgroundFetch = () => {
     if (setTrackingEnabled) {
       setTrackingEnabled(!isTrackingEnabled);
@@ -121,10 +125,25 @@ const HomePage = () => {
         <Text>Hours: 1</Text>
         <Text>Minutes: 1</Text>
       </HStack>
-      <Button title="Start Session" onPress={onStartSession} type={{type: "primary", size:"s"}}></Button>
-      <Button title="X" onPress={onCancelSession} type={{type: "primary", size:"s"}}></Button>
+      <Button
+        title="Start Session"
+        onPress={onStartSession}
+        type={{ type: "primary", size: "s" }}
+      ></Button>
+      <Button
+        title="X"
+        onPress={onCancelSession}
+        type={{ type: "primary", size: "s" }}
+      ></Button>
     </Box>
   );
+
+  const handleSendNotification = async () => {
+    await sendPushNotification({
+      title: "Devs say:",
+      body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+    });
+  };
 
   useEffect(() => {
     if (sessionState === SessionStatesEnum.START && timeInSeconds === -1) {
@@ -140,28 +159,45 @@ const HomePage = () => {
   return (
     <Box>
       <Text style={styles.text}>Home Page text</Text>
+
       {!!userName && <Text>Hello {userName}!</Text>}
 
-      <Button title="Update name" onPress={onNameChange} type={{type: "primary", size:"l"}}></Button>
-      <Button title="Reset setup" onPress={onNameClear} type={{type: "primary", size:"l"}}></Button>
-      <Button title="Clear name" onPress={onNameClear} type={{type: "primary", size:"l"}}></Button>
+      <Button
+        title="Update name"
+        onPress={onNameChange}
+        type={{ type: "primary", size: "s" }}
+      />
 
       <Button
-        title={
-          isTrackingEnabled
-            ? "Disable Tracking"
-            : "Enable Tracking"
-        }
-        onPress={toggleBackgroundFetch}
-        type={{type: "secondary", size:"s"}}
+        title="Reset setup"
+        onPress={onNameClear}
+        type={{ type: "primary", size: "l" }}
       />
+
+      <Button
+        title="Clear name"
+        onPress={onNameClear}
+        type={{ type: "secondary", size: "l" }}
+      />
+
+      <Button
+        title={isTrackingEnabled ? "Disable Tracking" : "Enable Tracking"}
+        onPress={toggleBackgroundFetch}
+        type={{ type: "secondary", size: "s" }}
+      />
+
       {timerState === TimerStatesEnum.STOPPED && (
-        <Button title="Start a session" onPress={onInitSession} type={{type: "primary", size:"l"}}></Button>
+        <Button
+          title="Start a session"
+          onPress={onInitSession}
+          type={{ type: "primary", size: "l" }}
+        ></Button>
       )}
 
       {sessionState === SessionStatesEnum.INIT && (
         <SetTimer onStartSession={onStartSession} />
       )}
+
       {(sessionState === SessionStatesEnum.START ||
         sessionState === SessionStatesEnum.PAUSE) && (
         <Timer
@@ -181,12 +217,27 @@ const HomePage = () => {
         <View style={styles.modalBackground}>
           <View style={styles.modalContainer}>
             <Text>Are you sure you want to end the session?</Text>
-            <Button title="Continue" onPress={handleContinue} type={{type: "primary", size:"l"}} />
-            <Button title="End Session" onPress={handleEndSession} type={{type: "primary", size:"l"}} />
+            <Button
+              title="Continue"
+              onPress={handleContinue}
+              type={{ type: "primary", size: "l" }}
+            />
+            <Button
+              title="End Session"
+              onPress={handleEndSession}
+              type={{ type: "primary", size: "l" }}
+            />
           </View>
         </View>
       </Modal>
+
       <DeviceMotionView />
+
+      <Button
+        title="Send Notification"
+        onPress={handleSendNotification}
+        type={{ type: "secondary", size: "l" }}
+      />
     </Box>
   );
 };
@@ -208,6 +259,13 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 10,
     alignItems: "center",
+  },
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    marginVertical: 10,
   },
 });
 
