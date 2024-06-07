@@ -186,6 +186,7 @@ const HomePage = () => {
           </View>
         </View>
       </Modal>
+      <DeviceMotionView />
     </Box>
   );
 };
