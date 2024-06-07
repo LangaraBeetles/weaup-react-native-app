@@ -24,36 +24,32 @@ const PushNotificationsProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   useEffect(() => {
     const registerForPushNotificationsAsync = async () => {
       try {
-        if (Device.isDevice) {
-          const { status: existingStatus } = await Notifications.getPermissionsAsync();
-          let finalStatus = existingStatus;
-
-          if (existingStatus !== 'granted') {
-            const { status } = await Notifications.requestPermissionsAsync();
-            finalStatus = status;
-          }
-
-          if (finalStatus !== 'granted') {
-            Alert.alert('Failed to get push token for push notification!');
-            return;
-          }
-
-          const token = (await Notifications.getExpoPushTokenAsync()).data;
-        } else {
-          Alert.alert('Must use physical device for Push Notifications');
+        if (!Device.isDevice) {
+          Alert.alert("Must use physical device for Push Notifications");
+          return;
         }
 
-        if (Platform.OS === 'android') {
-          Notifications.setNotificationChannelAsync('default', {
-            name: 'default',
+          const { status: initialStatus } =
+            await Notifications.getPermissionsAsync();
+
+          if (initialStatus !== "granted") {
+            const { status } = await Notifications.requestPermissionsAsync();
+            if (status !== "granted") {
+              console.error("Failed to get push token for push notification!");
+              return;
+            }
+          }
+        
+        if (Platform.OS === "android") {
+          Notifications.setNotificationChannelAsync("default", {
+            name: "default",
             importance: Notifications.AndroidImportance.MAX,
             vibrationPattern: [0, 250, 250, 250],
             lightColor: globalStyles.notificationLightColor,
           });
         }
       } catch (error) {
-        console.error('Error during push notification registration:', error);
-        Alert.alert('Error', 'Failed to register for push notifications.');
+        console.error("Error during push notification registration:", error);
       }
     };
 
@@ -81,8 +77,7 @@ const PushNotificationsProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         trigger: null,
       });
     } catch (error) {
-      console.error('Error sending push notification:', error);
-      Alert.alert('Error', 'Failed to send push notification.');
+      console.error("Error sending push notification:", error);
     }
   };
 

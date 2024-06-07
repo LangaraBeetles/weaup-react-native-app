@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from "react";
 
-import { StyleSheet, Text, Alert,TextInput,Modal, View} from "react-native";
+import { StyleSheet, Text, Modal, View } from "react-native";
 import { Box, HStack } from "@gluestack-ui/themed";
 import { Redirect } from "expo-router";
 import Button from "@src/components/ui/Button";
@@ -29,7 +29,6 @@ const HomePage = () => {
   const { isTrackingEnabled, setTrackingEnabled } = useBackgroundTasks();
 
   const { sendPushNotification } = usePushNotifications();
-  const [notificationText, setNotificationText] = useState<string>("");
 
   const onNameChange = () => {
     setAuth(true, {
@@ -126,10 +125,25 @@ const HomePage = () => {
         <Text>Hours: 1</Text>
         <Text>Minutes: 1</Text>
       </HStack>
-      <Button title="Start Session" onPress={onStartSession} type={{type: "primary", size:"s"}}></Button>
-      <Button title="X" onPress={onCancelSession} type={{type: "primary", size:"s"}}></Button>
+      <Button
+        title="Start Session"
+        onPress={onStartSession}
+        type={{ type: "primary", size: "s" }}
+      ></Button>
+      <Button
+        title="X"
+        onPress={onCancelSession}
+        type={{ type: "primary", size: "s" }}
+      ></Button>
     </Box>
   );
+
+  const handleSendNotification = async () => {
+    await sendPushNotification({
+      title: "Devs say:",
+      body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+    });
+  };
 
   useEffect(() => {
     if (sessionState === SessionStatesEnum.START && timeInSeconds === -1) {
@@ -141,52 +155,49 @@ const HomePage = () => {
       return () => clearInterval(timer);
     }
   }, [timeInSeconds, sessionState]);
-  const handleSendNotification = async () => {
-    try {
-      await sendPushNotification({
-        title: "Devs say:",
-        body: notificationText,
-      });
-    } catch (error) {
-      console.error("Error sending push notification:", error);
-      Alert.alert("Error", "Failed to send push notification.");
-    }
-  };
 
   return (
     <Box>
       <Text style={styles.text}>Home Page text</Text>
+
       {!!userName && <Text>Hello {userName}!</Text>}
 
       <Button
         title="Update name"
         onPress={onNameChange}
         type={{ type: "primary", size: "s" }}
-      ></Button>
+      />
 
       <Button
         title="Reset setup"
         onPress={onNameClear}
         type={{ type: "primary", size: "l" }}
-      ></Button>
+      />
+
       <Button
         title="Clear name"
         onPress={onNameClear}
         type={{ type: "secondary", size: "l" }}
-      ></Button>
+      />
 
       <Button
         title={isTrackingEnabled ? "Disable Tracking" : "Enable Tracking"}
         onPress={toggleBackgroundFetch}
         type={{ type: "secondary", size: "s" }}
       />
+
       {timerState === TimerStatesEnum.STOPPED && (
-        <Button title="Start a session" onPress={onInitSession} type={{type: "primary", size:"l"}}></Button>
+        <Button
+          title="Start a session"
+          onPress={onInitSession}
+          type={{ type: "primary", size: "l" }}
+        ></Button>
       )}
 
       {sessionState === SessionStatesEnum.INIT && (
         <SetTimer onStartSession={onStartSession} />
       )}
+
       {(sessionState === SessionStatesEnum.START ||
         sessionState === SessionStatesEnum.PAUSE) && (
         <Timer
@@ -206,20 +217,22 @@ const HomePage = () => {
         <View style={styles.modalBackground}>
           <View style={styles.modalContainer}>
             <Text>Are you sure you want to end the session?</Text>
-            <Button title="Continue" onPress={handleContinue} type={{type: "primary", size:"l"}} />
-            <Button title="End Session" onPress={handleEndSession} type={{type: "primary", size:"l"}} />
+            <Button
+              title="Continue"
+              onPress={handleContinue}
+              type={{ type: "primary", size: "l" }}
+            />
+            <Button
+              title="End Session"
+              onPress={handleEndSession}
+              type={{ type: "primary", size: "l" }}
+            />
           </View>
         </View>
       </Modal>
-      <DeviceMotionView />
-      <DeviceMotionView/>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Enter notification text"
-        value={notificationText}
-        onChangeText={setNotificationText}
-      />
+      <DeviceMotionView />
+
       <Button
         title="Send Notification"
         onPress={handleSendNotification}
