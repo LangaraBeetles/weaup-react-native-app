@@ -1,27 +1,27 @@
 import React from 'react';
 import { Text } from "@gluestack-ui/themed";
-import { StyleSheet, TouchableHighlight, View } from "react-native";
+import { StyleSheet, TouchableHighlight } from "react-native";
 import { globalStyles } from "@src/styles/globalStyles";
-import { useFonts, Inter_600SemiBold } from "@expo-google-fonts/inter";
 
-const Button: React.FC<{ title: string; onPress?: () => void; type: { type: 'primary' | 'secondary'; size?: 's' | 'l' } }> = ({
-  title,
-  onPress,
-  type,
-}) => {
-
-  let [fontsLoaded, fontError] = useFonts({
-    Inter_600SemiBold,
-  });
-  if (!fontsLoaded && !fontError) {
-    return null;
-  }
-
-  const buttonStyleType = (type.type === "primary" && styles.buttonPrimary) || (type.type === "secondary" && styles.buttonSecondary);
-  const textStyleType = (type.type === "primary" && styles.textPrimary) || (type.type === "secondary" && styles.textSecondary);
-  const buttonSize = (type.size === "s" && styles.smallButton) || (type.size === "l" && styles.largeButton);
+const Button: React.FC<{
+  title: string;
+  onPress?: () => void;
+  type: { type: "primary" | "secondary"; size?: "s" | "l" };
+}> = ({ title, onPress, type }) => {
+  const buttonStyleType =
+    (type.type === "primary" && styles.buttonPrimary) ||
+    (type.type === "secondary" && styles.buttonSecondary);
+  const textStyleType =
+    (type.type === "primary" && styles.textPrimary) ||
+    (type.type === "secondary" && styles.textSecondary);
+  const buttonSize =
+    (type.size === "s" && styles.smallButton) ||
+    (type.size === "l" && styles.largeButton);
   return (
-    <TouchableHighlight onPress={onPress} style={[styles.button, buttonStyleType, buttonSize]}>
+    <TouchableHighlight
+      onPress={onPress}
+      style={[styles.button, buttonStyleType, buttonSize]}
+    >
       <Text style={[styles.text, textStyleType]}>{title}</Text>
     </TouchableHighlight>
   );
@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   text: {
-    fontFamily: 'Inter_600SemiBold',
     fontStyle: "normal",
     lineHeight: 22,
     fontWeight: "600",
@@ -57,12 +56,12 @@ const styles = StyleSheet.create({
   textSecondary: {
     color: globalStyles.colors.primary,
   },
-  smallButton:{
+  smallButton: {
     width: 180,
   },
   largeButton: {
     width: 314,
-  }
+  },
 });
 
 export default Button;
