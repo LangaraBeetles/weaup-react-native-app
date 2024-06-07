@@ -1,18 +1,20 @@
 import React, { useState,useEffect } from "react";
 
 import { StyleSheet, Text, Alert,TextInput,Modal, View} from "react-native";
-import { globalStyles } from "@src/styles/globalStyles";
-import { useUser } from "@state/useUser";
 import { Box, HStack } from "@gluestack-ui/themed";
 import { Redirect } from "expo-router";
-import Button from '@src/components/ui/Button';
+import Button from "@src/components/ui/Button";
 import DeviceMotionView from "@src/components/ui/DeviceMotionView";
 import Timer from "@src/components/ui/Timer";
 
 import { SessionStatesEnum, TimerStatesEnum } from "@src/interfaces/session.types";
 
+import { useUser } from "@state/useUser";
+
 import { useBackgroundTasks } from "@src/components/providers/BackgroundTasksProvider";
 import { usePushNotifications } from "@src/components/providers/PushNotificationsProvider";
+
+import { globalStyles } from "@src/styles/globalStyles";
 
 const HomePage = () => {
   const isSetupComplete = useUser((state) => state.isSetupComplete);
@@ -140,18 +142,14 @@ const HomePage = () => {
     }
   }, [timeInSeconds, sessionState]);
   const handleSendNotification = async () => {
-    if (sendPushNotification) {
-      try {
-        await sendPushNotification({  //Call sendPushNotification with this params to get the notification
-          title: 'Devs say', //We can change the title here
-          body: notificationText, //this will be the message to send
-        });
-      } catch (error) {
-        console.error('Error sending push notification:', error);
-        Alert.alert('Error', 'Failed to send push notification.');
-      }
-    } else {
-      Alert.alert('Error', 'Push notification service is not available.');
+    try {
+      await sendPushNotification({
+        title: "Devs say:",
+        body: notificationText,
+      });
+    } catch (error) {
+      console.error("Error sending push notification:", error);
+      Alert.alert("Error", "Failed to send push notification.");
     }
   };
 
@@ -160,18 +158,27 @@ const HomePage = () => {
       <Text style={styles.text}>Home Page text</Text>
       {!!userName && <Text>Hello {userName}!</Text>}
 
-      <Button title="Update name" onPress={onNameChange} type={{type: "primary", size:"l"}}></Button>
-      <Button title="Reset setup" onPress={onNameClear} type={{type: "primary", size:"l"}}></Button>
-      <Button title="Clear name" onPress={onNameClear} type={{type: "primary", size:"l"}}></Button>
+      <Button
+        title="Update name"
+        onPress={onNameChange}
+        type={{ type: "primary", size: "s" }}
+      ></Button>
 
       <Button
-        title={
-          isTrackingEnabled
-            ? "Disable Tracking"
-            : "Enable Tracking"
-        }
+        title="Reset setup"
+        onPress={onNameClear}
+        type={{ type: "primary", size: "l" }}
+      ></Button>
+      <Button
+        title="Clear name"
+        onPress={onNameClear}
+        type={{ type: "secondary", size: "l" }}
+      ></Button>
+
+      <Button
+        title={isTrackingEnabled ? "Disable Tracking" : "Enable Tracking"}
         onPress={toggleBackgroundFetch}
-        type={{type: "secondary", size:"s"}}
+        type={{ type: "secondary", size: "s" }}
       />
       {timerState === TimerStatesEnum.STOPPED && (
         <Button title="Start a session" onPress={onInitSession} type={{type: "primary", size:"l"}}></Button>
@@ -216,7 +223,7 @@ const HomePage = () => {
       <Button
         title="Send Notification"
         onPress={handleSendNotification}
-        type={{type: "secondary", size:"l"}}
+        type={{ type: "secondary", size: "l" }}
       />
     </Box>
   );
