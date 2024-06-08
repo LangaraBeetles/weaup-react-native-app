@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import { StyleSheet, Text, Modal, View } from "react-native";
 import { Box, HStack } from "@gluestack-ui/themed";
@@ -7,7 +7,7 @@ import Button from "@src/components/ui/Button";
 import DeviceMotionView from "@src/components/ui/DeviceMotionView";
 import Timer from "@src/components/ui/Timer";
 
-import { SessionStatesEnum, TimerStatesEnum } from "@src/interfaces/session.types";
+import { SessionStatesType } from "@src/interfaces/session.types";
 
 import { useUser } from "@state/useUser";
 
@@ -20,8 +20,12 @@ const HomePage = () => {
   const isSetupComplete = useUser((state) => state.isSetupComplete);
   const userName = useUser((state) => state.user.name);
   const setAuth = useUser((state) => state.setAuth);
-  const [sessionState, setSessionState] = useState(SessionStatesEnum.STOP);
-  const [timerState, setTimerState] = useState(TimerStatesEnum.STOPPED);
+  
+  const [sessionState, setSessionState] =
+    useState<SessionStatesType["SessionStatesEnum"]>("STOP");
+  const [timerState, setTimerState] =
+    useState<SessionStatesType["TimerStatesEnum"]>("STOPPED");
+
   const [timeInSeconds, setTimeInSeconds] = useState(-1);
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -59,58 +63,53 @@ const HomePage = () => {
   };
 
   const onInitSession = () => {
-    setSessionState(SessionStatesEnum.INIT);
+    setSessionState("INIT");
   };
 
-  const onStartSession = () => {
-    setSessionState(SessionStatesEnum.START);
-    setTimerState(TimerStatesEnum.RUNNING);
+  const onStartSession = (): "START" => {
+    setSessionState("START");
+    setTimerState("RUNNING");
     //TODO: stop real time tracking
     //TODO: set time in seconds from the setTimer component
     setTimeInSeconds(3600);
     //TODO: function to check posture every second
     //if posture is okay ➝ save it to the local state and show the image animation
     //if posture is bad ➝ save it to the local state and show the image animation
+    return "START";
   };
 
   const onCancelSession = () => {
-    setSessionState(SessionStatesEnum.CANCEL);
-    setTimerState(TimerStatesEnum.STOPPED);
+    setSessionState("CANCEL");
+    setTimerState("STOPPED");
     setTimeInSeconds(-1);
     //TODO: start real time tracking
     //TODO: discard session data
   };
 
   const onStopSession = () => {
-    setSessionState(SessionStatesEnum.PAUSE);
-    setTimerState(TimerStatesEnum.PAUSED);
+    setSessionState("PAUSE");
+    setTimerState("PAUSED");
     setModalVisible(true);
   };
 
   const onPauseSession = () => {
-    setSessionState((prevState) =>
-      prevState === SessionStatesEnum.START
-        ? SessionStatesEnum.PAUSE
-        : SessionStatesEnum.START
-    );
+    setSessionState((prevState) => (prevState === "START" ? "PAUSE" : "START"));
 
     setTimerState((prevState) =>
-      prevState === TimerStatesEnum.RUNNING
-        ? TimerStatesEnum.PAUSED
-        : TimerStatesEnum.RUNNING
+      prevState === "RUNNING" ? "PAUSED" : "RUNNING"
     );
   };
 
   const handleContinue = () => {
     setModalVisible(false);
-    setSessionState(SessionStatesEnum.START);
-    setTimerState(TimerStatesEnum.RUNNING);
+    setSessionState("START");
+    setTimerState("RUNNING");
   };
 
   const handleEndSession = () => {
     setModalVisible(false);
-    setSessionState(SessionStatesEnum.STOP);
-    setTimerState(TimerStatesEnum.STOPPED);
+    setSessionState("STOP");
+    setTimerState("STOPPED");
     //TODO: save session data
     //TODO: Show session summary
     alert("Here is your session summary!");
@@ -146,9 +145,9 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    if (sessionState === SessionStatesEnum.START && timeInSeconds === -1) {
+    if (sessionState === "START" && timeInSeconds === -1) {
       onStopSession();
-    } else if (sessionState === SessionStatesEnum.START && timeInSeconds > 0) {
+    } else if (sessionState === "START" && timeInSeconds > 0) {
       const timer = setInterval(() => {
         setTimeInSeconds((prevTime) => prevTime - 1);
       }, 1000);
@@ -186,7 +185,7 @@ const HomePage = () => {
         type={{ type: "secondary", size: "s" }}
       />
 
-      {timerState === TimerStatesEnum.STOPPED && (
+      {timerState === "STOPPED" && (
         <Button
           title="Start a session"
           onPress={onInitSession}
@@ -194,17 +193,14 @@ const HomePage = () => {
         ></Button>
       )}
 
-      {sessionState === SessionStatesEnum.INIT && (
-        <SetTimer onStartSession={onStartSession} />
-      )}
+      {sessionState === "INIT" && <SetTimer onStartSession={onStartSession} />}
 
-      {(sessionState === SessionStatesEnum.START ||
-        sessionState === SessionStatesEnum.PAUSE) && (
+      {(sessionState === "START" || sessionState === "PAUSE") && (
         <Timer
           timeInSeconds={timeInSeconds}
           handlePause={onPauseSession}
           handleStop={onStopSession}
-          isPaused={timerState === TimerStatesEnum.PAUSED}
+          isPaused={timerState === "PAUSED"}
         />
       )}
 
@@ -262,7 +258,7 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    borderColor: 'gray',
+    borderColor: "gray",
     borderWidth: 1,
     paddingHorizontal: 10,
     marginVertical: 10,
