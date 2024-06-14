@@ -1,13 +1,15 @@
 import React, { useState,useEffect } from "react";
 
 import { StyleSheet, Text, Modal, View } from "react-native";
-import { Box, HStack } from "@gluestack-ui/themed";
 import { Redirect } from "expo-router";
 import Button from "@src/components/ui/Button";
 import DeviceMotionView from "@src/components/ui/DeviceMotionView";
 import Timer from "@src/components/ui/Timer";
 
-import { SessionStatesEnum, TimerStatesEnum } from "@src/interfaces/session.types";
+import {
+  SessionStatesEnum,
+  TimerStatesEnum,
+} from "@src/interfaces/session.types";
 
 import { useUser } from "@state/useUser";
 
@@ -15,6 +17,8 @@ import { useBackgroundTasks } from "@src/components/providers/BackgroundTasksPro
 import { usePushNotifications } from "@src/components/providers/PushNotificationsProvider";
 
 import { globalStyles } from "@src/styles/globalStyles";
+import Box from "@src/components/ui/Box";
+import HStack from "@src/components/ui/HStack";
 
 const HomePage = () => {
   const isSetupComplete = useUser((state) => state.isSetupComplete);
