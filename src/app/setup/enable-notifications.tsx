@@ -1,7 +1,7 @@
-import { Center, SafeAreaView, Text, VStack, View } from "@gluestack-ui/themed";
 import Main from "@src/components/layout/Main";
 import Button from "@src/components/ui/Button";
 import { router } from "expo-router";
+import { SafeAreaView } from "react-native";
 
 const EnableNotificationsScreen = () => {
   const next = () => {
@@ -11,7 +11,7 @@ const EnableNotificationsScreen = () => {
   return (
     <SafeAreaView>
       <Main>
-        <Center justifyContent="center" height="100%" paddingHorizontal={2}>
+        {/* <Center justifyContent="center" height="100%" paddingHorizontal={2}>
           <View height="40%" />
           <VStack gap={80}>
             <VStack gap={16}>
@@ -24,7 +24,7 @@ const EnableNotificationsScreen = () => {
 
             <Button title="Allow Notification" onPress={next} type={{type: "primary", size:"l"}}/>
           </VStack>
-        </Center>
+        </Center> */}
       </Main>
     </SafeAreaView>
   );

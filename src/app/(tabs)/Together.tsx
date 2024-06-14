@@ -1,4 +1,4 @@
-import { Box } from "@gluestack-ui/themed";
+import Box from "@src/components/ui/Box";
 import { Text } from "react-native";
 
 const TogetherScreen = () => {

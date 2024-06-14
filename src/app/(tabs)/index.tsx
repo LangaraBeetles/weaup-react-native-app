@@ -1,7 +1,6 @@
 import React, { useCallback, useMemo, useRef, useState } from "react";
 
-import { StyleSheet, Text } from "react-native";
-import { Box } from "@gluestack-ui/themed";
+import { StyleSheet, Text,View } from "react-native";
 import { Redirect } from "expo-router";
 import Button from "@src/components/ui/Button";
 import DeviceMotionView from "@src/components/ui/DeviceMotionView";
@@ -78,7 +77,7 @@ const HomePage = () => {
   }, []);
 
   return (
-    <Box>
+    <View>
       <Text style={styles.text}>Home Page text</Text>
 
       {!!userName && <Text>Hello {userName}!</Text>}
@@ -136,7 +135,7 @@ const HomePage = () => {
           ></Button>
         </BottomSheetView>
       </BottomSheetModal>
-    </Box>
+    </View>
   );
 };
 
