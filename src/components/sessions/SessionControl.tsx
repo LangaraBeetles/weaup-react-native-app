@@ -1,7 +1,7 @@
 import { Modal, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SessionStatesType } from "@src/interfaces/session.types";
-import Timer from "./Timer";
+import Timer from "../ui/Timer";
 import Button from "../ui/Button";
 
 const SessionControl = () => {
