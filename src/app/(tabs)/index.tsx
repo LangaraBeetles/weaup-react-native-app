@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, Text } from "react-native";
-import { Box,  } from "@gluestack-ui/themed";
+import { Box } from "@gluestack-ui/themed";
 import { Redirect } from "expo-router";
 import Button from "@src/components/ui/Button";
 import DeviceMotionView from "@src/components/ui/DeviceMotionView";
@@ -8,7 +8,7 @@ import { useUser } from "@state/useUser";
 import { useBackgroundTasks } from "@src/components/providers/BackgroundTasksProvider";
 import { usePushNotifications } from "@src/components/providers/PushNotificationsProvider";
 import { globalStyles } from "@src/styles/globalStyles";
-import Session from "@src/components/ui/Session";
+import SessionControl from "@src/components/sessions/SessionControl";
 
 const HomePage = () => {
   const isSetupComplete = useUser((state) => state.isSetupComplete);
@@ -85,7 +85,7 @@ const HomePage = () => {
         type={{ type: "secondary", size: "s" }}
       />
 
-      <Session />
+      <SessionControl />
       <DeviceMotionView />
 
       <Button

@@ -2,9 +2,9 @@ import { Modal, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SessionStatesType } from "@src/interfaces/session.types";
 import Timer from "./Timer";
-import Button from "./Button";
+import Button from "../ui/Button";
 
-const Session = () => {
+const SessionControl = () => {
   const [sessionState, setSessionState] =
     useState<SessionStatesType["SessionStatesEnum"]>("STOP");
   const [timerState, setTimerState] =
@@ -167,4 +167,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Session;
+export default SessionControl;
