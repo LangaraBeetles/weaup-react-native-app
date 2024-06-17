@@ -1508,6 +1508,13 @@
     find-up "^5.0.0"
     js-yaml "^4.1.0"
 
+"@fast-styles/react@^0.2.9":
+  version "0.2.9"
+  resolved "https://registry.yarnpkg.com/@fast-styles/react/-/react-0.2.9.tgz#3953990efa2120f7b2c7c2b807d643ce81c319d9"
+  integrity sha512-M2MOs2McrXt4dOnpDz4jU8wf/MDcdt4gHPEL6EHE3BzLG9AP/ySYaWHQjSLSWhcgz4gmDJGxo7nlJWsawVUrdw==
+  dependencies:
+    lodash.merge "^4.6.2"
+
 "@gorhom/bottom-sheet@^4":
   version "4.6.3"
   resolved "https://registry.yarnpkg.com/@gorhom/bottom-sheet/-/bottom-sheet-4.6.3.tgz#0e16999de7468efc6b730f680692f6d53f0abd8e"
