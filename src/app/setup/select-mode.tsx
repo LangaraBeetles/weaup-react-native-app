@@ -1,17 +1,17 @@
 import { Center, SafeAreaView, Text, VStack } from "@gluestack-ui/themed";
 import Main from "@src/components/layout/Main";
-import { router } from "expo-router";
 import { SetupStagesType } from "@src/interfaces/setup.types";
-import { useRef } from "react";
 import * as Haptics from "expo-haptics";
+import { router } from "expo-router";
+import { useRef } from "react";
 import {
   Animated,
   Dimensions,
-  PanResponder,
-  TouchableOpacity,
-  View as RNView,
-  EasingFunction,
   Easing,
+  EasingFunction,
+  PanResponder,
+  View as RNView,
+  TouchableOpacity,
 } from "react-native";
 
 const { height: screenHeight } = Dimensions.get("window");
@@ -29,9 +29,9 @@ const SelectModeScreen: React.FC<{
   const phoneArea = useRef<RNView>(null);
   const draggable = useRef<RNView>(null);
 
-  let headhonesAreaOpacity = new Animated.Value(1);
-  let phoneAreaOpacity = new Animated.Value(1);
-  let draggableOppacity = new Animated.Value(1);
+  const headhonesAreaOpacity = new Animated.Value(1);
+  const phoneAreaOpacity = new Animated.Value(1);
+  const draggableOppacity = new Animated.Value(1);
 
   const heaphonesAreaTranslateY = useRef(new Animated.Value(0)).current;
   const phoneAreaTranslateY = useRef(new Animated.Value(0)).current;
@@ -54,12 +54,12 @@ const SelectModeScreen: React.FC<{
           tension: 40, // Controls the speed of the spring animation
         }).start();
       },
-    })
+    }),
   ).current;
 
   const measureLayout = (
     ref: React.RefObject<RNView>,
-    callback: (layout: any) => void
+    callback: (layout: any) => void,
   ) => {
     if (ref.current) {
       ref.current?.measure((x, y, width, height, pageX, pageY) => {
@@ -79,7 +79,7 @@ const SelectModeScreen: React.FC<{
         };
         const overlap = isOverlappingHeadphones(
           draggableContainer,
-          headphonesContainer
+          headphonesContainer,
         );
 
         if (overlap) {
@@ -166,15 +166,16 @@ const SelectModeScreen: React.FC<{
     });
   };
 
-  const next = () => {
-    setTimeout(() => {
-      if (mode.current === "phone") {
-        router.push("/setup/phone-training");
-      } else {
-        router.replace("/setup/headphones-training");
-      }
-    }, 500);
-  };
+  //TODO: Review if we need this
+  // const next = () => {
+  //   setTimeout(() => {
+  //     if (mode.current === "phone") {
+  //       router.push("/setup/phone-training");
+  //     } else {
+  //       router.replace("/setup/headphones-training");
+  //     }
+  //   }, 500);
+  // };
 
   const onDragSelection = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
