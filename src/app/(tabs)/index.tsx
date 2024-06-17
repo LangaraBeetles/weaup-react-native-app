@@ -87,7 +87,7 @@ const HomePage = () => {
       />
 
       <SessionControl />
-      <DeviceMotionView />
+      <DeviceMotionView isTrackingEnabled={isTrackingEnabled} />
 
       <Button
         title="Send Notification"
