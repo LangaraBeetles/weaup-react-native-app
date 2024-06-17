@@ -1,29 +1,19 @@
-import React, { useState,useEffect } from "react";
-
-import { StyleSheet, Text, Modal, View } from "react-native";
-import { Box, HStack } from "@gluestack-ui/themed";
+import React from "react";
+import { StyleSheet, Text } from "react-native";
+import { Box } from "@gluestack-ui/themed";
 import { Redirect } from "expo-router";
 import Button from "@src/components/ui/Button";
 import DeviceMotionView from "@src/components/ui/DeviceMotionView";
-import Timer from "@src/components/ui/Timer";
-
-import { SessionStatesEnum, TimerStatesEnum } from "@src/interfaces/session.types";
-
 import { useUser } from "@state/useUser";
-
 import { useBackgroundTasks } from "@src/components/providers/BackgroundTasksProvider";
 import { usePushNotifications } from "@src/components/providers/PushNotificationsProvider";
-
 import { globalStyles } from "@src/styles/globalStyles";
+import SessionControl from "@src/components/sessions/SessionControl";
 
 const HomePage = () => {
   const isSetupComplete = useUser((state) => state.isSetupComplete);
   const userName = useUser((state) => state.user.name);
   const setAuth = useUser((state) => state.setAuth);
-  const [sessionState, setSessionState] = useState(SessionStatesEnum.STOP);
-  const [timerState, setTimerState] = useState(TimerStatesEnum.STOPPED);
-  const [timeInSeconds, setTimeInSeconds] = useState(-1);
-  const [modalVisible, setModalVisible] = useState(false);
 
   //TODO: add rest of the params
   const { isTrackingEnabled, setTrackingEnabled } = useBackgroundTasks();
@@ -58,103 +48,12 @@ const HomePage = () => {
     }
   };
 
-  const onInitSession = () => {
-    setSessionState(SessionStatesEnum.INIT);
-  };
-
-  const onStartSession = () => {
-    setSessionState(SessionStatesEnum.START);
-    setTimerState(TimerStatesEnum.RUNNING);
-    //TODO: stop real time tracking
-    //TODO: set time in seconds from the setTimer component
-    setTimeInSeconds(3600);
-    //TODO: function to check posture every second
-    //if posture is okay ➝ save it to the local state and show the image animation
-    //if posture is bad ➝ save it to the local state and show the image animation
-  };
-
-  const onCancelSession = () => {
-    setSessionState(SessionStatesEnum.CANCEL);
-    setTimerState(TimerStatesEnum.STOPPED);
-    setTimeInSeconds(-1);
-    //TODO: start real time tracking
-    //TODO: discard session data
-  };
-
-  const onStopSession = () => {
-    setSessionState(SessionStatesEnum.PAUSE);
-    setTimerState(TimerStatesEnum.PAUSED);
-    setModalVisible(true);
-  };
-
-  const onPauseSession = () => {
-    setSessionState((prevState) =>
-      prevState === SessionStatesEnum.START
-        ? SessionStatesEnum.PAUSE
-        : SessionStatesEnum.START
-    );
-
-    setTimerState((prevState) =>
-      prevState === TimerStatesEnum.RUNNING
-        ? TimerStatesEnum.PAUSED
-        : TimerStatesEnum.RUNNING
-    );
-  };
-
-  const handleContinue = () => {
-    setModalVisible(false);
-    setSessionState(SessionStatesEnum.START);
-    setTimerState(TimerStatesEnum.RUNNING);
-  };
-
-  const handleEndSession = () => {
-    setModalVisible(false);
-    setSessionState(SessionStatesEnum.STOP);
-    setTimerState(TimerStatesEnum.STOPPED);
-    //TODO: save session data
-    //TODO: Show session summary
-    alert("Here is your session summary!");
-    //Reset the timer
-    setTimeInSeconds(-1);
-    //TODO: start real time tracking
-  };
-
-  const SetTimer = ({ onStartSession }: { onStartSession: () => void }) => (
-    <Box>
-      <HStack>
-        <Text>Hours: 1</Text>
-        <Text>Minutes: 1</Text>
-      </HStack>
-      <Button
-        title="Start Session"
-        onPress={onStartSession}
-        type={{ type: "primary", size: "s" }}
-      ></Button>
-      <Button
-        title="X"
-        onPress={onCancelSession}
-        type={{ type: "primary", size: "s" }}
-      ></Button>
-    </Box>
-  );
-
   const handleSendNotification = async () => {
     await sendPushNotification({
       title: "Devs say:",
       body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
     });
   };
-
-  useEffect(() => {
-    if (sessionState === SessionStatesEnum.START && timeInSeconds === -1) {
-      onStopSession();
-    } else if (sessionState === SessionStatesEnum.START && timeInSeconds > 0) {
-      const timer = setInterval(() => {
-        setTimeInSeconds((prevTime) => prevTime - 1);
-      }, 1000);
-      return () => clearInterval(timer);
-    }
-  }, [timeInSeconds, sessionState]);
 
   return (
     <Box>
@@ -186,51 +85,7 @@ const HomePage = () => {
         type={{ type: "secondary", size: "s" }}
       />
 
-      {timerState === TimerStatesEnum.STOPPED && (
-        <Button
-          title="Start a session"
-          onPress={onInitSession}
-          type={{ type: "primary", size: "l" }}
-        ></Button>
-      )}
-
-      {sessionState === SessionStatesEnum.INIT && (
-        <SetTimer onStartSession={onStartSession} />
-      )}
-
-      {(sessionState === SessionStatesEnum.START ||
-        sessionState === SessionStatesEnum.PAUSE) && (
-        <Timer
-          timeInSeconds={timeInSeconds}
-          handlePause={onPauseSession}
-          handleStop={onStopSession}
-          isPaused={timerState === TimerStatesEnum.PAUSED}
-        />
-      )}
-
-      <Modal
-        transparent={true}
-        visible={modalVisible}
-        animationType="slide"
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View style={styles.modalBackground}>
-          <View style={styles.modalContainer}>
-            <Text>Are you sure you want to end the session?</Text>
-            <Button
-              title="Continue"
-              onPress={handleContinue}
-              type={{ type: "primary", size: "l" }}
-            />
-            <Button
-              title="End Session"
-              onPress={handleEndSession}
-              type={{ type: "primary", size: "l" }}
-            />
-          </View>
-        </View>
-      </Modal>
-
+      <SessionControl />
       <DeviceMotionView />
 
       <Button
@@ -247,22 +102,9 @@ const styles = StyleSheet.create({
     ...globalStyles,
     padding: 10,
   },
-  modalBackground: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-  },
-  modalContainer: {
-    width: 300,
-    padding: 20,
-    backgroundColor: "white",
-    borderRadius: 10,
-    alignItems: "center",
-  },
   input: {
     height: 40,
-    borderColor: 'gray',
+    borderColor: "gray",
     borderWidth: 1,
     paddingHorizontal: 10,
     marginVertical: 10,

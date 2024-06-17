@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
 
 const MINUTE_IN_SECONDS = 60;
