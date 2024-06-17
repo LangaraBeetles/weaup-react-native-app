@@ -1171,6 +1171,13 @@
     find-up "^5.0.0"
     js-yaml "^4.1.0"
 
+"@fast-styles/react@^0.2.9":
+  version "0.2.9"
+  resolved "https://registry.yarnpkg.com/@fast-styles/react/-/react-0.2.9.tgz#3953990efa2120f7b2c7c2b807d643ce81c319d9"
+  integrity sha512-M2MOs2McrXt4dOnpDz4jU8wf/MDcdt4gHPEL6EHE3BzLG9AP/ySYaWHQjSLSWhcgz4gmDJGxo7nlJWsawVUrdw==
+  dependencies:
+    lodash.merge "^4.6.2"
+
 "@graphql-typed-document-node/core@^3.1.0":
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/@graphql-typed-document-node/core/-/core-3.2.0.tgz#5f3d96ec6b2354ad6d8a28bf216a1d97b5426861"
@@ -4888,6 +4895,11 @@ lodash.debounce@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
   integrity sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==
+
+lodash.merge@^4.6.2:
+  version "4.6.2"
+  resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
+  integrity sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
 
 lodash.throttle@^4.1.1:
   version "4.1.1"
