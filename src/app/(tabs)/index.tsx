@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
+
 import { StyleSheet, Text } from "react-native";
 import { Box } from "@gluestack-ui/themed";
 import { Redirect } from "expo-router";
 import Button from "@src/components/ui/Button";
 import DeviceMotionView from "@src/components/ui/DeviceMotionView";
+
 import { useUser } from "@state/useUser";
-import { useBackgroundTasks } from "@src/components/providers/BackgroundTasksProvider";
+
 import { usePushNotifications } from "@src/components/providers/PushNotificationsProvider";
 import { globalStyles } from "@src/styles/globalStyles";
 import SessionControl from "@src/components/sessions/SessionControl";
@@ -15,8 +17,7 @@ const HomePage = () => {
   const userName = useUser((state) => state.user.name);
   const setAuth = useUser((state) => state.setAuth);
 
-  //TODO: add rest of the params
-  const { isTrackingEnabled, setTrackingEnabled } = useBackgroundTasks();
+  const [isTrackingEnabled, setTrackingEnabled] = useState(false);
 
   const { sendPushNotification } = usePushNotifications();
 
