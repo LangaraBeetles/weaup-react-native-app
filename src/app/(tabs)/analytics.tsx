@@ -1,11 +1,10 @@
-import Box from "@src/components/ui/Box";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 
 const AnalyticsScreen = () => {
   return (
-    <Box>
+    <View>
       <Text>Analytics Page text</Text>
-    </Box>
+    </View>
   );
 };
 

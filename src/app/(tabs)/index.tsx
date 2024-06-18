@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { Redirect } from "expo-router";
 import Button from "@src/components/ui/Button";
 import DeviceMotionView from "@src/components/ui/DeviceMotionView";
@@ -10,7 +10,6 @@ import { useUser } from "@state/useUser";
 import { usePushNotifications } from "@src/components/providers/PushNotificationsProvider";
 import { globalStyles } from "@src/styles/globalStyles";
 import SessionControl from "@src/components/sessions/SessionControl";
-import Box from "@src/components/ui/Box";
 
 const HomePage = () => {
   const isSetupComplete = useUser((state) => state.isSetupComplete);
@@ -57,7 +56,7 @@ const HomePage = () => {
   };
 
   return (
-    <Box>
+    <View>
       <Text style={styles.text}>Home Page text</Text>
 
       {!!userName && <Text>Hello {userName}!</Text>}
@@ -94,7 +93,7 @@ const HomePage = () => {
         onPress={handleSendNotification}
         type={{ type: "secondary", size: "l" }}
       />
-    </Box>
+    </View>
   );
 };
 
