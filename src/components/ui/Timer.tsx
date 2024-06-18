@@ -8,7 +8,7 @@ const TimerDisplay: React.FC<{ timeInSeconds: number }> = ({
 }) => {
   const hours = Math.floor(timeInSeconds / HOUR_IN_SECONDS);
   const minutes = Math.floor(
-    (timeInSeconds % HOUR_IN_SECONDS) / MINUTE_IN_SECONDS
+    (timeInSeconds % HOUR_IN_SECONDS) / MINUTE_IN_SECONDS,
   );
   const seconds = timeInSeconds % MINUTE_IN_SECONDS;
 
@@ -25,12 +25,10 @@ const Timer: React.FC<{
   handlePause: () => void;
   handleStop: () => void;
   isPaused: boolean;
-}> = ({ timeInSeconds, handlePause, handleStop, isPaused }) => {
+}> = ({ timeInSeconds, handleStop }) => {
   return (
     <View style={styles.container}>
       <TimerDisplay timeInSeconds={timeInSeconds} />
-      {/* TODO: remove Pause / Resume button */}
-      <Button title={isPaused ? "Resume" : "Pause"} onPress={handlePause} />
       <Button title="Stop tracking" onPress={handleStop} />
     </View>
   );
