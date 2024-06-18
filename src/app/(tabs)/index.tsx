@@ -67,6 +67,11 @@ const HomePage = () => {
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
   }, []);
+
+  const handleDismissModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.dismiss();
+  }, []);
+
   const handleSheetChanges = useCallback((index: number) => {
     console.log("handleSheetChanges", index);
   }, []);
@@ -101,7 +106,7 @@ const HomePage = () => {
         type={{ type: "secondary", size: "s" }}
       />
 
-      <SessionControl />
+      <SessionControl handlePresentModalPress={handlePresentModalPress} />
       <DeviceMotionView isTrackingEnabled={isTrackingEnabled} />
 
       <Button
@@ -112,7 +117,7 @@ const HomePage = () => {
 
       <Button
         onPress={handlePresentModalPress}
-        title="Present Modal"
+        title="Open Bottom Sheet Modal"
         type={{ type: "secondary", size: "l" }}
       />
       <BottomSheetModal
@@ -123,6 +128,11 @@ const HomePage = () => {
       >
         <BottomSheetView style={styles.contentContainer}>
           <Text>Awesome 🎉</Text>
+          <Button
+            onPress={handleDismissModalPress}
+            title="Close Bottom Sheet Modal"
+            type={{ type: "secondary", size: "l" }}
+          ></Button>
         </BottomSheetView>
       </BottomSheetModal>
     </Box>
