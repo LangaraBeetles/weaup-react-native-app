@@ -26,39 +26,7 @@ const SetupPages = () => {
               <Text align="center" level="title_1">
                 Welcome to WeaUp
               </Text>
-              {/* <Text align="center" level="title_1">
-                Title 1
-              </Text>
-              <Text align="center" level="title_2">
-                Title 2
-              </Text>
-              <Text align="center" level="title_3">
-                Title 3
-              </Text>
-              <Text align="center" level="headline">
-                Headline
-              </Text>
-              <Text align="center" level="body">
-                Body
-              </Text>
-              <Text align="center" level="callout">
-                Callout
-              </Text>
-              <Text align="center" level="subhead">
-                Subhead
-              </Text>
-              <Text align="center" level="footnote">
-                Footnote
-              </Text>
-              <Text align="center" level="caption_1">
-                Caption 1
-              </Text>
-              <Text align="center" level="caption_2">
-                Caption 2
-              </Text>
-              <Text align="center" level="caption_3">
-                Caption 3
-              </Text> */}
+
               <Text style={{ textAlign: "center" }}>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                 eiusmod tempor.

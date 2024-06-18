@@ -39,10 +39,6 @@ const HomePage = () => {
     });
   };
 
-  if (!isSetupComplete) {
-    return <Redirect href="/setup/start" />;
-  }
-
   const toggleBackgroundFetch = () => {
     if (setTrackingEnabled) {
       setTrackingEnabled(!isTrackingEnabled);
@@ -76,6 +72,10 @@ const HomePage = () => {
     console.log("handleSheetChanges", index);
   }, []);
 
+  if (!isSetupComplete) {
+    return <Redirect href="/setup/start" />;
+  }
+
   return (
     <View>
       <Text style={styles.text}>Home Page text</Text>
@@ -107,7 +107,7 @@ const HomePage = () => {
       />
 
       <SessionControl />
-      
+
       <DeviceMotionView isTrackingEnabled={isTrackingEnabled} />
 
       <Button
