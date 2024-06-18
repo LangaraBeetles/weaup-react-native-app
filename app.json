@@ -4,6 +4,7 @@
     "slug": "alignmend",
     "scheme": "alginmend-scheme",
     "version": "1.0.0",
+    "assetBundlePatterns": ["./assets/fonts/*"],
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -33,7 +34,31 @@
     },
     "owner": "beetles",
     "plugins": [
-      ["expo-router"]
+      ["expo-router"],
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/NunitoBlack.ttf",
+            "./assets/fonts/NunitoExtraBold.ttf",
+            "./assets/fonts/NunitoBold.ttf",
+            "./assets/fonts/NunitoSemiBold.ttf",
+            "./assets/fonts/NunitoMedium.ttf",
+            "./assets/fonts/NunitoRegular.ttf",
+            "./assets/fonts/NunitoLight.ttf",
+            "./assets/fonts/NunitoExtraLight.ttf",
+
+            "./assets/fonts/NunitoBlackItalic.ttf",
+            "./assets/fonts/NunitoExtraBoldItalic.ttf",
+            "./assets/fonts/NunitoBoldItalic.ttf",
+            "./assets/fonts/NunitoSemiBoldItalic.ttf",
+            "./assets/fonts/NunitoMediumItalic.ttf",
+            "./assets/fonts/NunitoItalic.ttf",
+            "./assets/fonts/NunitoLightItalic.ttf",
+            "./assets/fonts/NunitoExtraLightItalic.ttf"
+          ]
+        }
+      ]
     ]
   }
 }
