@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 import { StyleSheet, Text } from "react-native";
-import { Box } from "@gluestack-ui/themed";
 import { Redirect } from "expo-router";
 import Button from "@src/components/ui/Button";
 import DeviceMotionView from "@src/components/ui/DeviceMotionView";
@@ -11,6 +10,7 @@ import { useUser } from "@state/useUser";
 import { usePushNotifications } from "@src/components/providers/PushNotificationsProvider";
 import { globalStyles } from "@src/styles/globalStyles";
 import SessionControl from "@src/components/sessions/SessionControl";
+import Box from "@src/components/ui/Box";
 
 const HomePage = () => {
   const isSetupComplete = useUser((state) => state.isSetupComplete);

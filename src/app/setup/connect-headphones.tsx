@@ -1,4 +1,4 @@
-import { View } from "@gluestack-ui/themed";
+import { View } from "react-native";
 
 const ConnectHeadphonesScreen = () => {
   return <View></View>;

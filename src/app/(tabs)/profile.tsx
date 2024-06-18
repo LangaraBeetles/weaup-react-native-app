@@ -1,6 +1,6 @@
-import { Box } from "@gluestack-ui/themed";
 import { Text } from "react-native";
 import ImageUploader from "@src/components/ImageUploader";
+import Box from "@src/components/ui/Box";
 
 const ProfileScreen = () => {
   return (
@@ -12,4 +12,3 @@ const ProfileScreen = () => {
 };
 
 export default ProfileScreen;
-

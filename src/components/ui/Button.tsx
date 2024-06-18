@@ -1,6 +1,5 @@
 import React from 'react';
-import { Text } from "@gluestack-ui/themed";
-import { StyleSheet, TouchableHighlight } from "react-native";
+import { StyleSheet, Text, TouchableHighlight } from "react-native";
 import { globalStyles } from "@src/styles/globalStyles";
 
 const Button: React.FC<{

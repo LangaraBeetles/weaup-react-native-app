@@ -1,4 +1,3 @@
-import { Center, SafeAreaView, Text, VStack } from "@gluestack-ui/themed";
 import Main from "@src/components/layout/Main";
 import { SetupStagesType } from "@src/interfaces/setup.types";
 import * as Haptics from "expo-haptics";
@@ -11,7 +10,7 @@ import {
   EasingFunction,
   PanResponder,
   View as RNView,
-  TouchableOpacity,
+  SafeAreaView,
 } from "react-native";
 
 const { height: screenHeight } = Dimensions.get("window");
@@ -184,7 +183,7 @@ const SelectModeScreen: React.FC<{
   return (
     <SafeAreaView>
       <Main>
-        <Center justifyContent="center" height="100%" paddingHorizontal={2}>
+        {/* <Center justifyContent="center" height="100%" paddingHorizontal={2}>
           <VStack gap={80}>
             <Animated.View
               ref={heaphonesArea}
@@ -234,7 +233,7 @@ const SelectModeScreen: React.FC<{
               </VStack>
             </Animated.View>
           </VStack>
-        </Center>
+        </Center> */}
       </Main>
     </SafeAreaView>
   );

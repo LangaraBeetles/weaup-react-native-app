@@ -8,6 +8,7 @@ module.exports = function(api) {
       },
     },
     plugins: [
+      ["@fast-styles/babel-plugin"],
       [
         "module-resolver",
         {
