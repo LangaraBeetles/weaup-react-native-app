@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import React, { useState } from "react";
 
 import { StyleSheet, Text } from "react-native";
 import { Box } from "@gluestack-ui/themed";
@@ -11,7 +11,6 @@ import { useUser } from "@state/useUser";
 import { usePushNotifications } from "@src/components/providers/PushNotificationsProvider";
 import { globalStyles } from "@src/styles/globalStyles";
 import SessionControl from "@src/components/sessions/SessionControl";
-import { BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
 
 const HomePage = () => {
   const isSetupComplete = useUser((state) => state.isSetupComplete);
@@ -57,25 +56,6 @@ const HomePage = () => {
     });
   };
 
-  // ref
-  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-
-  // variables
-  const snapPoints = useMemo(() => ["25%", "50%"], []);
-
-  // callbacks
-  const handlePresentModalPress = useCallback(() => {
-    bottomSheetModalRef.current?.present();
-  }, []);
-
-  const handleDismissModalPress = useCallback(() => {
-    bottomSheetModalRef.current?.dismiss();
-  }, []);
-
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log("handleSheetChanges", index);
-  }, []);
-
   return (
     <Box>
       <Text style={styles.text}>Home Page text</Text>
@@ -106,7 +86,7 @@ const HomePage = () => {
         type={{ type: "secondary", size: "s" }}
       />
 
-      <SessionControl handlePresentModalPress={handlePresentModalPress} />
+      <SessionControl />
       <DeviceMotionView isTrackingEnabled={isTrackingEnabled} />
 
       <Button
@@ -114,27 +94,6 @@ const HomePage = () => {
         onPress={handleSendNotification}
         type={{ type: "secondary", size: "l" }}
       />
-
-      <Button
-        onPress={handlePresentModalPress}
-        title="Open Bottom Sheet Modal"
-        type={{ type: "secondary", size: "l" }}
-      />
-      <BottomSheetModal
-        ref={bottomSheetModalRef}
-        index={1}
-        snapPoints={snapPoints}
-        onChange={handleSheetChanges}
-      >
-        <BottomSheetView style={styles.contentContainer}>
-          <Text>Awesome 🎉</Text>
-          <Button
-            onPress={handleDismissModalPress}
-            title="Close Bottom Sheet Modal"
-            type={{ type: "secondary", size: "l" }}
-          ></Button>
-        </BottomSheetView>
-      </BottomSheetModal>
     </Box>
   );
 };
@@ -150,10 +109,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingHorizontal: 10,
     marginVertical: 10,
-  },
-  contentContainer: {
-    flex: 1,
-    alignItems: "center",
   },
 });
 

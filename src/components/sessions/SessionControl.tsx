@@ -1,11 +1,17 @@
 import { Modal, StyleSheet, Text, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { SessionStatesType } from "@src/interfaces/session.types";
 import Timer from "../ui/Timer";
 import Button from "../ui/Button";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
-const SessionControl = (props: any) => {
-  const { handlePresentModalPress } = props;
+const SessionControl = () => {
   const [sessionState, setSessionState] =
     useState<SessionStatesType["SessionStatesEnum"]>("STOP");
   const [timerState, setTimerState] =
@@ -13,11 +19,6 @@ const SessionControl = (props: any) => {
 
   const [timeInSeconds, setTimeInSeconds] = useState(-1);
   const [modalVisible, setModalVisible] = useState(false);
-
-  const onInitSession = () => {
-    setSessionState("INIT");
-    handlePresentModalPress();
-  };
 
   const onStartSession = (): "START" => {
     setSessionState("START");
@@ -35,6 +36,7 @@ const SessionControl = (props: any) => {
     setSessionState("CANCEL");
     setTimerState("STOPPED");
     setTimeInSeconds(-1);
+    handleDismissModalPress();
     //TODO: start real time tracking
     //TODO: discard session data
   };
@@ -72,7 +74,12 @@ const SessionControl = (props: any) => {
   };
 
   const SetTimer = ({ onStartSession }: { onStartSession: () => void }) => (
-    <View>
+    <BottomSheetModal
+      ref={bottomSheetModalRef}
+      index={1}
+      snapPoints={snapPoints}
+      onChange={handleSheetChanges}
+    >
       <Text>Hours: 1</Text>
       <Text>Minutes: 1</Text>
       <Button
@@ -85,7 +92,7 @@ const SessionControl = (props: any) => {
         onPress={onCancelSession}
         type={{ type: "primary", size: "s" }}
       ></Button>
-    </View>
+    </BottomSheetModal>
   );
 
   useEffect(() => {
@@ -99,12 +106,32 @@ const SessionControl = (props: any) => {
     }
   }, [timeInSeconds, sessionState]);
 
+  // ref
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+
+  // variables
+  const snapPoints = useMemo(() => ["25%", "50%"], []);
+
+  // callbacks
+  const handlePresentModalPress = useCallback(() => {
+    setSessionState("INIT");
+    bottomSheetModalRef.current?.present();
+  }, []);
+
+  const handleDismissModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.dismiss();
+  }, []);
+
+  const handleSheetChanges = useCallback((index: number) => {
+    console.log("handleSheetChanges", index);
+  }, []);
+
   return (
     <View>
       {timerState === "STOPPED" && (
         <Button
           title="Start a session"
-          onPress={onInitSession}
+          onPress={handlePresentModalPress}
           type={{ type: "primary", size: "l" }}
         ></Button>
       )}
@@ -158,6 +185,10 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: "white",
     borderRadius: 10,
+    alignItems: "center",
+  },
+  contentContainer: {
+    flex: 1,
     alignItems: "center",
   },
   input: {
