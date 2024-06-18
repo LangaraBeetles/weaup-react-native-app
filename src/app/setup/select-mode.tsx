@@ -1,5 +1,6 @@
-import { Center, SafeAreaView, Text, VStack } from "@gluestack-ui/themed";
 import Main from "@src/components/layout/Main";
+import Center from "@src/components/ui/Center";
+import Stack from "@src/components/ui/Stack";
 import { SetupStagesType } from "@src/interfaces/setup.types";
 import * as Haptics from "expo-haptics";
 import { router } from "expo-router";
@@ -11,7 +12,10 @@ import {
   EasingFunction,
   PanResponder,
   View as RNView,
+  SafeAreaView,
+  Text,
   TouchableOpacity,
+  View,
 } from "react-native";
 
 const { height: screenHeight } = Dimensions.get("window");
@@ -28,6 +32,7 @@ const SelectModeScreen: React.FC<{
   const heaphonesArea = useRef<RNView>(null);
   const phoneArea = useRef<RNView>(null);
   const draggable = useRef<RNView>(null);
+  const transitioning = useRef<boolean>(false);
 
   const headhonesAreaOpacity = new Animated.Value(1);
   const phoneAreaOpacity = new Animated.Value(1);
@@ -130,9 +135,12 @@ const SelectModeScreen: React.FC<{
       easing: Easing.ease,
       useNativeDriver: false,
     }).start(() => {
-      setTimeout(() => {
-        router.push("/setup/headphones-training");
-      }, 500);
+      if (!transitioning.current) {
+        setTimeout(() => {
+          transitioning.current = true;
+          router.push("/setup/headphones-training");
+        }, 500);
+      }
     });
   };
 
@@ -160,22 +168,14 @@ const SelectModeScreen: React.FC<{
       easing: Easing.ease,
       useNativeDriver: false,
     }).start(() => {
-      setTimeout(() => {
-        router.push("/setup/phone-training");
-      }, 500);
+      if (!transitioning.current) {
+        setTimeout(() => {
+          transitioning.current = true;
+          router.push("/setup/phone-training");
+        }, 500);
+      }
     });
   };
-
-  //TODO: Review if we need this
-  // const next = () => {
-  //   setTimeout(() => {
-  //     if (mode.current === "phone") {
-  //       router.push("/setup/phone-training");
-  //     } else {
-  //       router.replace("/setup/headphones-training");
-  //     }
-  //   }, 500);
-  // };
 
   const onDragSelection = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
@@ -184,8 +184,10 @@ const SelectModeScreen: React.FC<{
   return (
     <SafeAreaView>
       <Main>
-        <Center justifyContent="center" height="100%" paddingHorizontal={2}>
-          <VStack gap={80}>
+        <Center justifyContent="center" height="100%" px={2}>
+          <View style={{ height: "40%" }} />
+
+          <Stack gap={80}>
             <Animated.View
               ref={heaphonesArea}
               style={{
@@ -193,13 +195,13 @@ const SelectModeScreen: React.FC<{
                 transform: [{ translateY: heaphonesAreaTranslateY }],
               }}
             >
-              <VStack gap={16}>
-                <Text textAlign="center">Earbuds Mode</Text>
-                <Text textAlign="center">
+              <Stack gap={16}>
+                <Text style={{ textAlign: "center" }}>Earbuds Mode</Text>
+                <Text style={{ textAlign: "center" }}>
                   WeaUp supports AirPods 3 / Pro / Max / Beats Fit Pro / Google
                   Pixel Buds
                 </Text>
-              </VStack>
+              </Stack>
             </Animated.View>
 
             <Animated.View
@@ -214,7 +216,7 @@ const SelectModeScreen: React.FC<{
                 onPress={onDragSelection}
                 style={{ paddingVertical: 30 }}
               >
-                <Text textAlign="center">Drag to enter</Text>
+                <Text style={{ textAlign: "center" }}>Drag to enter</Text>
               </TouchableOpacity>
             </Animated.View>
 
@@ -225,15 +227,15 @@ const SelectModeScreen: React.FC<{
                 transform: [{ translateY: phoneAreaTranslateY }],
               }}
             >
-              <VStack gap={16}>
-                <Text textAlign="center">Phone-only Mode</Text>
-                <Text textAlign="center">
+              <Stack gap={16}>
+                <Text style={{ textAlign: "center" }}>Phone-only Mode</Text>
+                <Text style={{ textAlign: "center" }}>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do eiusmod tempor.
                 </Text>
-              </VStack>
+              </Stack>
             </Animated.View>
-          </VStack>
+          </Stack>
         </Center>
       </Main>
     </SafeAreaView>

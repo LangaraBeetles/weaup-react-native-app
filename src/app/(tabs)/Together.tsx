@@ -1,11 +1,10 @@
-import { Box } from "@gluestack-ui/themed";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 
 const TogetherScreen = () => {
   return (
-    <Box>
+    <View>
       <Text>Together Page text</Text>
-    </Box>
+    </View>
   );
 };
 
