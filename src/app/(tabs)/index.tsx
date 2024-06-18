@@ -57,6 +57,7 @@ const HomePage = () => {
     });
   };
 
+  //BottomSheet
   // ref
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
@@ -67,6 +68,11 @@ const HomePage = () => {
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
   }, []);
+
+  const handleDismissModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.dismiss();
+  }, []);
+
   const handleSheetChanges = useCallback((index: number) => {
     console.log("handleSheetChanges", index);
   }, []);
@@ -123,6 +129,11 @@ const HomePage = () => {
       >
         <BottomSheetView style={styles.contentContainer}>
           <Text>Awesome 🎉</Text>
+          <Button
+            onPress={handleDismissModalPress}
+            title="Close Bottom Sheet Modal"
+            type={{ type: "secondary", size: "l" }}
+          ></Button>
         </BottomSheetView>
       </BottomSheetModal>
     </Box>
