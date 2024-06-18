@@ -32,6 +32,7 @@ const SelectModeScreen: React.FC<{
   const heaphonesArea = useRef<RNView>(null);
   const phoneArea = useRef<RNView>(null);
   const draggable = useRef<RNView>(null);
+  const transitioning = useRef<boolean>(false);
 
   const headhonesAreaOpacity = new Animated.Value(1);
   const phoneAreaOpacity = new Animated.Value(1);
@@ -58,12 +59,12 @@ const SelectModeScreen: React.FC<{
           tension: 40, // Controls the speed of the spring animation
         }).start();
       },
-    })
+    }),
   ).current;
 
   const measureLayout = (
     ref: React.RefObject<RNView>,
-    callback: (layout: any) => void
+    callback: (layout: any) => void,
   ) => {
     if (ref.current) {
       ref.current?.measure((x, y, width, height, pageX, pageY) => {
@@ -83,7 +84,7 @@ const SelectModeScreen: React.FC<{
         };
         const overlap = isOverlappingHeadphones(
           draggableContainer,
-          headphonesContainer
+          headphonesContainer,
         );
 
         if (overlap) {
@@ -134,9 +135,12 @@ const SelectModeScreen: React.FC<{
       easing: Easing.ease,
       useNativeDriver: false,
     }).start(() => {
-      setTimeout(() => {
-        router.push("/setup/headphones-training");
-      }, 500);
+      if (!transitioning.current) {
+        setTimeout(() => {
+          transitioning.current = true;
+          router.push("/setup/headphones-training");
+        }, 500);
+      }
     });
   };
 
@@ -164,22 +168,14 @@ const SelectModeScreen: React.FC<{
       easing: Easing.ease,
       useNativeDriver: false,
     }).start(() => {
-      setTimeout(() => {
-        router.push("/setup/phone-training");
-      }, 500);
+      if (!transitioning.current) {
+        setTimeout(() => {
+          transitioning.current = true;
+          router.push("/setup/phone-training");
+        }, 500);
+      }
     });
   };
-
-  //TODO: Review if we need this
-  // const next = () => {
-  //   setTimeout(() => {
-  //     if (mode.current === "phone") {
-  //       router.push("/setup/phone-training");
-  //     } else {
-  //       router.replace("/setup/headphones-training");
-  //     }
-  //   }, 500);
-  // };
 
   const onDragSelection = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
