@@ -1,4 +1,4 @@
-import { Modal, StyleSheet, Text, View } from "react-native";
+import { Modal, StyleSheet, Text, TextInput, View } from "react-native";
 import React, {
   useCallback,
   useEffect,
@@ -19,16 +19,42 @@ const SessionControl = () => {
 
   const [timeInSeconds, setTimeInSeconds] = useState(-1);
   const [modalVisible, setModalVisible] = useState(false);
+  // const [timeInHours, setTimeInHours] = useState(0);
+  // const [timeInMinutes, setTimeInMinutes] = useState(0);
 
-  const onStartSession = (): "START" => {
+  // ref for BottomSheetModal
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+
+  // variables
+  const snapPoints = useMemo(() => ["25%", "50%"], []);
+
+  // callbacks
+  const handlePresentModalPress = useCallback(() => {
+    setSessionState("INIT");
+    setTimeout(() => {
+      bottomSheetModalRef.current?.present();
+    }, 100); // Small delay to ensure state update and ref readiness
+  }, []);
+
+  const handleDismissModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.dismiss();
+  }, []);
+
+  const handleSheetChanges = useCallback((index: number) => {
+    console.log("handleSheetChanges", index);
+  }, []);
+
+  const onStartSession = (
+    timeInHours: number,
+    timeInMinutes: number,
+  ): "START" => {
     setSessionState("START");
     setTimerState("RUNNING");
-    //TODO: stop real time tracking
-    //TODO: set time in seconds from the setTimer component
-    setTimeInSeconds(3600);
-    //TODO: function to check posture every second
-    //if posture is okay ➝ save it to the local state and show the image animation
-    //if posture is bad ➝ save it to the local state and show the image animation
+    // TODO: stop real time tracking
+    setTimeInSeconds(timeInHours * 3600 + timeInMinutes * 60);
+    // TODO: function to check posture every second
+    // if posture is okay ➝ save it to the local state and show the image animation
+    // if posture is bad ➝ save it to the local state and show the image animation
     return "START";
   };
 
@@ -37,8 +63,8 @@ const SessionControl = () => {
     setTimerState("STOPPED");
     setTimeInSeconds(-1);
     handleDismissModalPress();
-    //TODO: start real time tracking
-    //TODO: discard session data
+    // TODO: start real time tracking
+    // TODO: discard session data
   };
 
   const onStopSession = () => {
@@ -49,7 +75,6 @@ const SessionControl = () => {
 
   const onPauseSession = () => {
     setSessionState((prevState) => (prevState === "START" ? "PAUSE" : "START"));
-
     setTimerState((prevState) =>
       prevState === "RUNNING" ? "PAUSED" : "RUNNING",
     );
@@ -65,35 +90,58 @@ const SessionControl = () => {
     setModalVisible(false);
     setSessionState("STOP");
     setTimerState("STOPPED");
-    //TODO: save session data
-    //TODO: Show session summary
+    // TODO: save session data
+    // TODO: Show session summary
     alert("Here is your session summary!");
-    //Reset the timer
+    // Reset the timer
     setTimeInSeconds(-1);
-    //TODO: start real time tracking
+    // TODO: start real time tracking
   };
 
-  const SetTimer = ({ onStartSession }: { onStartSession: () => void }) => (
-    <BottomSheetModal
-      ref={bottomSheetModalRef}
-      index={1}
-      snapPoints={snapPoints}
-      onChange={handleSheetChanges}
-    >
-      <Text>Hours: 1</Text>
-      <Text>Minutes: 1</Text>
-      <Button
-        title="Start Session"
-        onPress={onStartSession}
-        type={{ type: "primary", size: "s" }}
-      ></Button>
-      <Button
-        title="X"
-        onPress={onCancelSession}
-        type={{ type: "primary", size: "s" }}
-      ></Button>
-    </BottomSheetModal>
-  );
+  const SetTimer = ({
+    onStartSession,
+  }: {
+    onStartSession: (timeInHours: number, timeInMinutes: number) => void;
+  }) => {
+    const [timeInHours, setTimeInHours] = useState(0);
+    const [timeInMinutes, setTimeInMinutes] = useState(0);
+
+    return (
+      <BottomSheetModal
+        ref={bottomSheetModalRef}
+        index={1}
+        snapPoints={snapPoints}
+        onChange={handleSheetChanges}
+      >
+        <Text>Hours:</Text>
+        <TextInput
+          style={styles.input}
+          onChangeText={(text) => setTimeInHours(Number(text))}
+          value={timeInHours.toString()}
+          placeholder="Hours"
+          keyboardType="numeric"
+        />
+        <Text>Minutes:</Text>
+        <TextInput
+          style={styles.input}
+          onChangeText={(text) => setTimeInMinutes(Number(text))}
+          value={timeInMinutes.toString()}
+          placeholder="Minutes"
+          keyboardType="numeric"
+        />
+        <Button
+          title="Start Session"
+          onPress={() => onStartSession(timeInHours, timeInMinutes)}
+          type={{ type: "primary", size: "s" }}
+        />
+        <Button
+          title="X"
+          onPress={onCancelSession}
+          type={{ type: "primary", size: "s" }}
+        />
+      </BottomSheetModal>
+    );
+  };
 
   useEffect(() => {
     if (sessionState === "START" && timeInSeconds === -1) {
@@ -106,26 +154,6 @@ const SessionControl = () => {
     }
   }, [timeInSeconds, sessionState]);
 
-  // ref
-  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-
-  // variables
-  const snapPoints = useMemo(() => ["25%", "50%"], []);
-
-  // callbacks
-  const handlePresentModalPress = useCallback(() => {
-    setSessionState("INIT");
-    bottomSheetModalRef.current?.present();
-  }, []);
-
-  const handleDismissModalPress = useCallback(() => {
-    bottomSheetModalRef.current?.dismiss();
-  }, []);
-
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log("handleSheetChanges", index);
-  }, []);
-
   return (
     <View>
       {timerState === "STOPPED" && (
@@ -133,7 +161,7 @@ const SessionControl = () => {
           title="Start a session"
           onPress={handlePresentModalPress}
           type={{ type: "primary", size: "l" }}
-        ></Button>
+        />
       )}
 
       {sessionState === "INIT" && <SetTimer onStartSession={onStartSession} />}
