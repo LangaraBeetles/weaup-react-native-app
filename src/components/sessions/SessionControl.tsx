@@ -10,6 +10,7 @@ import { SessionStatesType } from "@src/interfaces/session.types";
 import Timer from "../ui/Timer";
 import Button from "../ui/Button";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import CustomBackdrop from "../style/CustomBackdrop";
 
 const SessionControl = () => {
   const [sessionState, setSessionState] =
@@ -19,8 +20,6 @@ const SessionControl = () => {
 
   const [timeInSeconds, setTimeInSeconds] = useState(-1);
   const [modalVisible, setModalVisible] = useState(false);
-  // const [timeInHours, setTimeInHours] = useState(0);
-  // const [timeInMinutes, setTimeInMinutes] = useState(0);
 
   // ref for BottomSheetModal
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
@@ -42,12 +41,10 @@ const SessionControl = () => {
 
   const handleSheetChanges = useCallback((index: number) => {
     console.log("handleSheetChanges", index);
+    // TODO: add grey tint to the background when index is 1
   }, []);
 
-  const onStartSession = (
-    timeInHours: number,
-    timeInMinutes: number,
-  ): "START" => {
+  const onStartSession = (timeInHours: number, timeInMinutes: number) => {
     setSessionState("START");
     setTimerState("RUNNING");
     // TODO: stop real time tracking
@@ -55,7 +52,7 @@ const SessionControl = () => {
     // TODO: function to check posture every second
     // if posture is okay ➝ save it to the local state and show the image animation
     // if posture is bad ➝ save it to the local state and show the image animation
-    return "START";
+    handleDismissModalPress();
   };
 
   const onCancelSession = () => {
@@ -112,7 +109,9 @@ const SessionControl = () => {
         index={1}
         snapPoints={snapPoints}
         onChange={handleSheetChanges}
+        backdropComponent={CustomBackdrop}
       >
+        {/* TODO: create number input component */}
         <Text>Hours:</Text>
         <TextInput
           style={styles.input}
