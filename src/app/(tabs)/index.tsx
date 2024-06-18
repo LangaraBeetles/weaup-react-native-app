@@ -106,8 +106,7 @@ const HomePage = () => {
         type={{ type: "secondary", size: "s" }}
       />
 
-      <SessionControl />
-      
+      <SessionControl handlePresentModalPress={handlePresentModalPress} />
       <DeviceMotionView isTrackingEnabled={isTrackingEnabled} />
 
       <Button
@@ -118,7 +117,7 @@ const HomePage = () => {
 
       <Button
         onPress={handlePresentModalPress}
-        title="Present Modal"
+        title="Open Bottom Sheet Modal"
         type={{ type: "secondary", size: "l" }}
       />
 

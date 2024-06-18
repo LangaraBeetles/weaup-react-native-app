@@ -4,7 +4,8 @@ import { SessionStatesType } from "@src/interfaces/session.types";
 import Timer from "../ui/Timer";
 import Button from "../ui/Button";
 
-const SessionControl = () => {
+const SessionControl = (props: any) => {
+  const { handlePresentModalPress } = props;
   const [sessionState, setSessionState] =
     useState<SessionStatesType["SessionStatesEnum"]>("STOP");
   const [timerState, setTimerState] =
@@ -15,6 +16,7 @@ const SessionControl = () => {
 
   const onInitSession = () => {
     setSessionState("INIT");
+    handlePresentModalPress();
   };
 
   const onStartSession = (): "START" => {
@@ -47,7 +49,7 @@ const SessionControl = () => {
     setSessionState((prevState) => (prevState === "START" ? "PAUSE" : "START"));
 
     setTimerState((prevState) =>
-      prevState === "RUNNING" ? "PAUSED" : "RUNNING"
+      prevState === "RUNNING" ? "PAUSED" : "RUNNING",
     );
   };
 
