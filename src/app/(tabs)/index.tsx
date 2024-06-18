@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useRef, useState } from "react";
 
-import { StyleSheet, Text,View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { Redirect } from "expo-router";
 import Button from "@src/components/ui/Button";
 import DeviceMotionView from "@src/components/ui/DeviceMotionView";
@@ -107,6 +107,7 @@ const HomePage = () => {
       />
 
       <SessionControl />
+      
       <DeviceMotionView isTrackingEnabled={isTrackingEnabled} />
 
       <Button
@@ -120,6 +121,7 @@ const HomePage = () => {
         title="Present Modal"
         type={{ type: "secondary", size: "l" }}
       />
+
       <BottomSheetModal
         ref={bottomSheetModalRef}
         index={1}

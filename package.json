@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^4",
+    "@fast-styles/babel-plugin": "^0.2.3",
     "@fast-styles/react": "^0.2.9",
     "@react-native-async-storage/async-storage": "^1.23.1",
     "aws-sdk": "^2.1630.0",

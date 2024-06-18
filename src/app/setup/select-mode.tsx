@@ -1,4 +1,6 @@
 import Main from "@src/components/layout/Main";
+import Center from "@src/components/ui/Center";
+import Stack from "@src/components/ui/Stack";
 import { SetupStagesType } from "@src/interfaces/setup.types";
 import * as Haptics from "expo-haptics";
 import { router } from "expo-router";
@@ -11,6 +13,9 @@ import {
   PanResponder,
   View as RNView,
   SafeAreaView,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 const { height: screenHeight } = Dimensions.get("window");
@@ -53,12 +58,12 @@ const SelectModeScreen: React.FC<{
           tension: 40, // Controls the speed of the spring animation
         }).start();
       },
-    }),
+    })
   ).current;
 
   const measureLayout = (
     ref: React.RefObject<RNView>,
-    callback: (layout: any) => void,
+    callback: (layout: any) => void
   ) => {
     if (ref.current) {
       ref.current?.measure((x, y, width, height, pageX, pageY) => {
@@ -78,7 +83,7 @@ const SelectModeScreen: React.FC<{
         };
         const overlap = isOverlappingHeadphones(
           draggableContainer,
-          headphonesContainer,
+          headphonesContainer
         );
 
         if (overlap) {
@@ -183,8 +188,10 @@ const SelectModeScreen: React.FC<{
   return (
     <SafeAreaView>
       <Main>
-        {/* <Center justifyContent="center" height="100%" paddingHorizontal={2}>
-          <VStack gap={80}>
+        <Center justifyContent="center" height="100%" px={2}>
+          <View style={{ height: "40%" }} />
+
+          <Stack gap={80}>
             <Animated.View
               ref={heaphonesArea}
               style={{
@@ -192,13 +199,13 @@ const SelectModeScreen: React.FC<{
                 transform: [{ translateY: heaphonesAreaTranslateY }],
               }}
             >
-              <VStack gap={16}>
-                <Text textAlign="center">Earbuds Mode</Text>
-                <Text textAlign="center">
+              <Stack gap={16}>
+                <Text style={{ textAlign: "center" }}>Earbuds Mode</Text>
+                <Text style={{ textAlign: "center" }}>
                   WeaUp supports AirPods 3 / Pro / Max / Beats Fit Pro / Google
                   Pixel Buds
                 </Text>
-              </VStack>
+              </Stack>
             </Animated.View>
 
             <Animated.View
@@ -213,7 +220,7 @@ const SelectModeScreen: React.FC<{
                 onPress={onDragSelection}
                 style={{ paddingVertical: 30 }}
               >
-                <Text textAlign="center">Drag to enter</Text>
+                <Text style={{ textAlign: "center" }}>Drag to enter</Text>
               </TouchableOpacity>
             </Animated.View>
 
@@ -224,16 +231,16 @@ const SelectModeScreen: React.FC<{
                 transform: [{ translateY: phoneAreaTranslateY }],
               }}
             >
-              <VStack gap={16}>
-                <Text textAlign="center">Phone-only Mode</Text>
-                <Text textAlign="center">
+              <Stack gap={16}>
+                <Text style={{ textAlign: "center" }}>Phone-only Mode</Text>
+                <Text style={{ textAlign: "center" }}>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do eiusmod tempor.
                 </Text>
-              </VStack>
+              </Stack>
             </Animated.View>
-          </VStack>
-        </Center> */}
+          </Stack>
+        </Center>
       </Main>
     </SafeAreaView>
   );
