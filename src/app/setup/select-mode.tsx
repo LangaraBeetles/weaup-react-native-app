@@ -1,5 +1,6 @@
 import Main from "@src/components/layout/Main";
 import Center from "@src/components/ui/Center";
+import Spacer from "@src/components/ui/Spacer";
 import Stack from "@src/components/ui/Stack";
 import { SetupStagesType } from "@src/interfaces/setup.types";
 import * as Haptics from "expo-haptics";
@@ -15,7 +16,6 @@ import {
   SafeAreaView,
   Text,
   TouchableOpacity,
-  View,
 } from "react-native";
 
 const { height: screenHeight } = Dimensions.get("window");
@@ -185,7 +185,7 @@ const SelectModeScreen: React.FC<{
     <SafeAreaView>
       <Main>
         <Center justifyContent="center" height="100%" px={2}>
-          <View style={{ height: "40%" }} />
+          <Spacer height="30%" />
 
           <Stack gap={80}>
             <Animated.View

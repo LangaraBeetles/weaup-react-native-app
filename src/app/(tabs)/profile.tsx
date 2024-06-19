@@ -6,7 +6,12 @@ import Stack from "@src/components/ui/Stack";
 
 const ProfileScreen = () => {
   return (
-    <Center backgroundColor={theme.colors.$blue8} height="100%" gap={24}>
+    <Center
+      backgroundColor={theme.colors.$blue8}
+      height="100%"
+      flex={1}
+      gap={24}
+    >
       <Text>Profile Page text</Text>
 
       <Stack flexDirection="column" alignItems="center" gap={8}>
