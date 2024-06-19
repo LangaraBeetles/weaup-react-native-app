@@ -1,23 +1,26 @@
-import { GluestackUIProvider } from "@gluestack-ui/themed";
-import BackgroundTasksProvider from "@src/components/providers/BackgroundTasksProvider";
 import HeadTrackingProvider from "@src/components/providers/HeadTrackingProvider.ios";
 import TrackingModeProvider from "@src/components/providers/TrackingModeProvider";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import PushNotificationsProvider from "@src/components/providers/PushNotificationsProvider";
 import { Stack } from "expo-router/stack";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const RootLayout = () => {
   return (
-    <BackgroundTasksProvider>
+    <PushNotificationsProvider>
       <TrackingModeProvider>
         <HeadTrackingProvider>
-          <GluestackUIProvider>
-            <Stack>
-              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-              <Stack.Screen name="setup" options={{ headerShown: false }} />
-            </Stack>
-          </GluestackUIProvider>
+          <GestureHandlerRootView>
+            <BottomSheetModalProvider>
+              <Stack>
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                <Stack.Screen name="setup" options={{ headerShown: false }} />
+              </Stack>
+            </BottomSheetModalProvider>
+          </GestureHandlerRootView>
         </HeadTrackingProvider>
       </TrackingModeProvider>
-    </BackgroundTasksProvider>
+    </PushNotificationsProvider>
   );
 };
 

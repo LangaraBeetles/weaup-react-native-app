@@ -15,10 +15,6 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.alignmend",
-      "infoPlist": {
-        "UIBackgroundModes": ["fetch", "processing"],
-        "BGTaskSchedulerPermittedIdentifiers": ["com.transistorsoft.fetch"]
-      },
       "minSdkVersion": "15.0"
     },
     "android": {
@@ -38,7 +34,6 @@
     },
     "plugins": [
       "expo-router",
-      "react-native-background-fetch",
       [
         "expo-build-properties",
         {

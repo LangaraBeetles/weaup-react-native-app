@@ -1,7 +1,8 @@
-import { Center, SafeAreaView, Text, VStack, View } from "@gluestack-ui/themed";
-import Button from "@src/components/ui/Button";
 import Main from "@src/components/layout/Main";
+import Button from "@src/components/ui/Button";
+import Stack from "@src/components/ui/Stack";
 import { router } from "expo-router";
+import { SafeAreaView, Text, View } from "react-native";
 
 const SetupPages = () => {
   const next = () => {
@@ -11,22 +12,32 @@ const SetupPages = () => {
   return (
     <SafeAreaView>
       <Main>
-        <Center justifyContent="center" height="100%" paddingHorizontal={2}>
-          <View height="40%" />
-          <VStack gap={80}>
-            <VStack gap={16}>
-              <Text textAlign="center">Welcome to WeaUp</Text>
-              <Text textAlign="center">
+        <View
+          style={{
+            justifyContent: "center",
+            height: "100%",
+            paddingHorizontal: 2,
+          }}
+        >
+          <View style={{ height: "40%" }} />
+          <Stack gap={80}>
+            <Stack gap={16}>
+              <Text style={{ textAlign: "center" }}>Welcome to WeaUp</Text>
+              <Text style={{ textAlign: "center" }}>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                 eiusmod tempor.
               </Text>
-            </VStack>
+            </Stack>
 
-            <Button title="Start the Journey" onPress={next} />
+            <Button
+              title="Start the Journey"
+              onPress={next}
+              type={{ type: "primary", size: "l" }}
+            />
 
             <Text>I have read and agree Agreement and Privacy.</Text>
-          </VStack>
-        </Center>
+          </Stack>
+        </View>
       </Main>
     </SafeAreaView>
   );
