@@ -26,21 +26,27 @@ const HomePage = () => {
   return (
     <SafeAreaView>
       <Stack flexDirection="row" justifyContent="space-between" p={15} pb={0}>
-        <Stack flexDirection="row" gap={18} border={1} borderRadius={50} p={18}>
+        <Stack
+          flexDirection="row"
+          gap={18}
+          border={1}
+          borderRadius={50}
+          p={10}
+          alignItems="center"
+        >
           {/*TODO: display avatar */}
           <Image source={require("../../../assets/img/avatar.png")} />
           {userName === null ? <Text>{userName}</Text> : null}
           {/*TODO: get user level */}
           <Text>Lv.1</Text>
         </Stack>
-        <Stack flexDirection="row" gap={18} border={0} p={18}>
-          {/*TODO: display avatar */}
-          <Image source={require("../../../assets/img/avatar.png")} />
-          {userName === null ? <Text>{userName}</Text> : null}
-          {/*TODO: navigate to Notifications page */}
+        <Stack flexDirection="row" gap={18} border={0} p={5}>
+          <Image source={require("../../../assets/img/earbuds.png")} />
           <Link href="/notifications" asChild>
             <Pressable>
-              <Text>Notifications</Text>
+              <Image
+                source={require("../../../assets/img/notifications.png")}
+              />
             </Pressable>
           </Link>
         </Stack>
