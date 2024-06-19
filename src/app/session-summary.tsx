@@ -1,10 +1,11 @@
-import { Text, View } from "react-native";
+import { Text } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const SessionSummaryScreen = () => {
   return (
-    <View>
+    <SafeAreaView>
       <Text>Session Summary Page text</Text>
-    </View>
+    </SafeAreaView>
   );
 };
 

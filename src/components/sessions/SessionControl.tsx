@@ -11,6 +11,7 @@ import Timer from "../ui/Timer";
 import Button from "../ui/Button";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import CustomBackdrop from "../style/CustomBackdrop";
+import { useRouter } from "expo-router";
 
 const SessionControl = () => {
   const [sessionState, setSessionState] =
@@ -20,6 +21,8 @@ const SessionControl = () => {
 
   const [timeInSeconds, setTimeInSeconds] = useState(-1);
   const [modalVisible, setModalVisible] = useState(false);
+
+  const router = useRouter();
 
   // ref for BottomSheetModal
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
@@ -84,7 +87,7 @@ const SessionControl = () => {
     setTimerState("STOPPED");
     // TODO: save session data
     // TODO: Show session summary
-    alert("Here is your session summary!");
+    router.push("/session-summary");
     // Reset the timer
     setTimeInSeconds(-1);
     // TODO: start real time tracking
