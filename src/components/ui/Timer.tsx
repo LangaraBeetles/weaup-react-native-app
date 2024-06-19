@@ -13,7 +13,7 @@ const TimerDisplay: React.FC<{ timeInSeconds: number }> = ({
   const seconds = timeInSeconds % MINUTE_IN_SECONDS;
 
   return (
-    <Text>
+    <Text style={styles.text}>
       {hours}:{minutes < 10 ? `0${minutes}` : minutes}:
       {seconds < 10 ? `0${seconds}` : seconds}
     </Text>
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   text: {
-    fontSize: 32,
+    fontSize: 48,
   },
 });
 
