@@ -1,4 +1,5 @@
-import { Button, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+import Button from "./Button";
 
 const MINUTE_IN_SECONDS = 60;
 const HOUR_IN_SECONDS = 60 * MINUTE_IN_SECONDS;
@@ -29,7 +30,11 @@ const Timer: React.FC<{
   return (
     <View style={styles.container}>
       <TimerDisplay timeInSeconds={timeInSeconds} />
-      <Button title="Stop tracking" onPress={handleStop} />
+      <Button
+        title="Stop tracking"
+        onPress={handleStop}
+        type={{ type: "primary", size: "l" }}
+      />
     </View>
   );
 };

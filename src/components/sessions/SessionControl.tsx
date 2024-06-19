@@ -199,12 +199,14 @@ const SessionControl = () => {
 const styles = StyleSheet.create({
   modalBackground: {
     flex: 1,
-    justifyContent: "center",
+    padding: 20,
+    flexDirection: "column",
+    justifyContent: "flex-end",
     alignItems: "center",
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalContainer: {
-    width: 300,
+    width: "100%",
     padding: 20,
     backgroundColor: "white",
     borderRadius: 10,
