@@ -107,6 +107,7 @@ const HomePage = () => {
           border={1}
           borderRadius={20}
           justifyContent="space-between"
+          alignItems="center"
           w={"100%"}
           p={10}
         >
