@@ -183,7 +183,7 @@ const SessionControl = () => {
           <View style={styles.modalContainer}>
             <Text>Are you sure you want to end the session?</Text>
             <Button
-              title="Continue"
+              title="Keep Going"
               onPress={handleContinue}
               type={{ type: "primary", size: "l" }}
             />

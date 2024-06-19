@@ -19,6 +19,7 @@ const RootLayout = () => {
               name="notifications"
               options={{ headerShown: false }}
             />
+            <Stack.Screen name="streak" options={{ headerShown: false }} />
           </Stack>
         </BottomSheetModalProvider>
       </GestureHandlerRootView>
