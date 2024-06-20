@@ -7,10 +7,10 @@ import React, {
   useState,
 } from "react";
 import { SessionStatesType } from "@src/interfaces/session.types";
-import Timer from "../ui/Timer";
-import Button from "../ui/Button";
+import Timer from "@src/components/ui/Timer";
+import Button from "@src/components/ui/Button";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import CustomBackdrop from "../ui/CustomBackdrop";
+import CustomBackdrop from "@src/components/ui/CustomBackdrop";
 import { useRouter } from "expo-router";
 
 const SessionControl = () => {
