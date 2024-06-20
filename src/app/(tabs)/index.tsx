@@ -1,178 +1,130 @@
-import React, { useCallback, useMemo, useRef, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { Redirect } from "expo-router";
-import Button from "@src/components/ui/Button";
+import React, { useState } from "react";
+
+import { Image, Pressable, Switch, Text } from "react-native";
+import { Link, Redirect } from "expo-router";
 import DeviceMotionView from "@src/components/ui/DeviceMotionView";
-import NewLevelModal from "@src/components/modals/NewLevelModal";
 
 import { useUser } from "@state/useUser";
-import { usePushNotifications } from "@src/components/providers/PushNotificationsProvider";
-import { globalStyles } from "@src/styles/globalStyles";
+
 import SessionControl from "@src/components/sessions/SessionControl";
-import { BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
+import Stack from "@src/components/ui/Stack";
+import { SafeAreaView } from "react-native-safe-area-context";
+import Center from "@src/components/ui/Center";
 
 const HomePage = () => {
   const isSetupComplete = useUser((state) => state.isSetupComplete);
   const userName = useUser((state) => state.user.name);
-  const setAuth = useUser((state) => state.setAuth);
 
   const [isTrackingEnabled, setTrackingEnabled] = useState(false);
-  const [isModalVisible, setModalVisible] = useState(false);
-
-  const { sendPushNotification } = usePushNotifications();
-
-  const onNameChange = () => {
-    setAuth(true, {
-      deviceIds: ["1"],
-      currentDeviceId: "1",
-      dailyGoal: 80,
-      name: "Dr Seuss",
-    });
-  };
-
-  const onNameClear = () => {
-    setAuth(false, {
-      deviceIds: [],
-      currentDeviceId: null,
-      dailyGoal: 80,
-      name: "",
-    });
-  };
-
-  const toggleBackgroundFetch = () => {
-    if (setTrackingEnabled) {
-      setTrackingEnabled(!isTrackingEnabled);
-    }
-  };
-
-  const handleSendNotification = async () => {
-    await sendPushNotification({
-      title: "Devs say:",
-      body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-    });
-  };
-
-  //BottomSheet
-  // ref
-  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-
-  // variables
-  const snapPoints = useMemo(() => ["25%", "50%"], []);
-
-  // callbacks
-  const handlePresentModalPress = useCallback(() => {
-    bottomSheetModalRef.current?.present();
-  }, []);
-
-  const handleDismissModalPress = useCallback(() => {
-    bottomSheetModalRef.current?.dismiss();
-  }, []);
-
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log("handleSheetChanges", index);
-  }, []);
-
-  const showModal = () => {
-    setModalVisible(true);
-  };
-
-  const hideModal = () => {
-    setModalVisible(false);
-  };
+  const toggleTracking = () =>
+    setTrackingEnabled((previousState) => !previousState);
 
   if (!isSetupComplete) {
     return <Redirect href="/setup/start" />;
   }
 
   return (
-    <View>
-      <Text style={styles.text}>Home Page text</Text>
+    <SafeAreaView>
+      <Stack flexDirection="row" justifyContent="space-between" p={15} pb={0}>
+        <Stack
+          flexDirection="row"
+          gap={18}
+          border={1}
+          borderRadius={50}
+          p={10}
+          alignItems="center"
+        >
+          {/*TODO: display avatar */}
+          <Image source={require("../../../assets/img/avatar.png")} />
+          {userName === null ? <Text>{userName}</Text> : null}
+          {/*TODO: get user level */}
+          <Text>Lv.1</Text>
+        </Stack>
+        <Stack flexDirection="row" gap={18} border={0} p={5}>
+          <Image source={require("../../../assets/img/earbuds.png")} />
+          <Link href="/notifications" asChild>
+            <Pressable>
+              <Image
+                source={require("../../../assets/img/notifications.png")}
+              />
+            </Pressable>
+          </Link>
+        </Stack>
+      </Stack>
 
-      {!!userName && <Text>Hello {userName}!</Text>}
+      <Center p={15} pb={0}>
+        <Stack
+          flexDirection="row"
+          border={1}
+          borderRadius={20}
+          justifyContent="space-evenly"
+          w={"100%"}
+          p={18}
+        >
+          <Stack flexDirection="row" border={0} justifyContent="space-evenly">
+            <Center p={10}>
+              <Image source={require("../../../assets/img/avatar.png")} />
+            </Center>
 
-      <Button
-        title="Update name"
-        onPress={onNameChange}
-        type={{ type: "primary", size: "s" }}
-      />
-
-      <Button
-        title="Reset setup"
-        onPress={onNameClear}
-        type={{ type: "primary", size: "l" }}
-      />
-
-      <Button
-        title="Clear name"
-        onPress={onNameClear}
-        type={{ type: "secondary", size: "l" }}
-      />
-
-      <Button
-        title={isTrackingEnabled ? "Disable Tracking" : "Enable Tracking"}
-        onPress={toggleBackgroundFetch}
-        type={{ type: "secondary", size: "s" }}
-      />
-
-      <SessionControl />
+            <Stack
+              flexDirection="column"
+              border={0}
+              justifyContent="space-evenly"
+            >
+              <Text>Posture Score</Text>
+              <Text>89 / 100</Text>
+            </Stack>
+          </Stack>
+          <Stack
+            flexDirection="column"
+            border={0}
+            justifyContent="space-evenly"
+          >
+            <Stack
+              flexDirection="row"
+              gap={10}
+              border={0}
+              justifyContent="start"
+            >
+              <Image source={require("../../../assets/img/avatar.png")} />
+              <Text>500 XP</Text>
+            </Stack>
+            <Stack
+              flexDirection="row"
+              gap={10}
+              border={0}
+              justifyContent="start"
+            >
+              <Image source={require("../../../assets/img/avatar.png")} />
+              <Text>5 Day Streak</Text>
+            </Stack>
+          </Stack>
+        </Stack>
+      </Center>
+      <Center p={15}>
+        <Stack
+          flexDirection="row"
+          border={1}
+          borderRadius={20}
+          justifyContent="space-between"
+          alignItems="center"
+          w={"100%"}
+          p={10}
+        >
+          <Text>Realtime Tracking</Text>
+          <Switch onValueChange={toggleTracking} value={isTrackingEnabled} />
+        </Stack>
+      </Center>
+      <Center>
+        <Image source={require("../../../assets/img/mascot.png")} />
+      </Center>
+      <Center>
+        <SessionControl />
+      </Center>
 
       <DeviceMotionView isTrackingEnabled={isTrackingEnabled} />
-
-      <Button
-        title="Send Notification"
-        onPress={handleSendNotification}
-        type={{ type: "secondary", size: "l" }}
-      />
-
-      <Button
-        onPress={handlePresentModalPress}
-        title="Present Bottom Sheet Modal"
-        type={{ type: "secondary", size: "l" }}
-      />
-
-      <BottomSheetModal
-        ref={bottomSheetModalRef}
-        index={1}
-        snapPoints={snapPoints}
-        onChange={handleSheetChanges}
-      >
-        <BottomSheetView style={styles.contentContainer}>
-          <Text>Awesome 🎉</Text>
-          <Button
-            onPress={handleDismissModalPress}
-            title="Close Bottom Sheet Modal"
-            type={{ type: "secondary", size: "l" }}
-          />
-        </BottomSheetView>
-      </BottomSheetModal>
-
-      <Button
-        title="Show New Level Modal"
-        onPress={showModal}
-        type={{ type: "secondary", size: "l" }}
-      />
-
-      <NewLevelModal isVisible={isModalVisible} onClose={hideModal} />
-    </View>
+    </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  text: {
-    ...globalStyles,
-    padding: 10,
-  },
-  input: {
-    height: 40,
-    borderColor: "gray",
-    borderWidth: 1,
-    paddingHorizontal: 10,
-    marginVertical: 10,
-  },
-  contentContainer: {
-    flex: 1,
-    alignItems: "center",
-  },
-});
 
 export default HomePage;

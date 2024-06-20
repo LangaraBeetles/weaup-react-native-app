@@ -1,4 +1,5 @@
-import { Button, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+import Button from "./Button";
 
 const MINUTE_IN_SECONDS = 60;
 const HOUR_IN_SECONDS = 60 * MINUTE_IN_SECONDS;
@@ -8,12 +9,12 @@ const TimerDisplay: React.FC<{ timeInSeconds: number }> = ({
 }) => {
   const hours = Math.floor(timeInSeconds / HOUR_IN_SECONDS);
   const minutes = Math.floor(
-    (timeInSeconds % HOUR_IN_SECONDS) / MINUTE_IN_SECONDS
+    (timeInSeconds % HOUR_IN_SECONDS) / MINUTE_IN_SECONDS,
   );
   const seconds = timeInSeconds % MINUTE_IN_SECONDS;
 
   return (
-    <Text>
+    <Text style={styles.text}>
       {hours}:{minutes < 10 ? `0${minutes}` : minutes}:
       {seconds < 10 ? `0${seconds}` : seconds}
     </Text>
@@ -25,13 +26,15 @@ const Timer: React.FC<{
   handlePause: () => void;
   handleStop: () => void;
   isPaused: boolean;
-}> = ({ timeInSeconds, handlePause, handleStop, isPaused }) => {
+}> = ({ timeInSeconds, handleStop }) => {
   return (
     <View style={styles.container}>
       <TimerDisplay timeInSeconds={timeInSeconds} />
-      {/* TODO: remove Pause / Resume button */}
-      <Button title={isPaused ? "Resume" : "Pause"} onPress={handlePause} />
-      <Button title="Stop tracking" onPress={handleStop} />
+      <Button
+        title="Stop tracking"
+        onPress={handleStop}
+        type={{ type: "primary", size: "l" }}
+      />
     </View>
   );
 };
@@ -42,7 +45,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   text: {
-    fontSize: 32,
+    fontSize: 48,
   },
 });
 
