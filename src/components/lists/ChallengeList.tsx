@@ -3,7 +3,7 @@ import { useRouter } from "expo-router";
 
 import Center from "@src/components/ui/Center";
 import ChallengeCard from "@src/components/listItems/ChallengeCard";
-import Chip from "../ui/Chip";
+import Chip from "@src/components/ui/Chip";
 
 const ChallengeList = (props: any) => {
   const router = useRouter();

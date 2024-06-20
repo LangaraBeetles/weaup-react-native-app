@@ -8,7 +8,7 @@ import {
   Image,
 } from "react-native";
 
-import Stack from "../ui/Stack";
+import Stack from "@src/components/ui/Stack";
 import Button from "@src/components/ui/Button";
 
 const ChallengeDetailsForm = (props: any) => {

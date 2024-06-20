@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View, StyleSheet, TouchableOpacity, Image } from "react-native";
 
-import Stack from "../ui/Stack";
+import Stack from "@src/components/ui/Stack";
 import Button from "@src/components/ui/Button";
 
 const ChallengeConfirmationForm = (props: any) => {
@@ -12,7 +12,7 @@ const ChallengeConfirmationForm = (props: any) => {
       <Stack flexDirection="row" gap={18} p={16} justifyContent="flex-start">
         <View style={styles.button}>
           <TouchableOpacity
-            onPress={() => handleCloseModalPress()}
+            onPress={handleCloseModalPress}
             style={styles.closeButton}
           >
             <Image source={require("../../../assets/img/closeIcon.png")} />

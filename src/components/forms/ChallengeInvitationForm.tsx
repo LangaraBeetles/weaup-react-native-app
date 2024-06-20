@@ -1,8 +1,8 @@
 import React from "react";
 import { Text, View, StyleSheet, Image } from "react-native";
 
-import Center from "../ui/Center";
-import Stack from "../ui/Stack";
+import Center from "@src/components/ui/Center";
+import Stack from "@src/components/ui/Stack";
 import Button from "@src/components/ui/Button";
 
 const ChallengeInvitationForm = (props: any) => {
@@ -32,7 +32,7 @@ const ChallengeInvitationForm = (props: any) => {
           <Button
             type={{ type: "secondary", size: "l" }}
             title="Not Now"
-            onPress={() => handleCloseModalPress()}
+            onPress={handleCloseModalPress}
           ></Button>
         </Stack>
       </Stack>

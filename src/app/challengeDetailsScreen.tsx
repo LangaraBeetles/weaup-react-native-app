@@ -7,6 +7,7 @@ import Stack from "@src/components/ui/Stack";
 const challengeDetails = () => {
   const params = useLocalSearchParams();
 
+  //TODO: get the challengeId only, then make a GET request from the challenge API
   const name = params.name;
   const goal: number = params.goal as unknown as number;
   const progress: number = params.progress as unknown as number;

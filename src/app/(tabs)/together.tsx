@@ -48,10 +48,6 @@ const TogetherScreen = () => {
   const handleCloseModalPress = () => bottomSheetModalRef.current?.close();
 
   const createChallengeForm = (
-    // <View>
-    //   <CreateChallengeForm handleCloseModalPress={handleCloseModalPress} />
-    //   <ChallengeGoalForm></ChallengeGoalForm>
-    // </View>
     <CreateChallengeContainer handleCloseModalPress={handleCloseModalPress} />
   );
 

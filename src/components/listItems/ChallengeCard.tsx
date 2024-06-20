@@ -10,6 +10,7 @@ const ChallengeCard = (props: any) => {
   const showDetails = () => {
     router.navigate({
       pathname: "challengeDetailsScreen",
+      //TODO: get the challengeId only, then make a GET request from the challenge API
       params: {
         name: challenge.name,
         startDate: challenge.start_at,

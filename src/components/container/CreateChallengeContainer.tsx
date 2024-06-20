@@ -1,36 +1,32 @@
 import { useState } from "react";
 import { View } from "react-native";
 
-import ChallengeDetailsForm from "../forms/ChallengeDetailsForm";
-import ChallengeGoalForm from "../forms/ChallengeGoalForm";
-import ChallengeConfirmationForm from "../forms/ChallengeConfirmationForm";
-import ChallengeInvitationForm from "../forms/ChallengeInvitationForm";
+import ChallengeDetailsForm from "@src/components/forms/ChallengeDetailsForm";
+import ChallengeGoalForm from "@src/components/forms/ChallengeGoalForm";
+import ChallengeConfirmationForm from "@src/components/forms/ChallengeConfirmationForm";
+import ChallengeInvitationForm from "@src/components/forms/ChallengeInvitationForm";
 
 const CreateChallengeContainer = (props: any) => {
   const handleCloseModalPress = props.handleCloseModalPress;
   const [step, setStep] = useState(0);
 
-  const handleStep = (stepNumber: number) => {
-    setStep(stepNumber);
-  };
-
   return (
     <View>
       {step == 0 && (
         <ChallengeDetailsForm
-          handleStep={handleStep}
+          handleStep={setStep}
           handleCloseModalPress={handleCloseModalPress}
         />
       )}
       {step == 1 && (
         <ChallengeGoalForm
-          handleStep={handleStep}
+          handleStep={setStep}
           handleCloseModalPress={handleCloseModalPress}
         />
       )}
       {step == 2 && (
         <ChallengeConfirmationForm
-          handleStep={handleStep}
+          handleStep={setStep}
           handleCloseModalPress={handleCloseModalPress}
         />
       )}
