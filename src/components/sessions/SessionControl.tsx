@@ -10,7 +10,7 @@ import { SessionStatesType } from "@src/interfaces/session.types";
 import Timer from "../ui/Timer";
 import Button from "../ui/Button";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import CustomBackdrop from "../style/CustomBackdrop";
+import CustomBackdrop from "../ui/CustomBackdrop";
 import { useRouter } from "expo-router";
 
 const SessionControl = () => {
