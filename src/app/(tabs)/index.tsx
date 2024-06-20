@@ -1,12 +1,11 @@
 import React, { useCallback, useMemo, useRef, useState } from "react";
-
 import { StyleSheet, Text, View } from "react-native";
 import { Redirect } from "expo-router";
 import Button from "@src/components/ui/Button";
 import DeviceMotionView from "@src/components/ui/DeviceMotionView";
+import NewLevelModal from "@src/components/modals/NewLevelModal";
 
 import { useUser } from "@state/useUser";
-
 import { usePushNotifications } from "@src/components/providers/PushNotificationsProvider";
 import { globalStyles } from "@src/styles/globalStyles";
 import SessionControl from "@src/components/sessions/SessionControl";
@@ -18,6 +17,7 @@ const HomePage = () => {
   const setAuth = useUser((state) => state.setAuth);
 
   const [isTrackingEnabled, setTrackingEnabled] = useState(false);
+  const [isModalVisible, setModalVisible] = useState(false);
 
   const { sendPushNotification } = usePushNotifications();
 
@@ -72,6 +72,14 @@ const HomePage = () => {
     console.log("handleSheetChanges", index);
   }, []);
 
+  const showModal = () => {
+    setModalVisible(true);
+  };
+
+  const hideModal = () => {
+    setModalVisible(false);
+  };
+
   if (!isSetupComplete) {
     return <Redirect href="/setup/start" />;
   }
@@ -118,7 +126,7 @@ const HomePage = () => {
 
       <Button
         onPress={handlePresentModalPress}
-        title="Present Modal"
+        title="Present Bottom Sheet Modal"
         type={{ type: "secondary", size: "l" }}
       />
 
@@ -134,9 +142,17 @@ const HomePage = () => {
             onPress={handleDismissModalPress}
             title="Close Bottom Sheet Modal"
             type={{ type: "secondary", size: "l" }}
-          ></Button>
+          />
         </BottomSheetView>
       </BottomSheetModal>
+
+      <Button
+        title="Show New Level Modal"
+        onPress={showModal}
+        type={{ type: "secondary", size: "l" }}
+      />
+
+      <NewLevelModal isVisible={isModalVisible} onClose={hideModal} />
     </View>
   );
 };
