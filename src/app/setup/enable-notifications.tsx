@@ -1,9 +1,10 @@
 import Main from "@src/components/layout/Main";
 import Button from "@src/components/ui/Button";
 import Center from "@src/components/ui/Center";
+import Spacer from "@src/components/ui/Spacer";
 import Stack from "@src/components/ui/Stack";
 import { router } from "expo-router";
-import { SafeAreaView, Text, View } from "react-native";
+import { SafeAreaView, Text } from "react-native";
 
 const EnableNotificationsScreen = () => {
   const next = () => {
@@ -14,7 +15,8 @@ const EnableNotificationsScreen = () => {
     <SafeAreaView>
       <Main>
         <Center justifyContent="center" height="100%" px={2}>
-          <View style={{ height: "40%" }} />
+          <Spacer height="60%" />
+
           <Stack gap={80}>
             <Stack gap={16}>
               <Text style={{ textAlign: "center" }}>Get Real-time Alerts</Text>
