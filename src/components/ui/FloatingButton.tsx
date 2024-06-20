@@ -1,20 +1,17 @@
 import React from "react";
-import { TouchableOpacity, StyleSheet } from "react-native";
+import { TouchableOpacity, StyleSheet, Image } from "react-native";
 
 const FloatingButton = (props: any) => (
-  <TouchableOpacity
-    onPress={props.onPress}
-    style={styles.floatingButton}
-  ></TouchableOpacity>
+  <TouchableOpacity onPress={props.onPress} style={styles.floatingButton}>
+    <Image source={require("../../../assets/img/addIcon.png")} />
+  </TouchableOpacity>
 );
 
 const styles = StyleSheet.create({
-  container: {
+  floatingButton: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-  },
-  floatingButton: {
     position: "absolute",
     width: 49.5,
     height: 49.5,
