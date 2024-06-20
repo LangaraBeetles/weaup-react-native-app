@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from "react";
-import { View, Text, StyleSheet, Animated } from "react-native";
+import { View, StyleSheet, Animated } from "react-native";
 
 const ProgressBar = (props: any) => {
-  const { currentValue, goal } = props;
+  const { currentValue, goal, content } = props;
   const progress = (currentValue / goal) * 100;
   const animation = new Animated.Value(progress);
   const counter = useRef(new Animated.Value(0)).current;
@@ -16,7 +16,7 @@ const ProgressBar = (props: any) => {
   useEffect(() => {
     Animated.timing(counter, {
       toValue: animation,
-      duration: 0, //0 = insantly. 2000 = 2 sec
+      duration: 2000,
       useNativeDriver: false,
     }).start();
   }, [currentValue]);
@@ -26,9 +26,7 @@ const ProgressBar = (props: any) => {
       <View style={styles.container}>
         <Animated.View style={[styles.bar, { width: width }]} />
       </View>
-      <Text>
-        {currentValue}/{goal}
-      </Text>
+      {content}
     </View>
   );
 };

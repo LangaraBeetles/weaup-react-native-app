@@ -1,28 +1,37 @@
-import { FlatList } from "react-native";
+import { FlatList, Text } from "react-native";
+import { useRouter } from "expo-router";
 
 import Center from "@src/components/ui/Center";
-import Button from "@src/components/ui/Button";
-import ChallengeCard from "@src/listItems/ChallengeCard";
+import ChallengeCard from "@src/components/listItems/ChallengeCard";
+import Chip from "../ui/Chip";
 
 const ChallengeList = (props: any) => {
-  const { challenges, viewPastChallenges, showDetails } = props;
+  const router = useRouter();
+  const { challenges, isOngoing } = props;
+
+  const viewPastChallenges = () => {
+    router.navigate("pastChallengesScreen");
+  };
 
   return (
     <FlatList
       data={challenges}
       renderItem={({ item, index }) => {
-        if (index === challenges.length - 1) {
+        if (isOngoing && index === challenges.length - 1) {
           return (
             <Center>
-              <Button
-                type={{ type: "primary", size: "l" }}
-                title="View past challenges"
+              <Chip
+                borderRadius={50}
+                p={12}
+                h={45}
                 onPress={viewPastChallenges}
-              ></Button>
+              >
+                <Text>View past challenges</Text>
+              </Chip>
             </Center>
           );
         }
-        return <ChallengeCard challenge={item} showDetails={showDetails} />;
+        return <ChallengeCard challenge={item} isOngoing={isOngoing} />;
       }}
     />
   );

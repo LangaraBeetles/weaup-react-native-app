@@ -1,14 +1,13 @@
 import React, { useRef } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Image, Text } from "react-native";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
 import Stack from "@src/components/ui/Stack";
-import Center from "@src/components/ui/Center";
 import FloatingButton from "@src/components/ui/FloatingButton";
-import ChallengeList from "@src/components/lists/ChallengeList";
-import Button from "@src/components/ui/Button";
 import CustomBottomSheetModal from "@src/components/ui/CustomBottomSheetModal";
 import CreateChallengeForm from "@src/components/forms/CreateChallengeForm";
+import ChallengeList from "@src/components/lists/ChallengeList";
+import Chip from "@src/components/ui/Chip";
 
 //TODO START: Remove dummy data
 const todayDate = new Date();
@@ -31,15 +30,15 @@ const member2 = {
 const challenge = {
   creator_id: 1,
   name: "Challenging Work",
-  description: "My first challenge",
-  start_at: todayDate,
+  description: "Weekly upkeep",
+  start_at: new Date(),
   end_at: new Date(todayDate.setDate(todayDate.getDate() + duration)),
   goal: 100,
   status: "in_progress",
   members: [member1, member2],
   progress: 40,
 };
-const challenges = Array(10).fill(challenge);
+const challenges = Array(8).fill(challenge);
 //TODO END
 
 const TogetherScreen = () => {
@@ -54,21 +53,31 @@ const TogetherScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Center>
-        <Stack flexDirection="row" gap={10} justifyContent="space-between">
-          <Button
-            type={{ type: "secondary", size: "s" }}
-            title="By you"
-          ></Button>
-          <Button type={{ type: "secondary", size: "s" }} title="Sort"></Button>
+      <Stack
+        flexDirection="row"
+        gap={10}
+        pb={16}
+        px={16}
+        justifyContent="space-between"
+      >
+        <Stack flexDirection="row" gap={10} justifyContent="flex-start">
+          <Chip borderRadius={50} p={12} h={45} colorScheme="primary">
+            <Text>All</Text>
+          </Chip>
+          <Chip borderRadius={50} p={12} h={45} colorScheme="primary">
+            <Text>Created by you</Text>
+          </Chip>
         </Stack>
-      </Center>
-      <ChallengeList challenges={challenges}></ChallengeList>
-      <FloatingButton onPress={addChallenge}></FloatingButton>
+        <Chip borderRadius={50} p={12} h={45} colorScheme="primary">
+          <Image source={require("../../../assets/img/sortIcon.png")} />
+        </Chip>
+      </Stack>
+      <ChallengeList challenges={challenges} isOngoing={true} />
+      <FloatingButton onPress={addChallenge} />
       <CustomBottomSheetModal
         ref={bottomSheetModalRef}
         content={createChallengeForm}
-      ></CustomBottomSheetModal>
+      />
     </View>
   );
 };
@@ -76,6 +85,7 @@ const TogetherScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingVertical: 16,
   },
 });
 
