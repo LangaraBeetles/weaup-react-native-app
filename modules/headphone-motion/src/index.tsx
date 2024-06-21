@@ -17,7 +17,15 @@ const HeadphoneMotionModule = NativeModules.HeadphoneMotionModule
       }
     );
 
-const eventEmitter = new NativeEventEmitter(HeadphoneMotionModule);
+// Android boilerplate function
+export function multiply(a: number, b: number): Promise<number> {
+  return HeadphoneMotionModule.multiply(a, b);
+}
+
+const eventEmitter =
+  Platform.OS === "ios"
+    ? new NativeEventEmitter(HeadphoneMotionModule)
+    : undefined;
 
 export let isHeadphoneMotionAvailable = false;
 try {
@@ -61,15 +69,15 @@ export enum AuthorizationStatus {
 }
 
 export async function getAuthorizationStatus(): Promise<AuthorizationStatus> {
-  return await HeadphoneMotionModule.getAuthorizationStatus();
+  return await HeadphoneMotionModule.getAuthorizationStatus?.();
 }
 
 export async function requestPermission(): Promise<AuthorizationStatus> {
-  const status = await getAuthorizationStatus();
+  const status = await getAuthorizationStatus?.();
   if (status === AuthorizationStatus.notDetermined) {
-    await HeadphoneMotionModule.startDeviceMotionUpdates();
+    await HeadphoneMotionModule.startDeviceMotionUpdates?.();
   }
-  return await getAuthorizationStatus();
+  return await getAuthorizationStatus?.();
 }
 
 export async function startListenDeviceMotionUpdates() {
@@ -77,35 +85,35 @@ export async function startListenDeviceMotionUpdates() {
 }
 
 export async function startDeviceMotionUpdates() {
-  await HeadphoneMotionModule.startDeviceMotionUpdates();
+  await HeadphoneMotionModule.startDeviceMotionUpdates?.();
 }
 
 export async function stopDeviceMotionUpdates() {
-  await HeadphoneMotionModule.stopDeviceMotionUpdates();
+  await HeadphoneMotionModule.stopDeviceMotionUpdates?.();
 }
 
 export async function isDeviceMotionActive(): Promise<boolean> {
-  return await HeadphoneMotionModule.isDeviceMotionActive();
+  return await HeadphoneMotionModule.isDeviceMotionActive?.();
 }
 
 export async function getLatestDeviceMotion(): Promise<HeadphoneMotionData | null> {
-  return await HeadphoneMotionModule.getLatestDeviceMotion();
+  return await HeadphoneMotionModule.getLatestDeviceMotion?.();
 }
 
 export function onDeviceMotionUpdatesError(
   cb: (data: { text: string }) => void
 ) {
-  return eventEmitter.addListener("onDeviceMotionUpdatesError", cb);
+  return eventEmitter?.addListener("onDeviceMotionUpdatesError", cb);
 }
 
 export function onDeviceMotionUpdates(cb: (data: HeadphoneMotionData) => void) {
-  return eventEmitter.addListener("onDeviceMotionUpdates", cb);
+  return eventEmitter?.addListener("onDeviceMotionUpdates", cb);
 }
 
 export function onHeadphoneConnected(cb: () => void) {
-  return eventEmitter.addListener("onHeadphoneConnected", cb);
+  return eventEmitter?.addListener("onHeadphoneConnected", cb);
 }
 
 export function onHeadphoneDisconnected(cb: () => void) {
-  return eventEmitter.addListener("onHeadphoneDisconnected", cb);
+  return eventEmitter?.addListener("onHeadphoneDisconnected", cb);
 }
