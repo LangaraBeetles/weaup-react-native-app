@@ -48,6 +48,11 @@ const RootLayout = () => {
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             <Stack.Screen name="setup" options={{ headerShown: false }} />
             <Stack.Screen
+              name="provider-signup"
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen name="auth" options={{ headerShown: false }} />
+            <Stack.Screen
               name="session-summary"
               options={{ headerShown: false }}
             />
@@ -55,7 +60,6 @@ const RootLayout = () => {
               name="notifications"
               options={{ headerShown: false }}
             />
-            <Stack.Screen name="streak" options={{ headerShown: false }} />
           </Stack>
         </BottomSheetModalProvider>
       </GestureHandlerRootView>
