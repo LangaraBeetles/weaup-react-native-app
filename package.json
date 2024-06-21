@@ -19,6 +19,7 @@
     "aws-sdk": "^2.1630.0",
     "axios": "^1.7.2",
     "babel-plugin-module-resolver": "^5.0.2",
+    "cocoapods": "^0.0.0",
     "expo": "~51.0.14",
     "expo-constants": "~16.0.1",
     "expo-dev-client": "~4.0.18",
