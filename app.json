@@ -2,8 +2,11 @@
   "expo": {
     "name": "beetles-mobile",
     "slug": "alignmend",
-    "scheme": "alginmend-scheme",
+    "scheme": "alginmend",
     "version": "1.0.0",
+    "assetBundlePatterns": [
+      "./assets/fonts/*"
+    ],
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -15,14 +18,18 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.alignmend",
-      "minSdkVersion": "15.0"
+      "minSdkVersion": "15.0",
+      "runtimeVersion": "1.0.0"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.alignmend"
+      "package": "com.alignmend",
+      "runtimeVersion": {
+        "policy": "appVersion"
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -33,7 +40,32 @@
       }
     },
     "plugins": [
-      "expo-router",
+      [
+        "expo-router"
+      ],
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/NunitoBlack.ttf",
+            "./assets/fonts/NunitoExtraBold.ttf",
+            "./assets/fonts/NunitoBold.ttf",
+            "./assets/fonts/NunitoSemiBold.ttf",
+            "./assets/fonts/NunitoMedium.ttf",
+            "./assets/fonts/NunitoRegular.ttf",
+            "./assets/fonts/NunitoLight.ttf",
+            "./assets/fonts/NunitoExtraLight.ttf",
+            "./assets/fonts/NunitoBlackItalic.ttf",
+            "./assets/fonts/NunitoExtraBoldItalic.ttf",
+            "./assets/fonts/NunitoBoldItalic.ttf",
+            "./assets/fonts/NunitoSemiBoldItalic.ttf",
+            "./assets/fonts/NunitoMediumItalic.ttf",
+            "./assets/fonts/NunitoItalic.ttf",
+            "./assets/fonts/NunitoLightItalic.ttf",
+            "./assets/fonts/NunitoExtraLightItalic.ttf"
+          ]
+        }
+      ],
       [
         "expo-build-properties",
         {
@@ -44,6 +76,8 @@
         }
       ]
     ],
-    "owner": "beetles"
+    "updates": {
+      "url": "https://u.expo.dev/b61aa28d-218d-4007-b696-97c4a2208074"
+    }
   }
 }

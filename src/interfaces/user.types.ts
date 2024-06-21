@@ -3,6 +3,7 @@ export type UserType = {
   currentDeviceId: string | null;
   name: string;
   dailyGoal: number; // out of 100
+  providerId: string;
 };
 
 export enum TrackingModeEnum {

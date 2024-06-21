@@ -42,5 +42,5 @@ yarn-error.*
 config.ts
 
 #build
-ios/
-android/
+# ios/
+# android/
