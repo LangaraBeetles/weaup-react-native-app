@@ -19,7 +19,7 @@ const ChallengeDetailsForm = (props: any) => {
       <Stack flexDirection="row" gap={18} p={16} justifyContent="flex-start">
         <View style={styles.button}>
           <TouchableOpacity
-            onPress={() => handleCloseModalPress()}
+            onPress={handleCloseModalPress}
             style={styles.closeButton}
           >
             <Image source={require("../../../assets/img/closeIcon.png")} />
