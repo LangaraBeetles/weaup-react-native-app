@@ -19,6 +19,7 @@ const userInitialState: UserType = {
   currentDeviceId: null,
   name: "",
   dailyGoal: 80, // out of 100
+  providerId: "",
 };
 
 export const useUser = create<UserState>()(
@@ -51,7 +52,7 @@ export const useUser = create<UserState>()(
       {
         storage: createJSONStorage(() => AsyncStorage),
         name: "user-db",
-      }
-    )
-  )
+      },
+    ),
+  ),
 );
