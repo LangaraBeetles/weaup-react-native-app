@@ -109,7 +109,6 @@ const Notifications = () => {
         "You did a great job yesterday! Check out your Daily Summary now!",
       time: "Sunday",
     },
-    // Add more notifications as needed
   ]);
 
   const filteredNotifications = notifications.filter(
@@ -178,6 +177,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: "100%",
     backgroundColor: "#FDD462",
+    paddingBottom: 40,
   },
   header: {
     flexDirection: "row",
@@ -208,6 +208,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F9F9F9",
     paddingTop: 10,
     borderRadius: 20,
+    height: "100%",
   },
   notification: {
     flexDirection: "row",
