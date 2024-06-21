@@ -2,7 +2,7 @@
   "expo": {
     "name": "beetles-mobile",
     "slug": "alignmend",
-    "scheme": "alginmend-scheme",
+    "scheme": "alginmend",
     "version": "1.0.0",
     "assetBundlePatterns": ["./assets/fonts/*"],
     "orientation": "portrait",

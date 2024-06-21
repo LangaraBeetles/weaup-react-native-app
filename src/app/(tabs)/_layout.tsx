@@ -5,7 +5,7 @@ const TabsLayout = () => {
     <Tabs>
       <Tabs.Screen
         name="index"
-        options={{ headerTitle: "Home Page", title: "Home" }}
+        options={{ headerShown: false, title: "Home" }}
       />
       <Tabs.Screen
         name="together"

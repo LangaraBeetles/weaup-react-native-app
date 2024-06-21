@@ -3,8 +3,16 @@ import ImageUploader from "@src/components/ImageUploader";
 import { theme } from "@src/styles/theme";
 import Center from "@src/components/ui/Center";
 import Stack from "@src/components/ui/Stack";
+import { useUser } from "@src/state/useUser";
+import { Redirect } from "expo-router";
 
 const ProfileScreen = () => {
+  const isAuth = useUser((data) => data.isAuth);
+
+  if (!isAuth) {
+    return <Redirect href="/provider-signup" />;
+  }
+
   return (
     <Center
       backgroundColor={theme.colors.$blue8}

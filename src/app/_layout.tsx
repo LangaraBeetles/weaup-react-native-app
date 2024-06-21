@@ -55,6 +55,19 @@ const RootLayout = () => {
               name="pastChallengesScreen"
               options={{ headerShown: true, title: "Past Challenges" }}
             />
+            <Stack.Screen
+              name="provider-signup"
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen name="auth" options={{ headerShown: false }} />
+            <Stack.Screen
+              name="session-summary"
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="notifications"
+              options={{ headerShown: false }}
+            />
           </Stack>
         </BottomSheetModalProvider>
       </GestureHandlerRootView>
