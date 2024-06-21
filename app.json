@@ -4,7 +4,9 @@
     "slug": "alignmend",
     "scheme": "alginmend",
     "version": "1.0.0",
-    "assetBundlePatterns": ["./assets/fonts/*"],
+    "assetBundlePatterns": [
+      "./assets/fonts/*"
+    ],
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -15,14 +17,18 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.alignmend"
+      "bundleIdentifier": "com.alignmend",
+      "runtimeVersion": "1.0.0"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.alignmend"
+      "package": "com.alignmend",
+      "runtimeVersion": {
+        "policy": "appVersion"
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -34,7 +40,9 @@
     },
     "owner": "beetles",
     "plugins": [
-      ["expo-router"],
+      [
+        "expo-router"
+      ],
       [
         "expo-font",
         {
@@ -47,7 +55,6 @@
             "./assets/fonts/NunitoRegular.ttf",
             "./assets/fonts/NunitoLight.ttf",
             "./assets/fonts/NunitoExtraLight.ttf",
-
             "./assets/fonts/NunitoBlackItalic.ttf",
             "./assets/fonts/NunitoExtraBoldItalic.ttf",
             "./assets/fonts/NunitoBoldItalic.ttf",
@@ -59,6 +66,9 @@
           ]
         }
       ]
-    ]
+    ],
+    "updates": {
+      "url": "https://u.expo.dev/b61aa28d-218d-4007-b696-97c4a2208074"
+    }
   }
 }

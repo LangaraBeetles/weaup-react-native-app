@@ -9,7 +9,8 @@
     "ios": "expo run:ios",
     "ios:pods": "npx pod-install && expo run:ios --device",
     "web": "expo start --web",
-    "prepare": "husky"
+    "prepare": "husky",
+    "publish": "eas update --branch dev"
   },
   "dependencies": {
     "@fast-styles/babel-plugin": "^0.2.3",
@@ -32,6 +33,7 @@
     "expo-router": "~3.5.16",
     "expo-sensors": "^13.0.8",
     "expo-status-bar": "~1.12.1",
+    "expo-updates": "~0.25.17",
     "lint-staged": "^15.2.5",
     "react": "18.2.0",
     "react-native": "0.74.2",
