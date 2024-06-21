@@ -40,8 +40,8 @@ const TrackingModeProvider: React.FC<{ children: React.ReactNode }> = ({
     });
 
     return () => {
-      connectedListener.remove();
-      disconnectedListener.remove();
+      connectedListener?.remove();
+      disconnectedListener?.remove();
     };
   }, []);
 

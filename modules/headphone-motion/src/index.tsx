@@ -12,7 +12,9 @@ const HeadphoneMotionModule = NativeModules.HeadphoneMotionModule
       {},
       {
         get() {
-          throw new Error(LINKING_ERROR);
+          return;
+
+          // throw new Error(LINKING_ERROR);
         },
       }
     );
