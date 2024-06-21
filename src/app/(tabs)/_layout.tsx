@@ -9,7 +9,7 @@ const TabsLayout = () => {
       />
       <Tabs.Screen
         name="together"
-        options={{ headerTitle: "Together", title: "Together" }}
+        options={{ headerTitle: "Ongoing Challenges", title: "Together" }}
       />
       <Tabs.Screen
         name="analytics"
