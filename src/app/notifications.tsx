@@ -109,7 +109,6 @@ const Notifications = () => {
         "You did a great job yesterday! Check out your Daily Summary now!",
       time: "Sunday",
     },
-    // Add more notifications as needed
   ]);
 
   const filteredNotifications = notifications.filter(
