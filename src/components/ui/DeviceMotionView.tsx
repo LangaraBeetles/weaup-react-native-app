@@ -30,8 +30,8 @@ export default function DeviceMotionView() {
         DeviceMotion.addListener((devicemotionData) => {
           try {
             // Given acceleration including gravity components
-            const a_y = devicemotionData.accelerationIncludingGravity.y;
-            const a_z = devicemotionData.accelerationIncludingGravity.z;
+            const a_y = devicemotionData?.accelerationIncludingGravity?.y;
+            const a_z = devicemotionData?.accelerationIncludingGravity?.z;
             // Function to convert radians to degrees
             function radiansToDegrees(radians: number) {
               return radians * (180 / Math.PI);
@@ -51,8 +51,8 @@ export default function DeviceMotionView() {
             } else {
               setCurrentPosture("not_reading");
             }
-          } catch (error) {
-            console.error({ error });
+          } catch (error: any) {
+            console.error(error.message);
           }
         });
         DeviceMotion.setUpdateInterval(1000);
