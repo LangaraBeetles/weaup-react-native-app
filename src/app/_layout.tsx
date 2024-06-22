@@ -7,6 +7,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useEffect } from "react";
 
 import XPSystem from "@src/components/scoring/XPSystem";
+import HPSystem from "@src/components/scoring/HPSystem";
 
 const RootLayout = () => {
   const [fontsLoaded, fontError] = useFonts({
@@ -44,6 +45,7 @@ const RootLayout = () => {
 
   return (
     <PushNotificationsProvider>
+      <HPSystem />
       <XPSystem />
       <GestureHandlerRootView>
         <BottomSheetModalProvider>

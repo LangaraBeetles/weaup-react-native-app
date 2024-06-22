@@ -15,7 +15,7 @@ type UserState = {
 
   setLevel: (newLevel: number) => void;
   setXP: (newXP: number | ((prevXP: number) => number)) => void;
-  setHP: (newHP: number) => void;
+  setHP: (newHP: number | ((prevHP: number) => number)) => void;
   setDailyStreakCounter: (newDailyStreakCounter: number) => void;
 };
 
@@ -76,12 +76,12 @@ export const useUser = create<UserState>()(
               xp: typeof newXP === "function" ? newXP(state.user.xp) : newXP,
             },
           })),
-        setHP: (newHP: number) =>
+        setHP: (newHP: number | ((prevHP: number) => number)) =>
           set((state: { isAuth: boolean; user: UserType }) => ({
             ...state,
             user: {
               ...state.user,
-              hp: newHP,
+              hp: typeof newHP === "function" ? newHP(state.user.hp) : newHP,
             },
           })),
         setDailyStreakCounter: (newDailyStreakCounter: number) =>
