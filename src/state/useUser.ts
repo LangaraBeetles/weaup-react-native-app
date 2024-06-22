@@ -12,6 +12,10 @@ type UserState = {
   greeting: () => string;
   setAuth: (isAuth: boolean, user: UserType) => void;
   setDailyGoal: (newDailyGoal: number) => void;
+  setLevel: (newLevel: number) => void;
+  setXP: (newXP: number) => void;
+  setHP: (newHP: number) => void;
+  setDailyStreakCounter: (newDailyStreakCounter: number) => void;
 };
 
 const userInitialState: UserType = {
@@ -20,6 +24,10 @@ const userInitialState: UserType = {
   name: "",
   dailyGoal: 80, // out of 100
   providerId: "",
+  level: 1,
+  xp: 0,
+  hp: 100,
+  daily_streak_counter: 0,
 };
 
 export const useUser = create<UserState>()(
@@ -46,6 +54,38 @@ export const useUser = create<UserState>()(
             user: {
               ...state.user,
               dailyGoal: newDailyGoal,
+            },
+          })),
+        setLevel: (newLevel: number) =>
+          set((state: { isAuth: boolean; user: UserType }) => ({
+            ...state,
+            user: {
+              ...state.user,
+              level: newLevel,
+            },
+          })),
+        setXP: (newXP: number) =>
+          set((state: { isAuth: boolean; user: UserType }) => ({
+            ...state,
+            user: {
+              ...state.user,
+              xp: newXP,
+            },
+          })),
+        setHP: (newHP: number) =>
+          set((state: { isAuth: boolean; user: UserType }) => ({
+            ...state,
+            user: {
+              ...state.user,
+              hp: newHP,
+            },
+          })),
+        setDailyStreakCounter: (newDailyStreakCounter: number) =>
+          set((state: { isAuth: boolean; user: UserType }) => ({
+            ...state,
+            user: {
+              ...state.user,
+              daily_streak_counter: newDailyStreakCounter,
             },
           })),
       }),
