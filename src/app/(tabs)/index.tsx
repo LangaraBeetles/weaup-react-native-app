@@ -14,6 +14,10 @@ import Center from "@src/components/ui/Center";
 const HomePage = () => {
   const isSetupComplete = useUser((state) => state.isSetupComplete);
   const userName = useUser((state) => state.user.name);
+  const userLevel = useUser((state) => state.user.level);
+  const userHP = useUser((state) => state.user.hp);
+  const userXP = useUser((state) => state.user.xp);
+  const userSteak = useUser((state) => state.user.daily_streak_counter);
 
   const [isTrackingEnabled, setTrackingEnabled] = useState(false);
   const toggleTracking = () =>
@@ -37,8 +41,7 @@ const HomePage = () => {
           {/*TODO: display avatar */}
           <Image source={require("../../../assets/img/avatar.png")} />
           {userName === null ? <Text>{userName}</Text> : null}
-          {/*TODO: get user level */}
-          <Text>Lv.1</Text>
+          <Text>Lv.{userLevel}</Text>
         </Stack>
         <Stack flexDirection="row" gap={18} border={0} p={5}>
           <Image source={require("../../../assets/img/earbuds.png")} />
@@ -72,7 +75,7 @@ const HomePage = () => {
               justifyContent="space-evenly"
             >
               <Text>Posture Score</Text>
-              <Text>89 / 100</Text>
+              <Text>{userHP} / 100</Text>
             </Stack>
           </Stack>
           <Stack
@@ -87,7 +90,7 @@ const HomePage = () => {
               justifyContent="start"
             >
               <Image source={require("../../../assets/img/avatar.png")} />
-              <Text>500 XP</Text>
+              <Text>{userXP} XP</Text>
             </Stack>
             <Stack
               flexDirection="row"
@@ -96,7 +99,7 @@ const HomePage = () => {
               justifyContent="start"
             >
               <Image source={require("../../../assets/img/avatar.png")} />
-              <Text>5 Day Streak</Text>
+              <Text>{userSteak} Day Streak</Text>
             </Stack>
           </Stack>
         </Stack>

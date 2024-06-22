@@ -12,6 +12,7 @@ type UserState = {
   greeting: () => string;
   setAuth: (isAuth: boolean, user: UserType) => void;
   setDailyGoal: (newDailyGoal: number) => void;
+
   setLevel: (newLevel: number) => void;
   setXP: (newXP: number) => void;
   setHP: (newHP: number) => void;
@@ -29,6 +30,9 @@ const userInitialState: UserType = {
   hp: 100,
   daily_streak_counter: 0,
 };
+
+// Clear AsyncStorage:
+// AsyncStorage.clear();
 
 export const useUser = create<UserState>()(
   devtools(
