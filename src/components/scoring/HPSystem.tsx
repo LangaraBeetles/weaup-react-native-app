@@ -1,8 +1,9 @@
 import { useUser } from "@src/state/useUser";
 
-const HPSystem = ({ currentPosture }: { currentPosture: string }) => {
+const HPSystem = () => {
   const userHP = useUser((state) => state.user.hp);
   const setHP = useUser((state) => state.setHP);
+  const currentPosture = "good"; //TODO: use currentPosture from user state
 
   if (userHP >= 0 && userHP <= 100) {
     if (currentPosture === "bad") {
