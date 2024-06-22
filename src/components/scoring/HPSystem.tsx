@@ -20,6 +20,8 @@ const HPSystem = ({ currentPosture }: { currentPosture: string }) => {
       }
     }
   }
+
+  //TODO: save the HP to the database every 1 min if it has changed in the last minute
 };
 
 export default HPSystem;
