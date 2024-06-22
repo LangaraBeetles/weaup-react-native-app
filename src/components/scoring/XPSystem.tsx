@@ -3,7 +3,7 @@ import { useUser } from "@src/state/useUser";
 
 const XPSystem = () => {
   const userHP = useUser((state) => state.user.hp);
-  const currentPosture = "good"; //TODO: use currentPosture from user state
+  const currentPosture = useUser((state) => state.currentPosture);
   const setXP = useUser((state) => state.setXP);
 
   useEffect(() => {
@@ -11,12 +11,12 @@ const XPSystem = () => {
       if (userHP > 0 && currentPosture === "good") {
         setXP((prevXP) => prevXP + 10);
       }
-    }, 60000);
+    }, 5000); //TODO: adjust time
 
     return () => {
       clearInterval(interval);
     };
-  }, [currentPosture, userHP, setXP]);
+  }, [currentPosture, setXP]);
 
   return null;
 };

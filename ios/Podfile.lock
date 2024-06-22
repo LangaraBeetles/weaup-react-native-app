@@ -1,6 +1,8 @@
 PODS:
   - boost (1.83.0)
   - DoubleConversion (1.1.6)
+  - EASClient (0.12.0):
+    - ExpoModulesCore
   - EXApplication (5.9.1):
     - ExpoModulesCore
   - EXConstants (16.0.2):
@@ -285,6 +287,35 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - EXStructuredHeaders (3.8.0)
+  - EXUpdates (0.25.17):
+    - DoubleConversion
+    - EASClient
+    - EXManifests
+    - ExpoModulesCore
+    - EXStructuredHeaders
+    - EXUpdatesInterface
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - ReachabilitySwift
+    - React-Codegen
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - "sqlite3 (~> 3.45.3+1)"
+    - Yoga
   - EXUpdatesInterface (0.16.2):
     - ExpoModulesCore
   - FBLazyVector (0.74.2)
@@ -293,6 +324,29 @@ PODS:
   - hermes-engine (0.74.2):
     - hermes-engine/Pre-built (= 0.74.2)
   - hermes-engine/Pre-built (0.74.2)
+  - lottie-ios (4.4.3)
+  - lottie-react-native (6.7.0):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - lottie-ios (~> 4.4.1)
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Codegen
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - RCT-Folly (2024.01.01.00):
     - boost
     - DoubleConversion
@@ -315,6 +369,7 @@ PODS:
     - FBLazyVector (= 0.74.2)
     - RCTRequired (= 0.74.2)
     - React-Core (= 0.74.2)
+  - ReachabilitySwift (5.2.3)
   - React (0.74.2):
     - React-Core (= 0.74.2)
     - React-Core/DevSupport (= 0.74.2)
@@ -1221,6 +1276,27 @@ PODS:
   - React-Mapbuffer (0.74.2):
     - glog
     - React-debug
+  - react-native-headphone-motion (0.0.0):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Codegen
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - react-native-safe-area-context (4.10.1):
     - React-Core
   - React-nativeconfig (0.74.2)
@@ -1521,11 +1597,15 @@ PODS:
   - RNSVG (15.2.0):
     - React-Core
   - SocketRocket (0.7.0)
+  - "sqlite3 (3.45.3+1)":
+    - "sqlite3/common (= 3.45.3+1)"
+  - "sqlite3/common (3.45.3+1)"
   - Yoga (0.0.0)
 
 DEPENDENCIES:
   - boost (from `../node_modules/react-native/third-party-podspecs/boost.podspec`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
+  - EASClient (from `../node_modules/expo-eas-client/ios`)
   - EXApplication (from `../node_modules/expo-application/ios`)
   - EXConstants (from `../node_modules/expo-constants/ios`)
   - EXImageLoader (from `../node_modules/expo-image-loader/ios`)
@@ -1548,11 +1628,14 @@ DEPENDENCIES:
   - ExpoModulesCore (from `../node_modules/expo-modules-core`)
   - ExpoSensors (from `../node_modules/expo-sensors/ios`)
   - EXSplashScreen (from `../node_modules/expo-splash-screen/ios`)
+  - EXStructuredHeaders (from `../node_modules/expo-structured-headers/ios`)
+  - EXUpdates (from `../node_modules/expo-updates/ios`)
   - EXUpdatesInterface (from `../node_modules/expo-updates-interface/ios`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - fmt (from `../node_modules/react-native/third-party-podspecs/fmt.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - hermes-engine (from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
+  - lottie-react-native (from `../node_modules/lottie-react-native`)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCT-Folly/Fabric (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTDeprecation (from `../node_modules/react-native/ReactApple/Libraries/RCTFoundation/RCTDeprecation`)
@@ -1579,6 +1662,7 @@ DEPENDENCIES:
   - React-jsitracing (from `../node_modules/react-native/ReactCommon/hermes/executor/`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
+  - react-native-headphone-motion (from `../node_modules/react-native-headphone-motion`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - React-nativeconfig (from `../node_modules/react-native/ReactCommon`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
@@ -1612,13 +1696,18 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - lottie-ios
+    - ReachabilitySwift
     - SocketRocket
+    - sqlite3
 
 EXTERNAL SOURCES:
   boost:
     :podspec: "../node_modules/react-native/third-party-podspecs/boost.podspec"
   DoubleConversion:
     :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
+  EASClient:
+    :path: "../node_modules/expo-eas-client/ios"
   EXApplication:
     :path: "../node_modules/expo-application/ios"
   EXConstants:
@@ -1663,6 +1752,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-sensors/ios"
   EXSplashScreen:
     :path: "../node_modules/expo-splash-screen/ios"
+  EXStructuredHeaders:
+    :path: "../node_modules/expo-structured-headers/ios"
+  EXUpdates:
+    :path: "../node_modules/expo-updates/ios"
   EXUpdatesInterface:
     :path: "../node_modules/expo-updates-interface/ios"
   FBLazyVector:
@@ -1674,6 +1767,8 @@ EXTERNAL SOURCES:
   hermes-engine:
     :podspec: "../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec"
     :tag: hermes-2024-06-03-RNv0.74.2-bb1e74fe1e95c2b5a2f4f9311152da052badc2bc
+  lottie-react-native:
+    :path: "../node_modules/lottie-react-native"
   RCT-Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTDeprecation:
@@ -1722,6 +1817,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/logger"
   React-Mapbuffer:
     :path: "../node_modules/react-native/ReactCommon"
+  react-native-headphone-motion:
+    :path: "../node_modules/react-native-headphone-motion"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   React-nativeconfig:
@@ -1786,6 +1883,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   boost: d3f49c53809116a5d38da093a8aa78bf551aed09
   DoubleConversion: 76ab83afb40bddeeee456813d9c04f67f78771b5
+  EASClient: 1509a9a6b48b932ec61667644634daf2562983b8
   EXApplication: c08200c34daca7af7fd76ac4b9d606077410e8ad
   EXConstants: 409690fbfd5afea964e5e9d6c4eb2c2b59222c59
   EXImageLoader: ab589d67d6c5f2c33572afea9917304418566334
@@ -1808,15 +1906,20 @@ SPEC CHECKSUMS:
   ExpoModulesCore: 54c85b57000a2a82e5212d5e42cd7a36524be4ac
   ExpoSensors: cbcd06ec06602c74648b4ee71f6fe390fb513f72
   EXSplashScreen: fbf0ec78e9cee911df188bf17b4fe51d15a84b87
+  EXStructuredHeaders: cb8d1f698e144f4c5547b4c4963e1552f5d2b457
+  EXUpdates: 98b4009f8ce6455ce2791d4db0daedc4d3d8fcd0
   EXUpdatesInterface: 996527fd7d1a5d271eb523258d603f8f92038f24
   FBLazyVector: 4bc164e5b5e6cfc288d2b5ff28643ea15fa1a589
   fmt: 4c2741a687cc09f0634a2e2c72a838b99f1ff120
-  glog: fdfdfe5479092de0c4bdbebedd9056951f092c4f
+  glog: c5d68082e772fa1c511173d6b30a9de2c05a69a2
   hermes-engine: 01d3e052018c2a13937aca1860fbedbccd4a41b7
+  lottie-ios: fcb5e73e17ba4c983140b7d21095c834b3087418
+  lottie-react-native: f851c0e235f171d99083c803f728f644be1dcf65
   RCT-Folly: 02617c592a293bd6d418e0a88ff4ee1f88329b47
   RCTDeprecation: b03c35057846b685b3ccadc9bfe43e349989cdb2
   RCTRequired: 194626909cfa8d39ca6663138c417bc6c431648c
   RCTTypeSafety: 552aff5b8e8341660594db00e53ac889682bc120
+  ReachabilitySwift: 7f151ff156cea1481a8411701195ac6a984f4979
   React: a57fe42044fe6ed3e828f8867ce070a6c5872754
   React-callinvoker: 6bedefb354a8848b534752417954caa3a5cf34f9
   React-Codegen: 0952549a095f8f8cb2fb5def1733b6b232769b1c
@@ -1837,6 +1940,7 @@ SPEC CHECKSUMS:
   React-jsitracing: 0fa7f78d8fdda794667cb2e6f19c874c1cf31d7e
   React-logger: 29fa3e048f5f67fe396bc08af7606426d9bd7b5d
   React-Mapbuffer: bf56147c9775491e53122a94c423ac201417e326
+  react-native-headphone-motion: 835fb9da286f0f1c5d42184398ea34e30be7fa39
   react-native-safe-area-context: dcab599c527c2d7de2d76507a523d20a0b83823d
   React-nativeconfig: 9f223cd321823afdecf59ed00861ab2d69ee0fc1
   React-NativeModulesApple: ff7efaff7098639db5631236cfd91d60abff04c0
@@ -1867,8 +1971,9 @@ SPEC CHECKSUMS:
   RNScreens: b32a9ff15bea7fcdbe5dff6477bc503f792b1208
   RNSVG: 43b64ed39c14ce830d840903774154ca0c1f27ec
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
+  sqlite3: 02d1f07eaaa01f80a1c16b4b31dfcbb3345ee01a
   Yoga: ae3c32c514802d30f687a04a6a35b348506d411f
 
-PODFILE CHECKSUM: 415550069a03f0b7f1cbb0ee551cc1e1a9c4aa2d
+PODFILE CHECKSUM: 2e640fdcb2df8b43f8a9a91cbf8ac69e3765bd68
 
 COCOAPODS: 1.15.2

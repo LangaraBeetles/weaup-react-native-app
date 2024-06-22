@@ -43,4 +43,4 @@ config.ts
 
 #build
 # ios/
-android/
+# android/

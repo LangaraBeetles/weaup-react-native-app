@@ -4,7 +4,7 @@ import { useEffect } from "react";
 const HPSystem = () => {
   const userHP = useUser((state) => state.user.hp);
   const setHP = useUser((state) => state.setHP);
-  const currentPosture = "good"; //TODO: use currentPosture from user state
+  const currentPosture = useUser((state) => state.currentPosture);
 
   useEffect(() => {
     const interval = setInterval(() => {

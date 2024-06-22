@@ -1,3 +1,5 @@
+import HeadTrackingProvider from "@src/components/providers/HeadTrackingProvider.ios";
+import TrackingModeProvider from "@src/components/providers/TrackingModeProvider";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import PushNotificationsProvider from "@src/components/providers/PushNotificationsProvider";
 import { useFonts } from "expo-font";
@@ -46,38 +48,49 @@ const RootLayout = () => {
 
   return (
     <PushNotificationsProvider>
-      <HPSystem />
-      <XPSystem />
-      <LevelSystem />
-      <GestureHandlerRootView>
-        <BottomSheetModalProvider>
-          <Stack>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="setup" options={{ headerShown: false }} />
-            <Stack.Screen
-              name="challengeDetailsScreen"
-              options={{ headerShown: true, title: "Challenge progress" }}
-            />
-            <Stack.Screen
-              name="pastChallengesScreen"
-              options={{ headerShown: true, title: "Past Challenges" }}
-            />
-            <Stack.Screen
-              name="provider-signup"
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen name="auth" options={{ headerShown: false }} />
-            <Stack.Screen
-              name="session-summary"
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="notifications"
-              options={{ headerShown: false }}
-            />
-          </Stack>
-        </BottomSheetModalProvider>
-      </GestureHandlerRootView>
+      <TrackingModeProvider>
+        <HeadTrackingProvider>
+          <HPSystem />
+          <XPSystem />
+          <LevelSystem />
+          <GestureHandlerRootView>
+            <BottomSheetModalProvider>
+              <Stack>
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                <Stack.Screen name="setup" options={{ headerShown: false }} />
+                <Stack.Screen
+                  name="challengeDetailsScreen"
+                  options={{
+                    headerShown: true,
+                    title: "Challenge progress",
+                  }}
+                />
+                <Stack.Screen
+                  name="pastChallengesScreen"
+                  options={{
+                    headerShown: true,
+                    title: "Past Challenges",
+                    headerBackTitle: "Back",
+                  }}
+                />
+                <Stack.Screen
+                  name="provider-signup"
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen name="auth" options={{ headerShown: false }} />
+                <Stack.Screen
+                  name="session-summary"
+                  options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                  name="notifications"
+                  options={{ headerShown: false }}
+                />
+              </Stack>
+            </BottomSheetModalProvider>
+          </GestureHandlerRootView>
+        </HeadTrackingProvider>
+      </TrackingModeProvider>
     </PushNotificationsProvider>
   );
 };

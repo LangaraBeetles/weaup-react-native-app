@@ -1,0 +1,9 @@
+{
+  "name": "react-native-headphone-motion",
+  "version": "0.0.0",
+  "description": "reading the AirPods sensor data",
+  "main": "src/index",
+  "author": " <> ()",
+  "license": "UNLICENSED",
+  "homepage": "#readme"
+}

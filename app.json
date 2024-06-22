@@ -18,6 +18,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.alignmend",
+      "minSdkVersion": "15.0",
       "runtimeVersion": "1.0.0"
     },
     "android": {
@@ -38,11 +39,8 @@
         "projectId": "b61aa28d-218d-4007-b696-97c4a2208074"
       }
     },
-    "owner": "beetles",
     "plugins": [
-      [
-        "expo-router"
-      ],
+      ["expo-router"],
       [
         "expo-font",
         {
@@ -64,6 +62,15 @@
             "./assets/fonts/NunitoLightItalic.ttf",
             "./assets/fonts/NunitoExtraLightItalic.ttf"
           ]
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {},
+          "ios": {
+            "deploymentTarget": "15.0"
+          }
         }
       ]
     ],

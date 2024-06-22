@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { StyleSheet, Text, TouchableHighlight } from "react-native";
 import { globalStyles } from "@src/styles/globalStyles";
 
@@ -64,5 +64,3 @@ const styles = StyleSheet.create({
 });
 
 export default Button;
- 
- 
