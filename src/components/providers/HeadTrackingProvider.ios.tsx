@@ -1,25 +1,23 @@
-import { PostureStateType } from "@src/interfaces/headtracking.types";
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { PostureStatus } from "@src/interfaces/posture.types";
+import { useUser } from "@src/state/useUser";
+import { createContext, useContext, useEffect, useMemo, useRef } from "react";
 import {
   isDeviceMotionActive,
   isHeadphoneMotionAvailable,
   startDeviceMotionUpdates,
-  stopDeviceMotionUpdates,
   getLatestDeviceMotion,
   onDeviceMotionUpdates,
 } from "react-native-headphone-motion";
 
 type ContextState = {
   isHeadMotionAvailable: boolean;
-  posture: PostureStateType;
-  startTracking?: () => Promise<void>;
-  stopTracking?: () => Promise<void>;
+  posture: PostureStatus;
   getCurrentPosture?: () => Promise<void>;
 };
 
 const initialState: ContextState = {
   isHeadMotionAvailable: false,
-  posture: "not_tracking",
+  posture: "not_reading",
 };
 
 const HeadTrackingContext = createContext<ContextState>(initialState);
@@ -29,16 +27,21 @@ const HeadTrackingProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const isHeadMotionAvailable = useMemo(
     () => isHeadphoneMotionAvailable,
-    [isHeadphoneMotionAvailable]
+    [isHeadphoneMotionAvailable],
   );
 
-  const [postureStatus, setPoture] = useState<"good" | "bad" | "not_tracking">(
-    "not_tracking"
-  );
+  let isTracking = useRef<boolean>(false).current;
+  const interval = useRef<any>(null);
+
+  const mode = useUser((state) => state.mode);
+  const isTrackingEnabled = useUser((state) => state.isTrackingEnabled);
+  const postureStatus = useUser((state) => state.currentPosture);
+  const setPoture = useUser((state) => state.setCurrentPosture);
+  const postureData = useUser((state) => state.postureData);
 
   const handlePostureCorrectionAlert = (headPitch?: number) => {
     if (headPitch === undefined) {
-      postureStatus !== "not_tracking" && setPoture("not_tracking");
+      postureStatus !== "not_reading" && setPoture("not_reading");
     } else if (headPitch > -15 && headPitch < 15) {
       console.log("Yey!");
       postureStatus !== "good" && setPoture("good");
@@ -50,27 +53,25 @@ const HeadTrackingProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const startTracking = async () => {
     const isActive = await isDeviceMotionActive();
-
     if (!isActive) {
       await startDeviceMotionUpdates();
     }
 
-    setInterval(async () => {
-      const data = await getLatestDeviceMotion();
-      if (data) {
-        const headPitch = data?.attitude.pitchDeg;
-        handlePostureCorrectionAlert(headPitch);
-        // if (headPitch === undefined && posture !== "not_tracking") {
-        //   setPoture("not_tracking");
-        // } else if (headPitch > -15 && headPitch < 15) {
-        //   console.log("Yey!");
-        //   posture !== "good" && setPoture("good");
-        // } else {
-        //   console.log("Bad!");
-        //   posture !== "bad" && setPoture("bad");
-        // }
-      }
-    }, 1000);
+    isTracking = true;
+    interval.current = setInterval(
+      async (isEnabled, mode) => {
+        if (isEnabled && mode === "EARBUDS") {
+          const data = await getLatestDeviceMotion();
+          if (data) {
+            const headPitch = data?.attitude.pitchDeg;
+            handlePostureCorrectionAlert(headPitch);
+          }
+        }
+      },
+      1000,
+      isTrackingEnabled,
+      mode,
+    );
   };
 
   const getCurrentPosture = async () => {
@@ -85,13 +86,16 @@ const HeadTrackingProvider: React.FC<{ children: React.ReactNode }> = ({
       const headPitch = data?.attitude.pitchDeg;
       handlePostureCorrectionAlert(headPitch);
     } else {
-      setPoture("not_tracking");
+      setPoture("not_reading");
     }
   };
 
   const stopTracking = async () => {
-    await stopDeviceMotionUpdates();
-    setPoture("not_tracking");
+    if (interval.current) {
+      clearInterval(interval.current);
+    }
+    isTracking = false;
+    setPoture("not_reading");
   };
 
   useEffect(() => {
@@ -101,43 +105,32 @@ const HeadTrackingProvider: React.FC<{ children: React.ReactNode }> = ({
     });
   }, []);
 
+  useEffect(() => {
+    if (mode === "EARBUDS" && !isTracking && isTrackingEnabled) {
+      startTracking();
+    }
+
+    if (mode !== "EARBUDS" || !isTrackingEnabled) {
+      stopTracking();
+    }
+  }, [mode, isTracking, isTrackingEnabled]);
+
+  useEffect(() => {
+    console.log({
+      bad: postureData.filter((p) => p.status === "bad").length,
+      good: postureData.filter((p) => p.status === "good").length,
+    });
+  }, [postureStatus]);
+
   return (
     <HeadTrackingContext.Provider
       value={{
         isHeadMotionAvailable,
         posture: postureStatus,
-        startTracking,
-        stopTracking,
         getCurrentPosture,
       }}
     >
       {children}
-
-      {/*     <SafeAreaView>
-      <Center
-          justifyContent="center"
-          alignItems="center"
-          backgroundColor={
-            postureStatus == "bad"
-              ? "crimson"
-              : postureStatus === "good"
-              ? "green"
-              : "white"
-          }
-          height="100%"
-        >
-          <Text>
-            {postureStatus === "bad"
-              ? "Yikes!"
-              : postureStatus === "good"
-              ? "Well done!"
-              : "No Data"}
-          </Text>
-
-          <Button title="Start tracking" onPress={startTracking} />
-          <Button title="Stop tracking" onPress={stopTracking} />
-        </Center> 
-            </SafeAreaView>*/}
     </HeadTrackingContext.Provider>
   );
 };
@@ -148,7 +141,7 @@ export const useHeadTracking = () => {
   const context = useContext(HeadTrackingContext);
   if (!context) {
     throw Error(
-      "You need to wrap the components with the HeadTrackingProvider"
+      "You need to wrap the components with the HeadTrackingProvider",
     );
   }
   return context;

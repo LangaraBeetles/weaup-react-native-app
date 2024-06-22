@@ -21,6 +21,7 @@ const Stack = styled(View, {
     borderColor: "borderColor",
     w: "width",
     h: "height",
+    flex: "flex",
   },
 });
 

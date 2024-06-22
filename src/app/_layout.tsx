@@ -53,11 +53,18 @@ const RootLayout = () => {
                 <Stack.Screen name="setup" options={{ headerShown: false }} />
                 <Stack.Screen
                   name="challengeDetailsScreen"
-                  options={{ headerShown: true, title: "Challenge progress" }}
+                  options={{
+                    headerShown: true,
+                    title: "Challenge progress",
+                  }}
                 />
                 <Stack.Screen
                   name="pastChallengesScreen"
-                  options={{ headerShown: true, title: "Past Challenges" }}
+                  options={{
+                    headerShown: true,
+                    title: "Past Challenges",
+                    headerBackTitle: "Back",
+                  }}
                 />
                 <Stack.Screen
                   name="provider-signup"

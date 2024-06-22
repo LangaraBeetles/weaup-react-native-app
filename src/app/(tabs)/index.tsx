@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 
-import { Image, Pressable, Switch, Text } from "react-native";
+import { Image, Pressable, Text } from "react-native";
 import { Link, Redirect } from "expo-router";
 import DeviceMotionView from "@src/components/ui/DeviceMotionView";
 
@@ -12,20 +12,26 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Center from "@src/components/ui/Center";
 import TrackingModeIcon from "@src/components/homepage/TrackingModeIcon";
 
+const background = {
+  not_reading: "white",
+  good: "white",
+  mid: "yellow",
+  bad: "crimson",
+};
+
 const HomePage = () => {
   const isSetupComplete = useUser((state) => state.isSetupComplete);
   const userName = useUser((state) => state.user.name);
-
-  const [isTrackingEnabled, setTrackingEnabled] = useState(false);
-  const toggleTracking = () =>
-    setTrackingEnabled((previousState) => !previousState);
+  const currentPosture = useUser((state) => state.currentPosture);
 
   if (!isSetupComplete) {
     return <Redirect href="/setup/start" />;
   }
 
   return (
-    <SafeAreaView>
+    <SafeAreaView
+      style={{ backgroundColor: background[currentPosture], flex: 1 }}
+    >
       <Stack flexDirection="row" justifyContent="space-between" p={15} pb={0}>
         <Stack
           flexDirection="row"
@@ -104,18 +110,7 @@ const HomePage = () => {
         </Stack>
       </Center>
       <Center p={15}>
-        <Stack
-          flexDirection="row"
-          border={1}
-          borderRadius={20}
-          justifyContent="space-between"
-          alignItems="center"
-          w={"100%"}
-          p={10}
-        >
-          <Text>Realtime Tracking</Text>
-          <Switch onValueChange={toggleTracking} value={isTrackingEnabled} />
-        </Stack>
+        <DeviceMotionView />
       </Center>
       <Center>
         <Image source={require("../../../assets/img/mascot.png")} />
@@ -123,8 +118,6 @@ const HomePage = () => {
       <Center>
         <SessionControl />
       </Center>
-
-      <DeviceMotionView isTrackingEnabled={isTrackingEnabled} />
     </SafeAreaView>
   );
 };

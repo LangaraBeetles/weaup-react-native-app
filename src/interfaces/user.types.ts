@@ -1,4 +1,5 @@
 export type UserType = {
+  id: string;
   deviceIds: Array<string>;
   currentDeviceId: string | null;
   name: string;
