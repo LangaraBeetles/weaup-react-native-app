@@ -1,10 +1,13 @@
 import levels from "@src/levels";
 import { useUser } from "@src/state/useUser";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import NewLevelModal from "../modals/NewLevelModal";
 
 const LevelSystem = () => {
   const userXP = useUser((state) => state.user.xp);
+  const userLevel = useUser((state) => state.user.level);
   const setLevel = useUser((state) => state.setLevel);
+  const [levelModalVisible, setLevelModalVisible] = useState(false);
 
   useEffect(() => {
     const determineLevel = (xp: number) => {
@@ -20,10 +23,18 @@ const LevelSystem = () => {
     };
 
     const newLevel = determineLevel(userXP);
-    setLevel(newLevel);
+    if (newLevel > userLevel) {
+      setLevel(newLevel);
+      setLevelModalVisible(true);
+    }
   }, [userXP, setLevel]);
 
-  return null;
+  return (
+    <NewLevelModal
+      isVisible={levelModalVisible}
+      onClose={() => setLevelModalVisible(false)}
+    />
+  );
 
   //TODO: save the Level to the databse when new level reached
 };
