@@ -5,7 +5,9 @@ import * as Device from "expo-device";
 import { globalStyles } from "@src/styles/globalStyles";
 
 type PushNotificationsContextState = {
-  sendPushNotification: (notificationContent: NotificationContent) => Promise<void>;
+  sendPushNotification: (
+    notificationContent: NotificationContent,
+  ) => Promise<void>;
 };
 
 type NotificationContent = {
@@ -19,8 +21,9 @@ const PushNotificationsContext = createContext<PushNotificationsContextState>({
   },
 });
 
-const PushNotificationsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-
+const PushNotificationsProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   useEffect(() => {
     const registerForPushNotificationsAsync = async () => {
       try {
@@ -29,17 +32,17 @@ const PushNotificationsProvider: React.FC<{ children: React.ReactNode }> = ({ ch
           return;
         }
 
-          const { status: initialStatus } =
-            await Notifications.getPermissionsAsync();
+        const { status: initialStatus } =
+          await Notifications.getPermissionsAsync();
 
-          if (initialStatus !== "granted") {
-            const { status } = await Notifications.requestPermissionsAsync();
-            if (status !== "granted") {
-              console.error("Failed to get push token for push notification!");
-              return;
-            }
+        if (initialStatus !== "granted") {
+          const { status } = await Notifications.requestPermissionsAsync();
+          if (status !== "granted") {
+            console.error("Failed to get push token for push notification!");
+            return;
           }
-        
+        }
+
         if (Platform.OS === "android") {
           Notifications.setNotificationChannelAsync("default", {
             name: "default",
@@ -97,7 +100,9 @@ export default PushNotificationsProvider;
 export const usePushNotifications = () => {
   const context = useContext(PushNotificationsContext);
   if (!context) {
-    throw new Error("You need to wrap the components with the PushNotificationsProvider");
+    throw new Error(
+      "You need to wrap the components with the PushNotificationsProvider",
+    );
   }
   return context;
 };

@@ -13,6 +13,7 @@ module.exports = function(api) {
         "module-resolver",
         {
           alias: {
+            "@src": "./src",
             "@state": "./src/state",
             "@interfaces": "./src/interfaces",
           },

@@ -10,6 +10,7 @@ import SessionControl from "@src/components/sessions/SessionControl";
 import Stack from "@src/components/ui/Stack";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Center from "@src/components/ui/Center";
+import TrackingModeIcon from "@src/components/homepage/TrackingModeIcon";
 
 const HomePage = () => {
   const isSetupComplete = useUser((state) => state.isSetupComplete);
@@ -41,7 +42,8 @@ const HomePage = () => {
           <Text>Lv.1</Text>
         </Stack>
         <Stack flexDirection="row" gap={18} border={0} p={5}>
-          <Image source={require("../../../assets/img/earbuds.png")} />
+          <TrackingModeIcon />
+
           <Link href="/notifications" asChild>
             <Pressable>
               <Image

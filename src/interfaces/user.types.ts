@@ -5,3 +5,10 @@ export type UserType = {
   dailyGoal: number; // out of 100
   providerId: string;
 };
+
+export enum TrackingModeEnum {
+  PHONE = "PHONE",
+  EARBUDS = "EARBUDS",
+}
+
+export type TrackingModeType = `${TrackingModeEnum}`;

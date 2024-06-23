@@ -1,7 +1,7 @@
 import { persist, createJSONStorage, devtools } from "zustand/middleware";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
-import { UserType } from "@interfaces/user.types";
+import { TrackingModeType, UserType } from "@interfaces/user.types";
 
 type UserState = {
   isSetupComplete: boolean;
@@ -12,6 +12,9 @@ type UserState = {
   greeting: () => string;
   setAuth: (isAuth: boolean, user: UserType) => void;
   setDailyGoal: (newDailyGoal: number) => void;
+
+  mode: TrackingModeType;
+  changeMode: (value: TrackingModeType) => void;
 };
 
 const userInitialState: UserType = {
@@ -48,6 +51,9 @@ export const useUser = create<UserState>()(
               dailyGoal: newDailyGoal,
             },
           })),
+
+        mode: "PHONE",
+        changeMode: (value: TrackingModeType) => set({ mode: value }),
       }),
       {
         storage: createJSONStorage(() => AsyncStorage),
