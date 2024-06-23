@@ -10,6 +10,10 @@ const SetupPages = () => {
     router.replace("/setup/enable-motion");
   };
 
+  const login = () => {
+    router.replace("provider-signup");
+  };
+
   return (
     <SafeAreaView>
       <Main>
@@ -28,18 +32,27 @@ const SetupPages = () => {
               </Text>
 
               <Text style={{ textAlign: "center" }}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor.
+                Let the cute weasel help you stay upright!
               </Text>
             </Stack>
 
-            <Button
-              title="Start the Journey"
-              onPress={next}
-              type={{ type: "primary", size: "l" }}
-            />
+            <Stack>
+              <Button
+                title="Start the Journey"
+                onPress={next}
+                type={{ type: "primary", size: "l" }}
+              />
 
-            <Text>I have read and agree Agreement and Privacy.</Text>
+              <Button
+                title="Log in"
+                onPress={login}
+                type={{ type: "secondary", size: "l" }}
+              />
+            </Stack>
+
+            <Text>
+              I have read and agree to the Agreement and Privacy Policy.
+            </Text>
           </Stack>
         </View>
       </Main>
