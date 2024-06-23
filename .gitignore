@@ -44,3 +44,4 @@ config.ts
 #build
 # ios/
 # android/
+android/gradle.properties
