@@ -35,8 +35,6 @@ const LevelSystem = () => {
       onClose={() => setLevelModalVisible(false)}
     />
   );
-
-  //TODO: save the Level to the databse when new level reached
 };
 
 export default LevelSystem;

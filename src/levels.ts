@@ -6,7 +6,7 @@ const levels: LevelType[] = [
   { level: 2, xp: 20 },
   { level: 3, xp: 40 },
   { level: 4, xp: 50 },
-  { level: 5, xp: 190 },
+  { level: 5, xp: 180 },
 ];
 
 export default levels;

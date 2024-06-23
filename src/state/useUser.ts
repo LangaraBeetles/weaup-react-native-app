@@ -116,14 +116,26 @@ export const useUser = create<UserState>()(
               dailyGoal: newDailyGoal,
             },
           })),
-        setLevel: (newLevel: number) =>
+        setLevel: (newLevel: number) => {
           set((state: { isAuth: boolean; user: UserType }) => ({
             ...state,
             user: {
               ...state.user,
               level: newLevel,
             },
-          })),
+          }));
+
+          // TODO: authenticate guest user with an id for this to work:
+          // const user_id = get().user.id;
+          // const body = {
+          //   level: newLevel,
+          // };
+
+          // TODO: replace this with the axios interceptor api
+          // axios
+          //   .patch(`http://10.0.0.201:3000/api/v1/user/${user_id}`, body)
+          //   .catch(console.error);
+        },
         setXP: (newXP: number | ((prevXP: number) => number)) =>
           set((state: { isAuth: boolean; user: UserType }) => ({
             ...state,
