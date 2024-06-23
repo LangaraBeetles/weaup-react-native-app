@@ -9,7 +9,7 @@ const api = axios.create({
 
 api.interceptors.request.use(
   (request) => {
-    const { token } = useUser.getState();
+    const { token } = useUser.getState().token;
     const authToken = `Bearer ${token}`;
 
     request.headers.Authorization = authToken;
