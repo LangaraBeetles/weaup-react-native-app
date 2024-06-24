@@ -60,11 +60,14 @@ export const useUser = create<UserState>()(
 
         currentPosture: "not_reading",
         setCurrentPosture: (value) => {
-          const prevPostureData = get().postureData;
-
           if (value === "bad" || value === "good") {
-            prevPostureData.push({ status: value, date: new Date() });
-            set({ currentPosture: value, postureData: prevPostureData });
+            set((state) => ({
+              currentPosture: value,
+              postureData: [
+                ...state.postureData,
+                { status: value, date: new Date() },
+              ],
+            }));
           } else {
             set({ currentPosture: value });
           }

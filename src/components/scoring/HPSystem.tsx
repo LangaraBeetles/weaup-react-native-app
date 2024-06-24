@@ -5,31 +5,28 @@ const HPSystem = () => {
   const userHP = useUser((state) => state.user.hp);
   const setHP = useUser((state) => state.setHP);
   const currentPosture = useUser((state) => state.currentPosture);
+  const postureData = useUser((state) => state.postureData);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (userHP >= 0 && userHP <= 100) {
-        if (currentPosture === "bad") {
-          if (userHP - 1 < 0) {
-            setHP(0);
-          } else {
-            setHP(userHP - 1);
-          }
-        }
-        if (currentPosture === "good") {
-          if (userHP + 1 > 100) {
-            setHP(100);
-          } else {
-            setHP(userHP + 1);
-          }
+    if (userHP >= 0 && userHP <= 100) {
+      if (currentPosture === "bad") {
+        if (userHP - 1 < 0) {
+          setHP(0);
+        } else {
+          setHP(userHP - 1);
         }
       }
-    }, 1000);
+      if (currentPosture === "good") {
+        if (userHP + 1 > 100) {
+          setHP(100);
+        } else {
+          setHP(userHP + 1);
+        }
+      }
+    }
 
-    return () => {
-      clearInterval(interval);
-    };
-  }, [currentPosture, userHP, setHP]);
+    return;
+  }, [currentPosture, postureData.length]);
 
   return null;
 
