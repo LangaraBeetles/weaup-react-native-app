@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 
-import { Image, Pressable, Switch, Text } from "react-native";
+import { Image, Platform, Pressable, Text, View } from "react-native";
 import { Link, Redirect } from "expo-router";
 import DeviceMotionView from "@src/components/ui/DeviceMotionView";
 
@@ -12,20 +12,44 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Center from "@src/components/ui/Center";
 import TrackingModeIcon from "@src/components/homepage/TrackingModeIcon";
 
+import LottieView from "lottie-react-native";
+import { useRef } from "react";
+
+const background = {
+  not_reading: "white",
+  good: "white",
+  mid: "yellow",
+  bad: "crimson",
+};
+
 const HomePage = () => {
   const isSetupComplete = useUser((state) => state.isSetupComplete);
   const userName = useUser((state) => state.user.name);
+  const currentPosture = useUser((state) => state.currentPosture);
+  const animation = useRef<any>(null);
 
-  const [isTrackingEnabled, setTrackingEnabled] = useState(false);
-  const toggleTracking = () =>
-    setTrackingEnabled((previousState) => !previousState);
+  useEffect(() => {
+    if (animation.current) {
+      animation.current?.play?.(0, 0);
+
+      if (currentPosture === "mid") {
+        animation.current?.play?.(6, 6);
+      }
+
+      if (currentPosture === "bad") {
+        animation.current?.play?.(15, 50);
+      }
+    }
+  }, [currentPosture]);
 
   if (!isSetupComplete) {
     return <Redirect href="/setup/start" />;
   }
 
   return (
-    <SafeAreaView>
+    <SafeAreaView
+      style={{ backgroundColor: background[currentPosture], height: "100%" }}
+    >
       <Stack flexDirection="row" justifyContent="space-between" p={15} pb={0}>
         <Stack
           flexDirection="row"
@@ -104,27 +128,29 @@ const HomePage = () => {
         </Stack>
       </Center>
       <Center p={15}>
-        <Stack
-          flexDirection="row"
-          border={1}
-          borderRadius={20}
-          justifyContent="space-between"
-          alignItems="center"
-          w={"100%"}
-          p={10}
-        >
-          <Text>Realtime Tracking</Text>
-          <Switch onValueChange={toggleTracking} value={isTrackingEnabled} />
-        </Stack>
+        <DeviceMotionView />
       </Center>
-      <Center>
-        <Image source={require("../../../assets/img/mascot.png")} />
-      </Center>
+      <View style={{ width: "100%", height: 350 }}>
+        <Center>
+          {Platform.OS === "ios" ? (
+            <LottieView
+              autoPlay={false}
+              ref={animation}
+              progress={1}
+              style={{
+                width: "100%",
+                height: "100%",
+              }}
+              source={require("../../animations/alien.json")}
+            />
+          ) : (
+            <Image source={require("../../../assets/img/mascot.png")} />
+          )}
+        </Center>
+      </View>
       <Center>
         <SessionControl />
       </Center>
-
-      <DeviceMotionView isTrackingEnabled={isTrackingEnabled} />
     </SafeAreaView>
   );
 };
