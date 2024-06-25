@@ -6,7 +6,7 @@
     "start": "expo start",
     "restart": "expo start --clear",
     "android": "expo run:android",
-    "ios": "expo run:ios",
+    "ios": "expo run:ios --device",
     "ios:pods": "npx pod-install && expo run:ios --device",
     "web": "expo start --web",
     "prepare": "husky",

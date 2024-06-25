@@ -43,6 +43,7 @@ const userInitialState: UserType = {
   xp: 0,
   hp: 100,
   daily_streak_counter: 0,
+  token: "",
 };
 
 // Clear AsyncStorage:

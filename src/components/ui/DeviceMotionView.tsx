@@ -10,6 +10,7 @@ export default function DeviceMotionView() {
   const isTrackingEnabled = useUser((state) => state.isTrackingEnabled);
   const setTrackingEnabled = useUser((state) => state.setTrackingEnabled);
 
+  const currentPosture = useUser((state) => state.currentPosture);
   const setCurrentPosture = useUser((state) => state.setCurrentPosture);
   const mode = useUser((state) => state.mode);
 
@@ -40,11 +41,19 @@ export default function DeviceMotionView() {
             const pitchRadians = Math.atan2(a_y, a_z);
             // Convert pitch to degrees
             const pitchDegrees = radiansToDegrees(pitchRadians);
-            if (pitchDegrees < -120 && pitchDegrees > -179) {
-              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+
+            // TODO: improve haptics feedback
+            if (pitchDegrees < -120 && pitchDegrees > -175) {
+              if (currentPosture !== "bad") {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+              }
+
               setCurrentPosture("bad");
             } else if (pitchDegrees < -110 && pitchDegrees > -120) {
-              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
+              if (currentPosture !== "mid") {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
+              }
+
               setCurrentPosture("mid");
             } else if (pitchDegrees < -90 && pitchDegrees > -110) {
               setCurrentPosture("good");
@@ -75,7 +84,7 @@ export default function DeviceMotionView() {
       setCurrentPosture("not_reading");
       _unsubscribe();
     };
-  }, [isTrackingEnabled, mode]);
+  }, [isTrackingEnabled, mode, currentPosture]);
 
   return (
     <Stack

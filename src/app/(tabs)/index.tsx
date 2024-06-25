@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-import { Image, Pressable, Text, View } from "react-native";
+import { Image, Platform, Pressable, Text, View } from "react-native";
 import { Link, Redirect } from "expo-router";
 import DeviceMotionView from "@src/components/ui/DeviceMotionView";
 
@@ -51,7 +51,9 @@ const HomePage = () => {
   }
 
   return (
-    <SafeAreaView style={{ backgroundColor: background[currentPosture] }}>
+    <SafeAreaView
+      style={{ backgroundColor: background[currentPosture], height: "100%" }}
+    >
       <Stack flexDirection="row" justifyContent="space-between" p={15} pb={0}>
         <Stack
           flexDirection="row"
@@ -132,18 +134,21 @@ const HomePage = () => {
         <DeviceMotionView />
       </Center>
       <View style={{ width: "100%", height: 350 }}>
-        {/* <Image source={require("../../../assets/img/mascot.png")} /> */}
         <Center>
-          <LottieView
-            autoPlay={false}
-            ref={animation}
-            progress={1}
-            style={{
-              width: "100%",
-              height: "100%",
-            }}
-            source={require("../../animations/alien.json")}
-          />
+          {Platform.OS === "ios" ? (
+            <LottieView
+              autoPlay={false}
+              ref={animation}
+              progress={1}
+              style={{
+                width: "100%",
+                height: "100%",
+              }}
+              source={require("../../animations/alien.json")}
+            />
+          ) : (
+            <Image source={require("../../../assets/img/mascot.png")} />
+          )}
         </Center>
       </View>
       <Center>
