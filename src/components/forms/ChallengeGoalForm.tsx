@@ -12,17 +12,17 @@ import Stack from "@src/components/ui/Stack";
 import Button from "@src/components/ui/Button";
 
 const ChallengeGoalForm = (props: any) => {
-  const { handleCloseModalPress, handleStep } = props;
+  const { handleStep } = props;
 
   return (
     <View style={styles.main}>
       <Stack flexDirection="row" gap={18} p={16} justifyContent="flex-start">
         <View style={styles.button}>
           <TouchableOpacity
-            onPress={handleCloseModalPress}
+            onPress={() => handleStep(0)}
             style={styles.closeButton}
           >
-            <Image source={require("../../../assets/img/closeIcon.png")} />
+            <Image source={require("../../../assets/img/backIcon.png")} />
           </TouchableOpacity>
         </View>
         <Text style={styles.content}>Choose team's goal</Text>
