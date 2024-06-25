@@ -8,6 +8,10 @@ import { Stack } from "expo-router/stack";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useEffect } from "react";
 
+import XPSystem from "@src/components/scoring/XPSystem";
+import HPSystem from "@src/components/scoring/HPSystem";
+import LevelSystem from "@src/components/scoring/LevelSystem";
+
 const RootLayout = () => {
   const [fontsLoaded, fontError] = useFonts({
     NunitoBlack: require("../../assets/fonts/NunitoBlack.ttf"),
@@ -46,6 +50,9 @@ const RootLayout = () => {
     <PushNotificationsProvider>
       <TrackingModeProvider>
         <HeadTrackingProvider>
+          <HPSystem />
+          <XPSystem />
+          <LevelSystem />
           <GestureHandlerRootView>
             <BottomSheetModalProvider>
               <Stack>
