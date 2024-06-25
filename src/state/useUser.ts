@@ -44,6 +44,7 @@ const userInitialState: UserType = {
   hp: 100,
   daily_streak_counter: 0,
   token: "",
+  email: "",
 };
 
 // Clear AsyncStorage:

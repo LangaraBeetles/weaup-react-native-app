@@ -12,7 +12,7 @@ import Stack from "@src/components/ui/Stack";
 import Button from "@src/components/ui/Button";
 
 const ChallengeGoalForm = (props: any) => {
-  const { handleStep } = props;
+  const { challenge, handleChallenge, handleStep } = props;
 
   return (
     <View style={styles.main}>
@@ -38,7 +38,11 @@ const ChallengeGoalForm = (props: any) => {
         <Text>
           A score setting of 70–85% of good posture is perfect for beginners.
         </Text>
-        <TextInput placeholder="80%"></TextInput>
+        <TextInput
+          placeholder="80%"
+          value={challenge.goal}
+          onChangeText={(e) => handleChallenge("goal", e)}
+        ></TextInput>
 
         <Button
           type={{ type: "primary", size: "l" }}

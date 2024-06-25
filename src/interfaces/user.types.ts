@@ -10,6 +10,7 @@ export type UserType = {
   hp: number;
   daily_streak_counter: number;
   token: string | null;
+  email: string | null;
 };
 
 export enum TrackingModeEnum {
