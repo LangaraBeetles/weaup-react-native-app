@@ -6,6 +6,7 @@ export type UserType = {
   dailyGoal: number; // out of 100
   providerId: string;
   token: string | null;
+  email: string | null;
 };
 
 export enum TrackingModeEnum {

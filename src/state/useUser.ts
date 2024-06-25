@@ -36,6 +36,7 @@ const userInitialState: UserType = {
   dailyGoal: 80, // out of 100
   providerId: "",
   token: "",
+  email: "",
 };
 
 export const useUser = create<UserState>()(

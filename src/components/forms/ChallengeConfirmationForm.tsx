@@ -3,9 +3,20 @@ import { Text, View, StyleSheet, TouchableOpacity, Image } from "react-native";
 
 import Stack from "@src/components/ui/Stack";
 import Button from "@src/components/ui/Button";
+import { createChallenge } from "@src/services/challengeApi";
 
 const ChallengeConfirmationForm = (props: any) => {
-  const { handleStep } = props;
+  const { challenge, handleStep } = props;
+
+  const addChallenge = () => {
+    createChallenge(challenge)
+      .then(() => {
+        handleStep(3);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <View style={styles.main}>
@@ -28,15 +39,17 @@ const ChallengeConfirmationForm = (props: any) => {
         alignItems="center"
       >
         <Stack alignItems="center">
-          <Text>New Challenge</Text>
-          <Text>Spans 3 days</Text>
-          <Text>From June 21 to June 23</Text>
+          <Text>{challenge.name}</Text>
+          <Text>Spans {challenge.duration} days</Text>
+          <Text>
+            From {challenge.start_at} to {challenge.end_at}
+          </Text>
         </Stack>
 
         <Button
           type={{ type: "primary", size: "l" }}
           title="Create Challenge"
-          onPress={() => handleStep(3)}
+          onPress={addChallenge}
         ></Button>
       </Stack>
     </View>

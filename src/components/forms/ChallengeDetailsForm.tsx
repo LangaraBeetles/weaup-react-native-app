@@ -12,7 +12,15 @@ import Stack from "@src/components/ui/Stack";
 import Button from "@src/components/ui/Button";
 
 const ChallengeDetailsForm = (props: any) => {
-  const { handleCloseModalPress, handleStep } = props;
+  const { challenge, handleChallenge, handleCloseModalPress, handleStep } =
+    props;
+
+  const onDurationChange = (duration: string) => {
+    const endDate = new Date(challenge.start_at);
+    endDate.setDate(endDate.getDate() + Number(duration));
+    handleChallenge("end_at", endDate.toDateString());
+    handleChallenge("duration", duration);
+  };
 
   return (
     <View style={styles.main}>
@@ -35,7 +43,11 @@ const ChallengeDetailsForm = (props: any) => {
         alignItems="center"
       >
         <Stack gap={8} alignItems="center">
-          <TextInput placeholder="Type Challenge Name"></TextInput>
+          <TextInput
+            placeholder="Type Challenge Name"
+            value={challenge.name}
+            onChangeText={(e) => handleChallenge("name", e)}
+          ></TextInput>
           <Stack flexDirection="row" gap={18} pt={22} justifyContent="center">
             <TouchableOpacity style={styles.colorSelection1} />
             <TouchableOpacity style={styles.colorSelection2} />
@@ -51,14 +63,30 @@ const ChallengeDetailsForm = (props: any) => {
           backgroundColor="#DFDFDF"
           w={"100%"}
         >
-          <TextInput placeholder="Description (optional)"></TextInput>
+          <TextInput
+            placeholder="Description (optional)"
+            value={challenge.description}
+            onChangeText={(e) => handleChallenge("description", e)}
+          ></TextInput>
           <Stack flexDirection="row" gap={20} justifyContent="space-between">
             <Text>Start date</Text>
-            <TextInput placeholder="Select date"></TextInput>
+            <TextInput
+              placeholder="Select date"
+              value={challenge.start_at}
+              onChangeText={() =>
+                handleChallenge("start_at", new Date().toDateString())
+              }
+            ></TextInput>
+            {/* TODO: temporari;y set to curretnd date. Create bottomsheet for date */}
           </Stack>
           <Stack flexDirection="row" gap={20} justifyContent="space-between">
             <Text>Duration</Text>
-            <TextInput placeholder="Select challenge span"></TextInput>
+            <TextInput
+              placeholder="Select challenge span"
+              value={challenge.duration}
+              onChangeText={(e) => onDurationChange(e)}
+            ></TextInput>
+            {/* TODO: create bottomsheet for duration */}
           </Stack>
         </Stack>
         <Button
