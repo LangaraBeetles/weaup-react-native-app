@@ -81,7 +81,6 @@ export default function DeviceMotionView() {
     }
 
     return () => {
-      setCurrentPosture("not_reading");
       _unsubscribe();
     };
   }, [isTrackingEnabled, mode, currentPosture]);
