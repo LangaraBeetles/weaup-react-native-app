@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Text,
   View,
   StyleSheet,
   TextInput,
@@ -8,6 +7,7 @@ import {
   Image,
 } from "react-native";
 
+import { Text } from "@src/components/ui/typography";
 import Stack from "@src/components/ui/Stack";
 import Button from "@src/components/ui/Button";
 
@@ -25,7 +25,9 @@ const ChallengeGoalForm = (props: any) => {
             <Image source={require("../../../assets/img/backIcon.png")} />
           </TouchableOpacity>
         </View>
-        <Text style={styles.content}>Choose team's goal</Text>
+        <Text style={styles.content} level="title_2">
+          Choose team's goal
+        </Text>
       </Stack>
 
       <Stack

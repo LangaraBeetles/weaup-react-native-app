@@ -1,6 +1,7 @@
 import React from "react";
-import { Text, View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image } from "react-native";
 
+import { Text } from "@src/components/ui/typography";
 import Center from "@src/components/ui/Center";
 import Stack from "@src/components/ui/Stack";
 import Button from "@src/components/ui/Button";
@@ -12,7 +13,7 @@ const ChallengeInvitationForm = (props: any) => {
   return (
     <View style={styles.main}>
       <Center p={16}>
-        <Text>Your challenge is set up!</Text>
+        <Text level="title_2">Your challenge is set up!</Text>
       </Center>
       <Stack
         px={16}
