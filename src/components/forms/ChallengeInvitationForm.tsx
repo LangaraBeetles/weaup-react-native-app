@@ -4,9 +4,10 @@ import { Text, View, StyleSheet, Image } from "react-native";
 import Center from "@src/components/ui/Center";
 import Stack from "@src/components/ui/Stack";
 import Button from "@src/components/ui/Button";
+import ShareButton from "@src/components/ui/ShareButton";
 
 const ChallengeInvitationForm = (props: any) => {
-  const { handleCloseModalPress } = props;
+  const { url, handleCloseModalPress } = props;
 
   return (
     <View style={styles.main}>
@@ -25,10 +26,7 @@ const ChallengeInvitationForm = (props: any) => {
         <Image source={require("../../../assets/img/confetti.png")} />
 
         <Stack justifyContent="flex-end" alignItems="center">
-          <Button
-            type={{ type: "primary", size: "l" }}
-            title="Share Invitation"
-          ></Button>
+          <ShareButton url={url} />
           <Button
             type={{ type: "secondary", size: "l" }}
             title="Not Now"

@@ -6,11 +6,12 @@ import Button from "@src/components/ui/Button";
 import { createChallenge } from "@src/services/challengeApi";
 
 const ChallengeConfirmationForm = (props: any) => {
-  const { challenge, handleStep } = props;
+  const { challenge, handleStep, setUrl } = props;
 
   const addChallenge = () => {
     createChallenge(challenge)
-      .then(() => {
+      .then((res) => {
+        setUrl(res.data.url);
         handleStep(3);
       })
       .catch((err) => {
