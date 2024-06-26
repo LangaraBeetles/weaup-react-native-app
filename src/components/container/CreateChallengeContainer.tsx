@@ -1,11 +1,15 @@
 import { useState, useEffect } from "react";
 import { View, BackHandler, Alert } from "react-native";
 
-import { ChallengeStatusEnum } from "@src/interfaces/challenge.types";
+import {
+  ChallengeStatusEnum,
+  ChallengeType,
+} from "@src/interfaces/challenge.types";
 import ChallengeDetailsForm from "@src/components/forms/ChallengeDetailsForm";
 import ChallengeGoalForm from "@src/components/forms/ChallengeGoalForm";
 import ChallengeConfirmationForm from "@src/components/forms/ChallengeConfirmationForm";
 import ChallengeInvitationForm from "@src/components/forms/ChallengeInvitationForm";
+import { FormProvider, useForm } from "react-hook-form";
 
 const initialValues = {
   creator_id: "66693e1628ed06d3f5dcf64b", //TODO: Replace with useUser.getState().user.id when login/sign up is implemented
@@ -28,6 +32,8 @@ const CreateChallengeContainer = (props: any) => {
   const [step, setStep] = useState(0);
   const [challenge, setChallenge] = useState(initialValues);
   const [url, setUrl] = useState("");
+
+  const form = useForm<ChallengeType>();
 
   const handleChallenge = (fieldName: string, newValue: any) => {
     setChallenge((prevData) => ({
@@ -66,35 +72,37 @@ const CreateChallengeContainer = (props: any) => {
 
   return (
     <View>
-      {step == 0 && (
-        <ChallengeDetailsForm
-          challenge={challenge}
-          handleChallenge={handleChallenge}
-          handleCloseModalPress={confirmExit}
-          handleStep={setStep}
-        />
-      )}
-      {step == 1 && (
-        <ChallengeGoalForm
-          challenge={challenge}
-          handleChallenge={handleChallenge}
-          handleStep={setStep}
-        />
-      )}
-      {step == 2 && (
-        <ChallengeConfirmationForm
-          challenge={challenge}
-          handleChallenge={handleChallenge}
-          handleStep={setStep}
-          setUrl={setUrl}
-        />
-      )}
-      {step == 3 && (
-        <ChallengeInvitationForm
-          handleCloseModalPress={handleCloseModalPress}
-          url={url}
-        />
-      )}
+      <FormProvider {...form}>
+        {step == 0 && (
+          <ChallengeDetailsForm
+            challenge={challenge}
+            handleChallenge={handleChallenge}
+            handleCloseModalPress={confirmExit}
+            handleStep={setStep}
+          />
+        )}
+        {step == 1 && (
+          <ChallengeGoalForm
+            challenge={challenge}
+            handleChallenge={handleChallenge}
+            handleStep={setStep}
+          />
+        )}
+        {step == 2 && (
+          <ChallengeConfirmationForm
+            challenge={challenge}
+            handleChallenge={handleChallenge}
+            handleStep={setStep}
+            setUrl={setUrl}
+          />
+        )}
+        {step == 3 && (
+          <ChallengeInvitationForm
+            handleCloseModalPress={handleCloseModalPress}
+            url={url}
+          />
+        )}
+      </FormProvider>
     </View>
   );
 };
