@@ -27,6 +27,7 @@ const CreateChallengeContainer = (props: any) => {
   const handleCloseModalPress = props.handleCloseModalPress;
   const [step, setStep] = useState(0);
   const [challenge, setChallenge] = useState(initialValues);
+  const [url, setUrl] = useState("");
 
   const handleChallenge = (fieldName: string, newValue: any) => {
     setChallenge((prevData) => ({
@@ -81,11 +82,16 @@ const CreateChallengeContainer = (props: any) => {
         />
       )}
       {step == 2 && (
-        <ChallengeConfirmationForm challenge={challenge} handleStep={setStep} />
+        <ChallengeConfirmationForm
+          challenge={challenge}
+          handleStep={setStep}
+          setUrl={setUrl}
+        />
       )}
       {step == 3 && (
         <ChallengeInvitationForm
           handleCloseModalPress={handleCloseModalPress}
+          url={url}
         />
       )}
     </View>
