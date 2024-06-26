@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
 import {
-  Text,
   View,
   StyleSheet,
   TextInput,
@@ -8,18 +7,20 @@ import {
   Image,
 } from "react-native";
 
+import { Text } from "@src/components/ui/typography";
 import Stack from "@src/components/ui/Stack";
 import Button from "@src/components/ui/Button";
+import DatePickerModal from "@src/components/ui/DatePickerModal";
 
 const ChallengeDetailsForm = (props: any) => {
+  const [openDatePicker, setOpenDatePicker] = useState(false);
+  const [date, setDate] = useState(new Date());
   const { challenge, handleChallenge, handleCloseModalPress, handleStep } =
     props;
 
-  const onDurationChange = (duration: string) => {
-    const endDate = new Date(challenge.start_at);
-    endDate.setDate(endDate.getDate() + Number(duration));
-    handleChallenge("end_at", endDate.toDateString());
-    handleChallenge("duration", duration);
+  const onDateChange = (newDate: Date) => {
+    setDate(newDate);
+    handleChallenge("start_at", newDate.toDateString());
   };
 
   return (
@@ -70,21 +71,23 @@ const ChallengeDetailsForm = (props: any) => {
           ></TextInput>
           <Stack flexDirection="row" gap={20} justifyContent="space-between">
             <Text>Start date</Text>
-            <TextInput
-              placeholder="Select date"
-              value={challenge.start_at}
-              onChangeText={() =>
-                handleChallenge("start_at", new Date().toDateString())
-              }
-            ></TextInput>
-            {/* TODO: temporari;y set to curretnd date. Create bottomsheet for date */}
+            <TouchableOpacity onPress={() => setOpenDatePicker(true)}>
+              <Text> {challenge.start_at ?? "Select Date"} </Text>
+              <DatePickerModal
+                mode={"date"}
+                date={date}
+                setDate={onDateChange}
+                open={openDatePicker}
+                setOpen={setOpenDatePicker}
+              ></DatePickerModal>
+            </TouchableOpacity>
           </Stack>
           <Stack flexDirection="row" gap={20} justifyContent="space-between">
             <Text>Duration</Text>
             <TextInput
               placeholder="Select challenge span"
               value={challenge.duration}
-              onChangeText={(e) => onDurationChange(e)}
+              onChangeText={(e) => handleChallenge("duration", e)}
             ></TextInput>
             {/* TODO: create bottomsheet for duration */}
           </Stack>
