@@ -11,8 +11,8 @@ const initialValues = {
   creator_id: "66693e1628ed06d3f5dcf64b", //TODO: Replace with useUser.getState().user.id when login/sign up is implemented
   name: null,
   description: null,
-  start_at: new Date(),
-  end_at: new Date(),
+  start_at: null,
+  end_at: null,
   duration: 0,
   goal: 80,
   status: ChallengeStatusEnum.IN_PROGRESS,
@@ -84,6 +84,7 @@ const CreateChallengeContainer = (props: any) => {
       {step == 2 && (
         <ChallengeConfirmationForm
           challenge={challenge}
+          handleChallenge={handleChallenge}
           handleStep={setStep}
           setUrl={setUrl}
         />

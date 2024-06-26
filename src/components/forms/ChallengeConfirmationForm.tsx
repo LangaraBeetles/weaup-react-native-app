@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import { Text, View, StyleSheet, TouchableOpacity, Image } from "react-native";
 
 import Stack from "@src/components/ui/Stack";
@@ -6,7 +6,13 @@ import Button from "@src/components/ui/Button";
 import { createChallenge } from "@src/services/challengeApi";
 
 const ChallengeConfirmationForm = (props: any) => {
-  const { challenge, handleStep, setUrl } = props;
+  const { challenge, handleChallenge, handleStep, setUrl } = props;
+
+  useEffect(() => {
+    const endDate = new Date(challenge.start_at);
+    endDate.setDate(endDate.getDate() + Number(challenge.duration));
+    handleChallenge("end_at", endDate.toDateString());
+  }, []);
 
   const addChallenge = () => {
     createChallenge(challenge)

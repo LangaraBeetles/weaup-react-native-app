@@ -10,5 +10,5 @@ export const getChallengeById = async (id: string) => {
 
 export const createChallenge = async (challenge: ChallengeType) => {
   const response = await api.post(`${route}`, challenge);
-  return response;
+  return response.data;
 };
