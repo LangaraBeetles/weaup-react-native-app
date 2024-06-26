@@ -13,7 +13,7 @@ const initialValues = {
   description: null,
   start_at: null,
   end_at: null,
-  duration: 0,
+  duration: 1,
   goal: 80,
   status: ChallengeStatusEnum.IN_PROGRESS,
   members: [

@@ -4,7 +4,7 @@ export type ChallengeType = {
   name: string;
   description: string | null;
   start_at: Date;
-  end_at: Date; // out of 100
+  end_at: Date;
   goal: number;
   duration: number;
   status: ChallengeStatusType;
