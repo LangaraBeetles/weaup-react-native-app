@@ -11,12 +11,16 @@ import { Text } from "@src/components/ui/typography";
 import Stack from "@src/components/ui/Stack";
 import Button from "@src/components/ui/Button";
 import DatePickerModal from "@src/components/ui/DatePickerModal";
+import { Controller, useFormContext } from "react-hook-form";
+import { ChallengeType } from "@src/interfaces/challenge.types";
 
 const ChallengeDetailsForm = (props: any) => {
   const [openDatePicker, setOpenDatePicker] = useState(false);
   const [date, setDate] = useState(new Date());
   const { challenge, handleChallenge, handleCloseModalPress, handleStep } =
     props;
+
+const { control } = useFormContext<ChallengeType>();
 
   const onDateChange = (newDate: Date) => {
     setDate(newDate);
@@ -46,11 +50,24 @@ const ChallengeDetailsForm = (props: any) => {
         alignItems="center"
       >
         <Stack gap={8} alignItems="center">
-          <TextInput
-            placeholder="Type Challenge Name"
-            value={challenge.name}
-            onChangeText={(e) => handleChallenge("name", e)}
-          ></TextInput>
+          <Controller
+            control={control}
+            name="name"
+            rules={{
+              required: true,
+            }}
+            render={({ field }) => {
+              return (
+                <TextInput
+                  placeholder="Type Challenge Name"
+                  // value={challenge.name}
+                  // onChangeText={(e) => handleChallenge("name", e)}
+                  {...field}
+                />
+              );
+            }}
+          />
+
           <Stack flexDirection="row" gap={18} pt={22} justifyContent="center">
             <TouchableOpacity style={styles.colorSelection1} />
             <TouchableOpacity style={styles.colorSelection2} />
