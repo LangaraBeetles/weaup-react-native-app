@@ -1,8 +1,9 @@
 import { useEffect } from "react";
-import { Text, View, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Image } from "react-native";
 
 import Stack from "@src/components/ui/Stack";
 import Button from "@src/components/ui/Button";
+import { Text } from "@src/components/ui/typography";
 import { createChallenge } from "@src/services/challengeApi";
 
 const ChallengeConfirmationForm = (props: any) => {
@@ -36,7 +37,9 @@ const ChallengeConfirmationForm = (props: any) => {
             <Image source={require("../../../assets/img/backIcon.png")} />
           </TouchableOpacity>
         </View>
-        <Text style={styles.content}>All set?</Text>
+        <Text style={styles.content} level="title_2">
+          All set?
+        </Text>
       </Stack>
 
       <Stack

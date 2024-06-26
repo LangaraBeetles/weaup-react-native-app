@@ -34,7 +34,9 @@ const ChallengeDetailsForm = (props: any) => {
             <Image source={require("../../../assets/img/closeIcon.png")} />
           </TouchableOpacity>
         </View>
-        <Text style={styles.content}>Create Challenge</Text>
+        <Text style={styles.content} level="title_2">
+          Create Challenge
+        </Text>
       </Stack>
 
       <Stack
@@ -69,10 +71,10 @@ const ChallengeDetailsForm = (props: any) => {
             value={challenge.description}
             onChangeText={(e) => handleChallenge("description", e)}
           ></TextInput>
-          <Stack flexDirection="row" gap={20} justifyContent="space-between">
-            <Text>Start date</Text>
+          <Stack flexDirection="row" justifyContent="space-between">
+            <Text level="callout">Start date</Text>
             <TouchableOpacity onPress={() => setOpenDatePicker(true)}>
-              <Text> {challenge.start_at ?? "Select Date"} </Text>
+              <Text level="body"> {challenge.start_at ?? "Select Date"} </Text>
               <DatePickerModal
                 mode={"date"}
                 date={date}
@@ -82,8 +84,8 @@ const ChallengeDetailsForm = (props: any) => {
               ></DatePickerModal>
             </TouchableOpacity>
           </Stack>
-          <Stack flexDirection="row" gap={20} justifyContent="space-between">
-            <Text>Duration</Text>
+          <Stack flexDirection="row" justifyContent="space-between">
+            <Text level="callout">Duration</Text>
             <TextInput
               placeholder="Select challenge span"
               value={challenge.duration}
