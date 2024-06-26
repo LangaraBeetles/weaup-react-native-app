@@ -12,19 +12,19 @@ import ChallengeInvitationForm from "@src/components/forms/ChallengeInvitationFo
 import { FormProvider, useForm } from "react-hook-form";
 
 const initialValues = {
-  creator_id: "66693e1628ed06d3f5dcf64b", //TODO: Replace with useUser.getState().user.id when login/sign up is implemented
+  // creator_id: "667c5463a320e80d83222fe0", //TODO: Replace with useUser.getState().user.id when login/sign up is implemented
   name: null,
   description: null,
   start_at: null,
   end_at: null,
   duration: 1,
   goal: 80,
-  status: ChallengeStatusEnum.IN_PROGRESS,
-  members: [
-    {
-      user_id: "66693e1628ed06d3f5dcf64b", //TODO: Replace with useUser.getState().user.id when login/sign up is implemented
-    },
-  ],
+  // status: ChallengeStatusEnum.IN_PROGRESS,
+  // members: [
+  //   {
+  //     user_id: "667c5463a320e80d83222fe0", //TODO: Replace with useUser.getState().user.id when login/sign up is implemented
+  //   },
+  // ],
 };
 
 const CreateChallengeContainer = (props: any) => {

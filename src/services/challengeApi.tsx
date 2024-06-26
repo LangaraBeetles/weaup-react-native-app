@@ -12,3 +12,8 @@ export const createChallenge = async (challenge: ChallengeType) => {
   const response = await api.post(`${route}`, challenge);
   return response.data;
 };
+
+export const getChallenges = async () => {
+  const response = await api.get(`${route}`);
+  return response;
+};
