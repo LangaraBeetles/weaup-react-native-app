@@ -1,4 +1,3 @@
-import React from "react";
 import { View, StyleSheet, Image } from "react-native";
 
 import { Text } from "@src/components/ui/typography";
