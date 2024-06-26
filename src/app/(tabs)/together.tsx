@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { View, StyleSheet, Image, Text } from "react-native";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
@@ -8,6 +8,9 @@ import CustomBottomSheetModal from "@src/components/ui/CustomBottomSheetModal";
 import ChallengeList from "@src/components/lists/ChallengeList";
 import Chip from "@src/components/ui/Chip";
 import CreateChallengeContainer from "@src/components/container/CreateChallengeContainer";
+import { usePathname } from "expo-router";
+import { useQuery } from "@tanstack/react-query";
+import { getChallenges } from "@src/services/challengeApi";
 
 //TODO START: Remove dummy data
 const todayDate = new Date();
@@ -43,7 +46,15 @@ const challenges = Array(8).fill(challenge);
 
 const TogetherScreen = () => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+  const path = usePathname();
 
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["challenges"],
+    queryFn: getChallenges,
+    enabled: path === "/together",
+  });
+
+  console.log({ path });
   const addChallenge = () => bottomSheetModalRef.current?.present();
   const handleCloseModalPress = () => bottomSheetModalRef.current?.close();
 

@@ -9,19 +9,19 @@ const api = axios.create({
 
 api.interceptors.request.use(
   (request) => {
-    if (!config.dev_mode) {
-      const token = useUser.getState().user.token;
-      const authToken = `Bearer ${token}`;
+    // if (!config.dev_mode) {
+    const token = useUser.getState().user.token;
+    const authToken = `Bearer ${token}`;
 
-      request.headers.Authorization = authToken;
-    }
+    request.headers.Authorization = authToken;
+    // }
 
     return request;
   },
-  (error) => {
-    console.error(`Request error ${error}`);
-    return Promise.reject(error);
-  },
+    (error) => {
+      console.error(`Request error ${error}`);
+      return Promise.reject(error);
+    },
 );
 
 api.interceptors.response.use(
