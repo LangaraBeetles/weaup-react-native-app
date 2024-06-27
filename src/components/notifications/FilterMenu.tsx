@@ -1,73 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
 import { Text } from "@src/components/ui/typography";
 
-type FilterMenuProps = {
-  selectedFilter: string;
-  setSelectedFilter: (filter: string) => void;
+type Tab = {
+  label: string;
+  value: string;
 };
 
-const FilterMenu = ({ selectedFilter, setSelectedFilter }: FilterMenuProps) => {
-  const handleFilterPress = (filter: string) => {
-    setSelectedFilter(filter);
-  };
+type FilterMenuProps = {
+  tabs: Array<Tab>;
+  defaultTab?: string;
+  onChange?: (filter: string) => void;
+};
+
+const FilterMenu = ({ defaultTab, tabs, onChange }: FilterMenuProps) => {
+  const [selectedFilter, setSelectedFilter] = useState(
+    defaultTab ?? tabs?.[0].value
+  );
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={[
-          styles.filterButton,
-          selectedFilter === "All" && styles.selectedButton,
-        ]}
-        onPress={() => handleFilterPress("All")}
-      >
-        <Text
-          style={[
-            styles.filterText,
-            selectedFilter === "All" && styles.selectedText,
-          ]}
-          level="footnote"
-          weight="semibold"
-        >
-          All
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={[
-          styles.filterButton,
-          selectedFilter === "Summary" && styles.selectedButton,
-        ]}
-        onPress={() => handleFilterPress("Summary")}
-      >
-        <Text
-          style={[
-            styles.filterText,
-            selectedFilter === "Summary" && styles.selectedText,
-          ]}
-          level="footnote"
-          weight="semibold"
-        >
-          Summary
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={[
-          styles.filterButton,
-          selectedFilter === "Challenge" && styles.selectedButton,
-        ]}
-        onPress={() => handleFilterPress("Challenge")}
-      >
-        <Text
-          style={[
-            styles.filterText,
-            selectedFilter === "Challenge" && styles.selectedText,
-          ]}
-          level="footnote"
-          weight="semibold"
-        >
-          Challenge
-        </Text>
-      </TouchableOpacity>
+      {tabs.map(({ label, value }) => {
+        return (
+          <TouchableOpacity
+            key={value}
+            style={[
+              styles.filterButton,
+              selectedFilter === value && styles.selectedButton,
+            ]}
+            onPress={() => setSelectedFilter(value)}
+          >
+            <Text
+              style={[
+                styles.filterText,
+                selectedFilter === value && styles.selectedText,
+              ]}
+              level="footnote"
+              weight="semibold"
+            >
+              {label}
+            </Text>
+          </TouchableOpacity>
+        );
+      })}
     </View>
   );
 };
@@ -76,16 +51,16 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     backgroundColor: "#FEE39A",
-    paddingVertical: 3,
-    borderRadius: 10,
-    marginHorizontal: 20,
+    padding: 4,
+    borderRadius: 100,
+    gap: 1,
   },
   filterButton: {
     flex: 1,
     alignItems: "center",
-    paddingVertical: 3,
-    borderRadius: 10,
-    marginHorizontal: 5,
+    paddingVertical: 2,
+    paddingHorizontal: 9,
+    borderRadius: 100,
   },
   filterText: {
     color: "#5F5C56",
@@ -95,6 +70,7 @@ const styles = StyleSheet.create({
   },
   selectedText: {
     color: "#201F1D",
+    fontFamily: "NunitoBold",
   },
 });
 
