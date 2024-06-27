@@ -2,7 +2,6 @@ import { persist, createJSONStorage, devtools } from "zustand/middleware";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
 import { TrackingModeType, UserType } from "@interfaces/user.types";
-import axios from "axios";
 import { PostureStatus } from "@src/interfaces/posture.types";
 
 type UserState = {
@@ -16,7 +15,7 @@ type UserState = {
   setCurrentPosture: (value: PostureStatus) => void;
 
   postureData: Array<{ status: PostureStatus; date: Date }>;
-  savePostureData: (data: Array<{ status: PostureStatus; date: Date }>) => void;
+  preparePostureData: () => Array<{ status: PostureStatus; date: Date }>;
 
   isAuth: boolean;
   user: UserType;
@@ -76,29 +75,12 @@ export const useUser = create<UserState>()(
         },
 
         postureData: [],
-        savePostureData: () => {
-          const postureData = get().postureData;
-          const user_id = get().user.id;
-
-          if (!postureData.length) {
-            return;
-          }
-
-          const records = postureData
-            .filter((p) => p.status === "bad" || p.status === "good")
-            .map((p) => ({
-              user_id,
-              good_posture: p.status === "good",
-              recorded_at: p.date.toISOString(),
-            }));
-
-          // TODO: replace this with the axios interceptor api
-          axios
-            .post(`http://localhost:3000/api/v1/posture/records`, records)
-            .then(() => {
-              set({ postureData: [] });
-            })
-            .catch(console.error);
+        preparePostureData: () => {
+          // This function will get the current posture data that is ready to be sent to the api
+          // we clear the object to avoid duplicity
+          const data = get().postureData;
+          set({ postureData: [] });
+          return data;
         },
 
         isAuth: false,
@@ -166,7 +148,7 @@ export const useUser = create<UserState>()(
             },
           })),
 
-        mode: "PHONE",
+        mode: "phone",
         changeMode: (value: TrackingModeType) => set({ mode: value }),
       }),
       {

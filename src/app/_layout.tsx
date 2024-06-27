@@ -11,6 +11,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import HPSystem from "@src/components/scoring/HPSystem";
 import XPSystem from "@src/components/scoring/XPSystem";
 import LevelSystem from "@src/components/scoring/LevelSystem";
+import PostureDataProvider from "@src/components/providers/PostureDataProvider";
 
 const queryClient = new QueryClient();
 
@@ -58,41 +59,49 @@ const RootLayout = () => {
             <LevelSystem />
             <GestureHandlerRootView>
               <BottomSheetModalProvider>
-                <Stack>
-                  <Stack.Screen
-                    name="(tabs)"
-                    options={{ headerShown: false }}
-                  />
-                  <Stack.Screen name="setup" options={{ headerShown: false }} />
-                  <Stack.Screen
-                    name="challengeDetailsScreen"
-                    options={{
-                      headerShown: true,
-                      title: "Challenge progress",
-                    }}
-                  />
-                  <Stack.Screen
-                    name="pastChallengesScreen"
-                    options={{
-                      headerShown: true,
-                      title: "Past Challenges",
-                      headerBackTitle: "Back",
-                    }}
-                  />
-                  <Stack.Screen
-                    name="provider-signup"
-                    options={{ headerShown: false }}
-                  />
-                  <Stack.Screen name="auth" options={{ headerShown: false }} />
-                  <Stack.Screen
-                    name="session-summary"
-                    options={{ headerShown: false }}
-                  />
-                  <Stack.Screen
-                    name="notifications"
-                    options={{ headerShown: false }}
-                  />
-                </Stack>
+                <PostureDataProvider>
+                  <Stack>
+                    <Stack.Screen
+                      name="(tabs)"
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="setup"
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="challengeDetailsScreen"
+                      options={{
+                        headerShown: true,
+                        title: "Challenge progress",
+                      }}
+                    />
+                    <Stack.Screen
+                      name="pastChallengesScreen"
+                      options={{
+                        headerShown: true,
+                        title: "Past Challenges",
+                        headerBackTitle: "Back",
+                      }}
+                    />
+                    <Stack.Screen
+                      name="provider-signup"
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="auth"
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="session-summary"
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="notifications"
+                      options={{ headerShown: false }}
+                    />
+                  </Stack>
+                </PostureDataProvider>
               </BottomSheetModalProvider>
             </GestureHandlerRootView>
           </HeadTrackingProvider>
