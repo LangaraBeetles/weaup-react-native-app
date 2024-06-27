@@ -11,6 +11,7 @@ import { useNavigation } from "@react-navigation/native";
 import FilterMenu from "../components/notifications/FilterMenu";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Text } from "@src/components/ui/typography";
+import Icon from "@src/components/ui/Icon";
 
 const Notifications = () => {
   const navigation = useNavigation();
@@ -124,7 +125,7 @@ const Notifications = () => {
           style={styles.backButton}
         >
           <View style={styles.iconBackground}>
-            <Ionicons name="arrow-back" size={24} color="#545F71" />
+            <Icon name="arrow-left" />
           </View>
         </TouchableOpacity>
         <Text style={styles.headerTitle} level="title_3">
