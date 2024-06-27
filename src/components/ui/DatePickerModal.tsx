@@ -5,7 +5,7 @@ const DatePickerModal = (props: any) => {
   return (
     <DatePicker
       modal
-      minimumDate={date}
+      minimumDate={new Date()}
       mode={mode}
       open={open}
       date={date}

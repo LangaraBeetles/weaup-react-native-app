@@ -127,7 +127,7 @@ const ChallengeDetailsForm = (props: any) => {
                     <Text level="body"> {field.value ?? "Select Date"}</Text>
                     <DatePickerModal
                       mode={"date"}
-                      date={new Date()}
+                      date={field.value ? new Date(field.value) : new Date()}
                       open={openDatePicker}
                       setOpen={setOpenDatePicker}
                       onChangeText={(e: Date) =>

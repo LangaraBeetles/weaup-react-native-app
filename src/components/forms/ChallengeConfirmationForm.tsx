@@ -1,5 +1,5 @@
 import { View, StyleSheet, TouchableOpacity, Image } from "react-native";
-import { Controller, useFormContext } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 
 import Stack from "@src/components/ui/Stack";
 import Button from "@src/components/ui/Button";
@@ -9,7 +9,13 @@ import { ChallengeInputType } from "@src/interfaces/challenge.types";
 
 const ChallengeConfirmationForm = (props: any) => {
   const { handleStep, setUrl } = props;
-  const { control, handleSubmit } = useFormContext<ChallengeInputType>();
+  const { handleSubmit, getValues } = useFormContext<ChallengeInputType>();
+  const [start_at, end_at, duration, name] = getValues([
+    "start_at",
+    "end_at",
+    "duration",
+    "name",
+  ]);
 
   const validate = (data: ChallengeInputType) => {
     createChallenge(data)
@@ -45,42 +51,11 @@ const ChallengeConfirmationForm = (props: any) => {
         alignItems="center"
       >
         <Stack alignItems="center">
-          <Controller
-            control={control}
-            name="name"
-            rules={{
-              required: true,
-            }}
-            render={({ field }) => <Text>{field.value}</Text>}
-          />
-          <Controller
-            control={control}
-            name="duration"
-            rules={{
-              required: true,
-            }}
-            render={({ field }) => <Text>{field.value} days</Text>}
-          />
-
-          <Stack flexDirection="row">
-            <Controller
-              control={control}
-              name="start_at"
-              rules={{
-                required: true,
-              }}
-              render={({ field }) => <Text>From {field.value.toString()}</Text>}
-            />
-
-            <Controller
-              control={control}
-              name="end_at"
-              rules={{
-                required: true,
-              }}
-              render={({ field }) => <Text> to {field.value.toString()}</Text>}
-            />
-          </Stack>
+          <Text>{name}</Text>
+          <Text>{duration} days</Text>
+          <Text>
+            From {start_at} to {end_at}
+          </Text>
         </Stack>
 
         <Button
