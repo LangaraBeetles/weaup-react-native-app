@@ -1,7 +1,6 @@
 import React, { useRef } from "react";
 import { View, StyleSheet, Image, Text } from "react-native";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import { Redirect } from "expo-router";
 
 import Stack from "@src/components/ui/Stack";
 import FloatingButton from "@src/components/ui/FloatingButton";
@@ -10,6 +9,7 @@ import ChallengeList from "@src/components/lists/ChallengeList";
 import Chip from "@src/components/ui/Chip";
 import CreateChallengeContainer from "@src/components/container/CreateChallengeContainer";
 import { useUser } from "@src/state/useUser";
+import GoogleSignUp from "@src/components/profile/GoogleSignUp";
 
 //TODO START: Remove dummy data
 const todayDate = new Date();
@@ -56,7 +56,7 @@ const TogetherScreen = () => {
   );
 
   if (isGuest) {
-    return <Redirect href="/provider-signup" />;
+    return <GoogleSignUp />;
   }
 
   return (

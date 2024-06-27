@@ -5,23 +5,24 @@ import { theme } from "@src/styles/theme";
 import Center from "@src/components/ui/Center";
 import Stack from "@src/components/ui/Stack";
 import { useUser } from "@src/state/useUser";
-import { Redirect, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import Button from "@src/components/ui/Button";
 import authApi from "@src/services/authApi";
+import GoogleSignUp from "@src/components/profile/GoogleSignUp";
 
 const ProfileScreen = () => {
   const isGuest = useUser((data) => data.isGuest);
   const router = useRouter();
   const { logout } = authApi();
 
-  if (isGuest) {
-    return <Redirect href="/provider-signup" />;
-  }
-
   const handleLogout = async () => {
     logout();
     router.replace("/");
   };
+
+  if (isGuest) {
+    return <GoogleSignUp />;
+  }
 
   return (
     <Center
