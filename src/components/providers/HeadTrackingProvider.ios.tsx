@@ -53,7 +53,6 @@ const HeadTrackingProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const startTracking = async () => {
     const isActive = await isDeviceMotionActive();
-
     if (!isActive) {
       await startDeviceMotionUpdates();
     }

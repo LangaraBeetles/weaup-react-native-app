@@ -24,6 +24,10 @@ type UserState = {
   setAuth: (isAuth: boolean, user: UserType) => void;
   setDailyGoal: (newDailyGoal: number) => void;
 
+  setLevel: (newLevel: number) => void;
+  setXP: (newXP: number | ((prevXP: number) => number)) => void;
+  setHP: (newHP: number | ((prevHP: number) => number)) => void;
+  setDailyStreakCounter: (newDailyStreakCounter: number) => void;
   mode: TrackingModeType;
   changeMode: (value: TrackingModeType) => void;
 };
@@ -35,9 +39,16 @@ const userInitialState: UserType = {
   name: "",
   dailyGoal: 80, // out of 100
   providerId: "",
+  level: 1,
+  xp: 0,
+  hp: 100,
+  daily_streak_counter: 0,
   token: "",
   email: "",
 };
+
+// Clear AsyncStorage:
+// AsyncStorage.clear();
 
 export const useUser = create<UserState>()(
   devtools(
@@ -51,11 +62,14 @@ export const useUser = create<UserState>()(
 
         currentPosture: "not_reading",
         setCurrentPosture: (value) => {
-          const prevPostureData = get().postureData;
-
           if (value === "bad" || value === "good") {
-            prevPostureData.push({ status: value, date: new Date() });
-            set({ currentPosture: value, postureData: prevPostureData });
+            set((state) => ({
+              currentPosture: value,
+              postureData: [
+                ...state.postureData,
+                { status: value, date: new Date() },
+              ],
+            }));
           } else {
             set({ currentPosture: value });
           }
@@ -105,6 +119,50 @@ export const useUser = create<UserState>()(
             user: {
               ...state.user,
               dailyGoal: newDailyGoal,
+            },
+          })),
+        setLevel: (newLevel: number) => {
+          set((state: { isAuth: boolean; user: UserType }) => ({
+            ...state,
+            user: {
+              ...state.user,
+              level: newLevel,
+            },
+          }));
+
+          // TODO: authenticate guest user with an id for this to work:
+          // const user_id = get().user.id;
+          // const body = {
+          //   level: newLevel,
+          // };
+
+          // TODO: replace this with the axios interceptor api
+          // axios
+          //   .patch(`http://10.0.0.201:3000/api/v1/user/${user_id}`, body)
+          //   .catch(console.error);
+        },
+        setXP: (newXP: number | ((prevXP: number) => number)) =>
+          set((state: { isAuth: boolean; user: UserType }) => ({
+            ...state,
+            user: {
+              ...state.user,
+              xp: typeof newXP === "function" ? newXP(state.user.xp) : newXP,
+            },
+          })),
+        setHP: (newHP: number | ((prevHP: number) => number)) =>
+          set((state: { isAuth: boolean; user: UserType }) => ({
+            ...state,
+            user: {
+              ...state.user,
+              hp: typeof newHP === "function" ? newHP(state.user.hp) : newHP,
+            },
+          })),
+        setDailyStreakCounter: (newDailyStreakCounter: number) =>
+          set((state: { isAuth: boolean; user: UserType }) => ({
+            ...state,
+            user: {
+              ...state.user,
+              daily_streak_counter: newDailyStreakCounter,
             },
           })),
 

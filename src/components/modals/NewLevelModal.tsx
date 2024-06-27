@@ -3,6 +3,7 @@ import { View, Image, StyleSheet } from "react-native";
 import { Text } from "@src/components/ui/typography";
 import Modal from "react-native-modal";
 import { globalStyles } from "@src/styles/globalStyles";
+import { useUser } from "@src/state/useUser";
 
 interface NewLevelModalProps {
   isVisible: boolean;
@@ -13,16 +14,18 @@ const NewLevelModal: React.FC<NewLevelModalProps> = ({
   isVisible,
   onClose,
 }) => {
+  const level = useUser((state) => state.user.level);
+
   return (
     <Modal isVisible={isVisible} onBackdropPress={onClose}>
       <View style={styles.modalContent}>
         <Text style={styles.title} level="title_3">
-          You have reached Level 3
+          You have reached Level {level}
         </Text>
         <View style={styles.levelContainer}>
           <View style={styles.levelBarContainer} />
-          <Text level="caption_2">Level 2</Text>
-          <Text level="caption_2">Level 3</Text>
+          <Text level="caption_2">Level {level - 1}</Text>
+          <Text level="caption_2">Level {level}</Text>
         </View>
         <View style={styles.badgeContainer}>
           <Image
