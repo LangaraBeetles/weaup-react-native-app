@@ -5,13 +5,20 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
+import { Controller, useFormContext } from "react-hook-form";
 
 import { Text } from "@src/components/ui/typography";
 import Stack from "@src/components/ui/Stack";
 import Button from "@src/components/ui/Button";
+import { ChallengeInputType } from "@src/interfaces/challenge.types";
 
 const ChallengeGoalForm = (props: any) => {
-  const { challenge, handleChallenge, handleStep } = props;
+  const { handleStep } = props;
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useFormContext<ChallengeInputType>();
 
   return (
     <View style={styles.main}>
@@ -39,16 +46,32 @@ const ChallengeGoalForm = (props: any) => {
         <Text>
           A score setting of 70–85% of good posture is perfect for beginners.
         </Text>
-        <TextInput
-          placeholder="80%"
-          value={challenge.goal}
-          onChangeText={(e) => handleChallenge("goal", e)}
-        ></TextInput>
+        <Controller
+          control={control}
+          defaultValue={"80"}
+          name="goal"
+          rules={{
+            required: true,
+          }}
+          render={({ field }) => (
+            <TextInput
+              inputMode="numeric"
+              keyboardType="numeric"
+              placeholder="80%"
+              {...field}
+              onChangeText={field.onChange}
+            />
+          )}
+        />
+        {/* TODO: change based on design flow */}
+        {errors.goal && <Text>This is required.</Text>}
 
         <Button
           type={{ type: "primary", size: "l" }}
           title="Next"
-          onPress={() => handleStep(2)}
+          onPress={handleSubmit(() => {
+            handleStep(2);
+          })}
         ></Button>
       </Stack>
     </View>

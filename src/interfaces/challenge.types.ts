@@ -1,10 +1,11 @@
+//converted other fields to string to avoid errors on hook form. TextInput only accepts strings
 export type ChallengeInputType = {
   name: string;
   description: string;
-  start_at: Date;
-  end_at: Date;
-  goal: number;
-  duration: number;
+  start_at: string;
+  end_at: string;
+  goal: string;
+  duration: string;
   status: ChallengeStatusType;
 };
 

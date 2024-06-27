@@ -1,36 +1,25 @@
-import { useEffect } from "react";
 import { View, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { Controller, useFormContext } from "react-hook-form";
 
 import Stack from "@src/components/ui/Stack";
 import Button from "@src/components/ui/Button";
 import { Text } from "@src/components/ui/typography";
 import { createChallenge } from "@src/services/challengeApi";
-import { useFormContext } from "react-hook-form";
-import { ChallengeType } from "@src/interfaces/challenge.types";
+import { ChallengeInputType } from "@src/interfaces/challenge.types";
 
 const ChallengeConfirmationForm = (props: any) => {
-  const { challenge, handleChallenge, handleStep, setUrl } = props;
+  const { handleStep, setUrl } = props;
+  const { control, handleSubmit } = useFormContext<ChallengeInputType>();
 
-  const { control, handleSubmit } = useFormContext<ChallengeType>();
-
-  useEffect(() => {
-    const endDate = new Date(challenge.start_at);
-    endDate.setDate(endDate.getDate() + Number(challenge.duration));
-    handleChallenge("end_at", endDate.toDateString());
-  }, []);
-
-  const addChallenge = () => {
-    // createChallenge(challenge)
-    //   .then((res) => {
-    //     setUrl(res.data.url);
-    //     handleStep(3);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-    handleSubmit((data) => {
-      console.log({ data });
-    });
+  const validate = (data: ChallengeInputType) => {
+    createChallenge(data)
+      .then((res) => {
+        setUrl(res.data.url);
+        handleStep(3);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -56,17 +45,48 @@ const ChallengeConfirmationForm = (props: any) => {
         alignItems="center"
       >
         <Stack alignItems="center">
-          <Text>{challenge.name}</Text>
-          <Text>Spans {challenge.duration} days</Text>
-          <Text>
-            From {challenge.start_at} to {challenge.end_at}
-          </Text>
+          <Controller
+            control={control}
+            name="name"
+            rules={{
+              required: true,
+            }}
+            render={({ field }) => <Text>{field.value}</Text>}
+          />
+          <Controller
+            control={control}
+            name="duration"
+            rules={{
+              required: true,
+            }}
+            render={({ field }) => <Text>{field.value} days</Text>}
+          />
+
+          <Stack flexDirection="row">
+            <Controller
+              control={control}
+              name="start_at"
+              rules={{
+                required: true,
+              }}
+              render={({ field }) => <Text>From {field.value.toString()}</Text>}
+            />
+
+            <Controller
+              control={control}
+              name="end_at"
+              rules={{
+                required: true,
+              }}
+              render={({ field }) => <Text> to {field.value.toString()}</Text>}
+            />
+          </Stack>
         </Stack>
 
         <Button
           type={{ type: "primary", size: "l" }}
           title="Create Challenge"
-          onPress={addChallenge}
+          onPress={handleSubmit(validate)}
         ></Button>
       </Stack>
     </View>
