@@ -5,13 +5,35 @@ import Center from "@src/components/ui/Center";
 import Stack from "@src/components/ui/Stack";
 import { useUser } from "@src/state/useUser";
 import { Redirect } from "expo-router";
+import Button from "@src/components/ui/Button";
+import { useRouter } from "expo-router";
 
 const ProfileScreen = () => {
   const isAuth = useUser((data) => data.isAuth);
+  const router = useRouter();
 
   if (!isAuth) {
     return <Redirect href="/provider-signup" />;
   }
+
+  const logout = () => {
+    const user = {
+      id: "",
+      deviceIds: [],
+      currentDeviceId: null,
+      name: "",
+      dailyGoal: 80,
+      providerId: "",
+      level: 1,
+      xp: 0,
+      hp: 100,
+      daily_streak_counter: 0,
+      token: "",
+    };
+
+    useUser.getState().setAuth(false, user);
+    router.push("/");
+  };
 
   return (
     <Center
@@ -41,6 +63,11 @@ const ProfileScreen = () => {
         </Stack>
       </Stack>
       <ImageUploader />
+      <Button
+        title="Logout"
+        type={{ type: "primary", size: "l" }}
+        onPress={logout}
+      />
     </Center>
   );
 };

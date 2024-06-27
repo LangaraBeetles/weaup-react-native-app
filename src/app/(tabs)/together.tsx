@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { View, StyleSheet, Image, Text } from "react-native";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { Redirect } from "expo-router";
 
 import Stack from "@src/components/ui/Stack";
 import FloatingButton from "@src/components/ui/FloatingButton";
@@ -8,6 +9,7 @@ import CustomBottomSheetModal from "@src/components/ui/CustomBottomSheetModal";
 import ChallengeList from "@src/components/lists/ChallengeList";
 import Chip from "@src/components/ui/Chip";
 import CreateChallengeContainer from "@src/components/container/CreateChallengeContainer";
+import { useUser } from "@src/state/useUser";
 
 //TODO START: Remove dummy data
 const todayDate = new Date();
@@ -42,6 +44,8 @@ const challenges = Array(8).fill(challenge);
 //TODO END
 
 const TogetherScreen = () => {
+  const isAuth = useUser((data) => data.isAuth);
+
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   const addChallenge = () => bottomSheetModalRef.current?.present();
@@ -50,6 +54,10 @@ const TogetherScreen = () => {
   const createChallengeForm = (
     <CreateChallengeContainer handleCloseModalPress={handleCloseModalPress} />
   );
+
+  if (!isAuth) {
+    return <Redirect href="/provider-signup" />;
+  }
 
   return (
     <View style={styles.container}>
