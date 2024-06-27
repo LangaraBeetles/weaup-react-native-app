@@ -6,7 +6,6 @@ import {
   FlatList,
   Image,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import FilterMenu from "../components/notifications/FilterMenu";
 import { SafeAreaView } from "react-native-safe-area-context";
