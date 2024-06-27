@@ -1,14 +1,24 @@
-export type ChallengeType = {
-  id: string;
-  creator_id: string;
+export type ChallengeInputType = {
   name: string;
-  description: string | null;
+  description: string;
   start_at: Date;
   end_at: Date;
   goal: number;
   duration: number;
   status: ChallengeStatusType;
-  members: MemberType[] | null;
+};
+
+export type ChallengeType = {
+  id: string;
+  creator_id: string;
+  name: string;
+  description: string;
+  start_at: Date;
+  end_at: Date;
+  goal: number;
+  duration: number;
+  status: ChallengeStatusType;
+  members: MemberType[];
 };
 
 export enum ChallengeStatusEnum {

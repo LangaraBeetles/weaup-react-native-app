@@ -7,7 +7,9 @@ import * as SplashScreen from "expo-splash-screen";
 import { Stack } from "expo-router/stack";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useEffect } from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
+const queryClient = new QueryClient();
 const RootLayout = () => {
   const [fontsLoaded, fontError] = useFonts({
     NunitoBlack: require("../../assets/fonts/NunitoBlack.ttf"),
@@ -43,48 +45,53 @@ const RootLayout = () => {
   }
 
   return (
-    <PushNotificationsProvider>
-      <TrackingModeProvider>
-        <HeadTrackingProvider>
-          <GestureHandlerRootView>
-            <BottomSheetModalProvider>
-              <Stack>
-                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                <Stack.Screen name="setup" options={{ headerShown: false }} />
-                <Stack.Screen
-                  name="challengeDetailsScreen"
-                  options={{
-                    headerShown: true,
-                    title: "Challenge progress",
-                  }}
-                />
-                <Stack.Screen
-                  name="pastChallengesScreen"
-                  options={{
-                    headerShown: true,
-                    title: "Past Challenges",
-                    headerBackTitle: "Back",
-                  }}
-                />
-                <Stack.Screen
-                  name="provider-signup"
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen name="auth" options={{ headerShown: false }} />
-                <Stack.Screen
-                  name="session-summary"
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                  name="notifications"
-                  options={{ headerShown: false }}
-                />
-              </Stack>
-            </BottomSheetModalProvider>
-          </GestureHandlerRootView>
-        </HeadTrackingProvider>
-      </TrackingModeProvider>
-    </PushNotificationsProvider>
+    <QueryClientProvider client={queryClient}>
+      <PushNotificationsProvider>
+        <TrackingModeProvider>
+          <HeadTrackingProvider>
+            <GestureHandlerRootView>
+              <BottomSheetModalProvider>
+                <Stack>
+                  <Stack.Screen
+                    name="(tabs)"
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen name="setup" options={{ headerShown: false }} />
+                  <Stack.Screen
+                    name="challengeDetailsScreen"
+                    options={{
+                      headerShown: true,
+                      title: "Challenge progress",
+                    }}
+                  />
+                  <Stack.Screen
+                    name="pastChallengesScreen"
+                    options={{
+                      headerShown: true,
+                      title: "Past Challenges",
+                      headerBackTitle: "Back",
+                    }}
+                  />
+                  <Stack.Screen
+                    name="provider-signup"
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen name="auth" options={{ headerShown: false }} />
+                  <Stack.Screen
+                    name="session-summary"
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name="notifications"
+                    options={{ headerShown: false }}
+                  />
+                </Stack>
+              </BottomSheetModalProvider>
+            </GestureHandlerRootView>
+          </HeadTrackingProvider>
+        </TrackingModeProvider>
+      </PushNotificationsProvider>
+    </QueryClientProvider>
   );
 };
 
