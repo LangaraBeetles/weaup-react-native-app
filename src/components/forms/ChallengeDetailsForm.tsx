@@ -12,7 +12,7 @@ import Stack from "@src/components/ui/Stack";
 import Button from "@src/components/ui/Button";
 import DatePickerModal from "@src/components/ui/DatePickerModal";
 import { Controller, useFormContext } from "react-hook-form";
-import { ChallengeType } from "@src/interfaces/challenge.types";
+import type { ChallengeInputType } from "@src/interfaces/challenge.types";
 
 const ChallengeDetailsForm = (props: any) => {
   const [openDatePicker, setOpenDatePicker] = useState(false);
@@ -20,7 +20,7 @@ const ChallengeDetailsForm = (props: any) => {
   const { challenge, handleChallenge, handleCloseModalPress, handleStep } =
     props;
 
-const { control } = useFormContext<ChallengeType>();
+  const { control } = useFormContext<ChallengeInputType>();
 
   const onDateChange = (newDate: Date) => {
     setDate(newDate);
@@ -60,9 +60,8 @@ const { control } = useFormContext<ChallengeType>();
               return (
                 <TextInput
                   placeholder="Type Challenge Name"
-                  // value={challenge.name}
-                  // onChangeText={(e) => handleChallenge("name", e)}
                   {...field}
+                  onChangeText={field.onChange}
                 />
               );
             }}
@@ -83,11 +82,20 @@ const { control } = useFormContext<ChallengeType>();
           backgroundColor="#DFDFDF"
           w={"100%"}
         >
-          <TextInput
-            placeholder="Description (optional)"
-            value={challenge.description}
-            onChangeText={(e) => handleChallenge("description", e)}
-          ></TextInput>
+          <Controller
+            control={control}
+            name="description"
+            render={({ field }) => {
+              return (
+                <TextInput
+                  placeholder="Description (optional)"
+                  {...field}
+                  onChangeText={field.onChange}
+                />
+              );
+            }}
+          />
+
           <Stack flexDirection="row" justifyContent="space-between">
             <Text level="callout">Start date</Text>
             <TouchableOpacity onPress={() => setOpenDatePicker(true)}>
