@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -12,20 +12,33 @@ import Stack from "@src/components/ui/Stack";
 import Button from "@src/components/ui/Button";
 import DatePickerModal from "@src/components/ui/DatePickerModal";
 import { Controller, useFormContext } from "react-hook-form";
-import type { ChallengeInputType } from "@src/interfaces/challenge.types";
+import { ChallengeInputType } from "@src/interfaces/challenge.types";
 
 const ChallengeDetailsForm = (props: any) => {
   const [openDatePicker, setOpenDatePicker] = useState(false);
-  const [date, setDate] = useState(new Date());
-  const { challenge, handleChallenge, handleCloseModalPress, handleStep } =
-    props;
+  const { handleCloseModalPress, handleStep } = props;
 
-  const { control } = useFormContext<ChallengeInputType>();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    watch,
+    setValue,
+    getValues,
+  } = useFormContext<ChallengeInputType>();
+  const [watchDuration, watchStart] = watch(["duration", "start_at"]);
 
-  const onDateChange = (newDate: Date) => {
-    setDate(newDate);
-    handleChallenge("start_at", newDate.toDateString());
-  };
+  useEffect(() => {
+    if (watchDuration) {
+      const startDate = getValues("start_at");
+      if (startDate == undefined) {
+        setValue("start_at", new Date().toDateString());
+      }
+      const tempDate = new Date(startDate);
+      tempDate.setDate(tempDate.getDate() + Number(watchDuration));
+      setValue("end_at", tempDate.toDateString());
+    }
+  }, [watchDuration, watchStart]);
 
   return (
     <View style={styles.main}>
@@ -52,20 +65,21 @@ const ChallengeDetailsForm = (props: any) => {
         <Stack gap={8} alignItems="center">
           <Controller
             control={control}
-            name="name"
+            name={"name"}
             rules={{
               required: true,
             }}
-            render={({ field }) => {
-              return (
-                <TextInput
-                  placeholder="Type Challenge Name"
-                  {...field}
-                  onChangeText={field.onChange}
-                />
-              );
-            }}
+            render={({ field }) => (
+              <TextInput
+                placeholder="Type Challenge Name"
+                {...field}
+                onChangeText={field.onChange}
+              />
+            )}
           />
+          {/* TODO: change based on design flow */}
+
+          {errors.name && <Text>This is required.</Text>}
 
           <Stack flexDirection="row" gap={18} pt={22} justifyContent="center">
             <TouchableOpacity style={styles.colorSelection1} />
@@ -85,6 +99,9 @@ const ChallengeDetailsForm = (props: any) => {
           <Controller
             control={control}
             name="description"
+            rules={{
+              required: false,
+            }}
             render={({ field }) => {
               return (
                 <TextInput
@@ -95,34 +112,67 @@ const ChallengeDetailsForm = (props: any) => {
               );
             }}
           />
-
           <Stack flexDirection="row" justifyContent="space-between">
             <Text level="callout">Start date</Text>
-            <TouchableOpacity onPress={() => setOpenDatePicker(true)}>
-              <Text level="body"> {challenge.start_at ?? "Select Date"} </Text>
-              <DatePickerModal
-                mode={"date"}
-                date={date}
-                setDate={onDateChange}
-                open={openDatePicker}
-                setOpen={setOpenDatePicker}
-              ></DatePickerModal>
-            </TouchableOpacity>
+            <Controller
+              control={control}
+              defaultValue={undefined}
+              name="start_at"
+              rules={{
+                required: false,
+              }}
+              render={({ field }) => {
+                return (
+                  <TouchableOpacity onPress={() => setOpenDatePicker(true)}>
+                    <Text level="body"> {field.value ?? "Select Date"}</Text>
+                    <DatePickerModal
+                      mode={"date"}
+                      date={new Date()}
+                      open={openDatePicker}
+                      setOpen={setOpenDatePicker}
+                      onChangeText={(e: Date) =>
+                        field.onChange(e.toDateString())
+                      }
+                    ></DatePickerModal>
+                  </TouchableOpacity>
+                );
+              }}
+            />
           </Stack>
           <Stack flexDirection="row" justifyContent="space-between">
             <Text level="callout">Duration</Text>
-            <TextInput
-              placeholder="Select challenge span"
-              value={challenge.duration}
-              onChangeText={(e) => handleChallenge("duration", e)}
-            ></TextInput>
+            <Stack>
+              <Controller
+                control={control}
+                defaultValue={undefined}
+                name="duration"
+                rules={{
+                  required: true,
+                }}
+                render={({ field }) => {
+                  return (
+                    <TextInput
+                      inputMode="numeric"
+                      keyboardType="numeric"
+                      placeholder="Select challenge span"
+                      {...field}
+                      onChangeText={field.onChange}
+                    />
+                  );
+                }}
+              />
+              {/* TODO: change based on design flow */}
+              {errors.duration && <Text>This is required.</Text>}
+            </Stack>
             {/* TODO: create bottomsheet for duration */}
           </Stack>
         </Stack>
         <Button
           type={{ type: "primary", size: "l" }}
           title="Next"
-          onPress={() => handleStep(1)}
+          onPress={handleSubmit(() => {
+            handleStep(1);
+          })}
         ></Button>
       </Stack>
     </View>
