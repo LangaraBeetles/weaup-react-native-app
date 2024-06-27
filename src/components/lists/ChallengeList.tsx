@@ -16,9 +16,9 @@ const ChallengeList = (props: any) => {
   return (
     <FlatList
       data={challenges}
-      renderItem={({ item, index }) => {
-        if (isOngoing && index === challenges.length - 1) {
-          return (
+      ListFooterComponent={() => {
+        return (
+          isOngoing && (
             <Center>
               <Chip
                 borderRadius={50}
@@ -29,8 +29,10 @@ const ChallengeList = (props: any) => {
                 <Text>View past challenges</Text>
               </Chip>
             </Center>
-          );
-        }
+          )
+        );
+      }}
+      renderItem={({ item }) => {
         return <ChallengeCard challenge={item} isOngoing={isOngoing} />;
       }}
     />
