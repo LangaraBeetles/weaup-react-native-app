@@ -59,7 +59,10 @@ const RootLayout = () => {
             <GestureHandlerRootView>
               <BottomSheetModalProvider>
                 <Stack>
-                  <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                  <Stack.Screen
+                    name="(tabs)"
+                    options={{ headerShown: false }}
+                  />
                   <Stack.Screen name="setup" options={{ headerShown: false }} />
                   <Stack.Screen
                     name="challengeDetailsScreen"
