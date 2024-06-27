@@ -4,9 +4,15 @@ import Stack from "@src/components/ui/Stack";
 import { Text } from "@src/components/ui/typography";
 import { router } from "expo-router";
 import { SafeAreaView, View } from "react-native";
+import authApi from "@src/services/authApi";
+import { useUser } from "@src/state/useUser";
 
 const SetupPages = () => {
+  const isAuth = useUser((data) => data.isAuth);
+  const { createGuestUser } = authApi();
+
   const next = () => {
+    !isAuth && createGuestUser();
     router.replace("/setup/enable-motion");
   };
 

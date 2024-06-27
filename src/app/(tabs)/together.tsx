@@ -44,7 +44,7 @@ const challenges = Array(8).fill(challenge);
 //TODO END
 
 const TogetherScreen = () => {
-  const isAuth = useUser((data) => data.isAuth);
+  const isGuest = useUser((data) => data.isGuest);
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
@@ -55,7 +55,7 @@ const TogetherScreen = () => {
     <CreateChallengeContainer handleCloseModalPress={handleCloseModalPress} />
   );
 
-  if (!isAuth) {
+  if (isGuest) {
     return <Redirect href="/provider-signup" />;
   }
 

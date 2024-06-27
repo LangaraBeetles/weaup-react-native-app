@@ -19,9 +19,11 @@ type UserState = {
   savePostureData: (data: Array<{ status: PostureStatus; date: Date }>) => void;
 
   isAuth: boolean;
+  isGuest: boolean;
   user: UserType;
   greeting: () => string;
   setAuth: (isAuth: boolean, user: UserType) => void;
+  setGuest: (isGuest: boolean) => void;
   setDailyGoal: (newDailyGoal: number) => void;
 
   setLevel: (newLevel: number) => void;
@@ -101,6 +103,7 @@ export const useUser = create<UserState>()(
         },
 
         isAuth: false,
+        isGuest: true,
         user: userInitialState,
         greeting: () => `Hello ${get().user.name}!`,
         setAuth: (isAuth: boolean, user: UserType) =>
@@ -110,8 +113,8 @@ export const useUser = create<UserState>()(
                 isAuth: false,
                 user: userInitialState,
                 isSetupComplete: false,
-                // TODO: temporarily setting this to false
               }),
+        setGuest: (isGuest: boolean) => set({ isGuest }),
         setDailyGoal: (newDailyGoal: number) =>
           set((state: { isAuth: boolean; user: UserType }) => ({
             ...state,

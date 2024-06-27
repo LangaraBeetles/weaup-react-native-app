@@ -1,38 +1,26 @@
+import React from "react";
 import { Text } from "react-native";
 import ImageUploader from "@src/components/ImageUploader";
 import { theme } from "@src/styles/theme";
 import Center from "@src/components/ui/Center";
 import Stack from "@src/components/ui/Stack";
 import { useUser } from "@src/state/useUser";
-import { Redirect } from "expo-router";
+import { Redirect, useRouter } from "expo-router";
 import Button from "@src/components/ui/Button";
-import { useRouter } from "expo-router";
+import authApi from "@src/services/authApi";
 
 const ProfileScreen = () => {
-  const isAuth = useUser((data) => data.isAuth);
+  const isGuest = useUser((data) => data.isGuest);
   const router = useRouter();
+  const { logout } = authApi();
 
-  if (!isAuth) {
+  if (isGuest) {
     return <Redirect href="/provider-signup" />;
   }
 
-  const logout = () => {
-    const user = {
-      id: "",
-      deviceIds: [],
-      currentDeviceId: null,
-      name: "",
-      dailyGoal: 80,
-      providerId: "",
-      level: 1,
-      xp: 0,
-      hp: 100,
-      daily_streak_counter: 0,
-      token: "",
-    };
-
-    useUser.getState().setAuth(false, user);
-    router.push("/");
+  const handleLogout = async () => {
+    logout();
+    router.replace("/");
   };
 
   return (
@@ -63,11 +51,13 @@ const ProfileScreen = () => {
         </Stack>
       </Stack>
       <ImageUploader />
-      <Button
-        title="Logout"
-        type={{ type: "primary", size: "l" }}
-        onPress={logout}
-      />
+      {!isGuest && (
+        <Button
+          title="Logout"
+          type={{ type: "primary", size: "l" }}
+          onPress={handleLogout}
+        />
+      )}
     </Center>
   );
 };
