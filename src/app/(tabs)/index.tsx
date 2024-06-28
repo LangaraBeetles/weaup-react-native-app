@@ -23,6 +23,7 @@ import TrackingModeIcon from "@src/components/homepage/TrackingModeIcon";
 
 import LottieView from "lottie-react-native";
 import { useRef } from "react";
+import Icon from "@src/components/ui/Icon";
 
 const background = {
   not_reading: "white",
@@ -81,13 +82,13 @@ const HomePage = () => {
           <Stack flexDirection="row" gap={18} border={0} p={5}>
             <TrackingModeIcon />
 
-            <Link href="/notifications" asChild>
-              <Pressable>
-                <Image
-                  source={require("../../../assets/img/notifications.png")}
-                />
-              </Pressable>
-            </Link>
+            <Center>
+              <Link href="/notifications" asChild>
+                <Pressable>
+                  <Icon name={"notification-outline"} />
+                </Pressable>
+              </Link>
+            </Center>
           </Stack>
         </Stack>
 
@@ -101,8 +102,8 @@ const HomePage = () => {
             p={18}
           >
             <Stack flexDirection="row" border={0} justifyContent="space-evenly">
-              <Center p={10}>
-                <Image source={require("../../../assets/img/avatar.png")} />
+              <Center p={5}>
+                <Icon name={"colorLabelIcon-star"} />
               </Center>
 
               <Stack
@@ -125,7 +126,7 @@ const HomePage = () => {
                 border={0}
                 justifyContent="start"
               >
-                <Image source={require("../../../assets/img/avatar.png")} />
+                <Icon name={"colorLabelIcon-lightening"} />
                 <Text>{userXP} XP</Text>
               </Stack>
               <Stack
@@ -134,7 +135,7 @@ const HomePage = () => {
                 border={0}
                 justifyContent="start"
               >
-                <Image source={require("../../../assets/img/avatar.png")} />
+                <Icon name={"colorLabelIcon-streak"} />
                 <Text>{userStreak} Day Streak</Text>
               </Stack>
             </Stack>
