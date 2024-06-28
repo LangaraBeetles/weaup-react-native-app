@@ -10,7 +10,7 @@
     "ios:pods": "npx pod-install && expo run:ios --device",
     "web": "expo start --web",
     "prepare": "husky",
-    "publish": "eas update --branch dev"
+    "update": "eas update --branch dev"
   },
   "dependencies": {
     "@fast-styles/babel-plugin": "^0.2.3",
