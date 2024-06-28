@@ -3,23 +3,14 @@ import Button from "@src/components/ui/Button";
 import Center from "@src/components/ui/Center";
 import Spacer from "@src/components/ui/Spacer";
 import Stack from "@src/components/ui/Stack";
-import useAuth from "@src/components/hooks/useAuth";
-import { useUser } from "@src/state/useUser";
 import { router } from "expo-router";
-import { SafeAreaView, Text } from "react-native";
+import { SafeAreaView } from "react-native";
+import { Text } from "@src/components/ui/typography";
+import PaginationDot from "react-native-animated-pagination-dot";
 
-const SetUpGoalScreen = () => {
-  const isAuth = useUser((data) => data.isAuth);
-  const { createGuestUser } = useAuth();
-
+const SetUpGoalScreen3 = () => {
   const next = () => {
-    if (!isAuth) {
-      createGuestUser().then(() => {
-        router.navigate("/");
-      });
-    } else {
-      router.navigate("/");
-    }
+    router.push("/setup/set-up-goal2");
   };
 
   return (
@@ -30,23 +21,27 @@ const SetUpGoalScreen = () => {
 
           <Stack gap={80}>
             <Stack gap={16}>
-              <Text style={{ textAlign: "center" }}>Set your daily goal</Text>
-              <Text style={{ textAlign: "center" }}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor.
+              <Text align="center" level="title_2">
+                Gain Your Daily Progress with Weabo
+              </Text>
+              <Text align="center">
+                Gain daily progress by improving your posture score and
+                finishing sessions with your posture pal Weabo.
               </Text>
             </Stack>
-
             <Button
-              title="I’m all set"
+              title="Continue"
               onPress={next}
               type={{ type: "primary", size: "l" }}
             />
           </Stack>
+          <Center>
+            <PaginationDot activeDotColor={"black"} curPage={0} maxPage={2} />
+          </Center>
         </Center>
       </Main>
     </SafeAreaView>
   );
 };
 
-export default SetUpGoalScreen;
+export default SetUpGoalScreen3;
