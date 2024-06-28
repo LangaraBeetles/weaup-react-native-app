@@ -9,7 +9,9 @@ import {
   View,
 } from "react-native";
 import { Link, Redirect } from "expo-router";
-import DeviceMotionView from "@src/components/ui/DeviceMotionView";
+import DeviceMotionViewiOS, {
+  DeviceMotionViewAndroid,
+} from "@src/components/ui/DeviceMotionView";
 
 import { useUser } from "@state/useUser";
 
@@ -139,7 +141,8 @@ const HomePage = () => {
           </Stack>
         </Center>
         <Center p={15}>
-          <DeviceMotionView />
+          {Platform.OS === "ios" && <DeviceMotionViewiOS />}
+          {Platform.OS === "android" && <DeviceMotionViewAndroid />}
         </Center>
         <View style={{ width: "100%", height: 350 }}>
           <Center>
