@@ -2,7 +2,7 @@ import React, { createContext, useContext, useEffect } from "react";
 import { Alert, Platform } from "react-native";
 import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";
-import { globalStyles } from "@src/styles/globalStyles";
+import { theme } from "@src/styles/theme";
 
 type PushNotificationsContextState = {
   sendPushNotification: (
@@ -48,7 +48,7 @@ const PushNotificationsProvider: React.FC<{ children: React.ReactNode }> = ({
             name: "default",
             importance: Notifications.AndroidImportance.MAX,
             vibrationPattern: [0, 250, 250, 250],
-            lightColor: globalStyles.notificationLightColor,
+            lightColor: theme.colors.neutral[200],
           });
         }
       } catch (error) {

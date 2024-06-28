@@ -4,6 +4,7 @@ import { Text } from "@src/components/ui/typography";
 import Modal from "react-native-modal";
 import { globalStyles } from "@src/styles/globalStyles";
 import { useUser } from "@src/state/useUser";
+import { theme } from "@src/styles/theme";
 
 interface NewLevelModalProps {
   isVisible: boolean;
@@ -41,7 +42,7 @@ const NewLevelModal: React.FC<NewLevelModalProps> = ({
 
 const styles = StyleSheet.create({
   modalContent: {
-    backgroundColor: globalStyles.colors.white,
+    backgroundColor: theme.colors.white,
     paddingVertical: 50,
     paddingHorizontal: 20,
     borderRadius: 10,
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
     top: -20,
     width: "100%",
     height: 10,
-    backgroundColor: globalStyles.colors.secondary,
+    backgroundColor: globalStyles.colors.secondary[600],
     borderRadius: 5,
     overflow: "hidden",
   },

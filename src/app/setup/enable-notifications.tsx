@@ -3,12 +3,13 @@ import Button from "@src/components/ui/Button";
 import Center from "@src/components/ui/Center";
 import Spacer from "@src/components/ui/Spacer";
 import Stack from "@src/components/ui/Stack";
+import { Text } from "@src/components/ui/typography";
 import { router } from "expo-router";
-import { SafeAreaView, Text } from "react-native";
+import { SafeAreaView } from "react-native";
 
 const EnableNotificationsScreen = () => {
   const next = () => {
-    router.push("/setup/set-up-goal");
+    router.push("/setup/set-up-goal1");
   };
 
   return (
@@ -19,18 +20,24 @@ const EnableNotificationsScreen = () => {
 
           <Stack gap={80}>
             <Stack gap={16}>
-              <Text style={{ textAlign: "center" }}>Get Real-time Alerts</Text>
-              <Text style={{ textAlign: "center" }}>
+              <Text align="center" level="title_2">
+                Get Real-time Alerts
+              </Text>
+              <Text align="center">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                 eiusmod tempor.
               </Text>
             </Stack>
 
-            <Button
-              title="Allow Notification"
-              onPress={next}
-              type={{ type: "primary", size: "l" }}
-            />
+            {/* TODO: Allow notifications functionality */}
+            <Stack>
+              <Button
+                title="Allow Notifications"
+                onPress={next}
+                variant="primary"
+              />
+              <Button title="Maybe Later" onPress={next} variant="secondary" />
+            </Stack>
           </Stack>
         </Center>
       </Main>

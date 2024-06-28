@@ -27,7 +27,7 @@ const GoogleSignUp = () => {
       <Center p={30}>
         <Button
           title="Continue with Google"
-          type={{ type: "primary", size: "l" }}
+          variant="primary"
           onPress={getAuthLink}
         />
       </Center>

@@ -2,6 +2,7 @@ import Main from "@src/components/layout/Main";
 import Center from "@src/components/ui/Center";
 import Spacer from "@src/components/ui/Spacer";
 import Stack from "@src/components/ui/Stack";
+import { Text } from "@src/components/ui/typography";
 import { SetupStagesType } from "@src/interfaces/setup.types";
 import * as Haptics from "expo-haptics";
 import { router } from "expo-router";
@@ -14,7 +15,6 @@ import {
   PanResponder,
   View as RNView,
   SafeAreaView,
-  Text,
   TouchableOpacity,
 } from "react-native";
 
@@ -26,19 +26,19 @@ const centerY = screenHeight / 2;
 const SelectModeScreen: React.FC<{
   setStage: (stage: SetupStagesType) => void;
 }> = () => {
-  const mode = useRef<"phone" | "headphones" | null>(null);
+  const mode = useRef<"phone" | "earbuds" | null>(null);
   const pan = useRef(new Animated.ValueXY()).current;
 
-  const heaphonesArea = useRef<RNView>(null);
+  const earbudsArea = useRef<RNView>(null);
   const phoneArea = useRef<RNView>(null);
   const draggable = useRef<RNView>(null);
   const transitioning = useRef<boolean>(false);
 
-  const headhonesAreaOpacity = new Animated.Value(1);
+  const earbudsAreaOpacity = new Animated.Value(1);
   const phoneAreaOpacity = new Animated.Value(1);
   const draggableOppacity = new Animated.Value(1);
 
-  const heaphonesAreaTranslateY = useRef(new Animated.Value(0)).current;
+  const earbudsAreaTranslateY = useRef(new Animated.Value(0)).current;
   const phoneAreaTranslateY = useRef(new Animated.Value(0)).current;
 
   const panResponder = useRef(
@@ -78,17 +78,17 @@ const SelectModeScreen: React.FC<{
       return;
     }
     measureLayout(draggable, (draggableContainer) => {
-      measureLayout(heaphonesArea, (headphonesContainer) => {
-        const isOverlappingHeadphones = (moving: any, steady: any) => {
+      measureLayout(earbudsArea, (earbudsContainer) => {
+        const isOverlappingEarbuds = (moving: any, steady: any) => {
           return moving.pageY < steady.pageY;
         };
-        const overlap = isOverlappingHeadphones(
+        const overlap = isOverlappingEarbuds(
           draggableContainer,
-          headphonesContainer,
+          earbudsContainer,
         );
 
         if (overlap) {
-          mode.current = "headphones";
+          mode.current = "earbuds";
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
           animateHeadphoneSelected(Easing.exp);
         }
@@ -128,8 +128,8 @@ const SelectModeScreen: React.FC<{
       useNativeDriver: false,
     }).start();
 
-    // Center the headphones area
-    Animated.timing(heaphonesAreaTranslateY, {
+    // Center the earbuds area
+    Animated.timing(earbudsAreaTranslateY, {
       toValue: centerY - 100,
       duration: 700,
       easing: Easing.ease,
@@ -138,15 +138,15 @@ const SelectModeScreen: React.FC<{
       if (!transitioning.current) {
         setTimeout(() => {
           transitioning.current = true;
-          router.push("/setup/headphones-training");
+          router.push("/setup/connect-earbuds");
         }, 500);
       }
     });
   };
 
   const animatePhoneSelected = (easing: EasingFunction) => {
-    // Hide the headphones area
-    Animated.timing(headhonesAreaOpacity, {
+    // Hide the earbuds area
+    Animated.timing(earbudsAreaOpacity, {
       toValue: 0,
       duration: 500,
       easing,
@@ -185,19 +185,21 @@ const SelectModeScreen: React.FC<{
     <SafeAreaView>
       <Main>
         <Center justifyContent="center" height="100%" px={2}>
-          <Spacer height="30%" />
+          <Spacer height="35%" />
 
-          <Stack gap={80}>
+          <Stack gap={50}>
             <Animated.View
-              ref={heaphonesArea}
+              ref={earbudsArea}
               style={{
-                opacity: headhonesAreaOpacity,
-                transform: [{ translateY: heaphonesAreaTranslateY }],
+                opacity: earbudsAreaOpacity,
+                transform: [{ translateY: earbudsAreaTranslateY }],
               }}
             >
               <Stack gap={16}>
-                <Text style={{ textAlign: "center" }}>Earbuds Mode</Text>
-                <Text style={{ textAlign: "center" }}>
+                <Text align="center" level="title_2">
+                  Earbuds Mode
+                </Text>
+                <Text align="center">
                   WeaUp supports AirPods 3 / Pro / Max / Beats Fit Pro / Google
                   Pixel Buds
                 </Text>
@@ -216,7 +218,7 @@ const SelectModeScreen: React.FC<{
                 onPress={onDragSelection}
                 style={{ paddingVertical: 30 }}
               >
-                <Text style={{ textAlign: "center" }}>Drag to enter</Text>
+                <Text align="center">Drag to enter</Text>
               </TouchableOpacity>
             </Animated.View>
 
@@ -228,8 +230,10 @@ const SelectModeScreen: React.FC<{
               }}
             >
               <Stack gap={16}>
-                <Text style={{ textAlign: "center" }}>Phone-only Mode</Text>
-                <Text style={{ textAlign: "center" }}>
+                <Text align="center" level="title_2">
+                  Phone-only Mode
+                </Text>
+                <Text align="center">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do eiusmod tempor.
                 </Text>

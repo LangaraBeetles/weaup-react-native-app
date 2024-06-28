@@ -6,10 +6,11 @@ import Stack from "@src/components/ui/Stack";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native";
 import { Text } from "@src/components/ui/typography";
+import PaginationDot from "react-native-animated-pagination-dot";
 
-const PhoneTrainingScreen = () => {
+const SetUpGoalScreen3 = () => {
   const next = () => {
-    router.push("/setup/enable-notifications");
+    router.push("/setup/set-up-goal2");
   };
 
   return (
@@ -21,20 +22,22 @@ const PhoneTrainingScreen = () => {
           <Stack gap={80}>
             <Stack gap={16}>
               <Text align="center" level="title_2">
-                Track posture with phone
+                Gain Your Daily Progress with Weabo
               </Text>
               <Text align="center">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor.
+                Gain daily progress by improving your posture score and
+                finishing sessions with your posture pal Weabo.
               </Text>
             </Stack>
-
-            <Button title="Confirm" onPress={next} variant="primary" />
+            <Button title="Continue" onPress={next} variant="primary" />
           </Stack>
+          <Center>
+            <PaginationDot activeDotColor={"black"} curPage={0} maxPage={2} />
+          </Center>
         </Center>
       </Main>
     </SafeAreaView>
   );
 };
 
-export default PhoneTrainingScreen;
+export default SetUpGoalScreen3;
