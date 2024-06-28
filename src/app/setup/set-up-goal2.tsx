@@ -3,23 +3,13 @@ import Button from "@src/components/ui/Button";
 import Center from "@src/components/ui/Center";
 import Spacer from "@src/components/ui/Spacer";
 import Stack from "@src/components/ui/Stack";
-import useAuth from "@src/components/hooks/useAuth";
-import { useUser } from "@src/state/useUser";
 import { router } from "expo-router";
-import { SafeAreaView, Text } from "react-native";
+import { SafeAreaView } from "react-native";
+import { Text } from "@src/components/ui/typography";
 
-const SetUpGoalScreen = () => {
-  const isAuth = useUser((data) => data.isAuth);
-  const { createGuestUser } = useAuth();
-
+const SetUpGoalScreen2 = () => {
   const next = () => {
-    if (!isAuth) {
-      createGuestUser().then(() => {
-        router.navigate("/");
-      });
-    } else {
-      router.navigate("/");
-    }
+    router.push("/setup/set-up-goal3");
   };
 
   return (
@@ -30,18 +20,22 @@ const SetUpGoalScreen = () => {
 
           <Stack gap={80}>
             <Stack gap={16}>
-              <Text style={{ textAlign: "center" }}>Set your daily goal</Text>
-              <Text style={{ textAlign: "center" }}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor.
+              <Text align="center" level="title_2">
+                Achieve you Daily Goal and Level Up
+              </Text>
+              <Text align="center">
+                You can earn XP by achieving your daily score goal and complete
+                sessions. Level up and unlock badges and other exciting rewards
+                as you progress.
               </Text>
             </Stack>
-
             <Button
-              title="I’m all set"
+              title="Continue"
               onPress={next}
               type={{ type: "primary", size: "l" }}
             />
+
+            {/* TODO: Add breadcrumb indicator */}
           </Stack>
         </Center>
       </Main>
@@ -49,4 +43,4 @@ const SetUpGoalScreen = () => {
   );
 };
 
-export default SetUpGoalScreen;
+export default SetUpGoalScreen2;

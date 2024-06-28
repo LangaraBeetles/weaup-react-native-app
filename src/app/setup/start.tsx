@@ -3,15 +3,16 @@ import Button from "@src/components/ui/Button";
 import Stack from "@src/components/ui/Stack";
 import { Text } from "@src/components/ui/typography";
 import { router } from "expo-router";
+import Checkbox from "expo-checkbox";
 import { SafeAreaView, View } from "react-native";
 
 const SetupPages = () => {
   const next = () => {
-    router.replace("/setup/enable-motion");
+    router.push("/setup/enable-motion");
   };
 
   const login = () => {
-    router.replace("provider-signup");
+    router.push("provider-signup");
   };
 
   return (
@@ -49,10 +50,14 @@ const SetupPages = () => {
                 type={{ type: "secondary", size: "l" }}
               />
             </Stack>
-
-            <Text>
-              I have read and agree to the Agreement and Privacy Policy.
-            </Text>
+            <Stack flexDirection="row" gap={5}>
+              {/* TODO: Checkbox functionality */}
+              <Checkbox />
+              <Text>
+                I have read and agree to the Terms of Service and Privacy
+                Policy.
+              </Text>
+            </Stack>
           </Stack>
         </View>
       </Main>

@@ -4,11 +4,12 @@ import Center from "@src/components/ui/Center";
 import Spacer from "@src/components/ui/Spacer";
 import Stack from "@src/components/ui/Stack";
 import { router } from "expo-router";
-import { SafeAreaView, Text } from "react-native";
+import { SafeAreaView } from "react-native";
+import { Text } from "@src/components/ui/typography";
 
-const HeadphonesTrainingScreen = () => {
+const SetUpGoalScreen3 = () => {
   const next = () => {
-    router.push("/setup/enable-notifications");
+    router.push("/setup/set-up-goal2");
   };
 
   return (
@@ -19,20 +20,21 @@ const HeadphonesTrainingScreen = () => {
 
           <Stack gap={80}>
             <Stack gap={16}>
-              <Text style={{ textAlign: "center" }}>
-                Sit or stand up straight
+              <Text align="center" level="title_2">
+                Gain Your Daily Progress with Weabo
               </Text>
-              <Text style={{ textAlign: "center" }}>
-                WeaUp detects your posture by sensing the movement of your
-                earbuds. Keep your head aligned and upright.
+              <Text align="center">
+                Gain daily progress by improving your posture score and
+                finishing sessions with your posture pal Weabo.
               </Text>
             </Stack>
-
             <Button
               title="Continue"
               onPress={next}
               type={{ type: "primary", size: "l" }}
             />
+
+            {/* TODO: Add breadcrumb indicator */}
           </Stack>
         </Center>
       </Main>
@@ -40,4 +42,4 @@ const HeadphonesTrainingScreen = () => {
   );
 };
 
-export default HeadphonesTrainingScreen;
+export default SetUpGoalScreen3;

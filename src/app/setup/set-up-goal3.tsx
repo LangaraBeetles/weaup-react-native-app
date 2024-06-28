@@ -3,36 +3,40 @@ import Button from "@src/components/ui/Button";
 import Center from "@src/components/ui/Center";
 import Spacer from "@src/components/ui/Spacer";
 import Stack from "@src/components/ui/Stack";
-import { Text } from "@src/components/ui/typography";
+import { useUser } from "@src/state/useUser";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native";
+import { Text } from "@src/components/ui/typography";
 
-const EnableNotificationsScreen = () => {
+const SetUpGoalScreen3 = () => {
+  const completeSetup = useUser((state) => state.completeSetup);
+  // const setDailyGoal = useUser((state) => state.setDailyGoal);
+
   const next = () => {
-    router.push("/setup/set-up-goal1");
+    completeSetup();
+    router.navigate("/setup/welcome");
   };
 
   return (
     <SafeAreaView>
       <Main>
         <Center justifyContent="center" height="100%" px={2}>
-          <Spacer height="60%" />
-
           <Stack gap={80}>
             <Stack gap={16}>
               <Text align="center" level="title_2">
-                Get Real-time Alerts
+                Set your daily goal
               </Text>
+              <Spacer height="50%" />
               <Text align="center">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor.
+                A score setting of 70–85% of good posture is perfect for
+                beginners.
               </Text>
             </Stack>
 
-            {/* TODO: Allow notifications functionality */}
             <Stack>
+              {/* TODO: update button to have icons */}
               <Button
-                title="Allow Notifications"
+                title="I’m all set"
                 onPress={next}
                 type={{ type: "primary", size: "l" }}
               />
@@ -49,4 +53,4 @@ const EnableNotificationsScreen = () => {
   );
 };
 
-export default EnableNotificationsScreen;
+export default SetUpGoalScreen3;
