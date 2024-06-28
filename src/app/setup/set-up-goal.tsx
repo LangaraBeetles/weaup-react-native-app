@@ -3,16 +3,23 @@ import Button from "@src/components/ui/Button";
 import Center from "@src/components/ui/Center";
 import Spacer from "@src/components/ui/Spacer";
 import Stack from "@src/components/ui/Stack";
+import useAuth from "@src/components/hooks/useAuth";
 import { useUser } from "@src/state/useUser";
 import { router } from "expo-router";
 import { SafeAreaView, Text } from "react-native";
 
 const SetUpGoalScreen = () => {
-  const completeSetup = useUser((state) => state.completeSetup);
+  const isAuth = useUser((data) => data.isAuth);
+  const { createGuestUser } = useAuth();
 
   const next = () => {
-    completeSetup();
-    router.navigate("/");
+    if (!isAuth) {
+      createGuestUser().then(() => {
+        router.navigate("/");
+      });
+    } else {
+      router.navigate("/");
+    }
   };
 
   return (

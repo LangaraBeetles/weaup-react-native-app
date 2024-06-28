@@ -7,10 +7,14 @@ import * as SplashScreen from "expo-splash-screen";
 import { Stack } from "expo-router/stack";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useEffect } from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-import XPSystem from "@src/components/scoring/XPSystem";
 import HPSystem from "@src/components/scoring/HPSystem";
+import XPSystem from "@src/components/scoring/XPSystem";
 import LevelSystem from "@src/components/scoring/LevelSystem";
+import PostureDataProvider from "@src/components/providers/PostureDataProvider";
+
+const queryClient = new QueryClient();
 
 const RootLayout = () => {
   const [fontsLoaded, fontError] = useFonts({
@@ -47,51 +51,63 @@ const RootLayout = () => {
   }
 
   return (
-    <PushNotificationsProvider>
-      <TrackingModeProvider>
-        <HeadTrackingProvider>
-          <HPSystem />
-          <XPSystem />
-          <LevelSystem />
-          <GestureHandlerRootView>
-            <BottomSheetModalProvider>
-              <Stack>
-                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                <Stack.Screen name="setup" options={{ headerShown: false }} />
-                <Stack.Screen
-                  name="challengeDetailsScreen"
-                  options={{
-                    headerShown: true,
-                    title: "Challenge progress",
-                  }}
-                />
-                <Stack.Screen
-                  name="pastChallengesScreen"
-                  options={{
-                    headerShown: true,
-                    title: "Past Challenges",
-                    headerBackTitle: "Back",
-                  }}
-                />
-                <Stack.Screen
-                  name="provider-signup"
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen name="auth" options={{ headerShown: false }} />
-                <Stack.Screen
-                  name="session-summary"
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                  name="notifications"
-                  options={{ headerShown: false }}
-                />
-              </Stack>
-            </BottomSheetModalProvider>
-          </GestureHandlerRootView>
-        </HeadTrackingProvider>
-      </TrackingModeProvider>
-    </PushNotificationsProvider>
+    <QueryClientProvider client={queryClient}>
+      <PushNotificationsProvider>
+        <TrackingModeProvider>
+          <HeadTrackingProvider>
+            <HPSystem />
+            <XPSystem />
+            <LevelSystem />
+            <GestureHandlerRootView>
+              <BottomSheetModalProvider>
+                <PostureDataProvider>
+                  <Stack>
+                    <Stack.Screen
+                      name="(tabs)"
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="setup"
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="challengeDetailsScreen"
+                      options={{
+                        headerShown: true,
+                        title: "Challenge progress",
+                        headerBackTitle: "Back",
+                      }}
+                    />
+                    <Stack.Screen
+                      name="pastChallengesScreen"
+                      options={{
+                        headerShown: true,
+                        title: "Past Challenges",
+                        headerBackTitle: "Back",
+                      }}
+                    />
+
+                    <Stack.Screen
+                      name="auth"
+                      options={{ headerShown: false }}
+                    />
+
+                    <Stack.Screen
+                      name="session-summary"
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="notifications"
+                      options={{ headerShown: false }}
+                    />
+                  </Stack>
+                </PostureDataProvider>
+              </BottomSheetModalProvider>
+            </GestureHandlerRootView>
+          </HeadTrackingProvider>
+        </TrackingModeProvider>
+      </PushNotificationsProvider>
+    </QueryClientProvider>
   );
 };
 

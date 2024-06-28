@@ -2,7 +2,6 @@ import { persist, createJSONStorage, devtools } from "zustand/middleware";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
 import { TrackingModeType, UserType } from "@interfaces/user.types";
-import axios from "axios";
 import { PostureStatus } from "@src/interfaces/posture.types";
 
 type UserState = {
@@ -16,12 +15,14 @@ type UserState = {
   setCurrentPosture: (value: PostureStatus) => void;
 
   postureData: Array<{ status: PostureStatus; date: Date }>;
-  savePostureData: (data: Array<{ status: PostureStatus; date: Date }>) => void;
+  preparePostureData: () => Array<{ status: PostureStatus; date: Date }>;
 
   isAuth: boolean;
+  isGuest: boolean;
   user: UserType;
   greeting: () => string;
   setAuth: (isAuth: boolean, user: UserType) => void;
+  setGuest: (isGuest: boolean) => void;
   setDailyGoal: (newDailyGoal: number) => void;
 
   setLevel: (newLevel: number) => void;
@@ -34,16 +35,18 @@ type UserState = {
 
 const userInitialState: UserType = {
   id: "",
-  deviceIds: [],
-  currentDeviceId: null,
+  deviceId: "",
   name: "",
   dailyGoal: 80, // out of 100
   providerId: "",
   level: 1,
   xp: 0,
   hp: 100,
-  daily_streak_counter: 0,
+  dailyStreakCounter: 0,
   token: "",
+  email: "",
+  preferredMode: "phone",
+  isSetupComplete: false,
 };
 
 // Clear AsyncStorage:
@@ -75,43 +78,34 @@ export const useUser = create<UserState>()(
         },
 
         postureData: [],
-        savePostureData: () => {
-          const postureData = get().postureData;
-          const user_id = get().user.id;
-
-          if (!postureData.length) {
-            return;
-          }
-
-          const records = postureData
-            .filter((p) => p.status === "bad" || p.status === "good")
-            .map((p) => ({
-              user_id,
-              good_posture: p.status === "good",
-              recorded_at: p.date.toISOString(),
-            }));
-
-          // TODO: replace this with the axios interceptor api
-          axios
-            .post(`http://localhost:3000/api/v1/posture/records`, records)
-            .then(() => {
-              set({ postureData: [] });
-            })
-            .catch(console.error);
+        preparePostureData: () => {
+          // This function will get the current posture data that is ready to be sent to the api
+          // we clear the object to avoid duplicity
+          const data = get().postureData;
+          set({ postureData: [] });
+          return data;
         },
 
         isAuth: false,
+        isGuest: true,
         user: userInitialState,
         greeting: () => `Hello ${get().user.name}!`,
-        setAuth: (isAuth: boolean, user: UserType) =>
-          isAuth
-            ? set({ isAuth: true, user })
-            : set({
-                isAuth: false,
-                user: userInitialState,
-                isSetupComplete: false,
-                // TODO: temporarily setting this to false
-              }),
+        setAuth: (isAuth: boolean, user: UserType) => {
+          if (isAuth) {
+            set({
+              isAuth: true,
+              user,
+              isSetupComplete: !!user.isSetupComplete,
+            });
+          } else {
+            set({
+              isAuth: false,
+              user: userInitialState,
+              // isSetupComplete: false,
+            });
+          }
+        },
+        setGuest: (isGuest: boolean) => set({ isGuest }),
         setDailyGoal: (newDailyGoal: number) =>
           set((state: { isAuth: boolean; user: UserType }) => ({
             ...state,
@@ -165,7 +159,7 @@ export const useUser = create<UserState>()(
             },
           })),
 
-        mode: "PHONE",
+        mode: "phone",
         changeMode: (value: TrackingModeType) => set({ mode: value }),
       }),
       {

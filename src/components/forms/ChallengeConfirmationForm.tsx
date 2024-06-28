@@ -1,24 +1,47 @@
-import React from "react";
-import { Text, View, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { useFormContext } from "react-hook-form";
 
 import Stack from "@src/components/ui/Stack";
 import Button from "@src/components/ui/Button";
+import { Text } from "@src/components/ui/typography";
+import { createChallenge } from "@src/services/challengeApi";
+import { ChallengeInputType } from "@src/interfaces/challenge.types";
 
 const ChallengeConfirmationForm = (props: any) => {
-  const { handleCloseModalPress, handleStep } = props;
+  const { handleStep, setUrl } = props;
+  const { handleSubmit, getValues } = useFormContext<ChallengeInputType>();
+  const [start_at, end_at, duration, name] = getValues([
+    "start_at",
+    "end_at",
+    "duration",
+    "name",
+  ]);
+
+  const validate = (data: ChallengeInputType) => {
+    createChallenge(data)
+      .then((res) => {
+        setUrl(res.data.url);
+        handleStep(3);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <View style={styles.main}>
       <Stack flexDirection="row" gap={18} p={16} justifyContent="flex-start">
         <View style={styles.button}>
           <TouchableOpacity
-            onPress={handleCloseModalPress}
+            onPress={() => handleStep(1)}
             style={styles.closeButton}
           >
-            <Image source={require("../../../assets/img/closeIcon.png")} />
+            <Image source={require("../../../assets/img/backIcon.png")} />
           </TouchableOpacity>
         </View>
-        <Text style={styles.content}>All set?</Text>
+        <Text style={styles.content} level="title_2">
+          All set?
+        </Text>
       </Stack>
 
       <Stack
@@ -28,16 +51,18 @@ const ChallengeConfirmationForm = (props: any) => {
         alignItems="center"
       >
         <Stack alignItems="center">
-          <Text>New Challenge</Text>
-          <Text>Spans 3 days</Text>
-          <Text>From June 21 to June 23</Text>
+          <Text>{name}</Text>
+          <Text>{duration} days</Text>
+          <Text>
+            From {start_at} to {end_at}
+          </Text>
         </Stack>
 
         <Button
           type={{ type: "primary", size: "l" }}
           title="Create Challenge"
-          onPress={() => handleStep(3)}
-        ></Button>
+          onPress={handleSubmit(validate)}
+        />
       </Stack>
     </View>
   );
