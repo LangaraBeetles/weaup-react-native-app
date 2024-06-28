@@ -11,8 +11,12 @@ import CreateChallengeContainer from "@src/components/container/CreateChallengeC
 import { usePathname } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
 import { getChallenges } from "@src/services/challengeApi";
+import { useUser } from "@src/state/useUser";
+import GoogleSignUp from "@src/components/profile/GoogleSignUp";
 
 const TogetherScreen = () => {
+  const isGuest = useUser((data) => data.isGuest);
+
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const path = usePathname();
 
@@ -28,6 +32,10 @@ const TogetherScreen = () => {
   const createChallengeForm = (
     <CreateChallengeContainer handleCloseModalPress={handleCloseModalPress} />
   );
+
+  if (isGuest) {
+    return <GoogleSignUp />;
+  }
 
   return (
     <View style={styles.container}>

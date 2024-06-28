@@ -6,7 +6,7 @@ import * as Linking from "expo-linking";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const ProviderSignUp = () => {
+const GoogleSignUp = () => {
   const getAuthLink = async () => {
     try {
       //get google auth link [public]
@@ -26,7 +26,7 @@ const ProviderSignUp = () => {
     <SafeAreaView>
       <Center p={30}>
         <Button
-          title="SignUp with Google"
+          title="Continue with Google"
           type={{ type: "primary", size: "l" }}
           onPress={getAuthLink}
         />
@@ -35,4 +35,4 @@ const ProviderSignUp = () => {
   );
 };
 
-export default ProviderSignUp;
+export default GoogleSignUp;

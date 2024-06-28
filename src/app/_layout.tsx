@@ -8,6 +8,7 @@ import { Stack } from "expo-router/stack";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
 import HPSystem from "@src/components/scoring/HPSystem";
 import XPSystem from "@src/components/scoring/XPSystem";
 import LevelSystem from "@src/components/scoring/LevelSystem";
@@ -84,14 +85,12 @@ const RootLayout = () => {
                         headerBackTitle: "Back",
                       }}
                     />
-                    <Stack.Screen
-                      name="provider-signup"
-                      options={{ headerShown: false }}
-                    />
+
                     <Stack.Screen
                       name="auth"
                       options={{ headerShown: false }}
                     />
+
                     <Stack.Screen
                       name="session-summary"
                       options={{ headerShown: false }}

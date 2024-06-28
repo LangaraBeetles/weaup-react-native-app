@@ -1,36 +1,31 @@
-import { useEffect } from "react";
 import { View, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { useFormContext } from "react-hook-form";
 
 import Stack from "@src/components/ui/Stack";
 import Button from "@src/components/ui/Button";
 import { Text } from "@src/components/ui/typography";
 import { createChallenge } from "@src/services/challengeApi";
-import { useFormContext } from "react-hook-form";
-import { ChallengeType } from "@src/interfaces/challenge.types";
+import { ChallengeInputType } from "@src/interfaces/challenge.types";
 
 const ChallengeConfirmationForm = (props: any) => {
-  const { challenge, handleChallenge, handleStep, setUrl } = props;
+  const { handleStep, setUrl } = props;
+  const { handleSubmit, getValues } = useFormContext<ChallengeInputType>();
+  const [start_at, end_at, duration, name] = getValues([
+    "start_at",
+    "end_at",
+    "duration",
+    "name",
+  ]);
 
-  const { control, handleSubmit } = useFormContext<ChallengeType>();
-
-  useEffect(() => {
-    const endDate = new Date(challenge.start_at);
-    endDate.setDate(endDate.getDate() + Number(challenge.duration));
-    handleChallenge("end_at", endDate.toDateString());
-  }, []);
-
-  const addChallenge = () => {
-    // createChallenge(challenge)
-    //   .then((res) => {
-    //     setUrl(res.data.url);
-    //     handleStep(3);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-    handleSubmit((data) => {
-      console.log({ data });
-    });
+  const validate = (data: ChallengeInputType) => {
+    createChallenge(data)
+      .then((res) => {
+        setUrl(res.data.url);
+        handleStep(3);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -56,18 +51,18 @@ const ChallengeConfirmationForm = (props: any) => {
         alignItems="center"
       >
         <Stack alignItems="center">
-          <Text>{challenge.name}</Text>
-          <Text>Spans {challenge.duration} days</Text>
+          <Text>{name}</Text>
+          <Text>{duration} days</Text>
           <Text>
-            From {challenge.start_at} to {challenge.end_at}
+            From {start_at} to {end_at}
           </Text>
         </Stack>
 
         <Button
           type={{ type: "primary", size: "l" }}
           title="Create Challenge"
-          onPress={addChallenge}
-        ></Button>
+          onPress={handleSubmit(validate)}
+        />
       </Stack>
     </View>
   );

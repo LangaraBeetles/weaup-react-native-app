@@ -1,17 +1,17 @@
 import DatePicker from "react-native-date-picker";
 
 const DatePickerModal = (props: any) => {
-  const { mode, date, setDate, open, setOpen } = props;
+  const { mode, date, open, setOpen, onChangeText } = props;
   return (
     <DatePicker
       modal
-      minimumDate={date}
+      minimumDate={new Date()}
       mode={mode}
       open={open}
       date={date}
       onConfirm={(d) => {
         setOpen(false);
-        setDate(d);
+        onChangeText(d);
       }}
       onCancel={() => {
         setOpen(false);
