@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   buttonPrimary: {
-    backgroundColor: globalStyles.colors.primary,
+    backgroundColor: globalStyles.colors.primary[500],
   },
   textPrimary: {
     color: globalStyles.colors.white,
@@ -57,10 +57,10 @@ const styles = StyleSheet.create({
   buttonSecondary: {
     backgroundColor: "transparent",
     borderWidth: 2,
-    borderColor: globalStyles.colors.primary,
+    borderColor: globalStyles.colors.primary[500],
   },
   textSecondary: {
-    color: globalStyles.colors.primary,
+    color: globalStyles.colors.primary[500],
   },
   smallButton: {
     width: 180,
