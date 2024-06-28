@@ -1,16 +1,27 @@
+import React from "react";
 import { Text } from "react-native";
 import ImageUploader from "@src/components/ImageUploader";
 import { theme } from "@src/styles/theme";
 import Center from "@src/components/ui/Center";
 import Stack from "@src/components/ui/Stack";
 import { useUser } from "@src/state/useUser";
-import { Redirect } from "expo-router";
+import { useRouter } from "expo-router";
+import Button from "@src/components/ui/Button";
+import GoogleSignUp from "@src/components/profile/GoogleSignUp";
+import useAuth from "@src/components/hooks/useAuth";
 
 const ProfileScreen = () => {
-  const isAuth = useUser((data) => data.isAuth);
+  const isGuest = useUser((data) => data.isGuest);
+  const router = useRouter();
+  const { logout } = useAuth();
 
-  if (!isAuth) {
-    return <Redirect href="/provider-signup" />;
+  const handleLogout = async () => {
+    logout();
+    router.replace("/");
+  };
+
+  if (isGuest) {
+    return <GoogleSignUp />;
   }
 
   return (
@@ -41,6 +52,13 @@ const ProfileScreen = () => {
         </Stack>
       </Stack>
       <ImageUploader />
+      {!isGuest && (
+        <Button
+          title="Logout"
+          type={{ type: "primary", size: "l" }}
+          onPress={handleLogout}
+        />
+      )}
     </Center>
   );
 };

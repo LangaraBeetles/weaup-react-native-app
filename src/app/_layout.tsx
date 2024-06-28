@@ -73,11 +73,9 @@ const RootLayout = () => {
                     headerBackTitle: "Back",
                   }}
                 />
-                <Stack.Screen
-                  name="provider-signup"
-                  options={{ headerShown: false }}
-                />
+
                 <Stack.Screen name="auth" options={{ headerShown: false }} />
+
                 <Stack.Screen
                   name="session-summary"
                   options={{ headerShown: false }}

@@ -8,6 +8,8 @@ import CustomBottomSheetModal from "@src/components/ui/CustomBottomSheetModal";
 import ChallengeList from "@src/components/lists/ChallengeList";
 import Chip from "@src/components/ui/Chip";
 import CreateChallengeContainer from "@src/components/container/CreateChallengeContainer";
+import { useUser } from "@src/state/useUser";
+import GoogleSignUp from "@src/components/profile/GoogleSignUp";
 
 //TODO START: Remove dummy data
 const todayDate = new Date();
@@ -42,6 +44,8 @@ const challenges = Array(8).fill(challenge);
 //TODO END
 
 const TogetherScreen = () => {
+  const isGuest = useUser((data) => data.isGuest);
+
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   const addChallenge = () => bottomSheetModalRef.current?.present();
@@ -50,6 +54,10 @@ const TogetherScreen = () => {
   const createChallengeForm = (
     <CreateChallengeContainer handleCloseModalPress={handleCloseModalPress} />
   );
+
+  if (isGuest) {
+    return <GoogleSignUp />;
+  }
 
   return (
     <View style={styles.container}>
