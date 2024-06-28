@@ -11,7 +11,6 @@ api.interceptors.request.use(
   (request) => {
     const token = useUser.getState().user.token;
     const authToken = `Bearer ${token}`;
-
     request.headers.Authorization = authToken;
 
     return request;

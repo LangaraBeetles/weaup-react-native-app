@@ -62,7 +62,7 @@ const ChallengeConfirmationForm = (props: any) => {
           type={{ type: "primary", size: "l" }}
           title="Create Challenge"
           onPress={handleSubmit(validate)}
-        ></Button>
+        />
       </Stack>
     </View>
   );
