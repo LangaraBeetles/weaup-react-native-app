@@ -4,7 +4,8 @@ import Center from "@src/components/ui/Center";
 import Spacer from "@src/components/ui/Spacer";
 import Stack from "@src/components/ui/Stack";
 import { router } from "expo-router";
-import { SafeAreaView, Text } from "react-native";
+import { SafeAreaView } from "react-native";
+import { Text } from "@src/components/ui/typography";
 
 const PhoneTrainingScreen = () => {
   const next = () => {
@@ -19,17 +20,17 @@ const PhoneTrainingScreen = () => {
 
           <Stack gap={80}>
             <Stack gap={16}>
-              <Text style={{ textAlign: "center" }}>
-                Sit or stand up straight
+              <Text align="center" level="title_2">
+                Track posture with phone
               </Text>
-              <Text style={{ textAlign: "center" }}>
-                WeaUp detects your posture by sensing the movement of your
-                earbuds. Keep your head aligned and upright.
+              <Text align="center">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor.
               </Text>
             </Stack>
 
             <Button
-              title="Continue"
+              title="Confirm"
               onPress={next}
               type={{ type: "primary", size: "l" }}
             />

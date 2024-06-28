@@ -3,6 +3,7 @@ import Button from "@src/components/ui/Button";
 import Center from "@src/components/ui/Center";
 import Spacer from "@src/components/ui/Spacer";
 import Stack from "@src/components/ui/Stack";
+import useAuth from "@src/components/hooks/useAuth";
 import { useUser } from "@src/state/useUser";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native";
@@ -12,11 +13,24 @@ const SetUpGoalScreen3 = () => {
   const completeSetup = useUser((state) => state.completeSetup);
   // const setDailyGoal = useUser((state) => state.setDailyGoal);
 
-  //TODO: create guest user
+  const isAuth = useUser((data) => data.isAuth);
+  const { createGuestUser } = useAuth();
+
+  const handleButtonPress = () => {
+    completeSetup();
+    if (!isAuth) {
+      createGuestUser();
+    }
+    router.navigate("/setup/welcome");
+  };
 
   const next = () => {
-    completeSetup();
-    router.navigate("/setup/welcome");
+    handleButtonPress();
+    //TODO: set dialy goal
+  };
+
+  const skip = () => {
+    handleButtonPress();
   };
 
   return (
@@ -44,7 +58,7 @@ const SetUpGoalScreen3 = () => {
               />
               <Button
                 title="Maybe Later"
-                onPress={next}
+                onPress={skip}
                 type={{ type: "secondary", size: "l" }}
               />
             </Stack>
