@@ -35,7 +35,7 @@ const HomePage = () => {
   const userLevel = useUser((state) => state.user.level);
   const userHP = useUser((state) => state.user.hp);
   const userXP = useUser((state) => state.user.xp);
-  const userSteak = useUser((state) => state.user.dailyStreakCounter);
+  const userStreak = useUser((state) => state.user.dailyStreakCounter);
   const currentPosture = useUser((state) => state.currentPosture);
   const animation = useRef<any>(null);
 
@@ -133,7 +133,7 @@ const HomePage = () => {
                 justifyContent="start"
               >
                 <Image source={require("../../../assets/img/avatar.png")} />
-                <Text>{userSteak} Day Streak</Text>
+                <Text>{userStreak} Day Streak</Text>
               </Stack>
             </Stack>
           </Stack>

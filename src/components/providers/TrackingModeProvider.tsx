@@ -13,7 +13,7 @@ type ContextState = {
 };
 
 const initialState: ContextState = {
-  mode: "PHONE",
+  mode: "phone",
 };
 
 const TrackingModeContext = createContext<ContextState>(initialState);
@@ -30,13 +30,13 @@ const TrackingModeProvider: React.FC<{ children: React.ReactNode }> = ({
     const connectedListener = onHeadphoneConnected(() => {
       console.log("earbuds connected");
       if (isHeadphoneMotionAvailable) {
-        changeMode("EARBUDS");
+        changeMode("earbuds");
       }
     });
 
     const disconnectedListener = onHeadphoneDisconnected(() => {
       console.log("earbuds disconnected");
-      changeMode("PHONE");
+      changeMode("phone");
     });
 
     return () => {

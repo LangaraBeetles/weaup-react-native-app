@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { View, BackHandler, Alert } from "react-native";
-import { FormProvider, useForm } from "react-hook-form";
 
 import { ChallengeInputType } from "@src/interfaces/challenge.types";
 import ChallengeDetailsForm from "@src/components/forms/ChallengeDetailsForm";
 import ChallengeGoalForm from "@src/components/forms/ChallengeGoalForm";
 import ChallengeConfirmationForm from "@src/components/forms/ChallengeConfirmationForm";
 import ChallengeInvitationForm from "@src/components/forms/ChallengeInvitationForm";
+import { FormProvider, useForm } from "react-hook-form";
 
 const CreateChallengeContainer = (props: any) => {
   const handleCloseModalPress = props.handleCloseModalPress;

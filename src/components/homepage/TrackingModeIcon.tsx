@@ -4,7 +4,7 @@ import { Image, View } from "react-native";
 const TrackingModeIcon = () => {
   const mode = useUser((state) => state.mode);
 
-  if (mode === "EARBUDS") {
+  if (mode === "earbuds") {
     return <Image source={require("../../../assets/img/earbuds.png")} />;
   }
 

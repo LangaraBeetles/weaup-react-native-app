@@ -62,7 +62,7 @@ const useAuth = () => {
 
   const createGuestUser = async () => {
     const guestUser = {
-      preferred_mode: "phone", //user.preferredMode,
+      preferred_mode: user.preferredMode,
       daily_goal: user.dailyGoal,
       is_setup_complete: true,
     };

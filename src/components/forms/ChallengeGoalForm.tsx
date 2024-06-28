@@ -51,7 +51,7 @@ const ChallengeGoalForm = (props: any) => {
           </Text>
           <Controller
             control={control}
-            defaultValue={"80"}
+            defaultValue="80"
             name="goal"
             rules={{
               required: true,

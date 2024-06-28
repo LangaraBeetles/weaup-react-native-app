@@ -74,7 +74,7 @@ export default function DeviceMotionView() {
       DeviceMotion.removeAllListeners();
     };
 
-    if (isTrackingEnabled && mode === "PHONE") {
+    if (isTrackingEnabled && mode === "phone") {
       _subscribe();
     } else {
       setCurrentPosture("not_reading");
