@@ -36,16 +36,18 @@ type UserState = {
 
 const userInitialState: UserType = {
   id: "",
-  deviceIds: [],
-  currentDeviceId: null,
+  deviceId: "",
   name: "",
   dailyGoal: 80, // out of 100
   providerId: "",
   level: 1,
   xp: 0,
   hp: 100,
-  daily_streak_counter: 0,
+  dailyStreakCounter: 0,
   token: "",
+  email: "",
+  preferredMode: "PHONE",
+  isSetupComplete: false,
 };
 
 // Clear AsyncStorage:
@@ -106,14 +108,21 @@ export const useUser = create<UserState>()(
         isGuest: true,
         user: userInitialState,
         greeting: () => `Hello ${get().user.name}!`,
-        setAuth: (isAuth: boolean, user: UserType) =>
-          isAuth
-            ? set({ isAuth: true, user })
-            : set({
-                isAuth: false,
-                user: userInitialState,
-                isSetupComplete: false,
-              }),
+        setAuth: (isAuth: boolean, user: UserType) => {
+          if (isAuth) {
+            set({
+              isAuth: true,
+              user,
+              isSetupComplete: !!user.isSetupComplete,
+            });
+          } else {
+            set({
+              isAuth: false,
+              user: userInitialState,
+              // isSetupComplete: false,
+            });
+          }
+        },
         setGuest: (isGuest: boolean) => set({ isGuest }),
         setDailyGoal: (newDailyGoal: number) =>
           set((state: { isAuth: boolean; user: UserType }) => ({

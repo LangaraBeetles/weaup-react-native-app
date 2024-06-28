@@ -7,13 +7,13 @@ import Stack from "@src/components/ui/Stack";
 import { useUser } from "@src/state/useUser";
 import { useRouter } from "expo-router";
 import Button from "@src/components/ui/Button";
-import authApi from "@src/services/authApi";
 import GoogleSignUp from "@src/components/profile/GoogleSignUp";
+import useAuth from "@src/components/hooks/useAuth";
 
 const ProfileScreen = () => {
   const isGuest = useUser((data) => data.isGuest);
   const router = useRouter();
-  const { logout } = authApi();
+  const { logout } = useAuth();
 
   const handleLogout = async () => {
     logout();

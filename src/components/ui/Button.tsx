@@ -1,12 +1,18 @@
 import React from "react";
-import { StyleSheet, Text, TouchableHighlight } from "react-native";
+import {
+  GestureResponderEvent,
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+} from "react-native";
 import { globalStyles } from "@src/styles/globalStyles";
 
 const Button: React.FC<{
   title: string;
   onPress?: () => void;
+  onLongPress?: (event: GestureResponderEvent) => void;
   type: { type: "primary" | "secondary"; size?: "s" | "l" };
-}> = ({ title, onPress, type }) => {
+}> = ({ title, onPress, onLongPress, type }) => {
   const buttonStyleType =
     (type.type === "primary" && styles.buttonPrimary) ||
     (type.type === "secondary" && styles.buttonSecondary);
@@ -19,6 +25,7 @@ const Button: React.FC<{
   return (
     <TouchableHighlight
       onPress={onPress}
+      onLongPress={onLongPress}
       style={[styles.button, buttonStyleType, buttonSize]}
     >
       <Text style={[styles.text, textStyleType]}>{title}</Text>

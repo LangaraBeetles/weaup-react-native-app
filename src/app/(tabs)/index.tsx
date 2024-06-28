@@ -1,6 +1,13 @@
 import React, { useEffect } from "react";
 
-import { Image, Platform, Pressable, Text, View } from "react-native";
+import {
+  Image,
+  Platform,
+  Pressable,
+  ScrollView,
+  Text,
+  View,
+} from "react-native";
 import { Link, Redirect } from "expo-router";
 import DeviceMotionView from "@src/components/ui/DeviceMotionView";
 
@@ -28,7 +35,7 @@ const HomePage = () => {
   const userLevel = useUser((state) => state.user.level);
   const userHP = useUser((state) => state.user.hp);
   const userXP = useUser((state) => state.user.xp);
-  const userSteak = useUser((state) => state.user.daily_streak_counter);
+  const userSteak = useUser((state) => state.user.dailyStreakCounter);
   const currentPosture = useUser((state) => state.currentPosture);
   const animation = useRef<any>(null);
 
@@ -54,106 +61,108 @@ const HomePage = () => {
     <SafeAreaView
       style={{ backgroundColor: background[currentPosture], height: "100%" }}
     >
-      <Stack flexDirection="row" justifyContent="space-between" p={15} pb={0}>
-        <Stack
-          flexDirection="row"
-          gap={18}
-          border={1}
-          borderRadius={50}
-          p={10}
-          alignItems="center"
-        >
-          {/*TODO: display avatar */}
-          <Image source={require("../../../assets/img/avatar.png")} />
-          {userName === null ? <Text>{userName}</Text> : null}
-          <Text>Lv.{userLevel}</Text>
+      <ScrollView>
+        <Stack flexDirection="row" justifyContent="space-between" p={15} pb={0}>
+          <Stack
+            flexDirection="row"
+            gap={18}
+            border={1}
+            borderRadius={50}
+            p={10}
+            alignItems="center"
+          >
+            {/*TODO: display avatar */}
+            <Image source={require("../../../assets/img/avatar.png")} />
+            {userName === null ? <Text>{userName}</Text> : null}
+            <Text>Lv.{userLevel}</Text>
+          </Stack>
+          <Stack flexDirection="row" gap={18} border={0} p={5}>
+            <TrackingModeIcon />
+
+            <Link href="/notifications" asChild>
+              <Pressable>
+                <Image
+                  source={require("../../../assets/img/notifications.png")}
+                />
+              </Pressable>
+            </Link>
+          </Stack>
         </Stack>
-        <Stack flexDirection="row" gap={18} border={0} p={5}>
-          <TrackingModeIcon />
 
-          <Link href="/notifications" asChild>
-            <Pressable>
-              <Image
-                source={require("../../../assets/img/notifications.png")}
-              />
-            </Pressable>
-          </Link>
-        </Stack>
-      </Stack>
+        <Center p={15} pb={0}>
+          <Stack
+            flexDirection="row"
+            border={1}
+            borderRadius={20}
+            justifyContent="space-evenly"
+            w={"100%"}
+            p={18}
+          >
+            <Stack flexDirection="row" border={0} justifyContent="space-evenly">
+              <Center p={10}>
+                <Image source={require("../../../assets/img/avatar.png")} />
+              </Center>
 
-      <Center p={15} pb={0}>
-        <Stack
-          flexDirection="row"
-          border={1}
-          borderRadius={20}
-          justifyContent="space-evenly"
-          w={"100%"}
-          p={18}
-        >
-          <Stack flexDirection="row" border={0} justifyContent="space-evenly">
-            <Center p={10}>
-              <Image source={require("../../../assets/img/avatar.png")} />
-            </Center>
-
+              <Stack
+                flexDirection="column"
+                border={0}
+                justifyContent="space-evenly"
+              >
+                <Text>Posture Score</Text>
+                <Text>{userHP} / 100</Text>
+              </Stack>
+            </Stack>
             <Stack
               flexDirection="column"
               border={0}
               justifyContent="space-evenly"
             >
-              <Text>Posture Score</Text>
-              <Text>{userHP} / 100</Text>
+              <Stack
+                flexDirection="row"
+                gap={10}
+                border={0}
+                justifyContent="start"
+              >
+                <Image source={require("../../../assets/img/avatar.png")} />
+                <Text>{userXP} XP</Text>
+              </Stack>
+              <Stack
+                flexDirection="row"
+                gap={10}
+                border={0}
+                justifyContent="start"
+              >
+                <Image source={require("../../../assets/img/avatar.png")} />
+                <Text>{userSteak} Day Streak</Text>
+              </Stack>
             </Stack>
           </Stack>
-          <Stack
-            flexDirection="column"
-            border={0}
-            justifyContent="space-evenly"
-          >
-            <Stack
-              flexDirection="row"
-              gap={10}
-              border={0}
-              justifyContent="start"
-            >
-              <Image source={require("../../../assets/img/avatar.png")} />
-              <Text>{userXP} XP</Text>
-            </Stack>
-            <Stack
-              flexDirection="row"
-              gap={10}
-              border={0}
-              justifyContent="start"
-            >
-              <Image source={require("../../../assets/img/avatar.png")} />
-              <Text>{userSteak} Day Streak</Text>
-            </Stack>
-          </Stack>
-        </Stack>
-      </Center>
-      <Center p={15}>
-        <DeviceMotionView />
-      </Center>
-      <View style={{ width: "100%", height: 350 }}>
-        <Center>
-          {Platform.OS === "ios" ? (
-            <LottieView
-              autoPlay={false}
-              ref={animation}
-              progress={1}
-              style={{
-                width: "100%",
-                height: "100%",
-              }}
-              source={require("../../animations/alien.json")}
-            />
-          ) : (
-            <Image source={require("../../../assets/img/mascot.png")} />
-          )}
         </Center>
-      </View>
-      <Center>
-        <SessionControl />
-      </Center>
+        <Center p={15}>
+          <DeviceMotionView />
+        </Center>
+        <View style={{ width: "100%", height: 350 }}>
+          <Center>
+            {Platform.OS === "ios" ? (
+              <LottieView
+                autoPlay={false}
+                ref={animation}
+                progress={1}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                }}
+                source={require("../../animations/alien.json")}
+              />
+            ) : (
+              <Image source={require("../../../assets/img/mascot.png")} />
+            )}
+          </Center>
+        </View>
+        <Center>
+          <SessionControl />
+        </Center>
+      </ScrollView>
     </SafeAreaView>
   );
 };
