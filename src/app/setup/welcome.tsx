@@ -7,7 +7,7 @@ import Stack from "@src/components/ui/Stack";
 const WelcomeScreen = () => {
   setTimeout(() => {
     router.navigate("/");
-  }, 3000);
+  }, 1500);
 
   // TODO: change colours to theme colours
 
