@@ -6,6 +6,7 @@ import { router } from "expo-router";
 import { SafeAreaView, Pressable } from "react-native";
 import { Text } from "@src/components/ui/typography";
 import Button from "@src/components/ui/Button";
+import PaginationDot from "react-native-animated-pagination-dot";
 
 const EarbudsTrainingScreen3 = () => {
   const next = () => {
@@ -44,8 +45,10 @@ const EarbudsTrainingScreen3 = () => {
               onPress={next}
               type={{ type: "primary", size: "l" }}
             />
-            {/* TODO: Add breadcrumb indicator */}
           </Stack>
+          <Center>
+            <PaginationDot activeDotColor={"black"} curPage={2} maxPage={3} />
+          </Center>
         </Center>
       </Main>
     </SafeAreaView>

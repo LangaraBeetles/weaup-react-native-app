@@ -50,7 +50,7 @@ const userInitialState: UserType = {
 };
 
 // Clear AsyncStorage:
-// AsyncStorage.clear();
+AsyncStorage.clear();
 
 export const useUser = create<UserState>()(
   devtools(

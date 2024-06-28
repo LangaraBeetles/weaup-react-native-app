@@ -12,6 +12,8 @@ const SetUpGoalScreen3 = () => {
   const completeSetup = useUser((state) => state.completeSetup);
   // const setDailyGoal = useUser((state) => state.setDailyGoal);
 
+  //TODO: create guest user
+
   const next = () => {
     completeSetup();
     router.navigate("/setup/welcome");

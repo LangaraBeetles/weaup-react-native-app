@@ -5,6 +5,7 @@ import Stack from "@src/components/ui/Stack";
 import { router } from "expo-router";
 import { SafeAreaView, Pressable } from "react-native";
 import { Text } from "@src/components/ui/typography";
+import PaginationDot from "react-native-animated-pagination-dot";
 
 const EarbudsTrainingScreen2 = () => {
   const next = () => {
@@ -38,8 +39,9 @@ const EarbudsTrainingScreen2 = () => {
                 earbuds to remind you to correct your posture.
               </Text>
             </Stack>
-
-            {/* TODO: Add breadcrumb indicator */}
+            <Center>
+              <PaginationDot activeDotColor={"black"} curPage={1} maxPage={3} />
+            </Center>
           </Stack>
         </Center>
       </Main>

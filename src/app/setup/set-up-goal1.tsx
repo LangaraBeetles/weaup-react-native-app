@@ -6,6 +6,7 @@ import Stack from "@src/components/ui/Stack";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native";
 import { Text } from "@src/components/ui/typography";
+import PaginationDot from "react-native-animated-pagination-dot";
 
 const SetUpGoalScreen3 = () => {
   const next = () => {
@@ -33,9 +34,10 @@ const SetUpGoalScreen3 = () => {
               onPress={next}
               type={{ type: "primary", size: "l" }}
             />
-
-            {/* TODO: Add breadcrumb indicator */}
           </Stack>
+          <Center>
+            <PaginationDot activeDotColor={"black"} curPage={0} maxPage={2} />
+          </Center>
         </Center>
       </Main>
     </SafeAreaView>
