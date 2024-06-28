@@ -1,4 +1,12 @@
-import { Modal, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Keyboard,
+  Modal,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 import React, {
   useCallback,
   useEffect,
@@ -108,35 +116,37 @@ const SessionControl = () => {
         snapPoints={snapPoints}
         backdropComponent={CustomBackdrop}
       >
-        {/* TODO: create number input component */}
-        <View style={styles.bottomSheetContainer}>
-          <Text>Hours:</Text>
-          <TextInput
-            style={styles.input}
-            onChangeText={(text) => setTimeInHours(Number(text))}
-            value={timeInHours.toString()}
-            placeholder="Hours"
-            keyboardType="numeric"
-          />
-          <Text>Minutes:</Text>
-          <TextInput
-            style={styles.input}
-            onChangeText={(text) => setTimeInMinutes(Number(text))}
-            value={timeInMinutes.toString()}
-            placeholder="Minutes"
-            keyboardType="numeric"
-          />
-          <Button
-            title="Start Session"
-            onPress={() => onStartSession(timeInHours, timeInMinutes)}
-            type={{ type: "primary", size: "s" }}
-          />
-          <Button
-            title="X"
-            onPress={onCancelSession}
-            type={{ type: "primary", size: "s" }}
-          />
-        </View>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+          {/* TODO: create number input component */}
+          <View style={styles.bottomSheetContainer}>
+            <Text>Hours:</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={(text) => setTimeInHours(Number(text))}
+              value={timeInHours.toString()}
+              placeholder="Hours"
+              keyboardType="numeric"
+            />
+            <Text>Minutes:</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={(text) => setTimeInMinutes(Number(text))}
+              value={timeInMinutes.toString()}
+              placeholder="Minutes"
+              keyboardType="numeric"
+            />
+            <Button
+              title="Start Session"
+              onPress={() => onStartSession(timeInHours, timeInMinutes)}
+              type={{ type: "primary", size: "s" }}
+            />
+            <Button
+              title="X"
+              onPress={onCancelSession}
+              type={{ type: "primary", size: "s" }}
+            />
+          </View>
+        </TouchableWithoutFeedback>
       </BottomSheetModal>
     );
   };

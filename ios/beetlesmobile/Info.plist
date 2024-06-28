@@ -27,7 +27,7 @@
       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
-          <string>alginmend-scheme</string>
+          <string>alginmend</string>
           <string>com.alignmend</string>
         </array>
       </dict>
@@ -60,6 +60,26 @@
     <key>NSUserActivityTypes</key>
     <array>
       <string>$(PRODUCT_BUNDLE_IDENTIFIER).expo.index_route</string>
+      <string>$(PRODUCT_BUNDLE_IDENTIFIER).expo.index_route</string>
+    </array>
+    <key>UIAppFonts</key>
+    <array>
+      <string>NunitoBlack.ttf</string>
+      <string>NunitoExtraBold.ttf</string>
+      <string>NunitoBold.ttf</string>
+      <string>NunitoSemiBold.ttf</string>
+      <string>NunitoMedium.ttf</string>
+      <string>NunitoRegular.ttf</string>
+      <string>NunitoLight.ttf</string>
+      <string>NunitoExtraLight.ttf</string>
+      <string>NunitoBlackItalic.ttf</string>
+      <string>NunitoExtraBoldItalic.ttf</string>
+      <string>NunitoBoldItalic.ttf</string>
+      <string>NunitoSemiBoldItalic.ttf</string>
+      <string>NunitoMediumItalic.ttf</string>
+      <string>NunitoItalic.ttf</string>
+      <string>NunitoLightItalic.ttf</string>
+      <string>NunitoExtraLightItalic.ttf</string>
     </array>
     <key>UILaunchStoryboardName</key>
     <string>SplashScreen</string>
