@@ -2,7 +2,7 @@ export const globalStyles = {
   fontFamily: "sans-serif",
   fontSize: 16,
   colors: {
-    white: "#FFFFFFF",
+    white: "#FFF",
     surface: "#F9F9F9",
     text: "#201F1D",
     primary: {

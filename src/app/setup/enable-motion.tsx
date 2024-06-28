@@ -48,11 +48,7 @@ const EnableMotionScreen = () => {
               </Text>
             </Stack>
 
-            <Button
-              title="Go to Settings"
-              onPress={next}
-              type={{ type: "primary", size: "l" }}
-            />
+            <Button title="Go to Settings" onPress={next} variant="primary" />
           </Stack>
         </Center>
       </Main>

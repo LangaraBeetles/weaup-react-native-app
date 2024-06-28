@@ -40,11 +40,7 @@ const EarbudsTrainingScreen3 = () => {
                 steep.
               </Text>
             </Stack>
-            <Button
-              title="Continue"
-              onPress={next}
-              type={{ type: "primary", size: "l" }}
-            />
+            <Button title="Continue" onPress={next} variant="primary" />
           </Stack>
           <Center>
             <PaginationDot activeDotColor={"black"} curPage={2} maxPage={3} />

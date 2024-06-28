@@ -30,11 +30,7 @@ const ProfileScreen = () => {
       {/* <ImageUploader /> */}
 
       {!isGuest && (
-        <Button
-          title="Logout"
-          type={{ type: "primary", size: "l" }}
-          onPress={handleLogout}
-        />
+        <Button title="Logout" variant="primary" onPress={handleLogout} />
       )}
     </Center>
   );

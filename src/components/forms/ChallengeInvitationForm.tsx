@@ -28,7 +28,7 @@ const ChallengeInvitationForm = (props: any) => {
         <Stack justifyContent="flex-end" alignItems="center">
           <ShareButton url={url} />
           <Button
-            type={{ type: "secondary", size: "l" }}
+            variant="secondary"
             title="Not Now"
             onPress={handleCloseModalPress}
           ></Button>

@@ -29,11 +29,7 @@ const SetUpGoalScreen3 = () => {
                 finishing sessions with your posture pal Weabo.
               </Text>
             </Stack>
-            <Button
-              title="Continue"
-              onPress={next}
-              type={{ type: "primary", size: "l" }}
-            />
+            <Button title="Continue" onPress={next} variant="primary" />
           </Stack>
           <Center>
             <PaginationDot activeDotColor={"black"} curPage={0} maxPage={2} />

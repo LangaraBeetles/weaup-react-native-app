@@ -36,11 +36,7 @@ const EarbudsConnectedScreen = () => {
               </Text>
             </Stack>
 
-            <Button
-              title="Continue"
-              onPress={next}
-              type={{ type: "primary", size: "l" }}
-            />
+            <Button title="Continue" onPress={next} variant="primary" />
           </Stack>
         </View>
       </Main>

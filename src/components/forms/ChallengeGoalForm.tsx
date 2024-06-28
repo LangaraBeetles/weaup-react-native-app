@@ -78,7 +78,7 @@ const ChallengeGoalForm = (props: any) => {
           {errors.goal && <Text>This is required.</Text>}
 
           <Button
-            type={{ type: "primary", size: "l" }}
+            variant="primary"
             title="Next"
             onPress={handleSubmit(() => {
               handleStep(2);

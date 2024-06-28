@@ -29,7 +29,7 @@ export const Text: React.FC<BodyTextProps> = ({
   return <StyledText {...props} level={level} align={align} weight={weight} />;
 };
 
-const StyledText = styled(RNText, {
+export const StyledText = styled(RNText, {
   fontFamily: "NunitoRegular",
   variants: {
     align: {

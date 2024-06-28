@@ -61,14 +61,14 @@ const SessionControl = () => {
     handleDismissModalPress();
   };
 
-  const onCancelSession = () => {
-    setSessionState("CANCEL");
-    setTimerState("STOPPED");
-    setTimeInSeconds(-1);
-    handleDismissModalPress();
-    // TODO: start real time tracking
-    // TODO: discard session data
-  };
+  // const onCancelSession = () => {
+  //   setSessionState("CANCEL");
+  //   setTimerState("STOPPED");
+  //   setTimeInSeconds(-1);
+  //   handleDismissModalPress();
+  //   // TODO: start real time tracking
+  //   // TODO: discard session data
+  // };
 
   const onStopSession = () => {
     setSessionState("PAUSE");
@@ -138,12 +138,7 @@ const SessionControl = () => {
             <Button
               title="Start Session"
               onPress={() => onStartSession(timeInHours, timeInMinutes)}
-              type={{ type: "primary", size: "s" }}
-            />
-            <Button
-              title="X"
-              onPress={onCancelSession}
-              type={{ type: "primary", size: "s" }}
+              variant="primary"
             />
           </View>
         </TouchableWithoutFeedback>
@@ -168,7 +163,8 @@ const SessionControl = () => {
         <Button
           title="Start a session"
           onPress={handlePresentModalPress}
-          type={{ type: "primary", size: "l" }}
+          variant="secondary"
+          trailingIcon="play"
         />
       )}
 
@@ -195,12 +191,12 @@ const SessionControl = () => {
             <Button
               title="Keep Going"
               onPress={handleContinue}
-              type={{ type: "primary", size: "l" }}
+              variant="primary"
             />
             <Button
               title="End Session"
               onPress={handleEndSession}
-              type={{ type: "primary", size: "l" }}
+              variant="primary"
             />
           </View>
         </View>

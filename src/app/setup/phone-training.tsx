@@ -29,11 +29,7 @@ const PhoneTrainingScreen = () => {
               </Text>
             </Stack>
 
-            <Button
-              title="Confirm"
-              onPress={next}
-              type={{ type: "primary", size: "l" }}
-            />
+            <Button title="Confirm" onPress={next} variant="primary" />
           </Stack>
         </Center>
       </Main>

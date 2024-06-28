@@ -51,16 +51,8 @@ const SetUpGoalScreen3 = () => {
 
             <Stack>
               {/* TODO: update button to have icons */}
-              <Button
-                title="I’m all set"
-                onPress={next}
-                type={{ type: "primary", size: "l" }}
-              />
-              <Button
-                title="Maybe Later"
-                onPress={skip}
-                type={{ type: "secondary", size: "l" }}
-              />
+              <Button title="I’m all set" onPress={next} variant="primary" />
+              <Button title="Maybe Later" onPress={skip} variant="secondary" />
             </Stack>
           </Stack>
         </Center>
