@@ -58,6 +58,7 @@ import Trash from "assets/icons/trash.svg";
 import Warning from "assets/icons/warning.svg";
 import XpFill from "assets/icons/xp-fill.svg";
 import XpOutline from "assets/icons/xp-outline.svg";
+import WelcomeMascot from "assets/icons/welcome-mascot.svg";
 
 const IconConfig = {
   "arrow-left": ArrowLeft,
@@ -120,6 +121,7 @@ const IconConfig = {
   warning: Warning,
   "xp-fill": XpFill,
   "xp-outline": XpOutline,
+  "welcome-mascot": WelcomeMascot,
 };
 
 type IconProps = {
