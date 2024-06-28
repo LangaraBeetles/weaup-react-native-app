@@ -75,6 +75,7 @@ const RootLayout = () => {
                       options={{
                         headerShown: true,
                         title: "Challenge progress",
+                        headerBackTitle: "Back",
                       }}
                     />
                     <Stack.Screen
