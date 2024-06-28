@@ -41,8 +41,8 @@ const PostureDataProvider: React.FC<{ children: React.ReactNode }> = ({
           });
 
           savePostureRecords(records)
-            .then((result) => {
-              console.log("posture data saved", result);
+            .then(() => {
+              console.log("posture data saved");
 
               updateUser(_user.id, {
                 xp: _user.xp,
