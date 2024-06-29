@@ -59,7 +59,7 @@ const ChallengeConfirmationForm = (props: any) => {
         </Stack>
 
         <Button
-          type={{ type: "primary", size: "l" }}
+          variant="primary"
           title="Create Challenge"
           onPress={handleSubmit(validate)}
         />

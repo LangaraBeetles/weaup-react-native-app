@@ -1,6 +1,7 @@
 import ArrowLeft from "assets/icons/arrow-left.svg";
 import ArrowRight from "assets/icons/arrow-right.svg";
 import Add from "assets/icons/add.svg";
+import Play from "assets/icons/play.svg";
 import AwardOutline from "assets/icons/award-outline.svg";
 import AwardFilled from "assets/icons/award-filled.svg";
 import BadgeOutline from "assets/icons/badge-outline.svg";
@@ -63,10 +64,13 @@ import ColorLabelIconLightening from "assets/icons/colorLabelIcon-lightening.svg
 import ColorLabelIconStreak from "assets/icons/colorLabelIcon-streak.svg";
 import ColorLabelIconStar from "assets/icons/colorLabelIcon-star.svg";
 
+import { theme } from "@src/styles/theme";
+
 const IconConfig = {
   "arrow-left": ArrowLeft,
   "arrow-right": ArrowRight,
   add: Add,
+  play: Play,
   "award-outline": AwardOutline,
   "award-filled": AwardFilled,
   "badge-outline": BadgeOutline,
@@ -130,13 +134,17 @@ const IconConfig = {
   "colorLabelIcon-star": ColorLabelIconStar,
 };
 
+export type IconName = `${keyof typeof IconConfig}`;
+
 type IconProps = {
-  name: `${keyof typeof IconConfig}`;
+  name: IconName;
+  color?: string;
 };
 
-const Icon: React.FC<IconProps> = ({ name }) => {
+const Icon: React.FC<IconProps> = ({ name, color = theme.colors.text }) => {
   const CustomIcon = IconConfig[name];
-  return <CustomIcon />;
+
+  return <CustomIcon color={color} />;
 };
 
 export default Icon;

@@ -171,7 +171,7 @@ const ChallengeDetailsForm = (props: any) => {
             </Stack>
           </Stack>
           <Button
-            type={{ type: "primary", size: "l" }}
+            variant="primary"
             title="Next"
             onPress={handleSubmit(() => {
               handleStep(1);

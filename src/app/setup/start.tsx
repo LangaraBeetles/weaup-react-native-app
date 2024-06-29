@@ -41,14 +41,10 @@ const SetupPages = () => {
               <Button
                 title="Start the Journey"
                 onPress={next}
-                type={{ type: "primary", size: "l" }}
+                variant="primary"
               />
 
-              <Button
-                title="Log in"
-                onPress={login}
-                type={{ type: "secondary", size: "l" }}
-              />
+              <Button title="Log in" onPress={login} variant="secondary" />
             </Stack>
             <Stack flexDirection="row" gap={5}>
               {/* TODO: Checkbox functionality */}

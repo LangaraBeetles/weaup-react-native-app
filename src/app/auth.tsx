@@ -47,10 +47,7 @@ const AuthCallback = () => {
           <Button
             title="Yey! Continue"
             onPress={handleContinuePress}
-            type={{
-              type: "primary",
-              size: "l",
-            }}
+            variant="primary"
           />
         </Stack>
       </Center>

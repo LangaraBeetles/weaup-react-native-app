@@ -30,11 +30,7 @@ const Timer: React.FC<{
   return (
     <View style={styles.container}>
       <TimerDisplay timeInSeconds={timeInSeconds} />
-      <Button
-        title="Stop tracking"
-        onPress={handleStop}
-        type={{ type: "primary", size: "l" }}
-      />
+      <Button title="Stop tracking" onPress={handleStop} variant="primary" />
     </View>
   );
 };

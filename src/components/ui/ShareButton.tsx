@@ -18,7 +18,7 @@ const ShareButton = (props: any) => {
 
   return (
     <Button
-      type={{ type: "primary", size: "l" }}
+      variant="primary"
       title="Share Invitation"
       onPress={onShare}
     ></Button>
