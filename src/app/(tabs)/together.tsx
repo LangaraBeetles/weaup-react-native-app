@@ -1,5 +1,5 @@
-import React, { useRef } from "react";
-import { View, StyleSheet, Image, Text } from "react-native";
+import React, { useRef, useEffect } from "react";
+import { View, StyleSheet, Image, Text, AppStateStatus } from "react-native";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 
 import Stack from "@src/components/ui/Stack";
@@ -9,14 +9,13 @@ import ChallengeList from "@src/components/lists/ChallengeList";
 import Chip from "@src/components/ui/Chip";
 import CreateChallengeContainer from "@src/components/container/CreateChallengeContainer";
 import { usePathname } from "expo-router";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, focusManager } from "@tanstack/react-query";
 import { getChallenges } from "@src/services/challengeApi";
 import { useUser } from "@src/state/useUser";
 import GoogleSignUp from "@src/components/profile/GoogleSignUp";
-
+import { AppState } from "react-native";
 const TogetherScreen = () => {
   const isGuest = useUser((data) => data.isGuest);
-
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const path = usePathname();
 
@@ -24,10 +23,28 @@ const TogetherScreen = () => {
     queryKey: ["challenges"],
     queryFn: getChallenges,
     enabled: path === "/together",
+    refetchOnWindowFocus: true,
   });
 
-  const addChallenge = () => bottomSheetModalRef.current?.present();
-  const handleCloseModalPress = () => bottomSheetModalRef.current?.close();
+  const addChallenge = () => {
+    bottomSheetModalRef.current?.present();
+    focusManager.setFocused(undefined);
+  };
+
+  const handleCloseModalPress = () => {
+    bottomSheetModalRef.current?.close();
+    focusManager.setFocused(true);
+  };
+
+  //refresh data when app is opened from background
+  function onAppStateChange(status: AppStateStatus) {
+    focusManager.setFocused(status === "active");
+  }
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener("change", onAppStateChange);
+    return () => subscription.remove();
+  }, []);
 
   const createChallengeForm = (
     <CreateChallengeContainer handleCloseModalPress={handleCloseModalPress} />
