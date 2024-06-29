@@ -22,7 +22,7 @@ import CustomBackdrop from "@src/components/ui/CustomBackdrop";
 import { useRouter } from "expo-router";
 import {
   PostureSessionInput,
-  // PostureSessionRecord,
+  PostureSessionRecord,
 } from "@src/interfaces/posture.types";
 import { saveSessionRecords } from "@src/services/sessionApi";
 import { useUser } from "@src/state/useUser";
@@ -36,9 +36,9 @@ const SessionControl = () => {
   const [timeInSeconds, setTimeInSeconds] = useState(-1);
   const [modalVisible, setModalVisible] = useState(false);
 
-  // const [postureData, setPostureData] = useState<Array<PostureSessionRecord>>(
-  //   []
-  // );
+  const [postureData, setPostureData] = useState<Array<PostureSessionRecord>>(
+    [],
+  );
   const [startDate, setStartDate] = useState<string>("");
 
   const router = useRouter();
@@ -48,7 +48,7 @@ const SessionControl = () => {
 
   // variables
   const snapPoints = useMemo(() => ["25%", "50%"], []);
-  const isTrackingEnabled = useUser((state) => state.isTrackingEnabled);
+  const currentPosture = useUser((state) => state.currentPosture);
   const setTrackingEnabled = useUser((state) => state.setTrackingEnabled);
 
   // callbacks
@@ -66,16 +66,10 @@ const SessionControl = () => {
   const onStartSession = (timeInHours: number, timeInMinutes: number) => {
     setSessionState("START");
     setTimerState("RUNNING");
-    // TODO: stop real time tracking: DONE
-    isTrackingEnabled && setTrackingEnabled(false);
+    // TODO: stop real time tracking: Need to be on to read the posture
+    setTrackingEnabled(true);
     setTimeInSeconds(timeInHours * 3600 + timeInMinutes * 60);
-    // TODO: function to check posture every 20 seconds
-
-    // if posture is okay ➝ save it to the local state and show the image animation
-    // if posture is bad ➝ save it to the local state and show the image animation
-
     setStartDate(new Date().toISOString());
-
     handleDismissModalPress();
   };
 
@@ -85,7 +79,7 @@ const SessionControl = () => {
     setTimeInSeconds(-1);
     handleDismissModalPress();
     // TODO: start real time tracking
-    // TODO: discard session data
+    setPostureData([]);
   };
 
   const onStopSession = () => {
@@ -119,8 +113,7 @@ const SessionControl = () => {
     };
 
     saveSessionRecords(payload);
-
-    // TODO: save session data
+    setPostureData([]);
     // TODO: Show session summary
     router.push("/session-summary");
     // Reset the timer
@@ -179,8 +172,30 @@ const SessionControl = () => {
   };
 
   useEffect(() => {
-    if (sessionState === "START" && timeInSeconds === -1) {
-      onStopSession();
+    let interval: NodeJS.Timeout;
+
+    const checkPosture = () => {
+      const posture = {
+        good_posture: currentPosture === "good",
+        recorded_at: new Date().toISOString(),
+      };
+      setPostureData((prevState) => [...prevState, posture]);
+    };
+
+    if (sessionState === "START" && timerState === "RUNNING") {
+      interval = setInterval(() => {
+        checkPosture();
+      }, 5000);
+    }
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [sessionState, timerState, currentPosture, postureData]);
+
+  useEffect(() => {
+    if (sessionState === "START" && timeInSeconds === 0) {
+      handleEndSession();
     } else if (sessionState === "START" && timeInSeconds > 0) {
       const timer = setInterval(() => {
         setTimeInSeconds((prevTime) => prevTime - 1);

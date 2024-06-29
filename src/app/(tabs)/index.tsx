@@ -18,7 +18,6 @@ import { Text } from "@src/components/ui/typography";
 
 import LottieView from "lottie-react-native";
 import { useRef } from "react";
-import Icon from "@src/components/ui/Icon";
 
 const background = {
   not_reading: "white",
