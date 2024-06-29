@@ -2,7 +2,8 @@ import React, { useEffect, useRef } from "react";
 import { View, StyleSheet, Animated } from "react-native";
 
 const ProgressBar = (props: any) => {
-  const { currentValue, goal, content, backgroundColor, barColor } = props;
+  const { currentValue, goal, content, backgroundColor, barColor, height } =
+    props;
   const progress = (currentValue / goal) * 100;
   const animation = new Animated.Value(progress);
   const counter = useRef(new Animated.Value(0)).current;
@@ -26,13 +27,22 @@ const ProgressBar = (props: any) => {
       <View
         style={[
           styles.container,
-          { backgroundColor: backgroundColor || "#FFF" },
+          {
+            backgroundColor: backgroundColor || "#FFF",
+            height: height || 10,
+            borderRadius: (height || 10) / 2,
+          },
         ]}
       >
         <Animated.View
           style={[
             styles.bar,
-            { width: width, backgroundColor: barColor || "#000" },
+            {
+              width: width,
+              backgroundColor: barColor || "#000",
+              height: height || 10,
+              borderRadius: (height || 10) / 2,
+            },
           ]}
         />
       </View>
@@ -43,14 +53,9 @@ const ProgressBar = (props: any) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: 10,
     marginVertical: 10,
-    borderRadius: 5,
   },
-  bar: {
-    height: 10,
-    borderRadius: 5,
-  },
+  bar: {},
 });
 
 export default ProgressBar;

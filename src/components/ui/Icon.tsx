@@ -64,6 +64,9 @@ import ColorLabelIconLightening from "assets/icons/colorLabelIcon-lightening.svg
 import ColorLabelIconStreak from "assets/icons/colorLabelIcon-streak.svg";
 import ColorLabelIconStar from "assets/icons/colorLabelIcon-star.svg";
 import ProfileAvatar from "assets/icons/profile-avatar.svg";
+import colorLabelIconXp from "assets/icons/colorLabelIcon-xp.svg";
+import colorLabelIconAward from "assets/icons/colorLabelIcon-award.svg";
+import Logout from "assets/icons/logout.svg";
 
 import { theme } from "@src/styles/theme";
 
@@ -134,6 +137,9 @@ const IconConfig = {
   "colorLabelIcon-streak": ColorLabelIconStreak,
   "colorLabelIcon-star": ColorLabelIconStar,
   "profile-avatar": ProfileAvatar,
+  "colorLabelIcon-xp": colorLabelIconXp,
+  "colorLabelIcon-award": colorLabelIconAward,
+  logout: Logout,
 };
 
 export type IconName = `${keyof typeof IconConfig}`;

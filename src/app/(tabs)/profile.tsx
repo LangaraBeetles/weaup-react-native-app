@@ -13,13 +13,28 @@ import { StyleSheet } from "react-native";
 import { globalStyles } from "@src/styles/globalStyles";
 import Box from "@src/components/ui/Box";
 import Spacer from "@src/components/ui/Spacer";
+import ProgressBar from "@src/components/ui/ProgressBar";
+import levels from "@src/levels";
+import BadgeContainer from "@src/components/container/BadgeContainer";
 
 const ProfileScreen = () => {
   const isGuest = useUser((data) => data.isGuest);
   const userName = useUser((state) => state.user.name);
   const userEmail = useUser((state) => state.user.email);
+  const userPostureScore = useUser((state) => state.user.hp);
+  const userXP = useUser((state) => state.user.xp);
+  const userLevel = useUser((state) => state.user.level);
   const router = useRouter();
   const { logout } = useAuth();
+
+  const nextLevelXP = () => {
+    for (const level of levels) {
+      if (userXP < level.xp) {
+        return level.xp;
+      }
+    }
+    return null;
+  };
 
   const handleLogout = async () => {
     logout();
@@ -34,28 +49,10 @@ const ProfileScreen = () => {
     <SafeAreaView style={styles.constainer}>
       <Stack gap={20}>
         {/* Element 1 */}
-        <Stack flexDirection="row" gap={3}>
+        <Stack flexDirection="row" gap={12}>
           <Icon name="profile-avatar" />
           <Stack flexDirection="row" justifyContent="space-between" flex={1}>
-            <Stack>
-              <Text level="title_3" style={styles.title}>
-                {userName}
-              </Text>
-              <Text level="subhead" style={styles.subhead1}>
-                {userEmail}
-              </Text>
-            </Stack>
             <Center>
-              <Icon name="chevron-right" />
-            </Center>
-          </Stack>
-        </Stack>
-
-        {/* Element 2 */}
-        <Box>
-          <Stack flexDirection="row" gap={3}>
-            <Icon name="profile-avatar" />
-            <Stack flexDirection="row" justifyContent="space-between" flex={1}>
               <Stack>
                 <Text level="title_3" style={styles.title}>
                   {userName}
@@ -64,18 +61,116 @@ const ProfileScreen = () => {
                   {userEmail}
                 </Text>
               </Stack>
+            </Center>
+            <Center>
+              <Icon name="chevron-right" />
+            </Center>
+          </Stack>
+        </Stack>
+
+        {/* Element 2 */}
+        <Box>
+          <Stack flexDirection="row" justifyContent="space-between">
+            <Stack flexDirection="row" gap={8}>
               <Center>
-                <Icon name="chevron-right" />
+                <Icon name="colorLabelIcon-star" />
+              </Center>
+
+              <Center>
+                <Text level="subhead" weight="bold" style={styles.title}>
+                  Posture Score
+                </Text>
+              </Center>
+            </Stack>
+            <Stack flexDirection="row" gap={8}>
+              <Center>
+                <Text level="title_1" weight="bold" style={styles.title}>
+                  {userPostureScore}
+                </Text>
+              </Center>
+              <Center>
+                <Text level="caption_1" weight="bold" style={styles.caption1}>
+                  / 100
+                </Text>
               </Center>
             </Stack>
           </Stack>
         </Box>
 
         {/* Element 3 */}
-        <Box></Box>
+        <Box>
+          <Stack>
+            <Stack flexDirection="row" justifyContent="space-between">
+              <Stack flexDirection="row" gap={8}>
+                <Icon name="colorLabelIcon-xp" />
+                <Center>
+                  <Text level="subhead" weight="bold" style={styles.title}>
+                    XP
+                  </Text>
+                </Center>
+              </Stack>
+              <Center>
+                <Text level="headline">{userXP}</Text>
+              </Center>
+            </Stack>
+
+            <ProgressBar
+              currentValue={userXP}
+              goal={nextLevelXP()}
+              height={16}
+              barColor={globalStyles.colors.error[400]}
+              backgroundColor={globalStyles.colors.neutral[100]}
+            />
+
+            <Stack flexDirection="row" justifyContent="space-between">
+              <Text level="caption_1" style={styles.caption1}>
+                Level {userLevel}
+              </Text>
+              <Text level="caption_1" style={styles.caption1}>
+                Level {userLevel + 1}
+              </Text>
+            </Stack>
+          </Stack>
+        </Box>
 
         {/* Element 4 */}
-        <Box></Box>
+        <Box>
+          <Stack gap={18}>
+            <Stack flexDirection="row" justifyContent="space-between">
+              <Stack flexDirection="row" gap={8}>
+                <Center>
+                  <Icon name="colorLabelIcon-award" />
+                </Center>
+                <Center>
+                  <Text level="subhead" weight="bold" style={styles.title}>
+                    Badges
+                  </Text>
+                </Center>
+              </Stack>
+              <Center>
+                {/* TODO: get user badges count */}
+                <Text level="headline">{userXP}</Text>
+              </Center>
+            </Stack>
+            <Stack flexDirection="row" gap={12}>
+              <BadgeContainer
+                title="Fire Weasel"
+                subtitle="Level 3"
+                badge="dummy-badge"
+              />
+              <BadgeContainer
+                title="Fire Weasel"
+                subtitle="Level 3"
+                badge="dummy-badge"
+              />
+              <BadgeContainer
+                title="Fire Weasel"
+                subtitle="Level 3"
+                badge="dummy-badge"
+              />
+            </Stack>
+          </Stack>
+        </Box>
 
         {/* Element 5 */}
         <Box></Box>
@@ -86,7 +181,12 @@ const ProfileScreen = () => {
       <Spacer height={40} />
 
       {!isGuest && (
-        <Button title="Logout" variant="primary" onPress={handleLogout} />
+        <Button
+          title="Log out"
+          variant="secondary_coral"
+          onPress={handleLogout}
+          leadingIcon="logout"
+        />
       )}
     </SafeAreaView>
   );
@@ -102,6 +202,9 @@ const styles = StyleSheet.create({
   },
   subhead1: {
     color: globalStyles.colors.neutral[500],
+  },
+  caption1: {
+    color: globalStyles.colors.neutral[400],
   },
 });
 export default ProfileScreen;
