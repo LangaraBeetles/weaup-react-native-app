@@ -8,13 +8,16 @@ import useAuth from "@src/components/hooks/useAuth";
 import Icon from "@src/components/ui/Icon";
 import Stack from "@src/components/ui/Stack";
 import { Text } from "@src/components/ui/typography";
-import { ScrollView, StyleSheet } from "react-native";
+import { Pressable, ScrollView, StyleSheet } from "react-native";
 import { globalStyles } from "@src/styles/globalStyles";
 import Box from "@src/components/ui/Box";
 import Spacer from "@src/components/ui/Spacer";
 import ProgressBar from "@src/components/ui/ProgressBar";
 import levels from "@src/levels";
 import ProfileBadgeContainerPreview from "@src/components/container/ProfileBadgeContainerPreview";
+import Divider from "@src/components/ui/Divider";
+import StreakImageIndicator from "@src/components/streak/StreakImageIndicator";
+import StreakDaysIndicator from "@src/components/streak/StreakDaysIndicator";
 
 const ProfileScreen = () => {
   const isGuest = useUser((data) => data.isGuest);
@@ -24,6 +27,7 @@ const ProfileScreen = () => {
   const userXP = useUser((state) => state.user.xp);
   const userLevel = useUser((state) => state.user.level);
   const userDailyGoal = useUser((state) => state.user.dailyGoal);
+  const userStreak = useUser((state) => state.user.dailyStreakCounter);
   const router = useRouter();
   const { logout } = useAuth();
 
@@ -155,13 +159,17 @@ const ProfileScreen = () => {
                 </Center>
               </Stack>
               <ProfileBadgeContainerPreview />
-              {/* TODO: add divider */}
-              <Stack flexDirection="row" justifyContent="space-between">
-                <Center>
-                  <Text level="footnote">View all</Text>
-                </Center>
-                <Icon name="chevron-right" />
-              </Stack>
+
+              <Divider />
+              {/* TODO: go to all badges page */}
+              <Pressable>
+                <Stack flexDirection="row" justifyContent="space-between">
+                  <Center>
+                    <Text level="footnote">View all</Text>
+                  </Center>
+                  <Icon name="chevron-right" />
+                </Stack>
+              </Pressable>
             </Stack>
           </Box>
 
@@ -185,13 +193,16 @@ const ProfileScreen = () => {
                 </Center>
               </Stack>
 
-              {/* TODO: add divider */}
-              <Stack flexDirection="row" justifyContent="space-between">
-                <Center>
-                  <Text level="footnote">Change daily goal</Text>
-                </Center>
-                <Icon name="chevron-right" />
-              </Stack>
+              <Divider />
+              {/* TODO: Change goal functionality */}
+              <Pressable>
+                <Stack flexDirection="row" justifyContent="space-between">
+                  <Center>
+                    <Text level="footnote">Change daily goal</Text>
+                  </Center>
+                  <Icon name="chevron-right" />
+                </Stack>
+              </Pressable>
             </Stack>
           </Box>
 
@@ -199,21 +210,26 @@ const ProfileScreen = () => {
           <Box>
             <Stack gap={18}>
               <Stack flexDirection="row" justifyContent="space-between">
-                <Stack flexDirection="row" gap={8}>
+                <Stack flexDirection="row" gap={8} flex={1}>
                   <Center>
-                    <Icon name="colorLabelIcon-target" />
+                    <StreakImageIndicator streak={userStreak} />
                   </Center>
-                  <Center>
-                    <Text level="subhead" weight="bold" style={styles.title}>
-                      Streak
-                    </Text>
+                  <Center flex={1}>
+                    <Stack>
+                      <Text level="title_3" weight="bold" style={styles.title}>
+                        Streak
+                      </Text>
+                      <Text level="caption_1" style={styles.title}>
+                        Complete a Session every day to keep your streak going.
+                      </Text>
+                    </Stack>
                   </Center>
                 </Stack>
               </Stack>
 
-              {/* TODO: add divider */}
+              <Divider />
 
-              <Text level="footnote">streak days</Text>
+              <StreakDaysIndicator streak={2} startDay={0} />
             </Stack>
           </Box>
         </Stack>
@@ -236,6 +252,7 @@ const ProfileScreen = () => {
 const styles = StyleSheet.create({
   constainer: {
     padding: 16,
+    backgroundColor: globalStyles.colors.primary[200],
   },
   title: {
     color: globalStyles.colors.neutral[800],

@@ -5,7 +5,7 @@ import BadgeContainer from "./BadgeContainer";
 
 const ProfileBadgeContainerPreview = () => {
   return (
-    <Stack flexDirection="row" justifyContent="space-around">
+    <Stack flexDirection="row" justifyContent="space-between">
       <BadgeContainer
         title="Fire Weasel"
         subtitle="Level 3"
