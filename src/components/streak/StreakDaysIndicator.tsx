@@ -2,7 +2,6 @@ import { Text } from "../ui/typography";
 import Stack from "../ui/Stack";
 import { globalStyles } from "@src/styles/globalStyles";
 import Icon from "../ui/Icon";
-import { useState, useEffect } from "react";
 
 type Weekdays = {
   day: string;
@@ -20,20 +19,16 @@ const Days: Weekdays[] = [
 
 const StreakDaysIndicator: React.FC<{
   streak: number;
-  startDay?: number | null;
-}> = ({ streak, startDay = null }) => {
-  const [startIndex, setStartIndex] = useState<number | null>(startDay);
-
-  useEffect(() => {
-    setStartIndex(startDay);
-  }, [startDay]);
+}> = ({ streak }) => {
+  const today = new Date().getDay();
+  const startDay = today - streak;
 
   const renderDays = () => {
-    if (startIndex === null) return null;
+    if (startDay === null) return null;
 
     const daysToRender = [];
     for (let i = 0; i < 7; i++) {
-      const dayIndex = (startIndex + i) % 7;
+      const dayIndex = (startDay + i) % 7;
       daysToRender.push(
         <Stack key={i} alignItems="center">
           <Text

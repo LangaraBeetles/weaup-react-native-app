@@ -1,12 +1,16 @@
 import { styled } from "@fast-styles/react";
+import { globalStyles } from "@src/styles/globalStyles";
 import { View } from "react-native";
 
 const Box = styled(View, {
   display: "flex",
   width: "100%",
   padding: 16,
-  backgroundColor: "#fff",
+  backgroundColor: globalStyles.colors.white,
   borderRadius: 16,
+  borderStyle: "solid",
+  borderWidth: 1,
+  borderColor: globalStyles.colors.neutral[50],
 });
 
 export default Box;
