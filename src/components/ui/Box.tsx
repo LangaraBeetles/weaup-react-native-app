@@ -10,7 +10,7 @@ const Box = styled(View, {
   borderRadius: 16,
   borderStyle: "solid",
   borderWidth: 1,
-  borderColor: globalStyles.colors.neutral[50],
+  borderColor: globalStyles.colors.neutral[100],
 });
 
 export default Box;

@@ -1,7 +1,6 @@
 import React from "react";
 import { useUser } from "@src/state/useUser";
 import { useRouter } from "expo-router";
-import Center from "@src/components/ui/Center";
 import Button from "@src/components/ui/Button";
 import GoogleSignUp from "@src/components/profile/GoogleSignUp";
 import useAuth from "@src/components/hooks/useAuth";
@@ -49,6 +48,10 @@ const ProfileScreen = () => {
     return <GoogleSignUp />;
   }
 
+  const changeGoal = () => {
+    router.navigate("/setup/set-up-goal3");
+  };
+
   return (
     <>
       <ScrollView style={styles.container}>
@@ -63,52 +66,36 @@ const ProfileScreen = () => {
                 flexDirection="row"
                 justifyContent="space-between"
                 flex={1}
+                alignItems="center"
               >
-                <Center>
-                  <Stack>
-                    <Text level="title_3" style={styles.title}>
-                      {userName}
-                    </Text>
-                    <Text level="subhead" style={styles.subhead1}>
-                      {userEmail}
-                    </Text>
-                  </Stack>
-                </Center>
-                <Center>
-                  <Icon name="chevron-right" />
-                </Center>
+                <Stack>
+                  <Text level="title_3" style={styles.title}>
+                    {userName}
+                  </Text>
+                  <Text level="subhead" style={styles.subhead1}>
+                    {userEmail}
+                  </Text>
+                </Stack>
+                <Icon name="chevron-right" />
               </Stack>
             </Stack>
 
             {/* Element 2 */}
             <Box>
               <Stack flexDirection="row" justifyContent="space-between">
-                <Stack flexDirection="row" gap={8}>
-                  <Center>
-                    <Icon name="colorLabelIcon-star" />
-                  </Center>
-
-                  <Center>
-                    <Text level="subhead" weight="bold" style={styles.title}>
-                      Posture Score
-                    </Text>
-                  </Center>
+                <Stack flexDirection="row" gap={8} alignItems="center">
+                  <Icon name="colorLabelIcon-star" />
+                  <Text level="subhead" weight="bold" style={styles.title}>
+                    Posture Score
+                  </Text>
                 </Stack>
-                <Stack flexDirection="row" gap={8}>
-                  <Center>
-                    <Text level="title_1" weight="bold" style={styles.title}>
-                      {userPostureScore}
-                    </Text>
-                  </Center>
-                  <Center>
-                    <Text
-                      level="caption_1"
-                      weight="bold"
-                      style={styles.caption1}
-                    >
-                      / 100
-                    </Text>
-                  </Center>
+                <Stack flexDirection="row" gap={8} alignItems="center">
+                  <Text level="title_1" weight="bold" style={styles.title}>
+                    {userPostureScore}
+                  </Text>
+                  <Text level="caption_1" weight="bold" style={styles.caption1}>
+                    / 100
+                  </Text>
                 </Stack>
               </Stack>
             </Box>
@@ -117,17 +104,13 @@ const ProfileScreen = () => {
             <Box>
               <Stack>
                 <Stack flexDirection="row" justifyContent="space-between">
-                  <Stack flexDirection="row" gap={8}>
+                  <Stack flexDirection="row" gap={8} alignItems="center">
                     <Icon name="colorLabelIcon-xp" />
-                    <Center>
-                      <Text level="subhead" weight="bold" style={styles.title}>
-                        XP
-                      </Text>
-                    </Center>
+                    <Text level="subhead" weight="bold" style={styles.title}>
+                      XP
+                    </Text>
                   </Stack>
-                  <Center>
-                    <Text level="headline">{userXP}</Text>
-                  </Center>
+                  <Text level="headline">{userXP}</Text>
                 </Stack>
 
                 <ProgressBar
@@ -135,7 +118,7 @@ const ProfileScreen = () => {
                   goal={nextLevelXP()}
                   height={16}
                   barColor={globalStyles.colors.error[400]}
-                  backgroundColor={globalStyles.colors.neutral[100]}
+                  borderWidth={1}
                 />
 
                 <Stack flexDirection="row" justifyContent="space-between">
@@ -143,7 +126,7 @@ const ProfileScreen = () => {
                     Level {userLevel}
                   </Text>
                   <Text level="caption_1" style={styles.caption1}>
-                    Level {userLevel + 1}
+                    Level {Number(userLevel) + 1}
                   </Text>
                 </Stack>
               </Stack>
@@ -152,31 +135,34 @@ const ProfileScreen = () => {
             {/* Element 4 */}
             <Box>
               <Stack gap={18}>
-                <Stack flexDirection="row" justifyContent="space-between">
-                  <Stack flexDirection="row" gap={8}>
-                    <Center>
-                      <Icon name="colorLabelIcon-award" />
-                    </Center>
-                    <Center>
-                      <Text level="subhead" weight="bold" style={styles.title}>
-                        Badges
-                      </Text>
-                    </Center>
+                <Stack
+                  flexDirection="row"
+                  justifyContent="space-between"
+                  alignItems="center"
+                >
+                  <Stack flexDirection="row" gap={8} alignItems="center">
+                    <Icon name="colorLabelIcon-award" />
+
+                    <Text level="subhead" weight="bold" style={styles.title}>
+                      Badges
+                    </Text>
                   </Stack>
-                  <Center>
-                    {/* TODO: get user badges count */}
-                    <Text level="headline">{userXP}</Text>
-                  </Center>
+
+                  {/* TODO: get user badges count */}
+                  <Text level="headline">{userXP}</Text>
                 </Stack>
                 <ProfileBadgeContainerPreview />
 
                 <Divider />
                 {/* TODO: go to all badges page */}
                 <Pressable>
-                  <Stack flexDirection="row" justifyContent="space-between">
-                    <Center>
-                      <Text level="footnote">View all</Text>
-                    </Center>
+                  <Stack
+                    flexDirection="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Text level="footnote">View all</Text>
+
                     <Icon name="chevron-right" />
                   </Stack>
                 </Pressable>
@@ -186,30 +172,30 @@ const ProfileScreen = () => {
             {/* Element 5 */}
             <Box>
               <Stack gap={18}>
-                <Stack flexDirection="row" justifyContent="space-between">
-                  <Stack flexDirection="row" gap={8}>
-                    <Center>
-                      <Icon name="colorLabelIcon-target" />
-                    </Center>
-                    <Center>
-                      <Text level="subhead" weight="bold" style={styles.title}>
-                        Daily Goal
-                      </Text>
-                    </Center>
+                <Stack
+                  flexDirection="row"
+                  justifyContent="space-between"
+                  alignItems="center"
+                >
+                  <Stack flexDirection="row" gap={8} alignItems="center">
+                    <Icon name="colorLabelIcon-target" />
+                    <Text level="subhead" weight="bold" style={styles.title}>
+                      Daily Goal
+                    </Text>
                   </Stack>
-                  <Center>
-                    {/* TODO: get user badges count */}
+                  <>
                     <Text level="headline">{userDailyGoal}</Text>
-                  </Center>
+                  </>
                 </Stack>
 
                 <Divider />
-                {/* TODO: Change goal functionality */}
-                <Pressable>
-                  <Stack flexDirection="row" justifyContent="space-between">
-                    <Center>
-                      <Text level="footnote">Change daily goal</Text>
-                    </Center>
+                <Pressable onPress={changeGoal}>
+                  <Stack
+                    flexDirection="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Text level="footnote">Change daily goal</Text>
                     <Icon name="chevron-right" />
                   </Stack>
                 </Pressable>
@@ -220,25 +206,21 @@ const ProfileScreen = () => {
             <Box>
               <Stack gap={18}>
                 <Stack flexDirection="row" justifyContent="space-between">
-                  <Stack flexDirection="row" gap={8} flex={1}>
-                    <Center>
-                      <StreakImageIndicator streak={userStreak} />
-                    </Center>
-                    <Center flex={1}>
-                      <Stack>
-                        <Text
-                          level="title_3"
-                          weight="bold"
-                          style={styles.title}
-                        >
-                          Streak
-                        </Text>
-                        <Text level="caption_1" style={styles.title}>
-                          Complete a Session every day to keep your streak
-                          going.
-                        </Text>
-                      </Stack>
-                    </Center>
+                  <Stack
+                    flexDirection="row"
+                    gap={8}
+                    flex={1}
+                    alignItems="center"
+                  >
+                    <StreakImageIndicator streak={userStreak} />
+                    <Stack flex={1}>
+                      <Text level="title_3" weight="bold" style={styles.title}>
+                        Streak
+                      </Text>
+                      <Text level="caption_1" style={styles.title}>
+                        Complete a Session every day to keep your streak going.
+                      </Text>
+                    </Stack>
                   </Stack>
                 </Stack>
 
