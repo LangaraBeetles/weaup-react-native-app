@@ -79,7 +79,6 @@ const ButtonRoot = styled(Pressable, {
       primary: {},
       secondary: {},
       secondary_coral: {
-        backgroundColor: theme.colors.white,
         borderColor: theme.colors.error[500],
       },
       tertiary: {
