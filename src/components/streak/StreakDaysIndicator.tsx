@@ -21,11 +21,15 @@ const StreakDaysIndicator: React.FC<{
   streak: number;
 }> = ({ streak }) => {
   const today = new Date().getDay();
-  const startDay = today - streak;
+  let startDay = 0;
+
+  if (streak > 0) {
+    startDay = (today - streak + 7) % 7;
+  } else {
+    startDay = 0;
+  }
 
   const renderDays = () => {
-    if (startDay === null) return null;
-
     const daysToRender = [];
     for (let i = 0; i < 7; i++) {
       const dayIndex = (startDay + i) % 7;
