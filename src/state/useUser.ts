@@ -12,9 +12,10 @@ type UserState = {
   setTrackingEnabled: (value: boolean) => void;
 
   currentPosture: PostureStatus;
-  setCurrentPosture: (value: PostureStatus) => void;
+  setCurrentPosture: (value: PostureStatus, isSession: boolean) => void;
 
   postureData: Array<{ status: PostureStatus; date: Date }>;
+  sessionDataPosture: Array<{ status: PostureStatus; date: Date }>;
   preparePostureData: () => Array<{ status: PostureStatus; date: Date }>;
 
   isAuth: boolean;
@@ -31,6 +32,9 @@ type UserState = {
   setDailyStreakCounter: (newDailyStreakCounter: number) => void;
   mode: TrackingModeType;
   changeMode: (value: TrackingModeType) => void;
+
+  isSessionActive: boolean;
+  setSessionActive: (isActive: boolean) => void;
 };
 
 const userInitialState: UserType = {
@@ -63,21 +67,32 @@ export const useUser = create<UserState>()(
         setTrackingEnabled: (enabled) => set({ isTrackingEnabled: enabled }),
 
         currentPosture: "not_reading",
-        setCurrentPosture: (value) => {
+        setCurrentPosture: (value, isSession) => {
           if (value === "bad" || value === "good") {
-            set((state) => ({
-              currentPosture: value,
-              postureData: [
-                ...state.postureData,
-                { status: value, date: new Date() },
-              ],
-            }));
+            if (isSession) {
+              set((state) => ({
+                currentPosture: value,
+                sessionDataPosture: [
+                  ...state.sessionDataPosture,
+                  { status: value, date: new Date() },
+                ],
+              }));
+            } else {
+              set((state) => ({
+                currentPosture: value,
+                postureData: [
+                  ...state.postureData,
+                  { status: value, date: new Date() },
+                ],
+              }));
+            }
           } else {
             set({ currentPosture: value });
           }
         },
 
         postureData: [],
+        sessionDataPosture: [],
         preparePostureData: () => {
           // This function will get the current posture data that is ready to be sent to the api
           // we clear the object to avoid duplicity
@@ -161,6 +176,9 @@ export const useUser = create<UserState>()(
 
         mode: "phone",
         changeMode: (value: TrackingModeType) => set({ mode: value }),
+
+        isSessionActive: false,
+        setSessionActive: (isActive) => set({ isSessionActive: isActive }),
       }),
       {
         storage: createJSONStorage(() => AsyncStorage),

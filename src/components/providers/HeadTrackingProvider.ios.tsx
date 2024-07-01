@@ -13,11 +13,15 @@ type ContextState = {
   isHeadMotionAvailable: boolean;
   posture: PostureStatus;
   getCurrentPosture?: () => Promise<void>;
+  startSession: () => void;
+  stopSession: () => void;
 };
 
 const initialState: ContextState = {
   isHeadMotionAvailable: false,
   posture: "not_reading",
+  startSession: () => {},
+  stopSession: () => {},
 };
 
 const HeadTrackingContext = createContext<ContextState>(initialState);
@@ -36,17 +40,20 @@ const HeadTrackingProvider: React.FC<{ children: React.ReactNode }> = ({
   const mode = useUser((state) => state.mode);
   const isTrackingEnabled = useUser((state) => state.isTrackingEnabled);
   const postureStatus = useUser((state) => state.currentPosture);
-  const setPoture = useUser((state) => state.setCurrentPosture);
+  const setPosture = useUser((state) => state.setCurrentPosture);
+  const isSessionActive = useUser((state) => state.isSessionActive);
+  const setSessionActive = useUser((state) => state.setSessionActive);
 
   const handlePostureCorrectionAlert = (headPitch?: number) => {
     if (headPitch === undefined) {
-      postureStatus !== "not_reading" && setPoture("not_reading");
+      postureStatus !== "not_reading" &&
+        setPosture("not_reading", isSessionActive);
     } else if (headPitch > -15 && headPitch < 15) {
       console.log("Yey!");
-      postureStatus !== "good" && setPoture("good");
+      postureStatus !== "good" && setPosture("good", isSessionActive);
     } else {
       console.log("Bad!");
-      postureStatus !== "bad" && setPoture("bad");
+      postureStatus !== "bad" && setPosture("bad", isSessionActive);
     }
   };
 
@@ -85,7 +92,7 @@ const HeadTrackingProvider: React.FC<{ children: React.ReactNode }> = ({
       const headPitch = data?.attitude.pitchDeg;
       handlePostureCorrectionAlert(headPitch);
     } else {
-      setPoture("not_reading");
+      setPosture("not_reading", isSessionActive);
     }
   };
 
@@ -94,7 +101,17 @@ const HeadTrackingProvider: React.FC<{ children: React.ReactNode }> = ({
       clearInterval(interval.current);
     }
     isTracking = false;
-    setPoture("not_reading");
+    setPosture("not_reading", isSessionActive);
+  };
+
+  const startSession = () => {
+    setSessionActive(true);
+    startTracking();
+  };
+
+  const stopSession = () => {
+    setSessionActive(false);
+    stopTracking();
   };
 
   useEffect(() => {
@@ -120,6 +137,8 @@ const HeadTrackingProvider: React.FC<{ children: React.ReactNode }> = ({
         isHeadMotionAvailable,
         posture: postureStatus,
         getCurrentPosture,
+        startSession,
+        stopSession,
       }}
     >
       {children}

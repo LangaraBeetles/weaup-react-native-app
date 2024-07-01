@@ -50,6 +50,7 @@ const SessionControl = () => {
   const snapPoints = useMemo(() => ["25%", "50%"], []);
   const currentPosture = useUser((state) => state.currentPosture);
   const setTrackingEnabled = useUser((state) => state.setTrackingEnabled);
+  const setSessionActive = useUser((state) => state.setSessionActive);
 
   // callbacks
   const handlePresentModalPress = useCallback(() => {
@@ -66,8 +67,8 @@ const SessionControl = () => {
   const onStartSession = (timeInHours: number, timeInMinutes: number) => {
     setSessionState("START");
     setTimerState("RUNNING");
-    // TODO: stop real time tracking: Need to be on to read the posture
-    setTrackingEnabled(true);
+    setTrackingEnabled(false);
+    setSessionActive(true);
     setTimeInSeconds(timeInHours * 3600 + timeInMinutes * 60);
     setStartDate(new Date().toISOString());
     handleDismissModalPress();
@@ -78,7 +79,8 @@ const SessionControl = () => {
     setTimerState("STOPPED");
     setTimeInSeconds(-1);
     handleDismissModalPress();
-    // TODO: start real time tracking
+    setTrackingEnabled(true);
+    setSessionActive(false);
     setPostureData([]);
   };
 
@@ -114,11 +116,10 @@ const SessionControl = () => {
 
     saveSessionRecords(payload);
     setPostureData([]);
-    // TODO: Show session summary
+    setTrackingEnabled(false);
+    setSessionActive(false);
     router.push("/session-summary");
-    // Reset the timer
     setTimeInSeconds(-1);
-    // TODO: start real time tracking
   };
 
   const SetTimer = ({
@@ -137,7 +138,6 @@ const SessionControl = () => {
         backdropComponent={CustomBackdrop}
       >
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-          {/* TODO: create number input component */}
           <View style={styles.bottomSheetContainer}>
             <Text>Hours:</Text>
             <TextInput
@@ -191,7 +191,7 @@ const SessionControl = () => {
     return () => {
       clearInterval(interval);
     };
-  }, [sessionState, timerState, currentPosture, postureData]);
+  }, [sessionState, timerState, currentPosture]);
 
   useEffect(() => {
     if (sessionState === "START" && timeInSeconds === 0) {
