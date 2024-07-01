@@ -72,6 +72,7 @@ const SessionControl = () => {
     setTimeInSeconds(timeInHours * 3600 + timeInMinutes * 60);
     setStartDate(new Date().toISOString());
     handleDismissModalPress();
+    // TODO: update image animation
   };
 
   const onCancelSession = () => {
@@ -175,6 +176,7 @@ const SessionControl = () => {
     let interval: NodeJS.Timeout;
 
     const checkPosture = () => {
+      console.log("Checking posture", currentPosture);
       const posture = {
         good_posture: currentPosture === "good",
         recorded_at: new Date().toISOString(),

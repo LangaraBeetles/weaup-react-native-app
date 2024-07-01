@@ -10,6 +10,8 @@ export default function DeviceMotionViewiOS() {
   const isTrackingEnabled = useUser((state) => state.isTrackingEnabled);
   const setTrackingEnabled = useUser((state) => state.setTrackingEnabled);
 
+  const isSessionActive = useUser((state) => state.isSessionActive);
+
   const currentPosture = useUser((state) => state.currentPosture);
   const setCurrentPosture = useUser((state) => state.setCurrentPosture);
   const mode = useUser((state) => state.mode);
@@ -18,7 +20,7 @@ export default function DeviceMotionViewiOS() {
     const value = !isTrackingEnabled;
 
     if (!value) {
-      setCurrentPosture("not_reading");
+      setCurrentPosture("not_reading", isSessionActive);
     } else {
       DeviceMotion.requestPermissionsAsync();
     }
@@ -49,17 +51,17 @@ export default function DeviceMotionViewiOS() {
                 Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
               }
 
-              setCurrentPosture("bad");
+              setCurrentPosture("bad", isSessionActive);
             } else if (pitchDegrees < -110 && pitchDegrees > -120) {
               if (currentPosture !== "mid") {
                 Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
               }
 
-              setCurrentPosture("mid");
+              setCurrentPosture("mid", isSessionActive);
             } else if (pitchDegrees < -90 && pitchDegrees > -110) {
-              setCurrentPosture("good");
+              setCurrentPosture("good", isSessionActive);
             } else {
-              setCurrentPosture("not_reading");
+              setCurrentPosture("not_reading", isSessionActive);
             }
           } catch (error: any) {
             console.error(error.message);
@@ -75,16 +77,16 @@ export default function DeviceMotionViewiOS() {
       DeviceMotion.removeAllListeners();
     };
 
-    if (isTrackingEnabled && mode === "phone") {
+    if ((isSessionActive || isTrackingEnabled) && mode === "phone") {
       _subscribe();
     } else {
-      setCurrentPosture("not_reading");
+      setCurrentPosture("not_reading", isSessionActive);
     }
 
     return () => {
       _unsubscribe();
     };
-  }, [isTrackingEnabled, mode, currentPosture]);
+  }, [isTrackingEnabled, isSessionActive, mode, currentPosture]);
 
   return (
     <Stack
@@ -106,35 +108,40 @@ export function DeviceMotionViewAndroid() {
   const isTrackingEnabled = useUser((state) => state.isTrackingEnabled);
   const setTrackingEnabled = useUser((state) => state.setTrackingEnabled);
 
-  const setCurrentPosture = useUser((state) => state.setCurrentPosture);
-  const mode = useUser((state) => state.mode);
+  const isSessionActive = useUser((state) => state.isSessionActive);
 
-  const [{ beta, gamma }, setRotationData] = useState({ beta: 0, gamma: 0 });
-  const [orientation, setOrientation] = useState(0);
+  const setCurrentPosture = useUser((state) => state.setCurrentPosture);
+
+  const [{ beta, gamma }, setRotationData] = useState<{
+    beta: number;
+    gamma: number;
+  }>({ beta: 0, gamma: 0 });
+  const [orientation, setOrientation] = useState<number>(0);
 
   const toggleTracking = () => {
     const value = !isTrackingEnabled;
 
     if (!value) {
-      setCurrentPosture("not_reading");
+      setCurrentPosture("not_reading", isSessionActive);
     } else {
       DeviceMotion.requestPermissionsAsync();
     }
     setTrackingEnabled(value);
   };
-  //Get RotationData
+
+  // Manage device motion subscription
   useEffect(() => {
-    if (isTrackingEnabled && mode === "phone") {
+    if (isSessionActive || isTrackingEnabled) {
       _subscribe();
     } else {
-      setCurrentPosture("not_reading");
+      _unsubscribe();
     }
+
     return () => {
       _unsubscribe();
     };
-  }, [isTrackingEnabled, mode]);
+  }, [isSessionActive, isTrackingEnabled]);
 
-  //Get rotation and orientation values
   const _subscribe = async () => {
     try {
       DeviceMotion.addListener((devicemotionData) => {
@@ -154,25 +161,30 @@ export function DeviceMotionViewAndroid() {
     DeviceMotion.removeAllListeners();
   };
 
-  //Provide feedback
+  // Provide feedback based on posture
   useEffect(() => {
+    if (!isSessionActive && !isTrackingEnabled) {
+      setCurrentPosture("not_reading", isSessionActive);
+      return;
+    }
+
     if (beta < 0.03 && gamma < 0.03) {
-      //device is on a flat surface
+      // device is on a flat surface
       return;
     }
 
     if (isBadPosture()) {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-      setCurrentPosture("bad");
+      setCurrentPosture("bad", isSessionActive);
     } else {
-      setCurrentPosture("good");
+      setCurrentPosture("good", isSessionActive);
     }
-  }, [beta, gamma]);
+  }, [beta, gamma, isSessionActive, isTrackingEnabled]);
 
   const isBadPosture = () => {
     return (
-      (orientation == 0 && inBadPostureRange(beta)) ||
-      (orientation != 0 && inBadPostureRange(gamma))
+      (orientation === 0 && inBadPostureRange(beta)) ||
+      (orientation !== 0 && inBadPostureRange(gamma))
     );
   };
 
