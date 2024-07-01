@@ -52,6 +52,10 @@ const ProfileScreen = () => {
     router.navigate("/setup/set-up-goal3");
   };
 
+  const viewBadges = () => {
+    router.navigate("/badges");
+  };
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.background} />
@@ -154,7 +158,7 @@ const ProfileScreen = () => {
 
               <Divider />
               {/* TODO: go to all badges page */}
-              <Pressable>
+              <Pressable onPress={viewBadges}>
                 <Stack
                   flexDirection="row"
                   justifyContent="space-between"
