@@ -18,6 +18,7 @@ import { Text } from "@src/components/ui/typography";
 
 import LottieView from "lottie-react-native";
 import { useRef } from "react";
+import { theme } from "@src/styles/theme";
 
 const background = {
   not_reading: "white",
@@ -62,16 +63,34 @@ const HomePage = () => {
         <Stack flexDirection="row" justifyContent="space-between" p={15} pb={0}>
           <Stack
             flexDirection="row"
-            gap={18}
-            border={1}
-            borderRadius={50}
-            p={10}
+            gap={8}
+            border={1} // TODO: remove border
+            borderRadius={100}
+            py={8}
+            pl={8}
+            pr={12}
             alignItems="center"
           >
             {/*TODO: display avatar */}
-            <Image source={require("../../../assets/img/avatar.png")} />
-            {userName === null ? <Text>{userName}</Text> : null}
-            <Text>Lv.{userLevel}</Text>
+            <Stack flexDirection="row" gap={4}>
+              <Image source={require("../../../assets/img/avatar.png")} />
+              {userName !== "null" ? (
+                <Text
+                  style={{ color: theme.colors.neutral[800] }}
+                  level="footnote"
+                  weight="bold"
+                >
+                  {userName.split(" ")[0]}
+                </Text>
+              ) : null}
+            </Stack>
+            <Text
+              style={{ color: theme.colors.neutral[400] }}
+              level="caption_1"
+              weight="bold"
+            >
+              Lv.{userLevel}
+            </Text>
           </Stack>
           <Stack flexDirection="row" gap={18} border={0} p={5}>
             <TrackingModeIcon />
@@ -93,9 +112,10 @@ const HomePage = () => {
             borderRadius={20}
             gap={10}
             w={"100%"}
-            px={20}
+            px={16}
             py={25}
             justifyContent="space-between"
+            borderColor={theme.colors.neutral[100]}
           >
             <Stack
               flexDirection="row"
@@ -105,7 +125,7 @@ const HomePage = () => {
               pr={20}
             >
               <Center pr={10}>
-                <Icon name="star" />
+                <Icon name="star" size={40} />
               </Center>
 
               <Stack
