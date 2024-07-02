@@ -80,7 +80,6 @@ const SessionControl = () => {
     setTimerState("STOPPED");
     setTimeInSeconds(-1);
     handleDismissModalPress();
-    setTrackingEnabled(true);
     setSessionActive(false);
     setPostureData([]);
   };
@@ -117,7 +116,6 @@ const SessionControl = () => {
 
     saveSessionRecords(payload);
     setPostureData([]);
-    setTrackingEnabled(false);
     setSessionActive(false);
     router.push("/session-summary");
     setTimeInSeconds(-1);

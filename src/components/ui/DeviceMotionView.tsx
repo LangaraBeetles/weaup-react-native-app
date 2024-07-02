@@ -99,7 +99,11 @@ export default function DeviceMotionViewiOS() {
       p={10}
     >
       <Text>Realtime Tracking</Text>
-      <Switch onValueChange={toggleTracking} value={isTrackingEnabled} />
+      <Switch
+        onValueChange={toggleTracking}
+        value={isTrackingEnabled}
+        disabled={isSessionActive}
+      />
     </Stack>
   );
 }
@@ -203,7 +207,11 @@ export function DeviceMotionViewAndroid() {
       p={10}
     >
       <Text>Realtime Tracking</Text>
-      <Switch onValueChange={toggleTracking} value={isTrackingEnabled} />
+      <Switch
+        onValueChange={toggleTracking}
+        value={isTrackingEnabled}
+        disabled={isSessionActive}
+      />
     </Stack>
   );
 }
