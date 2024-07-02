@@ -1,8 +1,9 @@
+import OverviewCard from "@src/components/analytics/OverviewCard";
+import PostureScoresCard from "@src/components/analytics/PostureScoresCard";
 import FilterMenu from "@src/components/notifications/FilterMenu";
 import Icon from "@src/components/ui/Icon";
 import Spacer from "@src/components/ui/Spacer";
 import { Text } from "@src/components/ui/typography";
-import { useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 
 const AnalyticsScreen = () => {
@@ -30,7 +31,7 @@ const AnalyticsScreen = () => {
         </View>
 
         <View style={styles.mainCard}>
-          <View style={styles.card}>
+          {/* <View style={styles.card}>
             <View style={{ display: "flex", gap: 16 }}>
               <Text level="headline" weight="bold">
                 Overview
@@ -43,22 +44,16 @@ const AnalyticsScreen = () => {
               <OverviewSection label="Bad Posture" content="35%" />
             </View>
 
-            <View></View>
-          </View>
+            <View>
 
-          <View style={styles.card}>
-            <View style={{ display: "flex", gap: 16 }}>
-              <Text level="headline" weight="bold">
-                Posture Scores
-              </Text>
-
-              <Spacer height={150} />
             </View>
+          </View> */}
 
-            <View></View>
-          </View>
+          <OverviewCard />
 
-          <View style={styles.card}>
+          <PostureScoresCard />
+
+          {/* <View style={styles.card}>
             <View style={{ display: "flex", gap: 16 }}>
               <Text level="headline" weight="bold">
                 Corrections
@@ -80,7 +75,7 @@ const AnalyticsScreen = () => {
             </View>
 
             <View></View>
-          </View>
+          </View> */}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -131,14 +126,14 @@ const styles = StyleSheet.create({
     height: "100%",
     gap: 20,
   },
-  card: {
-    display: "flex",
-    padding: 16,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    backgroundColor: "#FFF",
-    borderRadius: 20,
-  },
+  // card: {
+  //   display: "flex",
+  //   padding: 16,
+  //   flexDirection: "row",
+  //   justifyContent: "space-between",
+  //   backgroundColor: "#FFF",
+  //   borderRadius: 20,
+  // },
 });
 
 export default AnalyticsScreen;
