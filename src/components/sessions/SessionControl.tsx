@@ -185,7 +185,7 @@ const SessionControl = () => {
     if (sessionState === "START" && timerState === "RUNNING") {
       interval = setInterval(() => {
         checkPosture();
-      }, 5000);
+      }, 2000);
     }
 
     return () => {
