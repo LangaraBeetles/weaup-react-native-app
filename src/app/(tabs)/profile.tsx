@@ -53,7 +53,7 @@ const ProfileScreen = () => {
   };
 
   const viewBadges = () => {
-    router.navigate("/badges");
+    router.navigate("/badges/");
   };
 
   return (

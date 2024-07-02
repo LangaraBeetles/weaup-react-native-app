@@ -3,7 +3,6 @@ import Stack from "../ui/Stack";
 import BadgeContainer from "./BadgeContainer";
 import { BadgeType } from "@src/interfaces/badges.types";
 
-// TODO: get the badges from the user
 const badgeData: BadgeType[] = [
   {
     title: "Fire Weasel",
@@ -30,7 +29,7 @@ const badgeData: BadgeType[] = [
     title: "Fire Weasel",
     subtitle: "Level 3",
     badge: "dummy-badge",
-    unlocked: true,
+    unlocked: false,
     date: "2023-04-01",
   },
   {
@@ -58,14 +57,14 @@ const badgeData: BadgeType[] = [
     title: "Fire Weasel",
     subtitle: "Level 3",
     badge: "dummy-badge",
-    unlocked: true,
+    unlocked: false,
     date: "2021-08-01",
   },
   {
     title: "Fire Weasel",
     subtitle: "Level 3",
     badge: "dummy-badge",
-    unlocked: true,
+    unlocked: false,
     date: "2021-08-01",
   },
 ];
