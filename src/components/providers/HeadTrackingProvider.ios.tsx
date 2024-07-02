@@ -41,12 +41,15 @@ const HeadTrackingProvider: React.FC<{ children: React.ReactNode }> = ({
   const handlePostureCorrectionAlert = (headPitch?: number) => {
     if (headPitch === undefined) {
       postureStatus !== "not_reading" && setPoture("not_reading");
-    } else if (headPitch > -15 && headPitch < 15) {
+    } else if (headPitch > -17 && headPitch < 15) {
       console.log("Yey!");
-      postureStatus !== "good" && setPoture("good");
+      setPoture("good");
+    } else if (headPitch > -22 && headPitch <= -17) {
+      console.log("Mid!");
+      setPoture("mid");
     } else {
       console.log("Bad!");
-      postureStatus !== "bad" && setPoture("bad");
+      setPoture("bad");
     }
   };
 
@@ -56,9 +59,15 @@ const HeadTrackingProvider: React.FC<{ children: React.ReactNode }> = ({
       await startDeviceMotionUpdates();
     }
 
+    if (interval.current) {
+      clearInterval(interval.current);
+    }
+
     isTracking = true;
     interval.current = setInterval(
       async (isEnabled, mode) => {
+        isTracking = true;
+
         if (isEnabled && mode === "earbuds") {
           const data = await getLatestDeviceMotion();
           if (data) {

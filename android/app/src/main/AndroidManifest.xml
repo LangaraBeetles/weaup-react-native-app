@@ -30,6 +30,8 @@
         <data android:scheme="alginmend"/>
         <data android:scheme="com.alignmend"/>
         <data android:scheme="exp+alignmend"/>
+        <data android:scheme="weaup"/>
+        <data android:scheme="exp+weaup"/>
       </intent-filter>
     </activity>
     <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" android:exported="false"/>
