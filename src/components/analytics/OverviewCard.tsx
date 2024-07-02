@@ -1,107 +1,166 @@
+import { useEffect } from "react";
+import Animated, {
+  useAnimatedProps,
+  useDerivedValue,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
+import Svg, { Circle } from "react-native-svg";
+
 import { Text } from "@src/components/ui/typography";
-import { Dimensions, StyleSheet, View } from "react-native";
-import Spacer from "@src/components/ui/Spacer";
+import { theme } from "@src/styles/theme";
+import { View } from "react-native";
 import Card from "./Card";
-import { ProgressChart } from "react-native-chart-kit";
+import { ReText } from "react-native-redash";
+import Stack from "../ui/Stack";
+
+const outterCircle = {
+  backgroundColor: theme.colors.white,
+  backgroundStrokeColor: theme.colors.primary[200],
+  strokeColor: theme.colors.white,
+  fillColor: "transparent",
+  strokeWidth: 20,
+};
+
+const innerCicle = {
+  backgroundColor: theme.colors.white,
+  backgroundStrokeColor: theme.colors.secondary[500],
+  strokeColor: theme.colors.white,
+  fillColor: "transparent",
+  strokeWidth: 20,
+};
+
+const CIRCLE_LENGTH = 300;
+const R = CIRCLE_LENGTH / (2 * Math.PI);
+
+const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
 const OverviewCard = () => {
-  const data = {
-    labels: ["Swim"], // optional
-    data: [0.4],
-  };
+  //TOOD: replace with a fetch
+  const goodCount = 80;
+  const badCount = 20;
 
-  const chartConfig = {
-    backgroundGradientFrom: "#ffffff",
-    backgroundGradientFromOpacity: 0,
-    backgroundGradientTo: "#ffffff",
-    backgroundGradientToOpacity: 0.5,
-    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-    strokeWidth: 2, // optional, default 3
-    barPercentage: 60,
+  const progress = useSharedValue(0);
+  const progressText = useSharedValue(0);
 
-    // useShadowColorFromDataset: false, // optional
-  };
+  useEffect(() => {
+    progress.value = withTiming(goodCount / 100, { duration: 2000 });
+    progressText.value = withTiming(1, { duration: 2000 });
+  }, []);
+
+  const animatedProps = useAnimatedProps(() => ({
+    strokeDashoffset: CIRCLE_LENGTH * (progress.value - 1),
+  }));
+
+  const progressGoodCount = useDerivedValue(() => {
+    return `${Math.floor(progressText.value * goodCount)}`;
+  });
+  const progressBadCount = useDerivedValue(() => {
+    return `${Math.floor(progressText.value * badCount)}`;
+  });
 
   return (
-    <Card flexDirection="row">
-      <View style={{ display: "flex", gap: 16 }}>
-        <Text level="headline" weight="bold">
-          Overview
-        </Text>
+    <Card gap={12}>
+      <Text level="headline" weight="bold">
+        Overview
+      </Text>
+      <View style={{ display: "flex", flexDirection: "row", gap: 32 }}>
+        <View
+          style={{
+            height: 116,
+            width: 116,
+          }}
+        >
+          <Svg>
+            <Circle
+              r={R}
+              cx={outterCircle.strokeWidth / 2 + R}
+              cy={outterCircle.strokeWidth / 2 + R}
+              fill={outterCircle.fillColor}
+              stroke={outterCircle.backgroundStrokeColor}
+              strokeWidth={outterCircle.strokeWidth}
+            />
+            <AnimatedCircle
+              r={R}
+              cx={innerCicle.strokeWidth / 2 + R}
+              cy={innerCicle.strokeWidth / 2 + R}
+              fill={innerCicle.fillColor}
+              stroke={innerCicle.backgroundStrokeColor}
+              strokeWidth={innerCicle.strokeWidth}
+              strokeDasharray={CIRCLE_LENGTH}
+              strokeLinecap="round"
+              animatedProps={animatedProps}
+            />
+          </Svg>
+        </View>
 
-        <OverviewSection label="Total Duration" content="15h 36m" />
+        <View style={{ display: "flex", gap: 16, justifyContent: "center" }}>
+          <View>
+            <Stack flexDirection="row" alignItems="center">
+              <ReText
+                style={{
+                  color: theme.colors.secondary[600],
+                  fontFamily: "NunitoBold",
+                  fontSize: 20,
+                  lineHeight: 26,
+                }}
+                text={progressGoodCount}
+              />
+              <Text
+                level="title_3"
+                weight="bold"
+                style={{ color: theme.colors.secondary[600] }}
+              >
+                %
+              </Text>
+            </Stack>
 
-        <OverviewSection label="Good Posture" content="65%" />
+            <Text
+              level="caption_3"
+              weight="bold"
+              style={{
+                textTransform: "uppercase",
+                color: theme.colors.neutral[400],
+              }}
+            >
+              Good Posture
+            </Text>
+          </View>
+          <View>
+            <Stack flexDirection="row" alignItems="center">
+              <ReText
+                style={{
+                  color: theme.colors.error[400],
+                  fontFamily: "NunitoBold",
+                  fontSize: 20,
+                  lineHeight: 26,
+                }}
+                text={progressBadCount}
+              />
+              <Text
+                level="title_3"
+                weight="bold"
+                style={{ color: theme.colors.error[400] }}
+              >
+                %
+              </Text>
+            </Stack>
 
-        <OverviewSection label="Bad Posture" content="35%" />
-      </View>
-      <View>
-        <ProgressChart
-          data={data}
-          width={Dimensions.get("window").width}
-          height={220}
-          strokeWidth={16}
-          radius={60}
-          chartConfig={{ ...chartConfig }}
-          hideLegend={false}
-        />
+            <Text
+              level="caption_3"
+              weight="bold"
+              style={{
+                textTransform: "uppercase",
+                color: theme.colors.neutral[400],
+              }}
+            >
+              Bad Posture
+            </Text>
+          </View>
+        </View>
       </View>
     </Card>
   );
 };
-
-const OverviewSection: React.FC<{ label: string; content: string }> = ({
-  label,
-  content,
-}) => {
-  return (
-    <View>
-      <Text level="caption_3" weight="bold">
-        {label}
-      </Text>
-      <Text level="title_3" weight="bold">
-        {content}
-      </Text>
-    </View>
-  );
-};
-
-const styles = StyleSheet.create({
-  page: {},
-  container: {
-    paddingTop: 30,
-    display: "flex",
-    backgroundColor: "#FDD462",
-  },
-  header: {
-    display: "flex",
-    gap: 16,
-    paddingHorizontal: 12,
-    paddingBottom: 15,
-  },
-  dateHeader: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  mainCard: {
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    backgroundColor: "#F9F9F9",
-    paddingVertical: 20,
-    paddingHorizontal: 16,
-    height: "100%",
-    gap: 20,
-  },
-  card: {
-    display: "flex",
-    padding: 16,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    backgroundColor: "#FFF",
-    borderRadius: 20,
-  },
-});
 
 export default OverviewCard;
