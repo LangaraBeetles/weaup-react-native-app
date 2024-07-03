@@ -25,6 +25,7 @@ const ScoreComponent = () => {
           py={25}
           justifyContent="space-between"
           borderColor={theme.colors.neutral[100]}
+          backgroundColor={theme.colors.white}
         >
           <Stack
             flexDirection="row"
@@ -93,6 +94,7 @@ const ScoreComponent = () => {
           w={"100%"}
           p={16}
           borderColor={theme.colors.neutral[100]}
+          backgroundColor={theme.colors.white}
         >
           <Stack flexDirection="row" pr={20} justifyContent="space-between">
             <Stack flexDirection="row" alignItems="center">

@@ -22,6 +22,7 @@ import { useRouter } from "expo-router";
 import TimePicker from "../ui/TimePicker";
 import { Text } from "../ui/typography/index";
 import Center from "../ui/Center";
+import Stack from "../ui/Stack";
 
 const { width, height } = Dimensions.get("window");
 
@@ -192,17 +193,21 @@ const SessionControl: React.FC = () => {
       >
         <View style={styles.modalBackground}>
           <View style={styles.modalContainer}>
-            <Text>Are you sure you want to end the session?</Text>
-            <Button
-              title="Keep Going"
-              onPress={handleContinue}
-              variant="primary"
-            />
-            <Button
-              title="End Session"
-              onPress={handleEndSession}
-              variant="primary"
-            />
+            <Stack gap={24}>
+              <Text>Are you sure you want to end the session?</Text>
+              <Stack gap={16}>
+                <Button
+                  title="Keep Going"
+                  onPress={handleContinue}
+                  variant="primary"
+                />
+                <Button
+                  title="End Session"
+                  onPress={handleEndSession}
+                  variant="secondary"
+                />
+              </Stack>
+            </Stack>
           </View>
         </View>
       </Modal>

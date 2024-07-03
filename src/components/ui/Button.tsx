@@ -84,6 +84,7 @@ const ButtonRoot = styled(Pressable, {
       tertiary: {
         backgroundColor: "transparent",
         borderColor: theme.colors.error[500],
+        borderWidth: 2,
       },
       disabled: {
         backgroundColor: theme.colors.neutral[100],

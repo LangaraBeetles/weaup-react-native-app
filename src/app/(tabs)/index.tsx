@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-import { Image, Platform, Pressable, ScrollView } from "react-native";
+import { Image, Platform, Pressable, ScrollView, View } from "react-native";
 import { Link, Redirect } from "expo-router";
 import DeviceMotionViewiOS, {
   DeviceMotionViewAndroid,
@@ -16,24 +16,18 @@ import Icon from "@src/components/ui/Icon";
 import TrackingModeIcon from "@src/components/homepage/TrackingModeIcon";
 import { Text } from "@src/components/ui/typography";
 
-// import LottieView from "lottie-react-native";
+import LottieView from "lottie-react-native";
 import { useRef } from "react";
 import { theme } from "@src/styles/theme";
 import ScoreComponent from "@src/components/homepage/ScoreComponent";
-
-const background = {
-  not_reading: "white",
-  good: "white",
-  mid: "yellow",
-  bad: "crimson",
-};
+import Gradient from "@src/components/ui/Gradient";
 
 const HomePage = () => {
   const isSetupComplete = useUser((state) => state.isSetupComplete);
   const userName = useUser((state) => state.user.name);
   const userLevel = useUser((state) => state.user.level);
   const currentPosture = useUser((state) => state.currentPosture);
-  //   const isSessionActive = useUser((state) => state.isSessionActive);
+  // const isSessionActive = useUser((state) => state.isSessionActive);
   const isSessionActive = true;
   const animation = useRef<any>(null);
 
@@ -56,15 +50,17 @@ const HomePage = () => {
   }
 
   return (
-    <SafeAreaView
-      style={{ backgroundColor: background[currentPosture], height: "100%" }}
-    >
+    <SafeAreaView style={{ height: "100%" }}>
+      <Gradient
+        color1={theme.colors.primary[300]}
+        color2={theme.colors.white}
+      />
       <ScrollView>
         <Stack flexDirection="row" justifyContent="space-between" p={15} pb={0}>
           <Stack
             flexDirection="row"
             gap={8}
-            border={1} // TODO: remove border
+            backgroundColor={theme.colors.white}
             borderRadius={100}
             py={8}
             pl={8}
@@ -114,7 +110,7 @@ const HomePage = () => {
           </Center>
         )}
 
-        {/* <View style={{ width: "100%", height: 350 }}>
+        <View style={{ width: "100%", height: 350 }}>
           <Center>
             {Platform.OS === "ios" ? (
               <LottieView
@@ -131,7 +127,7 @@ const HomePage = () => {
               <Image source={require("../../../assets/img/mascot.png")} />
             )}
           </Center>
-        </View> */}
+        </View>
         <Center>
           <SessionControl />
         </Center>
