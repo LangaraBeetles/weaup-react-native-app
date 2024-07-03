@@ -6,6 +6,7 @@ import FilterMenu from "@src/components/notifications/FilterMenu";
 import Icon from "@src/components/ui/Icon";
 import { Text } from "@src/components/ui/typography";
 import { theme } from "@src/styles/theme";
+import dayjs from "dayjs";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 
 const AnalyticsScreen = () => {
@@ -26,7 +27,7 @@ const AnalyticsScreen = () => {
           <View style={styles.dateHeader}>
             <Icon name="chevron-left" />
             <Text level="headline" style={{ marginTop: 4 }}>
-              Yesterday, May 30
+              {`Yesterday, ${dayjs().subtract(1, "day").format("MMM DD")}`}
             </Text>
             <Icon name="chevron-right" />
           </View>
