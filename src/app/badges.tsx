@@ -8,10 +8,6 @@ import Spacer from "@src/components/ui/Spacer";
 import { router } from "expo-router";
 import ProfileBadgeContainerFull from "@src/components/container/ProfileBadgeContainerFull";
 
-const back = () => {
-  router.back();
-};
-
 const Badges = () => {
   return (
     <ScrollView
@@ -23,7 +19,7 @@ const Badges = () => {
         <Spacer height={64} />
 
         <Stack flexDirection="row" alignItems="center">
-          <Pressable onPress={back} style={styles.icon}>
+          <Pressable onPress={router.back} style={styles.icon}>
             <Icon name="arrow-left" />
           </Pressable>
           <Stack flex={1} alignItems="center">
@@ -64,6 +60,7 @@ const styles = StyleSheet.create({
     backgroundColor: globalStyles.colors.neutral[50],
     borderRadius: 100,
     padding: 8,
+    zIndex: 2,
   },
 
   title: {
