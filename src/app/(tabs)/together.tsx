@@ -28,10 +28,6 @@ const TogetherScreen = () => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const path = usePathname();
 
-  if (isGuest) {
-    return <GoogleSignUp />;
-  }
-
   const { data, refetch } = useQuery({
     queryKey: ["ongoingChallenges"],
     queryFn: () => getOngoingChallenges(filterUser, sortDesc),
@@ -73,6 +69,10 @@ const TogetherScreen = () => {
   const createChallengeForm = (
     <CreateChallengeContainer handleCloseModalPress={handleCloseModalPress} />
   );
+
+  if (isGuest) {
+    return <GoogleSignUp />;
+  }
 
   return (
     <View style={styles.container}>
