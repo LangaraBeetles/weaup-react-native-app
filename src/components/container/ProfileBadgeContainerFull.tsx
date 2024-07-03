@@ -1,8 +1,8 @@
+import { StyleSheet } from "react-native";
 import Stack from "../ui/Stack";
 import BadgeContainer from "./BadgeContainer";
 import { BadgeType } from "@src/interfaces/badges.types";
 
-// TODO: get the badges from the user
 const badgeData: BadgeType[] = [
   {
     title: "Fire Weasel",
@@ -69,32 +69,9 @@ const badgeData: BadgeType[] = [
   },
 ];
 
-const ProfileBadgeContainerPreview = () => {
+const ProfileBadgeContainerFull = () => {
   const renderBadges = () => {
-    const latestBadges = badgeData
-      .filter((badge) => badge.unlocked)
-      .sort((a, b) => new Date(b.date!).getTime() - new Date(a.date!).getTime())
-      .slice(0, 3);
-
-    return latestBadges.map((badge, index) => (
-      <BadgeContainer
-        key={index}
-        title={badge.title}
-        subtitle={badge.subtitle}
-        badge={badge.badge}
-        unlocked={badge.unlocked}
-      />
-    ));
-  };
-
-  const latestBadges = badgeData
-    .filter((badge) => badge.unlocked)
-    .sort((a, b) => new Date(b.date!).getTime() - new Date(a.date!).getTime())
-    .slice(0, 3);
-
-  const renderLockedBadges = () => {
-    const lockedBadges = badgeData.slice(0, 3);
-    return lockedBadges.map((badge, index) => (
+    return badgeData.map((badge, index) => (
       <BadgeContainer
         key={index}
         title={badge.title}
@@ -108,12 +85,21 @@ const ProfileBadgeContainerPreview = () => {
   return (
     <Stack
       flexDirection="row"
+      justifyContent="space-between"
       gap={16}
-      justifyContent={latestBadges.length < 3 ? "start" : "space-between"}
+      style={styles.container}
     >
-      {latestBadges.length > 0 ? renderBadges() : renderLockedBadges()}
+      {renderBadges()}
     </Stack>
   );
 };
 
-export default ProfileBadgeContainerPreview;
+export default ProfileBadgeContainerFull;
+
+const styles = StyleSheet.create({
+  container: {
+    width: "100%",
+    flex: 1,
+    flexWrap: "wrap",
+  },
+});
