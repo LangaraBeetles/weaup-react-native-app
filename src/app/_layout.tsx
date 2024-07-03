@@ -16,6 +16,14 @@ import PostureDataProvider from "@src/components/providers/PostureDataProvider";
 
 const queryClient = new QueryClient();
 
+const error = console.error;
+console.error = (...args: any) => {
+  if (/defaultProps/.test(args[0])) return;
+  if (/Warning/.test(args[0])) return;
+
+  error(...args);
+};
+
 const RootLayout = () => {
   const [fontsLoaded, fontError] = useFonts({
     NunitoBlack: require("../../assets/fonts/NunitoBlack.ttf"),
