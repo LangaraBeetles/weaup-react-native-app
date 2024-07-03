@@ -7,12 +7,19 @@ import { AreaChart, Grid, XAxis, YAxis } from "react-native-svg-charts";
 import * as shape from "d3-shape";
 import Spacer from "@src/components/ui/Spacer";
 import Stack from "@src/components/ui/Stack";
+import { PostureData } from "@src/interfaces/posture.types";
+import { useFormContext } from "react-hook-form";
 
 const PostureScoresCard = () => {
-  // TODO: fetch this data form the api
-  const data = [0, 60, 50, 80, 20, 70, 85, 68, 55];
+  const { watch } = useFormContext<PostureData>();
+
+  const data = watch("records_by_hour") ?? []; //[0, 60, 50, 80, 20, 70, 85, 68, 55];
   const xdata = ["00:00", "06:00", "12:00", "18:00", "23:00"];
   const ydata = ["25", "50", "75", "100"];
+
+  const avgScore =
+    data?.reduce((accm, curr) => accm + (curr.score ?? 0), 0) /
+    (data.length ?? 1);
 
   return (
     <Card>
@@ -30,7 +37,7 @@ const PostureScoresCard = () => {
             weight="medium"
             style={{ color: theme.colors.neutral[600] }}
           >
-            69
+            {avgScore}
           </Text>
         </Stack>
       </Stack>
@@ -40,6 +47,7 @@ const PostureScoresCard = () => {
           <AreaChart
             style={{ height: 160 }}
             data={data}
+            yAccessor={({ item }) => item.score ?? 0}
             contentInset={{ top: 20, bottom: 0 }}
             curve={shape.curveNatural}
             svg={{

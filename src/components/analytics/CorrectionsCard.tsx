@@ -5,26 +5,15 @@ import { theme } from "@src/styles/theme";
 import { BarChart, Grid, XAxis, YAxis } from "react-native-svg-charts";
 import Spacer from "@src/components/ui/Spacer";
 import Stack from "@src/components/ui/Stack";
+import { PostureData } from "@src/interfaces/posture.types";
+import { useFormContext } from "react-hook-form";
 
 const CorrectionsCard = () => {
-  // TODO: fetch this data form the api
-  const data = [
-    0,
-    60,
-    50,
-    null,
-    80,
-    null,
-    20,
-    70,
-    null,
-    50,
-    85,
-    68,
-    null,
-    null,
-    55,
-  ];
+  const { watch } = useFormContext<PostureData>();
+
+  const data = watch("records_by_hour")?.map((data) => data.hour) ?? [];
+  //[0, 60, 50, null, 80, null, 20, 70, null, 50, 85, 68, null, null, 55]
+
   const xdata = ["00:00", "06:00", "12:00", "18:00", "23:00"];
   const ydata = ["25", "50", "75", "100"];
 

@@ -5,6 +5,9 @@ import Card from "./Card";
 import Stack from "../ui/Stack";
 import { theme } from "@src/styles/theme";
 import Icon from "../ui/Icon";
+import { useFormContext } from "react-hook-form";
+import { PostureData } from "@src/interfaces/posture.types";
+import dayjs from "dayjs";
 
 type SessionRowData = {
   id: string;
@@ -14,41 +17,51 @@ type SessionRowData = {
   score: number;
   timeOfDay: string;
 };
-const data = [
-  {
-    id: "1",
-    startTime: "19:30",
-    endTime: "20:00",
-    duration: "30 mins",
-    score: 68,
-    timeOfDay: "morning",
-  },
-  {
-    id: "2",
-    startTime: "19:30",
-    endTime: "20:00",
-    duration: "30 mins",
-    score: 68,
-    timeOfDay: "morning",
-  },
-  {
-    id: "3",
-    startTime: "19:30",
-    endTime: "20:00",
-    duration: "30 mins",
-    score: 68,
-    timeOfDay: "night",
-  },
-  {
-    id: "4",
-    startTime: "19:30",
-    endTime: "20:00",
-    duration: "30 mins",
-    score: 68,
-    timeOfDay: "night",
-  },
-];
+
+// const data = [
+//   {
+//     id: "1",
+//     startTime: "19:30",
+//     endTime: "20:00",
+//     duration: "30 mins",
+//     score: 68,
+//     timeOfDay: "morning",
+//   },
+//   {
+//     id: "2",
+//     startTime: "19:30",
+//     endTime: "20:00",
+//     duration: "30 mins",
+//     score: 68,
+//     timeOfDay: "morning",
+//   },
+//   {
+//     id: "3",
+//     startTime: "19:30",
+//     endTime: "20:00",
+//     duration: "30 mins",
+//     score: 68,
+//     timeOfDay: "night",
+//   },
+//   {
+//     id: "4",
+//     startTime: "19:30",
+//     endTime: "20:00",
+//     duration: "30 mins",
+//     score: 68,
+//     timeOfDay: "night",
+//   },
+// ];
+
 const SessionHistoryCard = () => {
+  const { watch } = useFormContext<PostureData>();
+
+  const data = watch("sessions") ?? [];
+
+  if (!data.length) {
+    return null;
+  }
+
   return (
     <Card gap={12} style={{ paddingBottom: 0 }}>
       <Text level="headline" weight="bold">
@@ -59,7 +72,20 @@ const SessionHistoryCard = () => {
           const isLastRow = index + 1 === data.length;
           return (
             <>
-              <SessionRow key={values.id} data={values} />
+              <SessionRow
+                key={values._id}
+                data={{
+                  id: values._id,
+                  duration: values.duration,
+                  startTime: dayjs(values.started_at).format("HH:mm"),
+                  endTime: dayjs(values.ended_at).format("HH:mm"),
+                  score: values?.score ?? 0,
+                  timeOfDay:
+                    dayjs(values.started_at).format("a") == "am"
+                      ? "morning"
+                      : "night",
+                }}
+              />
               <View
                 style={{
                   ...(isLastRow

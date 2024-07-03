@@ -13,6 +13,8 @@ import { View } from "react-native";
 import Card from "./Card";
 import { ReText } from "react-native-redash";
 import Stack from "@src/components/ui/Stack";
+import { useFormContext } from "react-hook-form";
+import { PostureData } from "@src/interfaces/posture.types";
 
 const outterCircle = {
   backgroundColor: theme.colors.white,
@@ -36,9 +38,11 @@ const R = CIRCLE_LENGTH / (2 * Math.PI);
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
 const OverviewCard = () => {
-  //TOOD: replace with a fetch
-  const goodCount = 80;
-  const badCount = 20;
+  const { watch } = useFormContext<PostureData>();
+
+  const goodCount = watch("overview.good_posture_count") ?? 0;
+  const badCount = watch("overview.good_posture_count") ?? 0;
+  const total = goodCount + badCount;
 
   const progress = useSharedValue(0);
   const progressText = useSharedValue(0);
@@ -77,7 +81,11 @@ const OverviewCard = () => {
               cx={outterCircle.strokeWidth / 2 + R}
               cy={outterCircle.strokeWidth / 2 + R}
               fill={outterCircle.fillColor}
-              stroke={outterCircle.backgroundStrokeColor}
+              stroke={
+                total > 0
+                  ? outterCircle.backgroundStrokeColor
+                  : theme.colors.neutral[100]
+              }
               strokeWidth={outterCircle.strokeWidth}
             />
             <AnimatedCircle
@@ -85,7 +93,11 @@ const OverviewCard = () => {
               cx={innerCicle.strokeWidth / 2 + R}
               cy={innerCicle.strokeWidth / 2 + R}
               fill={innerCicle.fillColor}
-              stroke={innerCicle.backgroundStrokeColor}
+              stroke={
+                total > 0
+                  ? innerCicle.backgroundStrokeColor
+                  : theme.colors.neutral[100]
+              }
               strokeWidth={innerCicle.strokeWidth}
               strokeDasharray={CIRCLE_LENGTH}
               strokeLinecap="round"

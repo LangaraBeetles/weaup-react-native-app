@@ -5,11 +5,27 @@ import SessionHistoryCard from "@src/components/analytics/SessionHistoryCard";
 import FilterMenu from "@src/components/notifications/FilterMenu";
 import Icon from "@src/components/ui/Icon";
 import { Text } from "@src/components/ui/typography";
+import { PostureData } from "@src/interfaces/posture.types";
+import { getAnalytics } from "@src/services/analyticsApi";
 import { theme } from "@src/styles/theme";
+import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
+import { useEffect } from "react";
+import { FormProvider, useForm } from "react-hook-form";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 
 const AnalyticsScreen = () => {
+  const { data } = useQuery({
+    queryKey: ["analytics"],
+    queryFn: getAnalytics,
+  });
+
+  const form = useForm<PostureData>();
+
+  useEffect(() => {
+    data && form.reset(data);
+  }, [data]);
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={{ height: "100%" }}>
@@ -27,21 +43,23 @@ const AnalyticsScreen = () => {
           <View style={styles.dateHeader}>
             <Icon name="chevron-left" />
             <Text level="headline" style={{ marginTop: 4 }}>
-              {`Yesterday, ${dayjs().subtract(1, "day").format("MMM DD")}`}
+              {`Yesterday, ${dayjs(data?.start_date).format("MMM DD")}`}
             </Text>
             <Icon name="chevron-right" />
           </View>
         </View>
 
-        <View style={styles.mainCard}>
-          <OverviewCard />
+        <FormProvider {...form}>
+          <View style={styles.mainCard}>
+            <OverviewCard />
 
-          <PostureScoresCard />
+            <PostureScoresCard />
 
-          <CorrectionsCard />
+            <CorrectionsCard />
 
-          <SessionHistoryCard />
-        </View>
+            <SessionHistoryCard />
+          </View>
+        </FormProvider>
       </ScrollView>
     </SafeAreaView>
   );
