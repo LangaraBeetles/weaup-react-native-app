@@ -1,5 +1,9 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import Button from "./Button";
+import { Text } from "./typography";
+import Stack from "./Stack";
+// import Center from "./Center";
+import { theme } from "@src/styles/theme";
 
 const MINUTE_IN_SECONDS = 60;
 const HOUR_IN_SECONDS = 60 * MINUTE_IN_SECONDS;
@@ -14,9 +18,10 @@ const TimerDisplay: React.FC<{ timeInSeconds: number }> = ({
   const seconds = timeInSeconds % MINUTE_IN_SECONDS;
 
   return (
-    <Text style={styles.text}>
-      {hours}:{minutes < 10 ? `0${minutes}` : minutes}:
-      {seconds < 10 ? `0${seconds}` : seconds}
+    <Text level="title_1" style={styles.text}>
+      {timeInSeconds >= HOUR_IN_SECONDS
+        ? `${hours}:${minutes < 10 ? `0${minutes}` : minutes}`
+        : `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`}
     </Text>
   );
 };
@@ -28,20 +33,23 @@ const Timer: React.FC<{
   isPaused: boolean;
 }> = ({ timeInSeconds, handleStop }) => {
   return (
-    <View style={styles.container}>
+    <Stack alignItems="center">
       <TimerDisplay timeInSeconds={timeInSeconds} />
-      <Button title="Stop tracking" onPress={handleStop} variant="primary" />
-    </View>
+      <Button title="Stop tracking" onPress={handleStop} variant="tertiary" />
+    </Stack>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 60,
     alignItems: "center",
     justifyContent: "center",
   },
   text: {
-    fontSize: 48,
+    fontSize: 60,
+    lineHeight: 90,
+    color: theme.colors.secondary[600],
   },
 });
 

@@ -79,7 +79,7 @@ const ButtonRoot = styled(Pressable, {
       primary: {},
       secondary: {},
       tertiary: {
-        backgroundColor: theme.colors.error[500],
+        backgroundColor: "transparent",
         borderColor: theme.colors.error[500],
       },
       disabled: {
@@ -127,7 +127,7 @@ const ButtonText = styled(Text, {
         color: theme.colors.secondary[600],
       },
       tertiary: {
-        color: theme.colors.white,
+        color: theme.colors.error[500],
       },
       disabled: {
         color: theme.colors.neutral[300],
