@@ -19,9 +19,8 @@ const TimerDisplay: React.FC<{ timeInSeconds: number }> = ({
 
   return (
     <Text level="title_1" style={styles.text}>
-      {timeInSeconds >= HOUR_IN_SECONDS
-        ? `${hours}:${minutes < 10 ? `0${minutes}` : minutes}`
-        : `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`}
+      {hours}:{minutes < 10 ? `0${minutes}` : minutes}:
+      {seconds < 10 ? `0${seconds}` : seconds}
     </Text>
   );
 };

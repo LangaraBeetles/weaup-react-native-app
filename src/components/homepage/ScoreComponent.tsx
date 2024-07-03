@@ -96,16 +96,22 @@ const ScoreComponent = () => {
           borderColor={theme.colors.neutral[100]}
           backgroundColor={theme.colors.white}
         >
-          <Stack flexDirection="row" pr={20} justifyContent="space-between">
+          <Stack flexDirection="row" justifyContent="space-between">
             <Stack flexDirection="row" alignItems="center">
               <Center pr={8}>
                 <Icon name="star" size={24} />
               </Center>
-              <Text level="caption_1">Posture Score</Text>
+              <Text
+                level="subhead"
+                weight="semibold"
+                style={{ lineHeight: 22 }}
+              >
+                Posture Score
+              </Text>
             </Stack>
 
             <Stack flexDirection="row">
-              <Text level="title_2">{userHP} </Text>
+              <Text level="title_1">{userHP} </Text>
               <Stack pt={9}>
                 <Text level="caption_1">/ 100</Text>
               </Stack>
