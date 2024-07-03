@@ -80,7 +80,7 @@ const HomePage = () => {
                   level="footnote"
                   weight="bold"
                 >
-                  {userName.split(" ")[0]}
+                  {userName !== null && userName.split(" ")[0]}
                 </Text>
               ) : null}
             </Stack>

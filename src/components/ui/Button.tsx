@@ -65,7 +65,7 @@ export default Button;
 
 const ButtonRoot = styled(Pressable, {
   paddingHorizontal: 48,
-  paddingVertical: 20,
+  paddingVertical: 16,
   minWidth: "100%",
   display: "flex",
   flexDirection: "row",
@@ -120,7 +120,7 @@ const ButtonRoot = styled(Pressable, {
 const ButtonText = styled(Text, {
   fontSize: 20,
   fontFamily: "NunitoBold",
-  lineHeight: 26,
+  lineHeight: 24,
   variants: {
     category: {
       primary: {

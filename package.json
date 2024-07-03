@@ -52,6 +52,7 @@
     "react-native-screens": "3.31.1",
     "react-native-share": "^10.2.1",
     "react-native-svg": "15.3.0",
+    "react-native-wheel-pick": "^1.2.2",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
