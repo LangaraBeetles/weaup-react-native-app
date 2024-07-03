@@ -19,6 +19,7 @@ import { Text } from "@src/components/ui/typography";
 import LottieView from "lottie-react-native";
 import { useRef } from "react";
 import { theme } from "@src/styles/theme";
+import ScoreComponent from "@src/components/homepage/ScoreComponent";
 
 const background = {
   not_reading: "white",
@@ -31,10 +32,9 @@ const HomePage = () => {
   const isSetupComplete = useUser((state) => state.isSetupComplete);
   const userName = useUser((state) => state.user.name);
   const userLevel = useUser((state) => state.user.level);
-  const userHP = useUser((state) => state.user.hp);
-  const userXP = useUser((state) => state.user.xp);
-  const userStreak = useUser((state) => state.user.dailyStreakCounter);
   const currentPosture = useUser((state) => state.currentPosture);
+  //   const isSessionActive = useUser((state) => state.isSessionActive);
+  const isSessionActive = false;
   const animation = useRef<any>(null);
 
   useEffect(() => {
@@ -105,83 +105,15 @@ const HomePage = () => {
           </Stack>
         </Stack>
 
-        <Center p={15} pb={0}>
-          <Stack
-            flexDirection="row"
-            border={1}
-            borderRadius={20}
-            gap={10}
-            w={"100%"}
-            px={16}
-            py={25}
-            justifyContent="space-between"
-            borderColor={theme.colors.neutral[100]}
-          >
-            <Stack
-              flexDirection="row"
-              gap={2}
-              borderRight={1}
-              borderColor={"#E7E5E4"}
-              pr={20}
-            >
-              <Center pr={10}>
-                <Icon name="star" size={40} />
-              </Center>
+        <ScoreComponent />
 
-              <Stack
-                flexDirection="column"
-                justifyContent="space-evenly"
-                gap={7}
-              >
-                <Text level="caption_1">Posture Score</Text>
-                <Stack flexDirection="row">
-                  <Text level="title_2">{userHP} </Text>
-                  <Stack pt={9}>
-                    <Text level="caption_1">/ 100</Text>
-                  </Stack>
-                </Stack>
-              </Stack>
-            </Stack>
-            <Stack
-              flexDirection="column"
-              border={0}
-              justifyContent="space-evenly"
-            >
-              <Stack
-                flexDirection="row"
-                gap={10}
-                border={0}
-                justifyContent="start"
-              >
-                <Icon name="lightening" />
-                <Stack flexDirection="row">
-                  <Text level="footnote" weight="bold">
-                    {userXP}{" "}
-                  </Text>
-                  <Text level="footnote">XP</Text>
-                </Stack>
-              </Stack>
-              <Stack
-                flexDirection="row"
-                gap={10}
-                border={0}
-                justifyContent="start"
-              >
-                <Icon name="streak" />
-                <Stack flexDirection="row">
-                  <Text level="footnote" weight="bold">
-                    {userStreak}{" "}
-                  </Text>
-                  <Text level="footnote">Day Streak</Text>
-                </Stack>
-              </Stack>
-            </Stack>
-          </Stack>
-        </Center>
-        <Center p={15}>
-          {Platform.OS === "ios" && <DeviceMotionViewiOS />}
-          {Platform.OS === "android" && <DeviceMotionViewAndroid />}
-        </Center>
+        {!isSessionActive && (
+          <Center p={15}>
+            {Platform.OS === "ios" && <DeviceMotionViewiOS />}
+            {Platform.OS === "android" && <DeviceMotionViewAndroid />}
+          </Center>
+        )}
+
         <View style={{ width: "100%", height: 350 }}>
           <Center>
             {Platform.OS === "ios" ? (
