@@ -2,8 +2,8 @@ import OverviewCard from "@src/components/analytics/OverviewCard";
 import PostureScoresCard from "@src/components/analytics/PostureScoresCard";
 import FilterMenu from "@src/components/notifications/FilterMenu";
 import Icon from "@src/components/ui/Icon";
-import Spacer from "@src/components/ui/Spacer";
 import { Text } from "@src/components/ui/typography";
+import { theme } from "@src/styles/theme";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 
 const AnalyticsScreen = () => {
@@ -82,28 +82,12 @@ const AnalyticsScreen = () => {
   );
 };
 
-const OverviewSection: React.FC<{ label: string; content: string }> = ({
-  label,
-  content,
-}) => {
-  return (
-    <View>
-      <Text level="caption_3" weight="bold">
-        {label}
-      </Text>
-      <Text level="title_3" weight="bold">
-        {content}
-      </Text>
-    </View>
-  );
-};
-
 const styles = StyleSheet.create({
   page: {},
   container: {
     paddingTop: 30,
     display: "flex",
-    backgroundColor: "#FDD462",
+    backgroundColor: theme.colors.primary[200],
   },
   header: {
     display: "flex",

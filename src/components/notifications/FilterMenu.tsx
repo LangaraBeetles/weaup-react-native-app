@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
 import { Text } from "@src/components/ui/typography";
+import { theme } from "@src/styles/theme";
 
 type Tab = {
   label: string;
@@ -15,7 +16,7 @@ type FilterMenuProps = {
 
 const FilterMenu = ({ defaultTab, tabs, onChange }: FilterMenuProps) => {
   const [selectedFilter, setSelectedFilter] = useState(
-    defaultTab ?? tabs?.[0].value
+    defaultTab ?? tabs?.[0].value,
   );
 
   return (
@@ -28,7 +29,10 @@ const FilterMenu = ({ defaultTab, tabs, onChange }: FilterMenuProps) => {
               styles.filterButton,
               selectedFilter === value && styles.selectedButton,
             ]}
-            onPress={() => setSelectedFilter(value)}
+            onPress={() => {
+              setSelectedFilter(value);
+              onChange?.(value);
+            }}
           >
             <Text
               style={[
@@ -50,7 +54,7 @@ const FilterMenu = ({ defaultTab, tabs, onChange }: FilterMenuProps) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    backgroundColor: "#FEE39A",
+    backgroundColor: theme.colors.primary[50],
     padding: 4,
     borderRadius: 100,
     gap: 1,
@@ -66,7 +70,7 @@ const styles = StyleSheet.create({
     color: "#5F5C56",
   },
   selectedButton: {
-    backgroundColor: "#FFF",
+    backgroundColor: theme.colors.primary[400],
   },
   selectedText: {
     color: "#201F1D",
