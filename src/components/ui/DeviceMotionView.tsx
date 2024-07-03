@@ -77,7 +77,9 @@ export default function DeviceMotionViewiOS() {
 
     if (isTrackingEnabled && mode === "phone") {
       _subscribe();
-    } else {
+    }
+
+    if (!isTrackingEnabled) {
       setCurrentPosture("not_reading");
     }
 
