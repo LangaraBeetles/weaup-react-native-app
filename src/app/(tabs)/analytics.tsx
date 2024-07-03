@@ -1,3 +1,4 @@
+import CorrectionsCard from "@src/components/analytics/CorrectionsCard";
 import OverviewCard from "@src/components/analytics/OverviewCard";
 import PostureScoresCard from "@src/components/analytics/PostureScoresCard";
 import FilterMenu from "@src/components/notifications/FilterMenu";
@@ -31,51 +32,11 @@ const AnalyticsScreen = () => {
         </View>
 
         <View style={styles.mainCard}>
-          {/* <View style={styles.card}>
-            <View style={{ display: "flex", gap: 16 }}>
-              <Text level="headline" weight="bold">
-                Overview
-              </Text>
-
-              <OverviewSection label="Total Duration" content="15h 36m" />
-
-              <OverviewSection label="Good Posture" content="65%" />
-
-              <OverviewSection label="Bad Posture" content="35%" />
-            </View>
-
-            <View>
-
-            </View>
-          </View> */}
-
           <OverviewCard />
 
           <PostureScoresCard />
 
-          {/* <View style={styles.card}>
-            <View style={{ display: "flex", gap: 16 }}>
-              <Text level="headline" weight="bold">
-                Corrections
-              </Text>
-
-              <Spacer height={150} />
-            </View>
-
-            <View></View>
-          </View>
-
-          <View style={styles.card}>
-            <View style={{ display: "flex", gap: 16 }}>
-              <Text level="headline" weight="bold">
-                Session History
-              </Text>
-
-              <Spacer height={150} />
-            </View>
-
-            <View></View>
-          </View> */}
+          <CorrectionsCard />
         </View>
       </ScrollView>
     </SafeAreaView>

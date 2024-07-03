@@ -12,7 +12,7 @@ import { theme } from "@src/styles/theme";
 import { View } from "react-native";
 import Card from "./Card";
 import { ReText } from "react-native-redash";
-import Stack from "../ui/Stack";
+import Stack from "@src/components/ui/Stack";
 
 const outterCircle = {
   backgroundColor: theme.colors.white,

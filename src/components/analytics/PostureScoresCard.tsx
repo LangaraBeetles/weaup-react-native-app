@@ -36,7 +36,7 @@ const PostureScoresCard = () => {
       </Stack>
 
       <Stack flexDirection="row">
-        <View style={{ height: 190, flex: 1 }}>
+        <View style={{ height: 180, flex: 1 }}>
           <AreaChart
             style={{ height: 160 }}
             data={data}
