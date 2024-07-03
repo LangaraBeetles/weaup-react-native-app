@@ -2,10 +2,9 @@ import {
   Keyboard,
   Modal,
   StyleSheet,
-  Text,
-  TextInput,
   TouchableWithoutFeedback,
   View,
+  Dimensions,
 } from "react-native";
 import React, {
   useCallback,
@@ -20,8 +19,13 @@ import Button from "@src/components/ui/Button";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import CustomBackdrop from "@src/components/ui/CustomBackdrop";
 import { useRouter } from "expo-router";
+import TimePicker from "../ui/TimePicker";
+import { Text } from "../ui/typography/index";
+import Center from "../ui/Center";
 
-const SessionControl = () => {
+const { width, height } = Dimensions.get("window");
+
+const SessionControl: React.FC = () => {
   const [sessionState, setSessionState] =
     useState<SessionStatesType["SessionStatesEnum"]>("STOP");
   const [timerState, setTimerState] =
@@ -53,22 +57,9 @@ const SessionControl = () => {
   const onStartSession = (timeInHours: number, timeInMinutes: number) => {
     setSessionState("START");
     setTimerState("RUNNING");
-    // TODO: stop real time tracking
     setTimeInSeconds(timeInHours * 3600 + timeInMinutes * 60);
-    // TODO: function to check posture every second
-    // if posture is okay ➝ save it to the local state and show the image animation
-    // if posture is bad ➝ save it to the local state and show the image animation
     handleDismissModalPress();
   };
-
-  // const onCancelSession = () => {
-  //   setSessionState("CANCEL");
-  //   setTimerState("STOPPED");
-  //   setTimeInSeconds(-1);
-  //   handleDismissModalPress();
-  //   // TODO: start real time tracking
-  //   // TODO: discard session data
-  // };
 
   const onStopSession = () => {
     setSessionState("PAUSE");
@@ -93,12 +84,8 @@ const SessionControl = () => {
     setModalVisible(false);
     setSessionState("STOP");
     setTimerState("STOPPED");
-    // TODO: save session data
-    // TODO: Show session summary
     router.push("/session-summary");
-    // Reset the timer
     setTimeInSeconds(-1);
-    // TODO: start real time tracking
   };
 
   const SetTimer = ({
@@ -109,6 +96,11 @@ const SessionControl = () => {
     const [timeInHours, setTimeInHours] = useState(0);
     const [timeInMinutes, setTimeInMinutes] = useState(0);
 
+    const hoursData = Array.from({ length: 24 }, (_, i) => i.toString());
+    const minutesData = Array.from({ length: 6 }, (_, i) =>
+      (i * 10).toString(),
+    );
+
     return (
       <BottomSheetModal
         ref={bottomSheetModalRef}
@@ -117,29 +109,42 @@ const SessionControl = () => {
         backdropComponent={CustomBackdrop}
       >
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-          {/* TODO: create number input component */}
           <View style={styles.bottomSheetContainer}>
-            <Text>Hours:</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={(text) => setTimeInHours(Number(text))}
-              value={timeInHours.toString()}
-              placeholder="Hours"
-              keyboardType="numeric"
-            />
-            <Text>Minutes:</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={(text) => setTimeInMinutes(Number(text))}
-              value={timeInMinutes.toString()}
-              placeholder="Minutes"
-              keyboardType="numeric"
-            />
-            <Button
-              title="Start Session"
-              onPress={() => onStartSession(timeInHours, timeInMinutes)}
-              variant="primary"
-            />
+            <Center>
+              <View style={styles.pickerTitle}>
+                <Text level="title_3" align="center">
+                  How long do you want the session to be?
+                </Text>
+              </View>
+            </Center>
+            <View style={styles.pickerContainer}>
+              <View style={styles.overlay} />
+              <View style={styles.pickerColumn}>
+                <TimePicker
+                  data={hoursData}
+                  onValueChange={(value) => setTimeInHours(Number(value))}
+                />
+                <Text level="title_3" align="center" style={styles.pickerLabel}>
+                  hours
+                </Text>
+              </View>
+              <View style={styles.pickerColumn}>
+                <TimePicker
+                  data={minutesData}
+                  onValueChange={(value) => setTimeInMinutes(Number(value))}
+                />
+                <Text level="title_3" align="center" style={styles.pickerLabel}>
+                  mins
+                </Text>
+              </View>
+            </View>
+            <View style={styles.button}>
+              <Button
+                title="Start Session"
+                onPress={() => onStartSession(timeInHours, timeInMinutes)}
+                variant="primary"
+              />
+            </View>
           </View>
         </TouchableWithoutFeedback>
       </BottomSheetModal>
@@ -222,16 +227,42 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   bottomSheetContainer: {
-    flex: 1,
-    padding: 24,
-    justifyContent: "center",
+    paddingHorizontal: 20,
   },
-  input: {
-    height: 40,
-    borderColor: "gray",
-    borderWidth: 1,
-    paddingHorizontal: 10,
-    marginVertical: 10,
+  pickerContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginVertical: height * 0.02,
+    marginTop: height * -0.08,
+    zIndex: -1,
+  },
+  pickerColumn: {
+    flexDirection: "row",
+    gap: width * 0.02,
+    alignItems: "center",
+    marginHorizontal: width * 0.1,
+  },
+  pickerTitle: {
+    paddingBottom: height * 0.02,
+    backgroundColor: "white",
+    marginHorizontal: width * 0.1,
+  },
+  pickerLabel: {
+    marginLeft: width * 0.04,
+  },
+  button: {
+    marginTop: height * 0.02,
+    height: 56,
+  },
+  overlay: {
+    position: "absolute",
+    top: 83,
+    left: width * 0.025,
+    right: width * 0.025,
+    height: height * 0.06,
+    backgroundColor: "#FDD4625A",
+    borderRadius: 10,
+    zIndex: 1,
   },
 });
 
