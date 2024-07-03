@@ -20,8 +20,8 @@ const PastChallengesScreen = () => {
     queryKey: ["pastChallenges"],
     queryFn: () => getPastChallenges(filterStatus, sortDesc),
     enabled: path === "/pastChallengesScreen",
-    refetchOnWindowFocus: true,
-    refetchInterval: 0,
+    // refetchOnWindowFocus: true,
+    // refetchInterval: 0,
   });
 
   const handleSortDesc = () => {
@@ -29,9 +29,9 @@ const PastChallengesScreen = () => {
     setSortDesc(sort);
   };
 
-  useEffect(() => {
-    refetch();
-  }, [filterStatus, sortDesc]);
+  // useEffect(() => {
+  //   refetch();
+  // }, [filterStatus, sortDesc]);
 
   return (
     <View style={styles.container}>
@@ -90,7 +90,7 @@ const PastChallengesScreen = () => {
           <Image source={require("../../assets/img/sortIcon.png")} />
         </Chip>
       </Stack>
-      <ChallengeList challenges={data?.data ?? []}></ChallengeList>
+      <ChallengeList challenges={data?.data ?? []} />
     </View>
   );
 };

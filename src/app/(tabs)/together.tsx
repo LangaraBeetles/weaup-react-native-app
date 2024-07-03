@@ -28,13 +28,13 @@ const TogetherScreen = () => {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const path = usePathname();
 
-  const { data, refetch } = useQuery({
-    queryKey: ["ongoingChallenges"],
+  const { data } = useQuery({
+    queryKey: ["ongoingChallenges", filterUser, sortDesc, path],
     queryFn: () => getOngoingChallenges(filterUser, sortDesc),
     enabled: path === "/together",
-    refetchOnWindowFocus: true,
-    refetchInterval: 0,
   });
+
+  console.log({ filterUser, sortDesc, path, data: data?.data?.length });
 
   const addChallenge = () => {
     bottomSheetModalRef.current?.present();
@@ -61,14 +61,10 @@ const TogetherScreen = () => {
     return () => subscription.remove();
   }, []);
 
-  // refetch on filter changed
-  useEffect(() => {
-    refetch();
-  }, [filterUser, sortDesc]);
-
-  const createChallengeForm = (
-    <CreateChallengeContainer handleCloseModalPress={handleCloseModalPress} />
-  );
+  // // refetch on filter changed
+  // useEffect(() => {
+  //   refetch();
+  // }, [filterUser, sortDesc]);
 
   if (isGuest) {
     return <GoogleSignUp />;
@@ -116,7 +112,11 @@ const TogetherScreen = () => {
       <FloatingButton onPress={addChallenge} />
       <CustomBottomSheetModal
         ref={bottomSheetModalRef}
-        content={createChallengeForm}
+        content={
+          <CreateChallengeContainer
+            handleCloseModalPress={handleCloseModalPress}
+          />
+        }
       />
     </View>
   );

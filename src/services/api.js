@@ -4,12 +4,14 @@ import { useUser } from "@state/useUser";
 import config from "@src/config";
 
 const api = axios.create({
-  baseURL: config.api,
+  baseURL: config.api_url,
 });
 
 api.interceptors.request.use(
   (request) => {
     const token = useUser.getState().user.token;
+    // console.log({ token });
+
     const authToken = `Bearer ${token}`;
     request.headers.Authorization = authToken;
 
@@ -18,7 +20,7 @@ api.interceptors.request.use(
   (error) => {
     console.error(`Request error ${error}`);
     return Promise.reject(error);
-  },
+  }
 );
 
 api.interceptors.response.use(
@@ -28,7 +30,7 @@ api.interceptors.response.use(
   (error) => {
     console.error(`Response error ${error}`);
     return Promise.reject(error);
-  },
+  }
 );
 
 export default api;

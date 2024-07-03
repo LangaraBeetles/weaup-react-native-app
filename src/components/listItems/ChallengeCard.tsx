@@ -2,6 +2,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
 
 import ProgressBar from "@src/components/ui/ProgressBar";
+import safenumber from "@src/utils/safenumber";
 
 const ChallengeCard = (props: any) => {
   const router = useRouter();
@@ -17,10 +18,13 @@ const ChallengeCard = (props: any) => {
   const endMonth = end.toLocaleDateString("default", { month: "long" });
   const endDay = end.getDate();
   const goalPoints =
-    challenge.goal * challenge.duration * challenge.members.length ?? 1;
+    safenumber(challenge.goal, 0) *
+    safenumber(challenge.duration, 0) *
+    safenumber(challenge.members.length, 1);
+
   const total = challenge.members.reduce(
-    (accu: any, curr: any) => accu + curr.points,
-    0,
+    (accu: any, curr: any) => accu + safenumber(curr.points),
+    0
   );
 
   const progressBarLabel = (

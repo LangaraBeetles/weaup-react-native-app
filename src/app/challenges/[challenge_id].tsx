@@ -13,8 +13,12 @@ import { globalStyles } from "@src/styles/globalStyles";
 import dayjs from "dayjs";
 import safenumber from "@src/utils/safenumber";
 
-const challengeDetails = () => {
+const ChallengeDetails = (props: any) => {
+  console.log({ props });
+
   const params = useLocalSearchParams();
+
+  console.log({ params });
   const id = params.id as string;
   const isOngoing: boolean = params.isOngoing as unknown as boolean;
   const path = usePathname();
@@ -37,7 +41,6 @@ const challengeDetails = () => {
 
   const startAt = dayjs(data?.data?.start_at);
   const endAt = dayjs(data?.data?.end_at);
-
   const dateRangeReadable = `From ${startAt.format("MMM DD")} to ${endAt.format("MMM DD")}`;
   const remainingTime = isOngoing
     ? `Ends in ${endAt.diff(dayjs(), "days")} days`
@@ -50,10 +53,9 @@ const challengeDetails = () => {
     safenumber(data?.data.duration) *
     safenumber(data?.data.members.length, 1);
 
-  const progress = data?.data.members.reduce(
-    (accu: any, curr: any) => accu + curr.points,
-    0
-  );
+  const progress = 0;
+
+  data?.data.members.reduce((accu: any, curr: any) => accu + curr.points, 0);
   const percentage = safenumber(progress / goalPoints) * 100;
 
   return (
@@ -191,4 +193,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default challengeDetails;
+export default ChallengeDetails;

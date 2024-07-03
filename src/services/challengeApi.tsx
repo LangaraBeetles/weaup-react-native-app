@@ -20,6 +20,7 @@ export const getOngoingChallenges = async (
   filterUser: boolean,
   sortDesc: number,
 ) => {
+  console.log(`fired!!!`);
   const response = await api.get(
     `${route}/?showOngoing=true&sortDesc=${sortDesc}&filterUser=${filterUser}`,
   );
