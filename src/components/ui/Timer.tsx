@@ -35,7 +35,9 @@ const Timer: React.FC<{
   return (
     <Stack alignItems="center">
       <TimerDisplay timeInSeconds={timeInSeconds} />
-      <Button title="Stop tracking" onPress={handleStop} variant="tertiary" />
+      <Stack w={230}>
+        <Button title="End session" onPress={handleStop} variant="tertiary" />
+      </Stack>
     </Stack>
   );
 };
