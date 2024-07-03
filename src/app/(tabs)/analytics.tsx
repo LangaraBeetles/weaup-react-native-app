@@ -1,6 +1,7 @@
 import CorrectionsCard from "@src/components/analytics/CorrectionsCard";
 import OverviewCard from "@src/components/analytics/OverviewCard";
 import PostureScoresCard from "@src/components/analytics/PostureScoresCard";
+import SessionHistoryCard from "@src/components/analytics/SessionHistoryCard";
 import FilterMenu from "@src/components/notifications/FilterMenu";
 import Icon from "@src/components/ui/Icon";
 import { Text } from "@src/components/ui/typography";
@@ -37,6 +38,8 @@ const AnalyticsScreen = () => {
           <PostureScoresCard />
 
           <CorrectionsCard />
+
+          <SessionHistoryCard />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -44,7 +47,6 @@ const AnalyticsScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  page: {},
   container: {
     paddingTop: 30,
     display: "flex",
