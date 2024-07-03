@@ -67,8 +67,8 @@ const challengeDetails = () => {
 
               {/* progress bar */}
               <ProgressBar
-                currentValue={40}
-                goal={100}
+                currentValue={progress}
+                goal={goalPoints}
                 backgroundColor={globalStyles.colors.neutral[100]}
                 barColor={globalStyles.colors.secondary[400]}
               ></ProgressBar>
