@@ -71,14 +71,6 @@ const styles = StyleSheet.create({
     height: "100%",
     gap: 20,
   },
-  // card: {
-  //   display: "flex",
-  //   padding: 16,
-  //   flexDirection: "row",
-  //   justifyContent: "space-between",
-  //   backgroundColor: "#FFF",
-  //   borderRadius: 20,
-  // },
 });
 
 export default AnalyticsScreen;
