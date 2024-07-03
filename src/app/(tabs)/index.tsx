@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-import { Image, Platform, Pressable, ScrollView, View } from "react-native";
+import { Image, Platform, Pressable, ScrollView } from "react-native";
 import { Link, Redirect } from "expo-router";
 import DeviceMotionViewiOS, {
   DeviceMotionViewAndroid,
@@ -16,7 +16,7 @@ import Icon from "@src/components/ui/Icon";
 import TrackingModeIcon from "@src/components/homepage/TrackingModeIcon";
 import { Text } from "@src/components/ui/typography";
 
-import LottieView from "lottie-react-native";
+// import LottieView from "lottie-react-native";
 import { useRef } from "react";
 import { theme } from "@src/styles/theme";
 import ScoreComponent from "@src/components/homepage/ScoreComponent";
@@ -34,7 +34,7 @@ const HomePage = () => {
   const userLevel = useUser((state) => state.user.level);
   const currentPosture = useUser((state) => state.currentPosture);
   //   const isSessionActive = useUser((state) => state.isSessionActive);
-  const isSessionActive = false;
+  const isSessionActive = true;
   const animation = useRef<any>(null);
 
   useEffect(() => {
@@ -114,7 +114,7 @@ const HomePage = () => {
           </Center>
         )}
 
-        <View style={{ width: "100%", height: 350 }}>
+        {/* <View style={{ width: "100%", height: 350 }}>
           <Center>
             {Platform.OS === "ios" ? (
               <LottieView
@@ -131,7 +131,7 @@ const HomePage = () => {
               <Image source={require("../../../assets/img/mascot.png")} />
             )}
           </Center>
-        </View>
+        </View> */}
         <Center>
           <SessionControl />
         </Center>
