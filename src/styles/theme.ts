@@ -1,4 +1,5 @@
 import { createTheme, defaultTheme } from "@fast-styles/react";
+import { globalStyles } from "@src/styles/globalStyles";
 
 export const theme = createTheme({
   //There are no predefined categories, so you can add any structure you prefer.
@@ -12,4 +13,7 @@ export const theme = createTheme({
   //styles: {},
   //tokens: {},
   ...defaultTheme,
+  colors: {
+    ...globalStyles.colors,
+  },
 });

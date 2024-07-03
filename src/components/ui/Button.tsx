@@ -1,73 +1,151 @@
-import React from "react";
-import {
-  GestureResponderEvent,
-  StyleSheet,
-  Text,
-  TouchableHighlight,
-} from "react-native";
-import { globalStyles } from "@src/styles/globalStyles";
+import React, { useState } from "react";
+import { Pressable } from "react-native";
+import { styled } from "@fast-styles/react";
+import { Text } from "@src/components/ui/typography";
+import { theme } from "@src/styles/theme";
+import Icon, { IconName } from "@src/components/ui/Icon";
 
 const Button: React.FC<{
   title: string;
-  onPress?: () => void;
-  onLongPress?: (event: GestureResponderEvent) => void;
-  type: { type: "primary" | "secondary"; size?: "s" | "l" };
-}> = ({ title, onPress, onLongPress, type }) => {
-  const buttonStyleType =
-    (type.type === "primary" && styles.buttonPrimary) ||
-    (type.type === "secondary" && styles.buttonSecondary);
-  const textStyleType =
-    (type.type === "primary" && styles.textPrimary) ||
-    (type.type === "secondary" && styles.textSecondary);
-  const buttonSize =
-    (type.size === "s" && styles.smallButton) ||
-    (type.size === "l" && styles.largeButton);
+  onPress: () => void;
+  variant?: "primary" | "secondary" | "secondary_coral" | "tertiary";
+  disabled?: boolean;
+  leadingIcon?: IconName;
+  trailingIcon?: IconName;
+}> = ({
+  title,
+  onPress,
+  leadingIcon,
+  trailingIcon,
+  disabled = false,
+  variant = "primary",
+}) => {
+  const [pressed, setPressed] = useState<boolean>();
+
+  const pressIn = () => {
+    try {
+      setPressed(true);
+    } catch (error) {}
+  };
+
+  const pressOut = () => {
+    try {
+      setPressed(false);
+    } catch (error) {}
+  };
+
   return (
-    <TouchableHighlight
+    <ButtonRoot
+      category={disabled ? "disabled" : variant}
+      status={pressed ? "pressed" : "default"}
       onPress={onPress}
-      onLongPress={onLongPress}
-      style={[styles.button, buttonStyleType, buttonSize]}
+      onPressIn={pressIn}
+      onPressOut={pressOut}
     >
-      <Text style={[styles.text, textStyleType]}>{title}</Text>
-    </TouchableHighlight>
+      {leadingIcon && (
+        <Icon
+          name={leadingIcon}
+          color={iconColors[disabled ? "disabled" : variant]}
+        />
+      )}
+      <ButtonText category={disabled ? "disabled" : variant}>
+        {title}
+      </ButtonText>
+      {trailingIcon && (
+        <Icon
+          name={trailingIcon}
+          color={iconColors[disabled ? "disabled" : variant]}
+        />
+      )}
+    </ButtonRoot>
   );
 };
 
-const styles = StyleSheet.create({
-  button: {
-    height: 48,
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    borderRadius: 6,
-    margin: 10,
+export default Button;
+
+const ButtonRoot = styled(Pressable, {
+  paddingHorizontal: 48,
+  paddingVertical: 20,
+  minWidth: "100%",
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: 8,
+  borderRadius: 100,
+  borderWidth: 1,
+  variants: {
+    category: {
+      primary: {},
+      secondary: {},
+      secondary_coral: {
+        borderColor: theme.colors.error[500],
+      },
+      tertiary: {
+        backgroundColor: theme.colors.error[500],
+        borderColor: theme.colors.error[500],
+      },
+      disabled: {
+        backgroundColor: theme.colors.neutral[100],
+      },
+    },
+    status: {
+      default: {},
+      pressed: {},
+    },
   },
-  text: {
-    fontStyle: "normal",
-    lineHeight: 22,
-    fontWeight: "600",
-    letterSpacing: -0.32,
-    textAlign: "center",
+  compoundVariants: {
+    "pressed+primary": {
+      borderColor: theme.colors.secondary[700],
+      backgroundColor: theme.colors.secondary[700],
+    },
+    "default+primary": {
+      backgroundColor: theme.colors.secondary[600],
+      borderColor: theme.colors.secondary[600],
+    },
+    "pressed+secondary": {
+      borderColor: theme.colors.white,
+      backgroundColor: theme.colors.white,
+    },
+    "default+secondary": {
+      backgroundColor: theme.colors.white,
+      borderColor: theme.colors.secondary[600],
+    },
   },
-  buttonPrimary: {
-    backgroundColor: globalStyles.colors.primary,
-  },
-  textPrimary: {
-    color: globalStyles.colors.white,
-  },
-  buttonSecondary: {
-    backgroundColor: "transparent",
-    borderWidth: 2,
-    borderColor: globalStyles.colors.primary,
-  },
-  textSecondary: {
-    color: globalStyles.colors.primary,
-  },
-  smallButton: {
-    width: 180,
-  },
-  largeButton: {
-    width: 314,
+  styleProps: {
+    width: "width",
   },
 });
 
-export default Button;
+const ButtonText = styled(Text, {
+  fontSize: 20,
+  fontFamily: "NunitoBold",
+  lineHeight: 26,
+  variants: {
+    category: {
+      primary: {
+        color: theme.colors.white,
+      },
+      secondary: {
+        color: theme.colors.secondary[600],
+      },
+      secondary_coral: {
+        color: theme.colors.error[500],
+      },
+      tertiary: {
+        color: theme.colors.white,
+      },
+      disabled: {
+        color: theme.colors.neutral[300],
+      },
+    },
+  },
+});
+
+const iconColors = {
+  primary: theme.colors.white,
+  secondary: theme.colors.secondary[600],
+  secondary_coral: theme.colors.error[500],
+  tertiary: theme.colors.white,
+  disabled: theme.colors.neutral[300],
+};

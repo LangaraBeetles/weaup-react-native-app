@@ -13,15 +13,11 @@ type ContextState = {
   isHeadMotionAvailable: boolean;
   posture: PostureStatus;
   getCurrentPosture?: () => Promise<void>;
-  startSession: () => void;
-  stopSession: () => void;
 };
 
 const initialState: ContextState = {
   isHeadMotionAvailable: false,
   posture: "not_reading",
-  startSession: () => {},
-  stopSession: () => {},
 };
 
 const HeadTrackingContext = createContext<ContextState>(initialState);
@@ -41,19 +37,19 @@ const HeadTrackingProvider: React.FC<{ children: React.ReactNode }> = ({
   const isTrackingEnabled = useUser((state) => state.isTrackingEnabled);
   const postureStatus = useUser((state) => state.currentPosture);
   const setPosture = useUser((state) => state.setCurrentPosture);
-  const isSessionActive = useUser((state) => state.isSessionActive);
-  const setSessionActive = useUser((state) => state.setSessionActive);
 
   const handlePostureCorrectionAlert = (headPitch?: number) => {
     if (headPitch === undefined) {
-      postureStatus !== "not_reading" &&
-        setPosture("not_reading", isSessionActive);
-    } else if (headPitch > -15 && headPitch < 15) {
+      postureStatus !== "not_reading" && setPosture("not_reading");
+    } else if (headPitch > -17 && headPitch < 15) {
       console.log("Yey!");
-      postureStatus !== "good" && setPosture("good", isSessionActive);
+      setPosture("good");
+    } else if (headPitch > -22 && headPitch <= -17) {
+      console.log("Mid!");
+      setPosture("mid");
     } else {
       console.log("Bad!");
-      postureStatus !== "bad" && setPosture("bad", isSessionActive);
+      setPosture("bad");
     }
   };
 
@@ -63,9 +59,15 @@ const HeadTrackingProvider: React.FC<{ children: React.ReactNode }> = ({
       await startDeviceMotionUpdates();
     }
 
+    if (interval.current) {
+      clearInterval(interval.current);
+    }
+
     isTracking = true;
     interval.current = setInterval(
       async (isEnabled, mode) => {
+        isTracking = true;
+
         if (isEnabled && mode === "earbuds") {
           const data = await getLatestDeviceMotion();
           if (data) {
@@ -92,7 +94,7 @@ const HeadTrackingProvider: React.FC<{ children: React.ReactNode }> = ({
       const headPitch = data?.attitude.pitchDeg;
       handlePostureCorrectionAlert(headPitch);
     } else {
-      setPosture("not_reading", isSessionActive);
+      setPosture("not_reading");
     }
   };
 
@@ -101,17 +103,7 @@ const HeadTrackingProvider: React.FC<{ children: React.ReactNode }> = ({
       clearInterval(interval.current);
     }
     isTracking = false;
-    setPosture("not_reading", isSessionActive);
-  };
-
-  const startSession = () => {
-    setSessionActive(true);
-    startTracking();
-  };
-
-  const stopSession = () => {
-    setSessionActive(false);
-    stopTracking();
+    setPosture("not_reading");
   };
 
   useEffect(() => {
@@ -137,8 +129,6 @@ const HeadTrackingProvider: React.FC<{ children: React.ReactNode }> = ({
         isHeadMotionAvailable,
         posture: postureStatus,
         getCurrentPosture,
-        startSession,
-        stopSession,
       }}
     >
       {children}

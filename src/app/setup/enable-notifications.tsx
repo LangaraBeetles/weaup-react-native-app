@@ -34,13 +34,9 @@ const EnableNotificationsScreen = () => {
               <Button
                 title="Allow Notifications"
                 onPress={next}
-                type={{ type: "primary", size: "l" }}
+                variant="primary"
               />
-              <Button
-                title="Maybe Later"
-                onPress={next}
-                type={{ type: "secondary", size: "l" }}
-              />
+              <Button title="Maybe Later" onPress={next} variant="secondary" />
             </Stack>
           </Stack>
         </Center>

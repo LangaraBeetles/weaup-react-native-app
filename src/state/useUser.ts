@@ -12,7 +12,7 @@ type UserState = {
   setTrackingEnabled: (value: boolean) => void;
 
   currentPosture: PostureStatus;
-  setCurrentPosture: (value: PostureStatus, isSession: boolean) => void;
+  setCurrentPosture: (value: PostureStatus) => void;
 
   postureData: Array<{ status: PostureStatus; date: Date }>;
   sessionDataPosture: Array<{ status: PostureStatus; date: Date }>;
@@ -67,7 +67,9 @@ export const useUser = create<UserState>()(
         setTrackingEnabled: (enabled) => set({ isTrackingEnabled: enabled }),
 
         currentPosture: "not_reading",
-        setCurrentPosture: (value, isSession) => {
+        setCurrentPosture: (value) => {
+          const isSession = get().isSessionActive;
+
           if (value === "bad" || value === "good") {
             if (isSession) {
               set((state) => ({

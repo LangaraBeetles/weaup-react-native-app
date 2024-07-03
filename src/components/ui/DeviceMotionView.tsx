@@ -20,7 +20,7 @@ export default function DeviceMotionViewiOS() {
     const value = !isTrackingEnabled;
 
     if (!value) {
-      setCurrentPosture("not_reading", isSessionActive);
+      setCurrentPosture("not_reading");
     } else {
       DeviceMotion.requestPermissionsAsync();
     }
@@ -51,17 +51,17 @@ export default function DeviceMotionViewiOS() {
                 Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
               }
 
-              setCurrentPosture("bad", isSessionActive);
+              setCurrentPosture("bad");
             } else if (pitchDegrees < -110 && pitchDegrees > -120) {
               if (currentPosture !== "mid") {
                 Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
               }
 
-              setCurrentPosture("mid", isSessionActive);
+              setCurrentPosture("mid");
             } else if (pitchDegrees < -90 && pitchDegrees > -110) {
-              setCurrentPosture("good", isSessionActive);
+              setCurrentPosture("good");
             } else {
-              setCurrentPosture("not_reading", isSessionActive);
+              setCurrentPosture("not_reading");
             }
           } catch (error: any) {
             console.error(error.message);
@@ -79,8 +79,10 @@ export default function DeviceMotionViewiOS() {
 
     if ((isSessionActive || isTrackingEnabled) && mode === "phone") {
       _subscribe();
-    } else {
-      setCurrentPosture("not_reading", isSessionActive);
+    }
+
+    if (!isTrackingEnabled) {
+      setCurrentPosture("not_reading");
     }
 
     return () => {
@@ -126,7 +128,7 @@ export function DeviceMotionViewAndroid() {
     const value = !isTrackingEnabled;
 
     if (!value) {
-      setCurrentPosture("not_reading", isSessionActive);
+      setCurrentPosture("not_reading");
     } else {
       DeviceMotion.requestPermissionsAsync();
     }
@@ -168,7 +170,7 @@ export function DeviceMotionViewAndroid() {
   // Provide feedback based on posture
   useEffect(() => {
     if (!isSessionActive && !isTrackingEnabled) {
-      setCurrentPosture("not_reading", isSessionActive);
+      setCurrentPosture("not_reading");
       return;
     }
 
@@ -179,9 +181,9 @@ export function DeviceMotionViewAndroid() {
 
     if (isBadPosture()) {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-      setCurrentPosture("bad", isSessionActive);
+      setCurrentPosture("bad");
     } else {
-      setCurrentPosture("good", isSessionActive);
+      setCurrentPosture("good");
     }
   }, [beta, gamma, isSessionActive, isTrackingEnabled]);
 

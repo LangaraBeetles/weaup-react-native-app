@@ -1,6 +1,7 @@
 import ArrowLeft from "assets/icons/arrow-left.svg";
 import ArrowRight from "assets/icons/arrow-right.svg";
 import Add from "assets/icons/add.svg";
+import Play from "assets/icons/play.svg";
 import AwardOutline from "assets/icons/award-outline.svg";
 import AwardFilled from "assets/icons/award-filled.svg";
 import BadgeOutline from "assets/icons/badge-outline.svg";
@@ -65,11 +66,21 @@ import WelcomeMascot from "assets/icons/welcome-mascot.svg";
 import ColorLabelIconLightening from "assets/icons/colorLabelIcon-lightening.svg";
 import ColorLabelIconStreak from "assets/icons/colorLabelIcon-streak.svg";
 import ColorLabelIconStar from "assets/icons/colorLabelIcon-star.svg";
+import ProfileAvatar from "assets/icons/profile-avatar.svg";
+import ColorLabelIconXp from "assets/icons/colorLabelIcon-xp.svg";
+import ColorLabelIconAward from "assets/icons/colorLabelIcon-award.svg";
+import Logout from "assets/icons/logout.svg";
+import ColorLabelIconTarget from "assets/icons/colorLabelIcon-target.svg";
+import StreakCheckmarkUnchecked from "assets/icons/streak-checkmark-unchecked.svg";
+import StreakCheckmarkChecked from "assets/icons/streak-checkmark-checked.svg";
+
+import { theme } from "@src/styles/theme";
 
 const IconConfig = {
   "arrow-left": ArrowLeft,
   "arrow-right": ArrowRight,
   add: Add,
+  play: Play,
   "award-outline": AwardOutline,
   "award-filled": AwardFilled,
   "badge-outline": BadgeOutline,
@@ -134,15 +145,26 @@ const IconConfig = {
   "colorLabelIcon-lightening": ColorLabelIconLightening,
   "colorLabelIcon-streak": ColorLabelIconStreak,
   "colorLabelIcon-star": ColorLabelIconStar,
+  "profile-avatar": ProfileAvatar,
+  "colorLabelIcon-xp": ColorLabelIconXp,
+  "colorLabelIcon-award": ColorLabelIconAward,
+  logout: Logout,
+  "colorLabelIcon-target": ColorLabelIconTarget,
+  "streak-checkmark-unchecked": StreakCheckmarkUnchecked,
+  "streak-checkmark-checked": StreakCheckmarkChecked,
 };
+
+export type IconName = `${keyof typeof IconConfig}`;
 
 type IconProps = {
-  name: `${keyof typeof IconConfig}`;
+  name: IconName;
+  color?: string;
 };
 
-const Icon: React.FC<IconProps> = ({ name }) => {
+const Icon: React.FC<IconProps> = ({ name, color = theme.colors.text }) => {
   const CustomIcon = IconConfig[name];
-  return <CustomIcon />;
+
+  return <CustomIcon color={color} />;
 };
 
 export default Icon;

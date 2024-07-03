@@ -58,7 +58,7 @@ const ConnectEarbudsScreen = () => {
             <Button
               title="Connect with earbuds"
               onPress={next}
-              type={{ type: "primary", size: "l" }}
+              variant="primary"
             />
           </Stack>
         </View>

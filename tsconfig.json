@@ -8,5 +8,6 @@
       "@state/*": ["./src/state/*"],
       "@interfaces/*": ["./src/interfaces/*"]
     }
-  }
+  },
+  "include": ["src", "svg.d.ts"]
 }
