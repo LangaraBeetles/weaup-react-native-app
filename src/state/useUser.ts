@@ -15,7 +15,6 @@ type UserState = {
   setCurrentPosture: (value: PostureStatus) => void;
 
   postureData: Array<{ status: PostureStatus; date: Date }>;
-  sessionDataPosture: Array<{ status: PostureStatus; date: Date }>;
   preparePostureData: () => Array<{ status: PostureStatus; date: Date }>;
 
   isAuth: boolean;
@@ -71,15 +70,7 @@ export const useUser = create<UserState>()(
           const isSession = get().isSessionActive;
 
           if (value === "bad" || value === "good") {
-            if (isSession) {
-              set((state) => ({
-                currentPosture: value,
-                sessionDataPosture: [
-                  ...state.sessionDataPosture,
-                  { status: value, date: new Date() },
-                ],
-              }));
-            } else {
+            if (!isSession) {
               set((state) => ({
                 currentPosture: value,
                 postureData: [
@@ -94,7 +85,7 @@ export const useUser = create<UserState>()(
         },
 
         postureData: [],
-        sessionDataPosture: [],
+
         preparePostureData: () => {
           // This function will get the current posture data that is ready to be sent to the api
           // we clear the object to avoid duplicity
