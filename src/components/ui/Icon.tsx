@@ -174,12 +174,12 @@ type IconProps = {
 const Icon: React.FC<IconProps> = ({
   name,
   color = theme.colors.text,
-  size = 24,
+  size = 20,
   ...props
 }) => {
   const CustomIcon = IconConfig[name];
 
-  return <CustomIcon {...props} fill={color} width={size} height={size} />;
+  return <CustomIcon {...props} color={color} width={size} height={size} />;
 };
 
 export default Icon;
