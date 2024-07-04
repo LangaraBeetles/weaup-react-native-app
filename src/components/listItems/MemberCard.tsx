@@ -13,8 +13,8 @@ const MemberCard = (props: any) => {
         <Stack flexDirection="row" gap={2} flex={4}>
           <Icon name="challenge-avatar" />
           <View>
-            <Text level="headline">{item.user.name}</Text>
-            <Text level="footnote">{item.points} points</Text>
+            <Text level="headline">{item?.user?.name}</Text>
+            <Text level="footnote">{item?.points} points</Text>
           </View>
         </Stack>
         <Stack
@@ -30,7 +30,7 @@ const MemberCard = (props: any) => {
           flex={1}
         >
           <Icon name="colorLabelIcon-star" />
-          <Text level="callout">{item.user.hp}</Text>
+          <Text level="callout">{item?.user?.hp}</Text>
         </Stack>
       </Stack>
     </View>

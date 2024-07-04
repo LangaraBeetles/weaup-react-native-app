@@ -4,7 +4,7 @@ import { useUser } from "@state/useUser";
 import config from "@src/config";
 
 const api = axios.create({
-  baseURL: config.api,
+  baseURL: config.api_url_local ?? config.api_url,
 });
 
 api.interceptors.request.use(

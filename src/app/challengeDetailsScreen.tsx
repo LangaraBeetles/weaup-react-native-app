@@ -2,6 +2,8 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { useLocalSearchParams, usePathname } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
 
+import dayjs from "dayjs";
+import safenumber from "@src/utils/safenumber";
 import { Text } from "@src/components/ui/typography";
 import ProgressBar from "@src/components/ui/ProgressBar";
 import Stack from "@src/components/ui/Stack";
@@ -18,26 +20,29 @@ const challengeDetails = () => {
   const path = usePathname();
 
   const { data } = useQuery({
-    queryKey: ["getChallengeById"],
+    queryKey: ["getChallengeById", path, id],
     queryFn: () => getChallengeById(id),
     enabled: path === "/challengeDetailsScreen",
-    refetchOnWindowFocus: true,
-    refetchInterval: 0,
   });
 
   const name = data?.data.name;
-  const start = new Date(data?.data.start_at as string);
-  const startMonth = start.toLocaleString("default", { month: "long" });
-  const startDay = start.getDate();
-  const end = new Date(data?.data.end_at as string);
-  const endMonth = end.toLocaleDateString("default", { month: "long" });
-  const endDay = end.getDate();
+  const startAt = dayjs(data?.data?.start_at);
+  const endAt = dayjs(data?.data?.end_at);
+
+  const dateRangeReadable = `From ${startAt.format("MMM DD")} to ${endAt.format("MMM DD")}`;
+  const remainingTime = isOngoing
+    ? `Ends in ${endAt.diff(dayjs(), "days")} days`
+    : `Ended on ${endAt.format("MMM DD")}`;
   const members = data?.data.members;
   const goalPoints =
-    data?.data.goal * data?.data.duration * data?.data.members.length ?? 1;
-  const progress = 0;
-  data?.data.members.reduce((accu: any, curr: any) => accu + curr.points, 0);
-  const percentage = (progress / goalPoints) * 100;
+    safenumber(data?.data.goal) *
+    safenumber(data?.data.duration) *
+    safenumber(data?.data.members.length, 1);
+  const progress = data?.data.members.reduce(
+    (accu: any, curr: any) => accu + curr.points,
+    0,
+  );
+  const percentage = safenumber(progress / goalPoints) * 100;
 
   return (
     <ScrollView style={styles.body}>
@@ -52,15 +57,12 @@ const challengeDetails = () => {
                 <Stack gap={4}>
                   <Text level="title_3">{name}</Text>
                   {isOngoing && (
-                    <Text
-                      level="caption_1"
-                      style={styles.captionDates}
-                    >{`From ${startMonth} ${startDay} to ${endMonth} ${endDay}`}</Text>
+                    <Text level="caption_1" style={styles.captionDates}>
+                      {dateRangeReadable}
+                    </Text>
                   )}
                   <Text level="caption_1" style={styles.captionDates}>
-                    {isOngoing
-                      ? `Ends in ${endDay - new Date().getDate()} days`
-                      : `Ended on ${endMonth} ${endDay}`}
+                    {remainingTime}
                   </Text>
                 </Stack>
               </Stack>
@@ -167,7 +169,7 @@ const styles = StyleSheet.create({
     borderColor: globalStyles.colors.neutral[100],
   },
   captionDates: {
-    color: globalStyles.colors.neutral[500],
+    color: globalStyles.colors.neutral[400],
   },
   captionScores: {
     color: globalStyles.colors.neutral[800],

@@ -1,7 +1,10 @@
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, TouchableOpacity, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
 
+import { Text } from "@src/components/ui/typography";
 import ProgressBar from "@src/components/ui/ProgressBar";
+import safenumber from "@src/utils/safenumber";
+import { globalStyles } from "@src/styles/globalStyles";
 
 const ChallengeCard = (props: any) => {
   const router = useRouter();
@@ -17,15 +20,17 @@ const ChallengeCard = (props: any) => {
   const endMonth = end.toLocaleDateString("default", { month: "long" });
   const endDay = end.getDate();
   const goalPoints =
-    challenge.goal * challenge.duration * challenge.members.length ?? 1;
-  const total = challenge.members.reduce(
-    (accu: any, curr: any) => accu + curr.points,
+    safenumber(challenge.goal, 0) *
+    safenumber(challenge.duration, 0) *
+    safenumber(challenge.members.length, 1);
+  const progress = challenge.members.reduce(
+    (accu: any, curr: any) => accu + safenumber(curr.points),
     0,
   );
 
   const progressBarLabel = (
     <Text>
-      {total}/{goalPoints}
+      {progress}/{goalPoints}
     </Text>
   );
   return (
@@ -38,9 +43,10 @@ const ChallengeCard = (props: any) => {
             : `Ended on ${endMonth} ${endDay} `}
         </Text>
         <ProgressBar
-          currentValue={challenge.progress}
+          currentValue={progress}
           goal={challenge.goal}
           content={progressBarLabel}
+          backgroundColor={globalStyles.colors.neutral[100]}
         />
       </TouchableOpacity>
     </View>

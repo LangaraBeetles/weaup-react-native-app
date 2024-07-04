@@ -116,19 +116,19 @@ const ChallengeDetailsForm = (props: any) => {
               {/* TODO: update colors according to style palette OR create a new component  */}
               <TouchableOpacity
                 style={styles.colorSelection1}
-                onPress={() => setColor(globalStyles.colors.primary)}
+                onPress={() => setColor(globalStyles.colors.error[100])}
               />
               <TouchableOpacity
                 style={styles.colorSelection2}
-                onPress={() => setColor(globalStyles.colors.secondary)}
+                onPress={() => setColor(globalStyles.colors.primary[100])}
               />
               <TouchableOpacity
                 style={styles.colorSelection3}
-                onPress={() => setColor(globalStyles.colors.tertiary)}
+                onPress={() => setColor(globalStyles.colors.secondary[300])}
               />
               <TouchableOpacity
                 style={styles.colorSelection4}
-                onPress={() => setColor(globalStyles.colors.anotations)}
+                onPress={() => setColor(globalStyles.colors.other[50])}
               />
             </Stack>
           </Stack>
@@ -246,25 +246,25 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 100,
-    backgroundColor: globalStyles.colors.primary,
+    backgroundColor: globalStyles.colors.error[100],
   },
   colorSelection2: {
     width: 32,
     height: 32,
     borderRadius: 100,
-    backgroundColor: globalStyles.colors.secondary,
+    backgroundColor: globalStyles.colors.primary[100],
   },
   colorSelection3: {
     width: 32,
     height: 32,
     borderRadius: 100,
-    backgroundColor: globalStyles.colors.tertiary,
+    backgroundColor: globalStyles.colors.secondary[300],
   },
   colorSelection4: {
     width: 32,
     height: 32,
     borderRadius: 100,
-    backgroundColor: globalStyles.colors.anotations,
+    backgroundColor: globalStyles.colors.other[50],
   },
 });
 

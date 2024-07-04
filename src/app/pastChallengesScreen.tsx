@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, View, Text, Image } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, View, Image } from "react-native";
 
+import { Text } from "@src/components/ui/typography";
 import ChallengeList from "@src/components/lists/ChallengeList";
 import Stack from "@src/components/ui/Stack";
 import Chip from "@src/components/ui/Chip";
@@ -16,22 +17,16 @@ const PastChallengesScreen = () => {
   const [sortDesc, setSortDesc] = useState(-1);
   const path = usePathname();
 
-  const { data, refetch } = useQuery({
-    queryKey: ["pastChallenges"],
+  const { data } = useQuery({
+    queryKey: ["pastChallenges", filterStatus, sortDesc],
     queryFn: () => getPastChallenges(filterStatus, sortDesc),
     enabled: path === "/pastChallengesScreen",
-    refetchOnWindowFocus: true,
-    refetchInterval: 0,
   });
 
   const handleSortDesc = () => {
     const sort = sortDesc == 1 ? -1 : 1;
     setSortDesc(sort);
   };
-
-  useEffect(() => {
-    refetch();
-  }, [filterStatus, sortDesc]);
 
   return (
     <View style={styles.container}>
@@ -90,7 +85,7 @@ const PastChallengesScreen = () => {
           <Image source={require("../../assets/img/sortIcon.png")} />
         </Chip>
       </Stack>
-      <ChallengeList challenges={data?.data ?? []}></ChallengeList>
+      <ChallengeList challenges={data?.data ?? []} />
     </View>
   );
 };
