@@ -22,6 +22,7 @@ import CopyFill from "assets/icons/copy-fill.svg";
 import CopyOutline from "assets/icons/copy-outline.svg";
 import Day from "assets/icons/day.svg";
 import Earbuds from "assets/icons/earbuds.svg";
+import EarbudsInactive from "assets/icons/earbuds-inactive.svg";
 import InfoFill from "assets/icons/info-fill.svg";
 import InfoOutline from "assets/icons/info-outline.svg";
 import EditFill from "assets/icons/edit-fill.svg";
@@ -101,6 +102,7 @@ const IconConfig = {
   "copy-outline": CopyOutline,
   day: Day,
   earbuds: Earbuds,
+  "earbuds-inactive": EarbudsInactive,
   "info-fill": InfoFill,
   "info-outline": InfoOutline,
   "edit-fill": EditFill,

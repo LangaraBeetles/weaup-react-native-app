@@ -166,14 +166,16 @@ const SessionControl: React.FC = () => {
 
   return (
     <View>
-      {timerState === "STOPPED" && (
-        <Button
-          title="Start a session"
-          onPress={handlePresentModalPress}
-          variant="secondary"
-          trailingIcon="play"
-        />
-      )}
+      <Stack w={250} pb={40}>
+        {timerState === "STOPPED" && (
+          <Button
+            title="Start a session"
+            onPress={handlePresentModalPress}
+            variant="secondary"
+            trailingIcon="play"
+          />
+        )}
+      </Stack>
 
       {sessionState === "INIT" && <SetTimer onStartSession={onStartSession} />}
 

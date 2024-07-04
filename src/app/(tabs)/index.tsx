@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-import { Platform, Pressable, ScrollView } from "react-native";
+import { Platform, Pressable, ScrollView, StyleSheet } from "react-native";
 import { Link, Redirect } from "expo-router";
 import DeviceMotionViewiOS, {
   DeviceMotionViewAndroid,
@@ -50,11 +50,13 @@ const HomePage = () => {
   }
 
   return (
-    <SafeAreaView style={{ height: "100%" }}>
+    <SafeAreaView style={{ height: "100%", position: "relative" }}>
       <Gradient
         color1={theme.colors.primary[300]}
         color2={theme.colors.white}
+        locations={[0, 0.5]}
       />
+      <Image name="background-happy" style={styles.backgroundImage} />
       <ScrollView>
         <Stack flexDirection="row" justifyContent="space-between" p={15} pb={0}>
           <Stack
@@ -69,7 +71,7 @@ const HomePage = () => {
           >
             {/*TODO: display avatar */}
             <Stack flexDirection="row" gap={4}>
-              {/* <Image source={require("../../../assets/img/avatar.png")} /> */}
+              <Image name="avatar" w={25} h={25} />
               {userName !== "null" ? (
                 <Text
                   style={{ color: theme.colors.neutral[800] }}
@@ -92,11 +94,20 @@ const HomePage = () => {
             <TrackingModeIcon />
 
             <Center>
-              <Link href="/notifications" asChild>
-                <Pressable>
-                  <Icon name={"notification-outline"} />
-                </Pressable>
-              </Link>
+              <Stack
+                backgroundColor={theme.colors.white}
+                h={40}
+                w={40}
+                alignItems="center"
+                justifyContent="center"
+                borderRadius={20}
+              >
+                <Link href="/notifications" asChild>
+                  <Pressable>
+                    <Icon name="notification-outline" />
+                  </Pressable>
+                </Link>
+              </Stack>
             </Center>
           </Stack>
         </Stack>
@@ -122,5 +133,22 @@ const HomePage = () => {
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  backgroundContainer: {
+    position: "relative",
+    overflow: "hidden",
+  },
+  backgroundImage: {
+    position: "absolute",
+    top: 180,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    width: "100%",
+    height: "100%",
+    zIndex: 0,
+  },
+});
 
 export default HomePage;

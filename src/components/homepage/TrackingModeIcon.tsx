@@ -1,23 +1,23 @@
 import { useUser } from "@src/state/useUser";
-import { Image, View } from "react-native";
+import Stack from "../ui/Stack";
+import Icon from "../ui/Icon";
+import { theme } from "@src/styles/theme";
 
 const TrackingModeIcon = () => {
   const mode = useUser((state) => state.mode);
 
-  if (mode === "earbuds") {
-    return <Image source={require("../../../assets/img/earbuds.png")} />;
-  }
-
   return (
-    // TODO: change this to a different icon, or hide completely
-    <View
-      style={{
-        width: 40,
-        height: 40,
-        borderRadius: 25,
-        backgroundColor: "#D9D9D9",
-      }}
-    />
+    <Stack
+      backgroundColor={theme.colors.white}
+      h={40}
+      w={40}
+      borderRadius={20}
+      alignItems="center"
+      justifyContent="center"
+    >
+      {/* <Icon name="earbuds" size={24} color={mode === "earbuds" ? theme.colors.text : theme.colors.white} /> */}
+      <Icon name={mode === "phone" ? "earbuds-inactive" : "earbuds"} />
+    </Stack>
   );
 };
 
