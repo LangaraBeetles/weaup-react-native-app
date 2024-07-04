@@ -34,7 +34,9 @@ const HeadTrackingProvider: React.FC<{ children: React.ReactNode }> = ({
   const interval = useRef<any>(null);
 
   const mode = useUser((state) => state.mode);
-  const isTrackingEnabled = useUser((state) => state.isTrackingEnabled);
+  const isTrackingEnabled = useUser(
+    (state) => state.isTrackingEnabled || state.isSessionActive,
+  );
   const postureStatus = useUser((state) => state.currentPosture);
   const setPosture = useUser((state) => state.setCurrentPosture);
 

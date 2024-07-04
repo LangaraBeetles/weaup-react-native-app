@@ -7,10 +7,10 @@ import { DeviceMotion } from "expo-sensors";
 import { Switch, Text } from "react-native";
 
 export default function DeviceMotionViewiOS() {
-  const isTrackingEnabled = useUser((state) => state.isTrackingEnabled);
+  const isTrackingEnabled = useUser(
+    (state) => state.isTrackingEnabled || state.isSessionActive,
+  );
   const setTrackingEnabled = useUser((state) => state.setTrackingEnabled);
-
-  const isSessionActive = useUser((state) => state.isSessionActive);
 
   const currentPosture = useUser((state) => state.currentPosture);
   const setCurrentPosture = useUser((state) => state.setCurrentPosture);
@@ -79,18 +79,18 @@ export default function DeviceMotionViewiOS() {
       DeviceMotion.removeAllListeners();
     };
 
-    if ((isSessionActive || isTrackingEnabled) && mode === "phone") {
+    if (isTrackingEnabled && mode === "phone") {
       _subscribe();
     }
 
-    if (!isSessionActive && !isTrackingEnabled) {
+    if (!isTrackingEnabled) {
       setCurrentPosture("not_reading");
     }
 
     return () => {
       _unsubscribe();
     };
-  }, [isTrackingEnabled, isSessionActive, mode, currentPosture]);
+  }, [isTrackingEnabled, mode, currentPosture]);
 
   return (
     <Stack
@@ -103,17 +103,15 @@ export default function DeviceMotionViewiOS() {
       p={10}
     >
       <Text>Realtime Tracking</Text>
-      <Switch
-        onValueChange={toggleTracking}
-        value={isTrackingEnabled}
-        disabled={isSessionActive}
-      />
+      <Switch onValueChange={toggleTracking} value={isTrackingEnabled} />
     </Stack>
   );
 }
 
 export function DeviceMotionViewAndroid() {
-  const isTrackingEnabled = useUser((state) => state.isTrackingEnabled);
+  const isTrackingEnabled = useUser(
+    (state) => state.isTrackingEnabled || state.isSessionActive,
+  );
   const setTrackingEnabled = useUser((state) => state.setTrackingEnabled);
 
   const isSessionActive = useUser((state) => state.isSessionActive);

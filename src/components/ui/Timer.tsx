@@ -20,7 +20,7 @@ const TimerDisplay: React.FC<{ timeInSeconds: number }> = ({
 }) => {
   const hours = Math.floor(timeInSeconds / HOUR_IN_SECONDS);
   const minutes = Math.floor(
-    (timeInSeconds % HOUR_IN_SECONDS) / MINUTE_IN_SECONDS
+    (timeInSeconds % HOUR_IN_SECONDS) / MINUTE_IN_SECONDS,
   );
   const seconds = timeInSeconds % MINUTE_IN_SECONDS;
 
@@ -35,9 +35,13 @@ const TimerDisplay: React.FC<{ timeInSeconds: number }> = ({
 const Timer = ({
   onStartCallback,
   onStopCallback,
+  onPauseCallback,
+  onResumeCallback,
 }: {
   onStartCallback: (seconds: number) => void;
   onStopCallback?: () => void;
+  onPauseCallback?: () => void;
+  onResumeCallback?: () => void;
 }) => {
   const timerInterval = useRef<any>();
   const [timeInSeconds, setTimeInSeconds] = useState(-1);
@@ -69,7 +73,6 @@ const Timer = ({
   };
 
   const startTimer = () => {
-    console.log({ timeInHours, timeInMinutes });
     if (timeInHours + timeInMinutes > 0) {
       const seconds = timeInHours * 3600 + timeInMinutes * 60;
       setTimeInSeconds(seconds);
@@ -83,12 +86,20 @@ const Timer = ({
     setShowStopSessionModal(false);
     clearInterval(timerInterval.current);
 
-    setTimeout(() => {
-      setTimeInSeconds(-1);
-      setTimerActive(false);
-      onStopCallback?.();
-      dismissBottomSheet();
-    }, 600);
+    setTimeInSeconds(-1);
+    setTimerActive(false);
+    onStopCallback?.();
+    dismissBottomSheet();
+  };
+
+  const pauseTimer = () => {
+    setShowStopSessionModal(true);
+    onPauseCallback?.();
+  };
+
+  const resumeTimer = () => {
+    setShowStopSessionModal(false);
+    onResumeCallback?.();
   };
 
   useEffect(() => {
@@ -101,10 +112,8 @@ const Timer = ({
           setTimeInSeconds((prevTime) => prevTime - 1);
         },
         1000,
-        showStopSessionModal
+        showStopSessionModal,
       );
-    } else {
-      stopTimer();
     }
 
     return () => {
@@ -119,7 +128,7 @@ const Timer = ({
           <TimerDisplay timeInSeconds={timeInSeconds} />
           <Button
             title="Stop tracking"
-            onPress={() => setShowStopSessionModal(true)}
+            onPress={pauseTimer}
             variant="primary"
           />
         </View>
@@ -136,14 +145,14 @@ const Timer = ({
         transparent={true}
         visible={showStopSessionModal}
         animationType="fade"
-        onRequestClose={() => setShowStopSessionModal(false)}
+        onRequestClose={resumeTimer}
       >
         <View style={styles.modalBackground}>
           <View style={styles.modalContainer}>
             <Text>Are you sure you want to end the session?</Text>
             <Button
               title="Keep Going"
-              onPress={() => setShowStopSessionModal(false)}
+              onPress={resumeTimer}
               variant="primary"
             />
             <Button

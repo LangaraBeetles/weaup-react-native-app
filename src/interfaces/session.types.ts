@@ -1,9 +1,7 @@
 export enum SessionStatesEnum {
-  START = "START",
-  PAUSE = "PAUSE",
-  STOP = "STOP",
-  CANCEL = "CANCEL",
-  INIT = "INIT",
+  ACTIVE = "ACTIVE",
+  PAUSED = "PAUSED",
+  INACTIVE = "INACTIVE",
 }
 
 export enum TimerStatesEnum {
