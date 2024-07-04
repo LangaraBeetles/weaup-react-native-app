@@ -1,8 +1,8 @@
 import {
+  Dimensions,
   Keyboard,
   Modal,
   StyleSheet,
-  Text,
   TextInput,
   TouchableWithoutFeedback,
   View,
@@ -11,6 +11,9 @@ import Button from "./Button";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import CustomBackdrop from "@src/components/ui/CustomBackdrop";
+import { theme } from "@src/styles/theme";
+import TimePicker from "./TimePicker";
+import { Text } from "./typography";
 
 const MINUTE_IN_SECONDS = 60;
 const HOUR_IN_SECONDS = 60 * MINUTE_IN_SECONDS;
@@ -25,12 +28,17 @@ const TimerDisplay: React.FC<{ timeInSeconds: number }> = ({
   const seconds = timeInSeconds % MINUTE_IN_SECONDS;
 
   return (
-    <Text style={styles.text}>
+    <Text level="title_1" style={styles.text}>
       {hours}:{minutes < 10 ? `0${minutes}` : minutes}:
       {seconds < 10 ? `0${seconds}` : seconds}
     </Text>
   );
 };
+
+const hoursData = Array.from({ length: 24 }, (_, i) => i.toString());
+const minutesData = Array.from({ length: 6 }, (_, i) => (i * 10).toString());
+
+const { width, height } = Dimensions.get("window");
 
 const Timer = ({
   onStartCallback,
@@ -172,6 +180,31 @@ const Timer = ({
       >
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
           <View style={styles.bottomSheetContainer}>
+            <View style={styles.pickerContainer}>
+              <View style={styles.pickerOverlay} />
+              <View style={styles.pickerColumn}>
+                <TimePicker
+                  data={hoursData}
+                  onValueChange={(value) => setTimeInHours(Number(value))}
+                />
+                <Text level="title_3" align="center" style={styles.pickerLabel}>
+                  hours
+                </Text>
+              </View>
+              <View style={styles.pickerColumn}>
+                <TimePicker
+                  data={minutesData}
+                  onValueChange={(value) => setTimeInMinutes(Number(value))}
+                />
+                <Text level="title_3" align="center" style={styles.pickerLabel}>
+                  mins
+                </Text>
+              </View>
+            </View>
+            <TimePicker
+              data={hoursData}
+              onValueChange={(value) => setTimeInHours(Number(value))}
+            />
             <Text>Hours:</Text>
             <TextInput
               style={styles.input}
@@ -204,11 +237,14 @@ const Timer = ({
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 60,
     alignItems: "center",
     justifyContent: "center",
   },
   text: {
-    fontSize: 48,
+    fontSize: 60,
+    lineHeight: 90,
+    color: theme.colors.secondary[600],
   },
   bottomSheetContainer: {
     flex: 1,
@@ -237,6 +273,37 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     gap: 8,
+  },
+  pickerColumn: {
+    flexDirection: "row",
+    gap: width * 0.02,
+    alignItems: "center",
+    marginHorizontal: width * 0.1,
+  },
+  pickerTitle: {
+    paddingBottom: height * 0.02,
+    backgroundColor: "white",
+    marginHorizontal: width * 0.1,
+  },
+  pickerLabel: {
+    marginLeft: width * 0.04,
+  },
+  pickerContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginVertical: height * 0.02,
+    marginTop: height * -0.08,
+    zIndex: -1,
+  },
+  pickerOverlay: {
+    position: "absolute",
+    top: 83,
+    left: width * 0.025,
+    right: width * 0.025,
+    height: height * 0.06,
+    backgroundColor: "#FDD4625A",
+    borderRadius: 10,
+    zIndex: 1,
   },
 });
 

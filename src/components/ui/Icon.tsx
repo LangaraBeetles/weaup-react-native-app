@@ -1,3 +1,6 @@
+import React from "react";
+import { SvgProps } from "react-native-svg";
+
 import ArrowLeft from "assets/icons/arrow-left.svg";
 import ArrowRight from "assets/icons/arrow-right.svg";
 import Add from "assets/icons/add.svg";
@@ -158,17 +161,23 @@ const IconConfig = {
   "challenge-avatar": ChallengeAvatar,
 };
 
-export type IconName = `${keyof typeof IconConfig}`;
+export type IconName = keyof typeof IconConfig;
 
 type IconProps = {
   name: IconName;
   color?: string;
-};
+  size?: number;
+} & Omit<SvgProps, "color">;
 
-const Icon: React.FC<IconProps> = ({ name, color = theme.colors.text }) => {
+const Icon: React.FC<IconProps> = ({
+  name,
+  color = theme.colors.text,
+  size = 24,
+  ...props
+}) => {
   const CustomIcon = IconConfig[name];
 
-  return <CustomIcon color={color} />;
+  return <CustomIcon {...props} fill={color} width={size} height={size} />;
 };
 
 export default Icon;

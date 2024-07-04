@@ -70,7 +70,7 @@ export default Button;
 
 const ButtonRoot = styled(Pressable, {
   paddingHorizontal: 48,
-  paddingVertical: 20,
+  paddingVertical: 16,
   minWidth: "100%",
   display: "flex",
   flexDirection: "row",
@@ -87,8 +87,9 @@ const ButtonRoot = styled(Pressable, {
         borderColor: theme.colors.error[500],
       },
       tertiary: {
-        backgroundColor: theme.colors.error[500],
+        backgroundColor: "transparent",
         borderColor: theme.colors.error[500],
+        borderWidth: 2,
       },
       disabled: {
         backgroundColor: theme.colors.neutral[100],
@@ -125,7 +126,7 @@ const ButtonRoot = styled(Pressable, {
 const ButtonText = styled(Text, {
   fontSize: 20,
   fontFamily: "NunitoBold",
-  lineHeight: 26,
+  lineHeight: 24,
   variants: {
     category: {
       primary: {
@@ -138,7 +139,7 @@ const ButtonText = styled(Text, {
         color: theme.colors.error[500],
       },
       tertiary: {
-        color: theme.colors.white,
+        color: theme.colors.error[500],
       },
       disabled: {
         color: theme.colors.neutral[300],
