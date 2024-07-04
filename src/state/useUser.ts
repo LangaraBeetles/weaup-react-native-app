@@ -78,6 +78,8 @@ export const useUser = create<UserState>()(
                   { status: value, date: new Date() },
                 ],
               }));
+            } else {
+              set({ currentPosture: value });
             }
           } else {
             set({ currentPosture: value });

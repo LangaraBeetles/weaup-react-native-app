@@ -33,7 +33,7 @@ const PostureDataProvider: React.FC<{ children: React.ReactNode }> = ({
             .filter((p) => !!p.status && !!p.date)
             .map((p) => ({
               good_posture: p.status === "good",
-              recorded_at: p?.date?.toISOString(),
+              recorded_at: p?.date?.toISOString?.(),
             }));
 
           console.log({

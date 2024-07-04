@@ -7,6 +7,8 @@ import { DeviceMotion } from "expo-sensors";
 import { Switch, Text } from "react-native";
 
 export default function DeviceMotionViewiOS() {
+  const isRealTimeTracking = useUser((state) => state.isTrackingEnabled);
+
   const isTrackingEnabled = useUser(
     (state) => state.isTrackingEnabled || state.isSessionActive,
   );
@@ -17,7 +19,7 @@ export default function DeviceMotionViewiOS() {
   const mode = useUser((state) => state.mode);
 
   const toggleTracking = () => {
-    const value = !isTrackingEnabled;
+    const value = !isRealTimeTracking;
 
     if (!value) {
       setCurrentPosture("not_reading");
@@ -26,8 +28,6 @@ export default function DeviceMotionViewiOS() {
     }
     setTrackingEnabled(value);
   };
-
-  console.log({ currentPosture });
 
   useEffect(() => {
     const _subscribe = async () => {
@@ -103,18 +103,18 @@ export default function DeviceMotionViewiOS() {
       p={10}
     >
       <Text>Realtime Tracking</Text>
-      <Switch onValueChange={toggleTracking} value={isTrackingEnabled} />
+      <Switch onValueChange={toggleTracking} value={isRealTimeTracking} />
     </Stack>
   );
 }
 
 export function DeviceMotionViewAndroid() {
+  const isRealTimeTracking = useUser((state) => state.isTrackingEnabled);
+
   const isTrackingEnabled = useUser(
     (state) => state.isTrackingEnabled || state.isSessionActive,
   );
   const setTrackingEnabled = useUser((state) => state.setTrackingEnabled);
-
-  const isSessionActive = useUser((state) => state.isSessionActive);
 
   const setCurrentPosture = useUser((state) => state.setCurrentPosture);
 
@@ -125,7 +125,7 @@ export function DeviceMotionViewAndroid() {
   const [orientation, setOrientation] = useState<number>(0);
 
   const toggleTracking = () => {
-    const value = !isTrackingEnabled;
+    const value = !isRealTimeTracking;
 
     if (!value) {
       setCurrentPosture("not_reading");
@@ -137,7 +137,7 @@ export function DeviceMotionViewAndroid() {
 
   // Manage device motion subscription
   useEffect(() => {
-    if (isSessionActive || isTrackingEnabled) {
+    if (isTrackingEnabled) {
       _subscribe();
     } else {
       _unsubscribe();
@@ -146,7 +146,7 @@ export function DeviceMotionViewAndroid() {
     return () => {
       _unsubscribe();
     };
-  }, [isSessionActive, isTrackingEnabled]);
+  }, [isTrackingEnabled]);
 
   const _subscribe = async () => {
     try {
@@ -169,7 +169,7 @@ export function DeviceMotionViewAndroid() {
 
   // Provide feedback based on posture
   useEffect(() => {
-    if (!isSessionActive && !isTrackingEnabled) {
+    if (!isTrackingEnabled) {
       setCurrentPosture("not_reading");
       return;
     }
@@ -185,7 +185,7 @@ export function DeviceMotionViewAndroid() {
     } else {
       setCurrentPosture("good");
     }
-  }, [beta, gamma, isSessionActive, isTrackingEnabled]);
+  }, [beta, gamma, isTrackingEnabled]);
 
   const isBadPosture = () => {
     return (
@@ -209,11 +209,7 @@ export function DeviceMotionViewAndroid() {
       p={10}
     >
       <Text>Realtime Tracking</Text>
-      <Switch
-        onValueChange={toggleTracking}
-        value={isTrackingEnabled}
-        disabled={isSessionActive}
-      />
+      <Switch onValueChange={toggleTracking} value={isRealTimeTracking} />
     </Stack>
   );
 }

@@ -27,6 +27,9 @@ const SessionControl = () => {
     records: [],
   });
 
+  const currentPosture = useUser((state) => state.currentPosture);
+  const setSessionActive = useUser((state) => state.setSessionActive);
+
   const { isPending, mutate } = useMutation({
     mutationKey: ["save-session-data"],
     mutationFn: (payload: PostureSessionInput) => saveSessionRecords(payload),
@@ -37,11 +40,9 @@ const SessionControl = () => {
     },
     onError: (error) => {
       console.log({ error });
+      setSessionActive(false);
     },
   });
-
-  const currentPosture = useUser((state) => state.currentPosture);
-  const setSessionActive = useUser((state) => state.setSessionActive);
 
   const onStartSession = () => {
     setSessionState("ACTIVE");
