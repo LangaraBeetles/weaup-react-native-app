@@ -8,7 +8,7 @@ const route = "challenges";
 
 export const getChallengeById = async (id: string) => {
   const response = await api.get(`${route}/${id}`);
-  return response;
+  return response.data;
 };
 
 export const createChallenge = async (challenge: ChallengeInputType) => {
@@ -16,12 +16,23 @@ export const createChallenge = async (challenge: ChallengeInputType) => {
   return response.data;
 };
 
-export const getChallenges = async (filterUser: boolean) => {
-  const response = await api.get(`${route}/?filterUser=${filterUser}`);
+export const getOngoingChallenges = async (
+  filterUser: boolean,
+  sortDesc: number,
+) => {
+  const response = await api.get(
+    `${route}/?showOngoing=true&sortDesc=${sortDesc}&filterUser=${filterUser}`,
+  );
   return response.data;
 };
 
-export const getPastChallenges = async (status: ChallengeStatusEnum) => {
-  const response = await api.get(`${route}/?filterStatus=${status}`);
+export const getPastChallenges = async (
+  filterStatus: ChallengeStatusEnum | undefined,
+  sortDesc: number,
+) => {
+  const status = filterStatus ? `&filterStatus=${filterStatus}` : ``;
+  const response = await api.get(
+    `${route}/?showOngoing=false&sortDesc=${sortDesc}${status}`,
+  );
   return response.data;
 };
