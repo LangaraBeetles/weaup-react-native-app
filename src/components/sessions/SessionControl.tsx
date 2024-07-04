@@ -144,6 +144,7 @@ const SessionControl: React.FC = () => {
                 title="Start Session"
                 onPress={() => onStartSession(timeInHours, timeInMinutes)}
                 variant="primary"
+                disabled={timeInHours === 0 && timeInMinutes === 0}
               />
             </View>
           </View>

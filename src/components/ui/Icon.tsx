@@ -167,7 +167,7 @@ type IconProps = {
 
 const Icon: React.FC<IconProps> = ({
   name,
-  color = theme.colors.text,
+  color = theme.colors.neutral[800],
   size = 24,
   ...props
 }) => {
