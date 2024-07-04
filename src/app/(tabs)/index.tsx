@@ -18,6 +18,7 @@ import { Text } from "@src/components/ui/typography";
 
 import LottieView from "lottie-react-native";
 import { useRef } from "react";
+import { Picker } from "react-native-wheel-pick";
 
 const background = {
   not_reading: "white",
@@ -164,6 +165,22 @@ const HomePage = () => {
         </Center>
         <View style={{ width: "100%", height: 300 }}>
           <Center>
+            <Picker
+              style={{ backgroundColor: "white", width: 300, height: 215 }}
+              selectedValue="item4"
+              pickerData={[
+                "item1",
+                "item2",
+                "item3",
+                "item4",
+                "item5",
+                "item6",
+                "item7",
+              ]}
+              onValueChange={(value: string) => {
+                console.log(value);
+              }}
+            />
             {Platform.OS === "ios" ? (
               <LottieView
                 autoPlay={false}

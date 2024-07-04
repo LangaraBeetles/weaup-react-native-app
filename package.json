@@ -55,6 +55,7 @@
     "react-native-share": "^10.2.1",
     "react-native-svg": "15.3.0",
     "react-native-svg-charts": "^5.4.0",
+    "react-native-wheel-pick": "^1.2.2",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
@@ -62,6 +63,8 @@
     "@babel/plugin-transform-react-jsx-source": "^7.24.6",
     "@eslint/compat": "^1.1.0",
     "@eslint/js": "^9.5.0",
+    "@react-native-community/datetimepicker": "^8.1.1",
+    "@react-native-picker/picker": "^2.7.7",
     "@types/d3-shape": "^3.1.6",
     "@types/react": "~18.2.45",
     "@types/react-native-svg-charts": "^5.0.16",
