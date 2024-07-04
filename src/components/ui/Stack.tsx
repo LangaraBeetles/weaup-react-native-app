@@ -31,6 +31,7 @@ const Stack = styled(View, {
     w: "width",
     h: "height",
     flex: "flex",
+    backgroundColor: "backgroundColor",
   },
 });
 

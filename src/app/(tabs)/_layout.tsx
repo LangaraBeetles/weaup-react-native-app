@@ -1,12 +1,17 @@
 import { Tabs } from "expo-router";
 import Icon from "@src/components/ui/Icon";
+import { Text } from "@src/components/ui/typography";
+import { theme } from "@src/styles/theme";
 
 const TabsLayout = () => {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: "#363430",
-        tabBarInactiveTintColor: "#363430",
+        tabBarActiveTintColor: theme.colors.neutral[700],
+        tabBarInactiveTintColor: theme.colors.neutral[700],
+        tabBarStyle: {
+          height: 60,
+        },
       }}
     >
       <Tabs.Screen
@@ -19,7 +24,19 @@ const TabsLayout = () => {
               name={
                 focused ? "navbar-home-selected" : "navbar-home-notselected"
               }
+              style={{ marginTop: 6 }}
             />
+          ),
+          tabBarLabel: ({ focused }) => (
+            <Text
+              level="footnote"
+              style={{
+                fontWeight: focused ? "700" : "400",
+                marginBottom: 6,
+              }}
+            >
+              Home
+            </Text>
           ),
         }}
       />
@@ -35,7 +52,19 @@ const TabsLayout = () => {
                   ? "navbar-together-selected"
                   : "navbar-together-notselected"
               }
+              style={{ marginTop: 6 }}
             />
+          ),
+          tabBarLabel: ({ focused }) => (
+            <Text
+              level="footnote"
+              style={{
+                fontWeight: focused ? "700" : "400",
+                marginBottom: 6,
+              }}
+            >
+              Together
+            </Text>
           ),
         }}
       />
@@ -52,7 +81,19 @@ const TabsLayout = () => {
                   ? "navbar-analytics-selected"
                   : "navbar-analytics-notselected"
               }
+              style={{ marginTop: 6 }}
             />
+          ),
+          tabBarLabel: ({ focused }) => (
+            <Text
+              level="footnote"
+              style={{
+                fontWeight: focused ? "700" : "400",
+                marginBottom: 6,
+              }}
+            >
+              Analytics
+            </Text>
           ),
         }}
       />
@@ -68,7 +109,19 @@ const TabsLayout = () => {
                   ? "navbar-profile-selected"
                   : "navbar-profile-notselected"
               }
+              style={{ marginTop: 6 }}
             />
+          ),
+          tabBarLabel: ({ focused }) => (
+            <Text
+              level="footnote"
+              style={{
+                fontWeight: focused ? "700" : "400",
+                marginBottom: 6,
+              }}
+            >
+              Profile
+            </Text>
           ),
         }}
       />

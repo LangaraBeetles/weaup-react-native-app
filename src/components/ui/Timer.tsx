@@ -274,6 +274,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 8,
   },
+  pickerContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginVertical: height * 0.02,
+    marginTop: height * -0.08,
+    zIndex: -1,
+  },
   pickerColumn: {
     flexDirection: "row",
     gap: width * 0.02,
@@ -288,12 +295,9 @@ const styles = StyleSheet.create({
   pickerLabel: {
     marginLeft: width * 0.04,
   },
-  pickerContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    marginVertical: height * 0.02,
-    marginTop: height * -0.08,
-    zIndex: -1,
+  button: {
+    marginTop: height * 0.02,
+    height: 56,
   },
   pickerOverlay: {
     position: "absolute",

@@ -4,7 +4,9 @@ import Stack from "@src/components/ui/Stack";
 import { useUser } from "@src/state/useUser";
 import * as Haptics from "expo-haptics";
 import { DeviceMotion } from "expo-sensors";
-import { Switch, Text } from "react-native";
+import { Switch } from "react-native";
+import { Text } from "@src/components/ui/typography";
+import { theme } from "@src/styles/theme";
 
 export default function DeviceMotionViewiOS() {
   const isRealTimeTracking = useUser((state) => state.isTrackingEnabled);
@@ -101,9 +103,10 @@ export default function DeviceMotionViewiOS() {
       alignItems="center"
       w="100%"
       p={10}
+      backgroundColor="white"
     >
-      <Text>Realtime Tracking</Text>
-      <Switch onValueChange={toggleTracking} value={isRealTimeTracking} />
+      <Text>Active Monitoring</Text>
+      <Switch onValueChange={toggleTracking} value={isTrackingEnabled} />
     </Stack>
   );
 }
@@ -201,15 +204,18 @@ export function DeviceMotionViewAndroid() {
   return (
     <Stack
       flexDirection="row"
-      border={1}
-      borderRadius={20}
+      borderRadius={12}
       justifyContent="space-between"
       alignItems="center"
       w="100%"
-      p={10}
+      py={10}
+      px={24}
+      backgroundColor={theme.colors.white}
     >
-      <Text>Realtime Tracking</Text>
-      <Switch onValueChange={toggleTracking} value={isRealTimeTracking} />
+      <Text level="footnote" weight="semibold">
+        Active Monitoring
+      </Text>
+      <Switch onValueChange={toggleTracking} value={isTrackingEnabled} />
     </Stack>
   );
 }

@@ -9,8 +9,8 @@ const ScoreComponent = () => {
   const userHP = useUser((state) => state.user.hp);
   const userXP = useUser((state) => state.user.xp);
   const userStreak = useUser((state) => state.user.dailyStreakCounter);
-  //   const isSessionActive = useUser((state) => state.isSessionActive);
-  const isSessionActive = true;
+  const isSessionActive = useUser((state) => state.isSessionActive);
+  // const isSessionActive = false;
 
   if (!isSessionActive) {
     return (

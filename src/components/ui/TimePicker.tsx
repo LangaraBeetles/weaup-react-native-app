@@ -16,7 +16,7 @@ const TimePicker: React.FC<TimePickerProps> = ({ data, onValueChange }) => {
   };
 
   useEffect(() => {
-    onValueChange(selectedValue); // Initialize with the first value
+    onValueChange(selectedValue);
   }, []);
 
   return (
