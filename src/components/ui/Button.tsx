@@ -8,7 +8,12 @@ import Icon, { IconName } from "@src/components/ui/Icon";
 const Button: React.FC<{
   title: string;
   onPress: () => void;
-  variant?: "primary" | "secondary" | "secondary_coral" | "tertiary";
+  variant?:
+    | "primary"
+    | "secondary"
+    | "secondary_coral"
+    | "tertiary"
+    | "disabled";
   disabled?: boolean;
   leadingIcon?: IconName;
   trailingIcon?: IconName;
