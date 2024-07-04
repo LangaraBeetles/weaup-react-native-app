@@ -97,16 +97,22 @@ export default function DeviceMotionViewiOS() {
   return (
     <Stack
       flexDirection="row"
-      border={1}
       borderRadius={20}
       justifyContent="space-between"
       alignItems="center"
       w="100%"
-      p={10}
+      py={10}
+      px={24}
       backgroundColor="white"
     >
       <Text>Active Monitoring</Text>
-      <Switch onValueChange={toggleTracking} value={isTrackingEnabled} />
+      <Switch
+        trackColor={{
+          true: theme.colors.secondary[600],
+        }}
+        onValueChange={toggleTracking}
+        value={isTrackingEnabled}
+      />
     </Stack>
   );
 }
@@ -215,7 +221,13 @@ export function DeviceMotionViewAndroid() {
       <Text level="footnote" weight="semibold">
         Active Monitoring
       </Text>
-      <Switch onValueChange={toggleTracking} value={isTrackingEnabled} />
+      <Switch
+        onValueChange={toggleTracking}
+        trackColor={{
+          true: theme.colors.secondary[600],
+        }}
+        value={isTrackingEnabled}
+      />
     </Stack>
   );
 }

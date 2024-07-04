@@ -3,7 +3,6 @@ import {
   Keyboard,
   Modal,
   StyleSheet,
-  TextInput,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
@@ -205,26 +204,9 @@ const Timer = ({
               data={hoursData}
               onValueChange={(value) => setTimeInHours(Number(value))}
             />
-            <Text>Hours:</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={(text) => setTimeInHours(Number(text))}
-              // value={timeInHours.toString()}
-              placeholder="Hours"
-              keyboardType="numeric"
-              defaultValue="0"
-            />
-            <Text>Minutes:</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={(text) => setTimeInMinutes(Number(text))}
-              // value={timeInMinutes.toString()}
-              defaultValue="0"
-              placeholder="Minutes"
-              keyboardType="numeric"
-            />
+
             <Button
-              title="Start Session"
+              title="Start a session"
               onPress={startTimer}
               variant="primary"
             />
