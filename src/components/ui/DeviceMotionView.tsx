@@ -27,6 +27,8 @@ export default function DeviceMotionViewiOS() {
     setTrackingEnabled(value);
   };
 
+  console.log({ currentPosture });
+
   useEffect(() => {
     const _subscribe = async () => {
       try {
@@ -81,7 +83,7 @@ export default function DeviceMotionViewiOS() {
       _subscribe();
     }
 
-    if (!isTrackingEnabled) {
+    if (!isSessionActive && !isTrackingEnabled) {
       setCurrentPosture("not_reading");
     }
 

@@ -28,6 +28,7 @@ import { saveSessionRecords } from "@src/services/sessionApi";
 import { useUser } from "@src/state/useUser";
 
 const SessionControl = () => {
+  const sessionInterval = useRef<any>();
   const [sessionState, setSessionState] =
     useState<SessionStatesType["SessionStatesEnum"]>("STOP");
   const [timerState, setTimerState] =
@@ -105,6 +106,7 @@ const SessionControl = () => {
       records: postureData,
     };
 
+    console.log({ payload });
     saveSessionRecords(payload);
     setPostureData([]);
     setSessionActive(false);
@@ -156,11 +158,12 @@ const SessionControl = () => {
     );
   };
 
+  console.log({ sessionState, sessionInterval });
   useEffect(() => {
-    let interval: NodeJS.Timeout;
+    // let interval: NodeJS.Timeout;
 
-    const checkPosture = () => {
-      console.log("Checking posture", currentPosture);
+    const checkPosture = (_posture: any) => {
+      console.log("Checking posture", _posture);
       const posture = {
         good_posture: currentPosture === "good",
         recorded_at: new Date().toISOString(),
@@ -169,15 +172,30 @@ const SessionControl = () => {
     };
 
     if (sessionState === "START" && timerState === "RUNNING") {
-      interval = setInterval(() => {
-        checkPosture();
-      }, 2000);
+      console.log("interval", sessionInterval.current);
+      sessionInterval.current = setInterval(
+        (_state, _posture) => {
+          console.log("interval", _state);
+          checkPosture(_posture);
+        },
+        2000,
+        sessionState,
+        currentPosture,
+      );
+    }
+
+    if (sessionState === "STOP") {
+      if (sessionInterval.current) {
+        clearInterval(sessionInterval.current);
+      }
     }
 
     return () => {
-      clearInterval(interval);
+      if (sessionInterval.current) {
+        clearInterval(sessionInterval.current);
+      }
     };
-  }, [sessionState, timerState, currentPosture]);
+  }, [sessionState, timerState, currentPosture, sessionInterval]);
 
   useEffect(() => {
     if (sessionState === "START" && timeInSeconds === 0) {
