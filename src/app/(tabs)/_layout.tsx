@@ -44,6 +44,7 @@ const TabsLayout = () => {
         options={{
           headerTitle: "Analytics",
           title: "Analytics",
+          headerShown: false,
           tabBarIcon: ({ focused }) => (
             <Icon
               name={

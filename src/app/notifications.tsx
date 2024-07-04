@@ -133,8 +133,12 @@ const Notifications = () => {
       </View>
       <View>
         <FilterMenu
-          selectedFilter={selectedFilter}
-          setSelectedFilter={setSelectedFilter}
+          tabs={[
+            { value: "All", label: "All" },
+            { value: "Summary", label: "Summary" },
+            { value: "Challenge", label: "Challenge" },
+          ]}
+          onChange={setSelectedFilter}
         />
       </View>
       <View style={styles.notificationsContainer}>
