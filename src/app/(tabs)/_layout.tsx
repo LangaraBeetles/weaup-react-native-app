@@ -1,13 +1,14 @@
 import { Tabs } from "expo-router";
 import Icon from "@src/components/ui/Icon";
 import { Text } from "@src/components/ui/typography";
+import { theme } from "@src/styles/theme";
 
 const TabsLayout = () => {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: "#363430",
-        tabBarInactiveTintColor: "#363430",
+        tabBarActiveTintColor: theme.colors.neutral[700],
+        tabBarInactiveTintColor: theme.colors.neutral[700],
         tabBarStyle: {
           height: 60,
         },

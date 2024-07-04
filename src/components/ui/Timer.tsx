@@ -34,7 +34,7 @@ const Timer: React.FC<{
   return (
     <Stack alignItems="center">
       <TimerDisplay timeInSeconds={timeInSeconds} />
-      <Stack w={230}>
+      <Stack w={230} pb={50}>
         <Button title="End session" onPress={handleStop} variant="tertiary" />
       </Stack>
     </Stack>
