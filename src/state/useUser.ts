@@ -17,6 +17,9 @@ type UserState = {
   postureData: Array<{ status: PostureStatus; date: Date }>;
   preparePostureData: () => Array<{ status: PostureStatus; date: Date }>;
 
+  sessionPostureData: Array<{ status: PostureStatus; date: Date }>;
+  prepareSessionPostureData: () => Array<{ status: PostureStatus; date: Date }>;
+
   isAuth: boolean;
   isGuest: boolean;
   user: UserType;
@@ -70,7 +73,17 @@ export const useUser = create<UserState>()(
           const isSession = get().isSessionActive;
 
           if (value === "bad" || value === "good") {
-            if (!isSession) {
+            if (isSession) {
+              // Session
+              set((state) => ({
+                currentPosture: value,
+                sessionPostureData: [
+                  ...state.sessionPostureData,
+                  { status: value, date: new Date() },
+                ],
+              }));
+            } else {
+              // Real-time tracking
               set((state) => ({
                 currentPosture: value,
                 postureData: [
@@ -78,8 +91,6 @@ export const useUser = create<UserState>()(
                   { status: value, date: new Date() },
                 ],
               }));
-            } else {
-              set({ currentPosture: value });
             }
           } else {
             set({ currentPosture: value });
@@ -174,6 +185,14 @@ export const useUser = create<UserState>()(
 
         isSessionActive: false,
         setSessionActive: (isActive) => set({ isSessionActive: isActive }),
+        sessionPostureData: [],
+        prepareSessionPostureData: () => {
+          // This function will get the current posture data that is ready to be sent to the api
+          // we clear the object to avoid duplicity
+          const data = get().sessionPostureData;
+          set({ sessionPostureData: [] });
+          return data;
+        },
       }),
       {
         storage: createJSONStorage(() => AsyncStorage),

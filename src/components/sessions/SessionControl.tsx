@@ -1,34 +1,21 @@
 import { View } from "react-native";
-import React, { useEffect, useRef, useState } from "react";
-import { SessionStatesType } from "@src/interfaces/session.types";
+import React, { useRef } from "react";
 import Timer from "@src/components/ui/Timer";
 import { useRouter } from "expo-router";
-import {
-  PostureSessionInput,
-  PostureSessionRecord,
-} from "@src/interfaces/posture.types";
+import { PostureSessionInput } from "@src/interfaces/posture.types";
 import { saveSessionRecords } from "@src/services/sessionApi";
 import { useUser } from "@src/state/useUser";
 import { useMutation } from "@tanstack/react-query";
 import { Text } from "@src/components/ui/typography";
 
 const SessionControl = () => {
-  const sessionInterval = useRef<any>();
   const router = useRouter();
+  const startDate = useRef<string>("");
 
-  const [sessionState, setSessionState] =
-    useState<SessionStatesType["SessionStatesEnum"]>("INACTIVE");
-
-  const sessionData = useRef<{
-    startDate: string;
-    records: Array<PostureSessionRecord>;
-  }>({
-    startDate: "",
-    records: [],
-  });
-
-  const currentPosture = useUser((state) => state.currentPosture);
   const setSessionActive = useUser((state) => state.setSessionActive);
+  const prepareSessionPostureData = useUser(
+    (state) => state.prepareSessionPostureData,
+  );
 
   const { isPending, mutate } = useMutation({
     mutationKey: ["save-session-data"],
@@ -42,74 +29,37 @@ const SessionControl = () => {
       console.log({ error });
       setSessionActive(false);
     },
+    onSettled: () => {},
   });
 
   const onStartSession = () => {
-    setSessionState("ACTIVE");
     setSessionActive(true);
-    sessionData.current = {
-      startDate: new Date().toISOString(),
-      records: [],
-    };
+    startDate.current = new Date().toISOString();
   };
 
   const onPauseSession = () => {
-    setSessionState("PAUSED");
     setSessionActive(false);
   };
 
   const onResumeSession = () => {
-    setSessionState("ACTIVE");
     setSessionActive(true);
   };
 
   const onStopSession = () => {
-    setSessionState("INACTIVE");
     setSessionActive(false);
 
+    const records = prepareSessionPostureData();
     const payload: PostureSessionInput = {
-      started_at: sessionData.current.startDate,
+      started_at: startDate.current,
       ended_at: new Date().toISOString(),
-      records: sessionData.current.records,
+      records: records?.map((data) => ({
+        good_posture: data.status === "good",
+        recorded_at: data?.date?.toISOString?.(),
+      })),
     };
 
     mutate(payload);
   };
-
-  useEffect(() => {
-    const checkPosture = (_posture: any) => {
-      console.log("[SESSION] Checking posture", _posture);
-      const posture = {
-        good_posture: _posture === "good",
-        recorded_at: new Date().toISOString(),
-      };
-      sessionData.current.records.push(posture);
-    };
-
-    if (sessionState === "ACTIVE") {
-      sessionInterval.current = setInterval(
-        (_posture) => {
-          if (_posture === "good" || _posture === "bad") {
-            checkPosture(_posture);
-          }
-        },
-        2000,
-        currentPosture,
-      );
-    }
-
-    if (sessionState === "INACTIVE") {
-      if (sessionInterval.current) {
-        clearInterval(sessionInterval.current);
-      }
-    }
-
-    return () => {
-      if (sessionInterval.current) {
-        clearInterval(sessionInterval.current);
-      }
-    };
-  }, [sessionState, currentPosture, sessionInterval]);
 
   return (
     <View>
