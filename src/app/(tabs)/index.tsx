@@ -28,15 +28,15 @@ import ScoreComponent from "@src/components/homepage/ScoreComponent";
 import Gradient from "@src/components/ui/Gradient";
 import Image from "@src/components/ui/Image";
 
-const { width, height } = Dimensions.get("screen");
+const { height } = Dimensions.get("screen");
 
 const HomePage = () => {
   const isSetupComplete = useUser((state) => state.isSetupComplete);
   const userName = useUser((state) => state.user.name);
   const userLevel = useUser((state) => state.user.level);
   const currentPosture = useUser((state) => state.currentPosture);
-  // const isSessionActive = useUser((state) => state.isSessionActive);
-  const isSessionActive = false;
+  const isSessionActive = useUser((state) => state.isSessionActive);
+
   const animation = useRef<any>(null);
 
   useEffect(() => {
@@ -163,10 +163,8 @@ const styles = StyleSheet.create({
     zIndex: 0,
   },
   sessionButton: {
-    position: "absolute",
-    bottom: height * -0.08,
-    left: width * 0.15,
-    zIndex: 3,
+    width: 250,
+    marginHorizontal: "auto",
   },
 });
 
