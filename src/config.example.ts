@@ -6,7 +6,7 @@ const config = {
     region: "",
   },
   api_url: "",
-  dev_mode: true,
+  api_url_local: "",
 };
 
 export default config;

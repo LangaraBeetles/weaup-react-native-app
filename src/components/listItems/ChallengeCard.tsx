@@ -1,40 +1,36 @@
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, TouchableOpacity, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
 
+import { Text } from "@src/components/ui/typography";
 import ProgressBar from "@src/components/ui/ProgressBar";
+import safenumber from "@src/utils/safenumber";
+import { globalStyles } from "@src/styles/globalStyles";
 
 const ChallengeCard = (props: any) => {
   const router = useRouter();
   const { challenge, isOngoing } = props;
 
   const showDetails = () => {
-    router.navigate({
+    router.push({
       pathname: "challengeDetailsScreen",
-      //TODO: get the challengeId only, then make a GET request from the challenge API. Will be done on ChallengeDetail ticket# 86b11cydp
-      params: {
-        name: challenge.name,
-        startDate: challenge.start_at,
-        endDate: challenge.end_at,
-        goal: challenge.goal,
-        progress: challenge.progress,
-        isOngoing: isOngoing,
-      },
+      params: { id: challenge._id, isOngoing: isOngoing },
     });
   };
   const end = new Date(challenge.end_at);
   const endMonth = end.toLocaleDateString("default", { month: "long" });
   const endDay = end.getDate();
-
   const goalPoints =
-    challenge.goal * challenge.duration * challenge.members.length ?? 1;
-  const total = challenge.members.reduce(
-    (accu: any, curr: any) => accu + curr.points,
+    safenumber(challenge.goal, 0) *
+    safenumber(challenge.duration, 0) *
+    safenumber(challenge.members.length, 1);
+  const progress = challenge.members.reduce(
+    (accu: any, curr: any) => accu + safenumber(curr.points),
     0,
   );
 
   const progressBarLabel = (
     <Text>
-      {total}/{goalPoints}
+      {progress}/{goalPoints}
     </Text>
   );
   return (
@@ -43,13 +39,14 @@ const ChallengeCard = (props: any) => {
         <Text>{challenge.name}</Text>
         <Text>
           {isOngoing
-            ? `${challenge.duration} days left`
+            ? `${endDay - new Date().getDate()} days left`
             : `Ended on ${endMonth} ${endDay} `}
         </Text>
         <ProgressBar
-          currentValue={challenge.progress}
+          currentValue={progress}
           goal={challenge.goal}
           content={progressBarLabel}
+          backgroundColor={globalStyles.colors.neutral[100]}
         />
       </TouchableOpacity>
     </View>

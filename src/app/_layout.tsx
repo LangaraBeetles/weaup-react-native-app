@@ -13,6 +13,7 @@ import HPSystem from "@src/components/scoring/HPSystem";
 import XPSystem from "@src/components/scoring/XPSystem";
 import LevelSystem from "@src/components/scoring/LevelSystem";
 import PostureDataProvider from "@src/components/providers/PostureDataProvider";
+import { globalStyles } from "@src/styles/globalStyles";
 
 const queryClient = new QueryClient();
 
@@ -76,6 +77,16 @@ const RootLayout = () => {
                         headerShown: true,
                         title: "Challenge progress",
                         headerBackTitle: "Back",
+                        // TODO: customize/create component for header style
+                        headerStyle: {
+                          backgroundColor: globalStyles.colors.secondary[100],
+                        },
+                        headerTintColor: globalStyles.colors.text,
+                        headerTitleStyle: {
+                          fontWeight: "bold",
+                          color: globalStyles.colors.text,
+                        },
+                        headerShadowVisible: false,
                       }}
                     />
                     <Stack.Screen
