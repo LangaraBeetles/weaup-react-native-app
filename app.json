@@ -1,12 +1,10 @@
 {
   "expo": {
-    "name": "beetles-mobile",
-    "slug": "alignmend",
-    "scheme": "alginmend",
+    "name": "weaup",
+    "slug": "weaup",
+    "scheme": "weaup",
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "./assets/fonts/*"
-    ],
+    "assetBundlePatterns": ["./assets/fonts/*"],
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",

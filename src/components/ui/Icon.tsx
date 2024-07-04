@@ -42,6 +42,7 @@ import NavbarTogetherSelected from "assets/icons/navbar-together-selected.svg";
 import Night from "assets/icons/night.svg";
 import NotificationFill from "assets/icons/notification-fill.svg";
 import NotificationOutline from "assets/icons/notification-outline.svg";
+import Plus from "assets/icons/plus.svg";
 import PlusFilled from "assets/icons/plus-filled.svg";
 import PlusOutline from "assets/icons/plus-outline.svg";
 import ProgressFill from "assets/icons/progress-fill.svg";
@@ -63,6 +64,14 @@ import WelcomeMascot from "assets/icons/welcome-mascot.svg";
 import ColorLabelIconLightening from "assets/icons/colorLabelIcon-lightening.svg";
 import ColorLabelIconStreak from "assets/icons/colorLabelIcon-streak.svg";
 import ColorLabelIconStar from "assets/icons/colorLabelIcon-star.svg";
+import ProfileAvatar from "assets/icons/profile-avatar.svg";
+import ColorLabelIconXp from "assets/icons/colorLabelIcon-xp.svg";
+import ColorLabelIconAward from "assets/icons/colorLabelIcon-award.svg";
+import Logout from "assets/icons/logout.svg";
+import ColorLabelIconTarget from "assets/icons/colorLabelIcon-target.svg";
+import StreakCheckmarkUnchecked from "assets/icons/streak-checkmark-unchecked.svg";
+import StreakCheckmarkChecked from "assets/icons/streak-checkmark-checked.svg";
+import ChallengeAvatar from "assets/icons/challenge-avatar.svg";
 
 import { theme } from "@src/styles/theme";
 
@@ -111,6 +120,7 @@ const IconConfig = {
   night: Night,
   "notification-fill": NotificationFill,
   "notification-outline": NotificationOutline,
+  plus: Plus,
   "plus-filled": PlusFilled,
   "plus-outline": PlusOutline,
   "progress-fill": ProgressFill,
@@ -132,6 +142,14 @@ const IconConfig = {
   "colorLabelIcon-lightening": ColorLabelIconLightening,
   "colorLabelIcon-streak": ColorLabelIconStreak,
   "colorLabelIcon-star": ColorLabelIconStar,
+  "profile-avatar": ProfileAvatar,
+  "colorLabelIcon-xp": ColorLabelIconXp,
+  "colorLabelIcon-award": ColorLabelIconAward,
+  logout: Logout,
+  "colorLabelIcon-target": ColorLabelIconTarget,
+  "streak-checkmark-unchecked": StreakCheckmarkUnchecked,
+  "streak-checkmark-checked": StreakCheckmarkChecked,
+  "challenge-avatar": ChallengeAvatar,
 };
 
 export type IconName = `${keyof typeof IconConfig}`;

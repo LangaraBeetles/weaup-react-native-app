@@ -1,4 +1,4 @@
-rootProject.name = 'beetles-mobile'
+rootProject.name = 'weaup'
 
 dependencyResolutionManagement {
   versionCatalogs {
