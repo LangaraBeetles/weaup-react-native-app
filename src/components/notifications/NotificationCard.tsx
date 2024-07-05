@@ -10,6 +10,11 @@ const NotificationCard = ({ item }: { item: NotificationType }) => {
   const diff = dayjs().diff(dayjs(item.createdAt), "day");
 
   const displayTime = () => {
+    const isValidDate = dayjs(item.createdAt).isValid();
+    if (!isValidDate) {
+      return item.createdAt;
+    }
+
     if (diff === 0) {
       return (item.createdAt = dayjs(item.createdAt).format("h:mm A"));
     }
@@ -68,6 +73,7 @@ const styles = StyleSheet.create({
   },
   notificationDetail: {
     color: theme.colors.neutral[400],
+    maxWidth: "90%",
   },
 });
 
