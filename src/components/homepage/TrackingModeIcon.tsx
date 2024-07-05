@@ -15,8 +15,12 @@ const TrackingModeIcon = () => {
       alignItems="center"
       justifyContent="center"
     >
-      {/* <Icon name="earbuds" size={24} color={mode === "earbuds" ? theme.colors.text : theme.colors.white} /> */}
-      <Icon name={mode === "phone" ? "earbuds-inactive" : "earbuds"} />
+      <Icon
+        name={"earbuds"}
+        color={
+          mode === "earbuds" ? theme.colors.text : theme.colors.neutral[200]
+        }
+      />
     </Stack>
   );
 };
