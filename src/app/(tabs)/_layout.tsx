@@ -2,18 +2,21 @@ import { Tabs } from "expo-router";
 import Icon from "@src/components/ui/Icon";
 import { Text } from "@src/components/ui/typography";
 import { theme } from "@src/styles/theme";
+import { Platform } from "react-native";
 
 const TabsLayout = () => {
+  const isAndroid = Platform.OS === "android";
+
+  const customTabBarOptions = {
+    tabBarActiveTintColor: theme.colors.neutral[700],
+    tabBarInactiveTintColor: theme.colors.neutral[700],
+    tabBarStyle: {
+      height: 60,
+    },
+  };
+
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: theme.colors.neutral[700],
-        tabBarInactiveTintColor: theme.colors.neutral[700],
-        tabBarStyle: {
-          height: 60,
-        },
-      }}
-    >
+    <Tabs screenOptions={isAndroid ? customTabBarOptions : {}}>
       <Tabs.Screen
         name="index"
         options={{

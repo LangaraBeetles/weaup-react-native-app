@@ -145,7 +145,32 @@ const HomePage = () => {
             {!isSessionActive ? (
               <Image name="weasel-happy" />
             ) : (
-              <Image name="weasel-side-peaceful" w={109} h={230} />
+              <Stack w={290} h={290}>
+                <Image
+                  name="green-gradient"
+                  style={StyleSheet.absoluteFillObject}
+                />
+                <Stack
+                  mt={18}
+                  h={253}
+                  w={253}
+                  borderColor={theme.colors.white}
+                  border={12}
+                  borderRadius={150}
+                  style={{ overflow: "hidden", alignSelf: "center" }}
+                >
+                  <Image
+                    name="background-happy"
+                    style={[
+                      StyleSheet.absoluteFillObject,
+                      styles.backgroundImageFill,
+                    ]}
+                  />
+                  <Center style={{ marginTop: 25 }}>
+                    <Image name="weasel-side-peaceful" w={109} h={230} />
+                  </Center>
+                </Stack>
+              </Stack>
             )}
           </Center>
         </Stack>
@@ -165,6 +190,10 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     zIndex: 0,
+  },
+  backgroundImageFill: {
+    flex: 1,
+    transform: [{ scale: 2 }, { translateY: 10 }],
   },
   sessionButton: {
     bottom: width * 0.2,

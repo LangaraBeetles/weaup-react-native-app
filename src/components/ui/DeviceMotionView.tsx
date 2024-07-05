@@ -105,7 +105,9 @@ export default function DeviceMotionViewiOS() {
       px={24}
       backgroundColor="white"
     >
-      <Text>Active Monitoring</Text>
+      <Text level="footnote" weight="semibold">
+        Active Monitoring
+      </Text>
       <Switch
         trackColor={{
           true: theme.colors.secondary[600],

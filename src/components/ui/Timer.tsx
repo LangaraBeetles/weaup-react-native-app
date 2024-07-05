@@ -133,11 +133,13 @@ const Timer = ({
       {isTimerActive ? (
         <View style={styles.container}>
           <TimerDisplay timeInSeconds={timeInSeconds} />
-          <Button
-            title="Stop tracking"
-            onPress={pauseTimer}
-            variant="primary"
-          />
+          <View style={{ width: 225 }}>
+            <Button
+              title="End session"
+              onPress={pauseTimer}
+              variant="tertiary"
+            />
+          </View>
         </View>
       ) : (
         <Button
@@ -177,6 +179,17 @@ const Timer = ({
         snapPoints={snapPoints}
         backdropComponent={CustomBackdrop}
       >
+        <View
+          style={{
+            zIndex: 2,
+            paddingHorizontal: width * 0.1,
+            backgroundColor: theme.colors.white,
+          }}
+        >
+          <Text level="title_3" style={{ textAlign: "center" }}>
+            How long do you want the session to be?
+          </Text>
+        </View>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
           <View style={styles.bottomSheetContainer}>
             <View style={styles.pickerContainer}>
@@ -219,7 +232,7 @@ const Timer = ({
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 60,
+    marginTop: 30,
     alignItems: "center",
     justifyContent: "center",
   },

@@ -5,6 +5,7 @@ import WeaselHappyImage from "assets/img/weasel-happy.svg";
 import BackGroundHappyImage from "assets/img/background-happy.svg";
 import AvatarImage from "assets/img/avatar.svg";
 import WaeaselSideImage from "assets/img/weasel-side-peaceful.svg";
+import GreenGradientImage from "assets/img/green-gradient.svg";
 
 const ImageConfig = {
   "streak-flames": StreakFlames,
@@ -12,6 +13,7 @@ const ImageConfig = {
   "background-happy": BackGroundHappyImage,
   avatar: AvatarImage,
   "weasel-side-peaceful": WaeaselSideImage,
+  "green-gradient": GreenGradientImage,
 };
 
 export type ImageName = `${keyof typeof ImageConfig}`;

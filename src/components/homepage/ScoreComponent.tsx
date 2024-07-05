@@ -72,7 +72,13 @@ const ScoreComponent = () => {
                 <Text level="footnote" weight="bold">
                   {userXP}{" "}
                 </Text>
-                <Text level="footnote">XP</Text>
+                <Text
+                  level="footnote"
+                  weight="bold"
+                  style={{ color: theme.colors.neutral[400] }}
+                >
+                  XP
+                </Text>
               </Stack>
             </Stack>
             <Stack
@@ -83,11 +89,17 @@ const ScoreComponent = () => {
               alignItems="center"
             >
               <Icon name="streak" />
-              <Stack flexDirection="row" h={16}>
+              <Stack flexDirection="row" h={20}>
                 <Text level="footnote" weight="bold">
                   {userStreak}{" "}
                 </Text>
-                <Text level="footnote">Day Streak</Text>
+                <Text
+                  level="footnote"
+                  weight="bold"
+                  style={{ color: theme.colors.neutral[400] }}
+                >
+                  day streak
+                </Text>
               </Stack>
             </Stack>
           </Stack>
@@ -121,7 +133,7 @@ const ScoreComponent = () => {
 
             <Stack flexDirection="row">
               <Text level="title_1">{userHP} </Text>
-              <Stack pt={9}>
+              <Stack pt={19}>
                 <Text level="caption_1">/ 100</Text>
               </Stack>
             </Stack>
