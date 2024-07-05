@@ -168,6 +168,8 @@ const styles = StyleSheet.create({
   },
   sessionButton: {
     bottom: width * 0.2,
+    width: 250,
+    alignSelf: "center",
   },
 });
 
