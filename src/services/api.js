@@ -12,7 +12,10 @@ api.interceptors.request.use(
     const token = useUser.getState().user.token;
     const authToken = `Bearer ${token}`;
     request.headers.Authorization = authToken;
+    console.log({ token });
 
+    console.log(request.baseURL);
+    console.log(request.url);
     return request;
   },
   (error) => {

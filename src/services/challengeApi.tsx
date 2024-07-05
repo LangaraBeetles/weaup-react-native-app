@@ -31,8 +31,13 @@ export const getPastChallenges = async (
   sortDesc: number,
 ) => {
   const status = filterStatus ? `&filterStatus=${filterStatus}` : ``;
-  const response = await api.get(
-    `${route}/?showOngoing=false&sortDesc=${sortDesc}${status}`,
-  );
+  const response = await api.get(route, {
+    params: {
+      filterUser: true,
+      showOngoing: false,
+      sortDesc,
+      filterStatus: status,
+    },
+  });
   return response.data;
 };

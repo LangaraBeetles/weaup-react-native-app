@@ -1,11 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import {
-  View,
-  StyleSheet,
-  Image,
-  AppStateStatus,
-  AppState,
-} from "react-native";
+import { StyleSheet, Image, AppStateStatus, AppState } from "react-native";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { usePathname } from "expo-router";
 
@@ -20,6 +14,7 @@ import GoogleSignUp from "@src/components/profile/GoogleSignUp";
 import { useQuery, focusManager } from "@tanstack/react-query";
 import { getOngoingChallenges } from "@src/services/challengeApi";
 import { useUser } from "@src/state/useUser";
+import Page from "@src/components/layout/Page";
 
 const TogetherScreen = () => {
   const [filterUser, setFilterUser] = useState(false);
@@ -66,43 +61,46 @@ const TogetherScreen = () => {
   }
 
   return (
-    <View style={styles.container}>
-      <Stack
-        flexDirection="row"
-        gap={10}
-        pb={16}
-        px={16}
-        justifyContent="space-between"
-      >
-        <Stack flexDirection="row" gap={10} justifyContent="flex-start">
+    <Page
+      header={
+        <Stack
+          flexDirection="row"
+          gap={10}
+          pb={16}
+          px={16}
+          justifyContent="space-between"
+        >
+          <Stack flexDirection="row" gap={10} justifyContent="flex-start">
+            <Chip
+              borderRadius={50}
+              p={12}
+              h={45}
+              onPress={() => setFilterUser(false)}
+            >
+              <Text>All</Text>
+            </Chip>
+            <Chip
+              borderRadius={50}
+              p={12}
+              h={45}
+              onPress={() => setFilterUser(true)}
+            >
+              <Text>Created by you</Text>
+            </Chip>
+          </Stack>
           <Chip
             borderRadius={50}
             p={12}
             h={45}
-            onPress={() => setFilterUser(false)}
+            colorScheme="primary"
+            onPress={handleSortDesc}
           >
-            <Text>All</Text>
-          </Chip>
-          <Chip
-            borderRadius={50}
-            p={12}
-            h={45}
-            onPress={() => setFilterUser(true)}
-          >
-            <Text>Created by you</Text>
+            {/* TODO: follow up sort icon */}
+            <Image source={require("../../../assets/img/sortIcon.png")} />
           </Chip>
         </Stack>
-        <Chip
-          borderRadius={50}
-          p={12}
-          h={45}
-          colorScheme="primary"
-          onPress={handleSortDesc}
-        >
-          {/* TODO: follow up sort icon */}
-          <Image source={require("../../../assets/img/sortIcon.png")} />
-        </Chip>
-      </Stack>
+      }
+    >
       <ChallengeList challenges={data?.data ?? []} isOngoing={true} />
       <FloatingButton onPress={addChallenge} />
       <CustomBottomSheetModal
@@ -113,7 +111,7 @@ const TogetherScreen = () => {
           />
         }
       />
-    </View>
+    </Page>
   );
 };
 
