@@ -1,15 +1,6 @@
-import {
-  Dimensions,
-  Keyboard,
-  Modal,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  View,
-} from "react-native";
+import { StyleSheet, View, Modal, Pressable } from "react-native";
 import Button from "./Button";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import CustomBackdrop from "@src/components/ui/CustomBackdrop";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { theme } from "@src/styles/theme";
 import TimePicker from "./TimePicker";
 import { Text } from "./typography";
@@ -20,7 +11,7 @@ const HOUR_IN_SECONDS = 60 * MINUTE_IN_SECONDS;
 const TimerDisplay: React.FC<{ timeInSeconds: number }> = ({
   timeInSeconds,
 }) => {
-  const hours = Math.floor(timeInSeconds / HOUR_IN_SECONDS);
+  // const hours = Math.floor(timeInSeconds / HOUR_IN_SECONDS);
   const minutes = Math.floor(
     (timeInSeconds % HOUR_IN_SECONDS) / MINUTE_IN_SECONDS,
   );
@@ -28,16 +19,16 @@ const TimerDisplay: React.FC<{ timeInSeconds: number }> = ({
 
   return (
     <Text level="title_1" style={styles.text}>
-      {hours}:{minutes < 10 ? `0${minutes}` : minutes}:
+      {/* {hours}: */}
+      {minutes < 10 ? `0${minutes}` : minutes}:
       {seconds < 10 ? `0${seconds}` : seconds}
     </Text>
   );
 };
 
-const hoursData = Array.from({ length: 24 }, (_, i) => i.toString());
-const minutesData = Array.from({ length: 6 }, (_, i) => (i * 10).toString());
-
-const { width, height } = Dimensions.get("window");
+const minutesData = Array.from({ length: 8 }, (_, i) =>
+  (i * 10).toString(),
+).slice(1, -1);
 
 const Timer = ({
   onStartCallback,
@@ -55,26 +46,20 @@ const Timer = ({
 
   const [showStopSessionModal, setShowStopSessionModal] =
     useState<boolean>(false);
+  const [showStartSessionModal, setShowStartSessionModal] =
+    useState<boolean>(false);
 
-  // ref for BottomSheetModal
-  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const [isTimerActive, setTimerActive] = useState<boolean>(false);
-  // variables
-  const snapPoints = useMemo(() => ["25%", "50%"], []);
 
   const [timeInHours, setTimeInHours] = useState(0);
   const [timeInMinutes, setTimeInMinutes] = useState(0);
 
   const showTimeSetup = useCallback(() => {
-    // setSessionState("INIT");
-    setTimeout(() => {
-      bottomSheetModalRef.current?.present();
-    }, 100); // Small delay to ensure state update and ref readiness
+    setShowStartSessionModal(true);
   }, []);
 
-  const dismissBottomSheet = () => {
-    bottomSheetModalRef.current?.dismiss();
-
+  const closePauseModal = () => {
+    setShowStartSessionModal(false);
     setTimeInHours(0);
     setTimeInMinutes(0);
   };
@@ -85,7 +70,7 @@ const Timer = ({
       setTimeInSeconds(seconds);
       onStartCallback?.(seconds);
       setTimerActive(true);
-      dismissBottomSheet();
+      closePauseModal();
     }
   };
 
@@ -96,7 +81,7 @@ const Timer = ({
     setTimeInSeconds(-1);
     setTimerActive(false);
     onStopCallback?.();
-    dismissBottomSheet();
+    closePauseModal();
   };
 
   const pauseTimer = () => {
@@ -154,10 +139,14 @@ const Timer = ({
         transparent={true}
         visible={showStopSessionModal}
         animationType="fade"
-        onRequestClose={resumeTimer}
       >
-        <View style={styles.modalBackground}>
-          <View style={styles.modalContainer}>
+        <Pressable style={styles.modalBackground} onPress={resumeTimer}>
+          <Pressable
+            style={styles.modalContainer}
+            onTouchStart={(e) => {
+              e.stopPropagation();
+            }}
+          >
             <Text>Are you sure you want to end the session?</Text>
             <Button
               title="Keep Going"
@@ -169,63 +158,43 @@ const Timer = ({
               onPress={stopTimer}
               variant="secondary"
             />
-          </View>
-        </View>
+          </Pressable>
+        </Pressable>
       </Modal>
 
-      <BottomSheetModal
-        ref={bottomSheetModalRef}
-        index={1}
-        snapPoints={snapPoints}
-        backdropComponent={CustomBackdrop}
+      <Modal
+        transparent={true}
+        visible={showStartSessionModal}
+        animationType="fade"
       >
-        <View
-          style={{
-            zIndex: 2,
-            paddingHorizontal: width * 0.1,
-            backgroundColor: theme.colors.white,
-          }}
+        <Pressable
+          style={styles.modalBackground}
+          onPress={() => setShowStartSessionModal(false)}
         >
-          <Text level="title_3" style={{ textAlign: "center" }}>
-            How long do you want the session to be?
-          </Text>
-        </View>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-          <View style={styles.bottomSheetContainer}>
-            <View style={styles.pickerContainer}>
-              <View style={styles.pickerOverlay} />
-              <View style={styles.pickerColumn}>
-                <TimePicker
-                  data={hoursData}
-                  onValueChange={(value) => setTimeInHours(Number(value))}
-                />
-                <Text level="title_3" align="center" style={styles.pickerLabel}>
-                  hours
-                </Text>
-              </View>
-              <View style={styles.pickerColumn}>
-                <TimePicker
-                  data={minutesData}
-                  onValueChange={(value) => setTimeInMinutes(Number(value))}
-                />
-                <Text level="title_3" align="center" style={styles.pickerLabel}>
-                  mins
-                </Text>
-              </View>
+          <Pressable
+            style={styles.modalContainer}
+            onTouchStart={(e) => {
+              e.stopPropagation();
+            }}
+          >
+            <View>
+              <Text level="title_3" style={{ textAlign: "center" }}>
+                How long do you want the session to be?
+              </Text>
+              <TimePicker
+                data={minutesData}
+                onValueChange={(value) => setTimeInMinutes(Number(value))}
+                title="minutes"
+              />
             </View>
-            <TimePicker
-              data={hoursData}
-              onValueChange={(value) => setTimeInHours(Number(value))}
-            />
-
             <Button
-              title="Start a session"
+              title="Start session"
               onPress={startTimer}
               variant="primary"
             />
-          </View>
-        </TouchableWithoutFeedback>
-      </BottomSheetModal>
+          </Pressable>
+        </Pressable>
+      </Modal>
     </View>
   );
 };
@@ -260,49 +229,19 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     alignItems: "center",
     backgroundColor: "rgba(0, 0, 0, 0.5)",
+    zIndex: 1,
   },
   modalContainer: {
     width: "100%",
     padding: 20,
-    backgroundColor: "white",
-    borderRadius: 10,
+    backgroundColor: theme.colors.white,
+    borderRadius: 16,
     alignItems: "center",
     gap: 8,
-  },
-  pickerContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    marginVertical: height * 0.02,
-    marginTop: height * -0.08,
-    zIndex: -1,
+    zIndex: 2,
   },
   pickerColumn: {
     flexDirection: "row",
-    gap: width * 0.02,
-    alignItems: "center",
-    marginHorizontal: width * 0.1,
-  },
-  pickerTitle: {
-    paddingBottom: height * 0.02,
-    backgroundColor: "white",
-    marginHorizontal: width * 0.1,
-  },
-  pickerLabel: {
-    marginLeft: width * 0.04,
-  },
-  button: {
-    marginTop: height * 0.02,
-    height: 56,
-  },
-  pickerOverlay: {
-    position: "absolute",
-    top: 83,
-    left: width * 0.025,
-    right: width * 0.025,
-    height: height * 0.06,
-    backgroundColor: "#FDD4625A",
-    borderRadius: 10,
-    zIndex: 1,
   },
 });
 

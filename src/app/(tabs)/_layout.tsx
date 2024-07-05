@@ -16,7 +16,17 @@ const TabsLayout = () => {
   };
 
   return (
-    <Tabs screenOptions={isAndroid ? customTabBarOptions : {}}>
+    <Tabs
+      screenOptions={
+        isAndroid
+          ? customTabBarOptions
+          : {
+              tabBarStyle: {
+                height: 90,
+              },
+            }
+      }
+    >
       <Tabs.Screen
         name="index"
         options={{
