@@ -28,7 +28,7 @@ import ScoreComponent from "@src/components/homepage/ScoreComponent";
 import Gradient from "@src/components/ui/Gradient";
 import Image from "@src/components/ui/Image";
 
-const { height, width } = Dimensions.get("screen");
+const { height } = Dimensions.get("screen");
 
 const HomePage = () => {
   const isSetupComplete = useUser((state) => state.isSetupComplete);
@@ -74,7 +74,11 @@ const HomePage = () => {
       )}
       {!isSessionActive && (
         <Stack h={height} style={styles.backgroundImage}>
-          <Image name="background-happy" />
+          {currentPosture === "bad" ? (
+            <Image name="background-bad" />
+          ) : (
+            <Image name="background-happy" />
+          )}
         </Stack>
       )}
       <ScrollView style={{ flex: 1 }}>
@@ -196,7 +200,6 @@ const styles = StyleSheet.create({
     transform: [{ scale: 2 }, { translateY: 10 }],
   },
   sessionButton: {
-    bottom: width * 0.2,
     width: 250,
     alignSelf: "center",
   },

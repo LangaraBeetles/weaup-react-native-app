@@ -3,6 +3,7 @@ import { SvgProps } from "react-native-svg";
 import StreakFlames from "assets/img/streak-flames.svg";
 import WeaselHappyImage from "assets/img/weasel-happy.svg";
 import BackGroundHappyImage from "assets/img/background-happy.svg";
+import BackGroundBadImage from "assets/img/background-bad.svg";
 import AvatarImage from "assets/img/avatar.svg";
 import WaeaselSideImage from "assets/img/weasel-side-peaceful.svg";
 import GreenGradientImage from "assets/img/green-gradient.svg";
@@ -11,6 +12,7 @@ const ImageConfig = {
   "streak-flames": StreakFlames,
   "weasel-happy": WeaselHappyImage,
   "background-happy": BackGroundHappyImage,
+  "background-bad": BackGroundBadImage,
   avatar: AvatarImage,
   "weasel-side-peaceful": WaeaselSideImage,
   "green-gradient": GreenGradientImage,
