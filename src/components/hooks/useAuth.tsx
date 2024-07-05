@@ -75,6 +75,7 @@ const useAuth = () => {
 
       const createdUser = data.data;
 
+      console.log("[USER] user created ", createdUser._id);
       const user: UserType = {
         id: createdUser._id,
         deviceId: createdUser.device_id,

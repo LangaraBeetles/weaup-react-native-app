@@ -44,6 +44,7 @@ const TabsLayout = () => {
         options={{
           headerTitle: "Analytics",
           title: "Analytics",
+          headerShown: false,
           tabBarIcon: ({ focused }) => (
             <Icon
               name={
@@ -58,7 +59,7 @@ const TabsLayout = () => {
       <Tabs.Screen
         name="profile"
         options={{
-          headerTitle: "Profile",
+          headerShown: false,
           title: "Profile",
           tabBarIcon: ({ focused }) => (
             <Icon

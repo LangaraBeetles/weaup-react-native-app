@@ -34,22 +34,25 @@ const HeadTrackingProvider: React.FC<{ children: React.ReactNode }> = ({
   const interval = useRef<any>(null);
 
   const mode = useUser((state) => state.mode);
-  const isTrackingEnabled = useUser((state) => state.isTrackingEnabled);
+  const isTrackingEnabled = useUser((state) => {
+    return state.isTrackingEnabled || state.isSessionActive;
+  });
+
   const postureStatus = useUser((state) => state.currentPosture);
-  const setPoture = useUser((state) => state.setCurrentPosture);
+  const setPosture = useUser((state) => state.setCurrentPosture);
 
   const handlePostureCorrectionAlert = (headPitch?: number) => {
     if (headPitch === undefined) {
-      postureStatus !== "not_reading" && setPoture("not_reading");
+      postureStatus !== "not_reading" && setPosture("not_reading");
     } else if (headPitch > -17 && headPitch < 15) {
       console.log("Yey!");
-      setPoture("good");
+      setPosture("good");
     } else if (headPitch > -22 && headPitch <= -17) {
       console.log("Mid!");
-      setPoture("mid");
+      setPosture("mid");
     } else {
       console.log("Bad!");
-      setPoture("bad");
+      setPosture("bad");
     }
   };
 
@@ -64,6 +67,7 @@ const HeadTrackingProvider: React.FC<{ children: React.ReactNode }> = ({
     }
 
     isTracking = true;
+
     interval.current = setInterval(
       async (isEnabled, mode) => {
         isTracking = true;
@@ -94,7 +98,7 @@ const HeadTrackingProvider: React.FC<{ children: React.ReactNode }> = ({
       const headPitch = data?.attitude.pitchDeg;
       handlePostureCorrectionAlert(headPitch);
     } else {
-      setPoture("not_reading");
+      setPosture("not_reading");
     }
   };
 
@@ -103,7 +107,7 @@ const HeadTrackingProvider: React.FC<{ children: React.ReactNode }> = ({
       clearInterval(interval.current);
     }
     isTracking = false;
-    setPoture("not_reading");
+    setPosture("not_reading");
   };
 
   useEffect(() => {

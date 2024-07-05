@@ -1,9 +1,11 @@
+import { globalStyles } from "@src/styles/globalStyles";
 import React from "react";
-import { TouchableOpacity, StyleSheet, Image } from "react-native";
+import { TouchableOpacity, StyleSheet } from "react-native";
+import Icon from "./Icon";
 
 const FloatingButton = (props: any) => (
   <TouchableOpacity onPress={props.onPress} style={styles.floatingButton}>
-    <Image source={require("../../../assets/img/addIcon.png")} />
+    <Icon name="plus" color={globalStyles.colors.white} />
   </TouchableOpacity>
 );
 
@@ -17,6 +19,8 @@ const styles = StyleSheet.create({
     height: 49.5,
     bottom: 10,
     right: 20,
+    backgroundColor: globalStyles.colors.secondary[600],
+    borderRadius: 100,
   },
 });
 

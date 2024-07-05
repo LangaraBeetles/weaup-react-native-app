@@ -7,6 +7,7 @@ type BodyTextVariant = {
     | "subhead"
     | "callout"
     | "footnote"
+    | "footnote_2"
     | "caption_1"
     | "caption_2"
     | "caption_3"
@@ -99,6 +100,12 @@ export const StyledText = styled(RNText, {
         fontSize: 14,
         fontStyle: "normal",
         fontFamily: "NunitoRegular",
+        lineHeight: 22,
+      },
+      footnote_2: {
+        fontSize: 14,
+        fontStyle: "normal",
+        fontFamily: "NunitoBold",
         lineHeight: 22,
       },
       caption_1: {

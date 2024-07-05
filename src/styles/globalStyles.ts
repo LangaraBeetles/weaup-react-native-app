@@ -57,5 +57,8 @@ export const globalStyles = {
       900: "#151513",
       950: "#0B0A0A",
     },
+    other: {
+      50: "#D3E7FF",
+    },
   },
 };
