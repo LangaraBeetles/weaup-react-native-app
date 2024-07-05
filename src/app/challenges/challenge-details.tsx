@@ -12,8 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import { theme } from "@src/styles/theme";
 import ChallengeDetailCard from "@src/components/listItems/ChallengeDetailCard";
 
-const ChallengeDetail = (props: any) => {
-  console.log(props);
+const ChallengeDetail = () => {
   const navigation = useNavigation();
   const params = useLocalSearchParams();
   const id = params.id as string;
