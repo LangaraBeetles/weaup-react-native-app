@@ -12,7 +12,7 @@ const ChallengeCard = (props: any) => {
 
   const showDetails = () => {
     router.push({
-      pathname: "challengeDetailsScreen",
+      pathname: "/challenges/challenge-details",
       params: { id: challenge._id, isOngoing: isOngoing },
     });
   };

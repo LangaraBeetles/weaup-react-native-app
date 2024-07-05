@@ -4,14 +4,15 @@ import { Text } from "@src/components/ui/typography";
 import Stack from "@src/components/ui/Stack";
 import Icon from "@src/components/ui/Icon";
 import { globalStyles } from "@src/styles/globalStyles";
+import Avatar from "@src/components/ui/Avatar";
 
 const MemberCard = (props: any) => {
   const { itemStyle, item } = props;
   return (
     <View style={itemStyle}>
       <Stack flexDirection="row" justifyContent="space-between" py={16}>
-        <Stack flexDirection="row" gap={2} flex={4}>
-          <Icon name="challenge-avatar" />
+        <Stack flexDirection="row" gap={8} flex={4}>
+          <Avatar content={item?.user?.name[0]} />
           <View>
             <Text level="headline">{item?.user?.name}</Text>
             <Text level="footnote">{item?.points} points</Text>
