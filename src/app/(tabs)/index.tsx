@@ -28,7 +28,7 @@ import ScoreComponent from "@src/components/homepage/ScoreComponent";
 import Gradient from "@src/components/ui/Gradient";
 import Image from "@src/components/ui/Image";
 
-const { height } = Dimensions.get("screen");
+const { height, width } = Dimensions.get("screen");
 
 const HomePage = () => {
   const isSetupComplete = useUser((state) => state.isSetupComplete);
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     zIndex: 0,
   },
   sessionButton: {
-    bottom: width * 0.1,
+    bottom: width * 0.2,
   },
 });
 
