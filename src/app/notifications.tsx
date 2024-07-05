@@ -77,7 +77,9 @@ const styles = StyleSheet.create({
   notificationsContainer: {
     marginTop: 20,
     backgroundColor: "#F9F9F9",
-    paddingTop: 10,
+    paddingTop: 16,
+    paddingLeft: 16,
+    paddingRight: 16,
     borderRadius: 20,
     height: "100%",
   },
