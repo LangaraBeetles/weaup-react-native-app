@@ -8,11 +8,7 @@ import { getNotifications } from "@src/services/notificationsApi";
 const NotificationList = ({ selectedFilter }: { selectedFilter: string }) => {
   const userId = useUser((state) => state.user.id);
 
-  const {
-    data: notificationsData,
-    isLoading,
-    isError,
-  } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["notifications"],
     queryFn: () => getNotifications(userId),
   });
@@ -25,12 +21,17 @@ const NotificationList = ({ selectedFilter }: { selectedFilter: string }) => {
     return <Text>Error loading notifications</Text>;
   }
 
-  const filteredNotifications: NotificationType[] =
-    notificationsData.data.filter(
-      (notification: NotificationType) =>
-        selectedFilter === "All" ||
-        notification.notification_type === selectedFilter,
-    );
+  //sort data by createdAt
+  const notificationsData = data.data.sort(
+    (a: NotificationType, b: NotificationType) =>
+      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+  );
+
+  const filteredNotifications: NotificationType[] = notificationsData.filter(
+    (notification: NotificationType) =>
+      selectedFilter === "All" ||
+      notification.notification_type === selectedFilter,
+  );
 
   return (
     <FlatList

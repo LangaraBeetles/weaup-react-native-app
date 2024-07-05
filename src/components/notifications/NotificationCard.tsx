@@ -3,10 +3,26 @@ import { StyleSheet, View, Image } from "react-native";
 import Divider from "../ui/Divider";
 import { theme } from "@src/styles/theme";
 import { NotificationType } from "@src/interfaces/notification.types";
+import dayjs from "dayjs";
 
 const NotificationCard = ({ item }: { item: NotificationType }) => {
+  const diff = dayjs().diff(dayjs(item.createdAt), "day");
+
+  const displayTime = () => {
+    if (diff === 0) {
+      return (item.createdAt = dayjs(item.createdAt).format("h:mm A"));
+    }
+    if (diff === 1) {
+      return "Yesterday";
+    }
+    if (diff > 1) {
+      return dayjs(item.createdAt).format("DD-MM-YYYY");
+    }
+  };
+
   return (
     <View style={styles.notification}>
+      {/* TODO: get correct image */}
       <Image
         source={require("../../../assets/img/avatar.png")}
         style={styles.avatar}
@@ -21,7 +37,7 @@ const NotificationCard = ({ item }: { item: NotificationType }) => {
             {item.title}
           </Text>
           <Text style={styles.notificationTime} level="caption_1">
-            {item.createdAt}
+            {displayTime()}
           </Text>
         </View>
         <Text style={styles.notificationDetail} level="caption_1">
