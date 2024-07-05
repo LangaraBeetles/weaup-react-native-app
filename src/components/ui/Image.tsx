@@ -4,12 +4,14 @@ import StreakFlames from "assets/img/streak-flames.svg";
 import WeaselHappyImage from "assets/img/weasel-happy.svg";
 import BackGroundHappyImage from "assets/img/background-happy.svg";
 import AvatarImage from "assets/img/avatar.svg";
+import WaeaselSideImage from "assets/img/weasel-side-peaceful.svg";
 
 const ImageConfig = {
   "streak-flames": StreakFlames,
   "weasel-happy": WeaselHappyImage,
   "background-happy": BackGroundHappyImage,
   avatar: AvatarImage,
+  "weasel-side-peaceful": WaeaselSideImage,
 };
 
 export type ImageName = `${keyof typeof ImageConfig}`;

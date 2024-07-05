@@ -69,7 +69,7 @@ const HomePage = () => {
         <Gradient
           color1={theme.colors.primary[300]}
           color2={theme.colors.white}
-          locations={[0, 1]}
+          locations={[0, 0.8]}
         />
       )}
       {!isSessionActive && (
@@ -142,7 +142,11 @@ const HomePage = () => {
 
         <Stack h={286} my={15}>
           <Center>
-            <Image name="weasel-happy" />
+            {!isSessionActive ? (
+              <Image name="weasel-happy" />
+            ) : (
+              <Image name="weasel-side-peaceful" w={109} h={230} />
+            )}
           </Center>
         </Stack>
         <Center style={styles.sessionButton}>
@@ -163,8 +167,7 @@ const styles = StyleSheet.create({
     zIndex: 0,
   },
   sessionButton: {
-    width: 250,
-    marginHorizontal: "auto",
+    bottom: width * 0.1,
   },
 });
 
