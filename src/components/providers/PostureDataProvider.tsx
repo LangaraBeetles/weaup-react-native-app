@@ -23,8 +23,9 @@ const PostureDataProvider: React.FC<{ children: React.ReactNode }> = ({
 
     intervalRef.current = setInterval(
       (_user, _postureData, popData) => {
-        console.log("--- save posture data task ---");
         if (_postureData.length) {
+          console.log("--- save posture data task ---", _postureData.length);
+
           const data = popData();
 
           const records = data
@@ -32,7 +33,7 @@ const PostureDataProvider: React.FC<{ children: React.ReactNode }> = ({
             .filter((p) => !!p.status && !!p.date)
             .map((p) => ({
               good_posture: p.status === "good",
-              recorded_at: p?.date?.toISOString(),
+              recorded_at: p?.date?.toISOString?.(),
             }));
 
           console.log({
