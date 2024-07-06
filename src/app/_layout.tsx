@@ -79,18 +79,12 @@ const RootLayout = () => {
                       options={{ headerShown: false }}
                     />
                     <Stack.Screen
-                      name="challengeDetailsScreen"
-                      options={{
-                        headerShown: false,
-                      }}
+                      name="challenges/challenge-details"
+                      options={{ headerShown: false }}
                     />
                     <Stack.Screen
                       name="challenges/past"
-                      options={{
-                        headerShown: false,
-                        title: "Past Challenges",
-                        headerBackTitle: "Back",
-                      }}
+                      options={{ headerShown: false }}
                     />
 
                     <Stack.Screen

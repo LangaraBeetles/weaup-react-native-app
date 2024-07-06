@@ -2,6 +2,7 @@ import { FlatList } from "react-native";
 
 import ChallengeCard from "@src/components/listItems/ChallengeCard";
 import { ChallengeResponseType } from "@src/interfaces/challenge.types";
+import { theme } from "@src/styles/theme";
 
 const ChallengeList = ({
   challenges,
@@ -26,6 +27,7 @@ const ChallengeList = ({
 }) => {
   return (
     <FlatList
+      style={{ backgroundColor: theme.colors.surface }}
       data={challenges}
       refreshing={refreshing}
       onRefresh={onRefresh}

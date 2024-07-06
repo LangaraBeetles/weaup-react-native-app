@@ -79,7 +79,7 @@ const PastChallengesScreen = () => {
           </Stack>
           <Chip colorScheme="default" onPress={handleSortDesc} h={38} w={38}>
             <Icon
-              name={sortDesc === 1 ? "lightening-fill" : "copy-fill"}
+              name={sortDesc === 1 ? "sort-desc-filled" : "sort-asc-filled"}
               size={24}
             />
           </Chip>
