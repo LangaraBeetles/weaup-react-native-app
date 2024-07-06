@@ -55,25 +55,25 @@ export const StyledText = styled(RNText, {
       title_1: {
         fontSize: 28,
         fontStyle: "normal",
-        lineHeight: 34,
+        // lineHeight: 34,
         fontFamily: "NunitoBold",
       },
       title_2: {
         fontSize: 22,
         fontStyle: "normal",
-        lineHeight: 28,
+        // lineHeight: 28,
         fontFamily: "NunitoBold",
       },
       title_3: {
         fontSize: 20,
         fontStyle: "normal",
-        lineHeight: 25,
+        // lineHeight: 25,
         fontFamily: "NunitoBold",
       },
       headline: {
         fontSize: 17,
         fontStyle: "normal",
-        lineHeight: 22,
+        // lineHeight: 22,
         fontFamily: "NunitoBold",
       },
 
@@ -82,25 +82,25 @@ export const StyledText = styled(RNText, {
         fontSize: 16,
         fontStyle: "normal",
         fontFamily: "NunitoMedium",
-        lineHeight: 17,
+        // lineHeight: 17,
       },
       callout: {
         fontSize: 16,
         fontStyle: "normal",
         fontFamily: "NunitoSemiBold",
-        lineHeight: 21,
+        // lineHeight: 21,
       },
       subhead: {
         fontSize: 15,
         fontStyle: "normal",
         fontFamily: "NunitoRegular",
-        lineHeight: 16, // Design is with 15px but, this will make the text be cut off at the top
+        // lineHeight: 16, // Design is with 15px but, this will make the text be cut off at the top
       },
       footnote: {
         fontSize: 14,
         fontStyle: "normal",
         fontFamily: "NunitoRegular",
-        lineHeight: 22,
+        // lineHeight: 22,
       },
       footnote_2: {
         fontSize: 14,
@@ -112,19 +112,19 @@ export const StyledText = styled(RNText, {
         fontSize: 12,
         fontStyle: "normal",
         fontFamily: "NunitoRegular",
-        lineHeight: 16,
+        // lineHeight: 16,
       },
       caption_2: {
         fontSize: 10,
         fontStyle: "normal",
         fontFamily: "NunitoRegular",
-        lineHeight: 14,
+        // lineHeight: 14,
       },
       caption_3: {
         fontSize: 11,
         fontStyle: "normal",
         fontFamily: "NunitoBold",
-        lineHeight: 13,
+        // lineHeight: 13,
         textTransform: "uppercase",
       },
     },

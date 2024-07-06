@@ -4,13 +4,15 @@ import Stack from "@src/components/ui/Stack";
 import { useUser } from "@src/state/useUser";
 import * as Haptics from "expo-haptics";
 import { DeviceMotion } from "expo-sensors";
-import { Switch, Text } from "react-native";
+import { Switch } from "react-native";
+import { Text } from "@src/components/ui/typography";
+import { theme } from "@src/styles/theme";
 
 export default function DeviceMotionViewiOS() {
   const isRealTimeTracking = useUser((state) => state.isTrackingEnabled);
 
   const isTrackingEnabled = useUser(
-    (state) => state.isTrackingEnabled || state.isSessionActive,
+    (state) => state.isTrackingEnabled || state.sessionStatus !== "INACTIVE",
   );
   const setTrackingEnabled = useUser((state) => state.setTrackingEnabled);
 
@@ -95,15 +97,24 @@ export default function DeviceMotionViewiOS() {
   return (
     <Stack
       flexDirection="row"
-      border={1}
       borderRadius={20}
       justifyContent="space-between"
       alignItems="center"
       w="100%"
-      p={10}
+      py={10}
+      px={24}
+      backgroundColor="white"
     >
-      <Text>Realtime Tracking</Text>
-      <Switch onValueChange={toggleTracking} value={isRealTimeTracking} />
+      <Text level="footnote" weight="semibold">
+        Active Monitoring
+      </Text>
+      <Switch
+        trackColor={{
+          true: theme.colors.secondary[600],
+        }}
+        onValueChange={toggleTracking}
+        value={isTrackingEnabled}
+      />
     </Stack>
   );
 }
@@ -112,7 +123,7 @@ export function DeviceMotionViewAndroid() {
   const isRealTimeTracking = useUser((state) => state.isTrackingEnabled);
 
   const isTrackingEnabled = useUser(
-    (state) => state.isTrackingEnabled || state.isSessionActive,
+    (state) => state.isTrackingEnabled || state.sessionStatus !== "INACTIVE",
   );
   const setTrackingEnabled = useUser((state) => state.setTrackingEnabled);
 
@@ -201,15 +212,24 @@ export function DeviceMotionViewAndroid() {
   return (
     <Stack
       flexDirection="row"
-      border={1}
-      borderRadius={20}
+      borderRadius={12}
       justifyContent="space-between"
       alignItems="center"
       w="100%"
-      p={10}
+      py={10}
+      px={24}
+      backgroundColor={theme.colors.white}
     >
-      <Text>Realtime Tracking</Text>
-      <Switch onValueChange={toggleTracking} value={isRealTimeTracking} />
+      <Text level="footnote" weight="semibold">
+        Active Monitoring
+      </Text>
+      <Switch
+        onValueChange={toggleTracking}
+        trackColor={{
+          true: theme.colors.secondary[600],
+        }}
+        value={isTrackingEnabled}
+      />
     </Stack>
   );
 }
