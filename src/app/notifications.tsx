@@ -18,8 +18,8 @@ const Notifications = () => {
           onPress={() => navigation.goBack()}
           style={styles.backButton}
         >
-          <View style={styles.iconBackground}>
-            <Icon name="arrow-left" />
+          <View>
+            <Icon name="arrow-left" size={40} />
           </View>
         </TouchableOpacity>
         <Text style={styles.headerTitle} level="title_3">
@@ -59,14 +59,6 @@ const styles = StyleSheet.create({
   },
   backButton: {
     marginStart: 10,
-  },
-  iconBackground: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: "#EEF1F4",
-    justifyContent: "center",
-    alignItems: "center",
   },
   headerTitle: {
     position: "absolute",

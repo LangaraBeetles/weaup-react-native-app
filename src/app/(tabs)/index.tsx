@@ -1,6 +1,12 @@
 import React, { useEffect } from "react";
 
-import { Image, Platform, Pressable, ScrollView, View } from "react-native";
+import {
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Dimensions,
+} from "react-native";
 import { Link, Redirect } from "expo-router";
 import DeviceMotionViewiOS, {
   DeviceMotionViewAndroid,
@@ -16,24 +22,21 @@ import Icon from "@src/components/ui/Icon";
 import TrackingModeIcon from "@src/components/homepage/TrackingModeIcon";
 import { Text } from "@src/components/ui/typography";
 
-import LottieView from "lottie-react-native";
 import { useRef } from "react";
+import { theme } from "@src/styles/theme";
+import ScoreComponent from "@src/components/homepage/ScoreComponent";
+import Gradient from "@src/components/ui/Gradient";
+import Image from "@src/components/ui/Image";
 
-const background = {
-  not_reading: "white",
-  good: "white",
-  mid: "yellow",
-  bad: "crimson",
-};
+const { height } = Dimensions.get("screen");
 
 const HomePage = () => {
   const isSetupComplete = useUser((state) => state.isSetupComplete);
   const userName = useUser((state) => state.user.name);
   const userLevel = useUser((state) => state.user.level);
-  const userHP = useUser((state) => state.user.hp);
-  const userXP = useUser((state) => state.user.xp);
-  const userStreak = useUser((state) => state.user.dailyStreakCounter);
   const currentPosture = useUser((state) => state.currentPosture);
+  const sessionStatus = useUser((state) => state.sessionStatus);
+
   const animation = useRef<any>(null);
 
   useEffect(() => {
@@ -56,136 +59,153 @@ const HomePage = () => {
 
   return (
     <SafeAreaView
-      style={{ backgroundColor: background[currentPosture], height: "100%" }}
+      style={{
+        position: "relative",
+        height: height,
+        backgroundColor: theme.colors.white,
+      }}
     >
-      <ScrollView>
+      <Gradient
+        color1={theme.colors.primary[300]}
+        color2={theme.colors.white}
+        locations={[0, 0.8]}
+      />
+
+      {sessionStatus === "INACTIVE" && (
+        <Stack h={height} style={styles.backgroundImage}>
+          {currentPosture === "bad" ? (
+            <Image name="background-bad" />
+          ) : (
+            <Image name="background-happy" />
+          )}
+        </Stack>
+      )}
+      <ScrollView style={{ flex: 1, zIndex: 2 }}>
         <Stack flexDirection="row" justifyContent="space-between" p={15} pb={0}>
           <Stack
             flexDirection="row"
-            gap={18}
-            border={1}
-            borderRadius={50}
-            p={10}
+            gap={8}
+            backgroundColor={theme.colors.white}
+            borderRadius={100}
+            py={8}
+            pl={8}
+            pr={12}
             alignItems="center"
           >
-            {/*TODO: display avatar */}
-            <Image source={require("../../../assets/img/avatar.png")} />
-            {userName != null ? <Text>{userName.split(" ")[0]}</Text> : null}
-            <Text>Lv.{userLevel}</Text>
+            <Stack flexDirection="row" gap={4}>
+              <Image name="avatar" w={25} h={25} />
+              {userName !== "null" ? (
+                <Text
+                  style={{ color: theme.colors.neutral[800] }}
+                  level="footnote"
+                  weight="bold"
+                >
+                  {userName !== null && userName.split(" ")[0]}
+                </Text>
+              ) : null}
+            </Stack>
+            <Text
+              style={{ color: theme.colors.neutral[400] }}
+              level="caption_1"
+              weight="bold"
+            >
+              Lv.{userLevel}
+            </Text>
           </Stack>
           <Stack flexDirection="row" gap={18} border={0} p={5}>
             <TrackingModeIcon />
 
             <Center>
-              <Link href="/notifications" asChild>
-                <Pressable>
-                  <Icon name={"notification-outline"} />
-                </Pressable>
-              </Link>
+              <Stack
+                backgroundColor={theme.colors.white}
+                h={40}
+                w={40}
+                alignItems="center"
+                justifyContent="center"
+                borderRadius={20}
+              >
+                <Link href="/notifications" asChild>
+                  <Pressable>
+                    <Icon name="notification-outline" />
+                  </Pressable>
+                </Link>
+              </Stack>
             </Center>
           </Stack>
         </Stack>
 
-        <Center p={15} pb={0}>
-          <Stack
-            flexDirection="row"
-            border={1}
-            borderRadius={20}
-            gap={10}
-            w={"100%"}
-            px={20}
-            py={25}
-            justifyContent="space-between"
-          >
-            <Stack
-              flexDirection="row"
-              gap={2}
-              borderRight={1}
-              borderColor={"#E7E5E4"}
-              pr={20}
-            >
-              <Center pr={10}>
-                <Icon name="star" />
-              </Center>
+        <ScoreComponent />
 
-              <Stack
-                flexDirection="column"
-                justifyContent="space-evenly"
-                gap={7}
-              >
-                <Text level="caption_1">Posture Score</Text>
-                <Stack flexDirection="row">
-                  <Text level="title_2">{userHP} </Text>
-                  <Stack pt={9}>
-                    <Text level="caption_1">/ 100</Text>
+        {sessionStatus === "INACTIVE" && (
+          <Center p={15}>
+            {Platform.OS === "ios" && <DeviceMotionViewiOS />}
+            {Platform.OS === "android" && <DeviceMotionViewAndroid />}
+          </Center>
+        )}
+
+        <Stack h={286} my={15}>
+          <Center>
+            {sessionStatus === "INACTIVE" ? (
+              <Image name="weasel-happy" />
+            ) : (
+              <>
+                <Stack w={290} h={290}>
+                  <Image
+                    name="green-gradient"
+                    style={StyleSheet.absoluteFillObject}
+                  />
+                  <Stack
+                    mt={18}
+                    h={253}
+                    w={253}
+                    borderColor={theme.colors.white}
+                    border={12}
+                    borderRadius={150}
+                    style={{ overflow: "hidden", alignSelf: "center" }}
+                  >
+                    <Image
+                      name="background-happy"
+                      style={[
+                        StyleSheet.absoluteFillObject,
+                        styles.backgroundImageFill,
+                      ]}
+                    />
+                    <Center style={{ marginTop: 25 }}>
+                      <Image name="weasel-side-peaceful" w={109} h={230} />
+                    </Center>
                   </Stack>
                 </Stack>
-              </Stack>
-            </Stack>
-            <Stack
-              flexDirection="column"
-              border={0}
-              justifyContent="space-evenly"
-            >
-              <Stack
-                flexDirection="row"
-                gap={10}
-                border={0}
-                justifyContent="start"
-              >
-                <Icon name="lightening" />
-                <Stack flexDirection="row">
-                  <Text level="footnote" weight="bold">
-                    {userXP}{" "}
-                  </Text>
-                  <Text level="footnote">XP</Text>
-                </Stack>
-              </Stack>
-              <Stack
-                flexDirection="row"
-                gap={10}
-                border={0}
-                justifyContent="start"
-              >
-                <Icon name="streak" />
-                <Stack flexDirection="row">
-                  <Text level="footnote" weight="bold">
-                    {userStreak}{" "}
-                  </Text>
-                  <Text level="footnote">Day Streak</Text>
-                </Stack>
-              </Stack>
-            </Stack>
-          </Stack>
-        </Center>
-        <Center p={15}>
-          {Platform.OS === "ios" && <DeviceMotionViewiOS />}
-          {Platform.OS === "android" && <DeviceMotionViewAndroid />}
-        </Center>
-        <View style={{ width: "100%", height: 300 }}>
-          <Center>
-            {Platform.OS === "ios" ? (
-              <LottieView
-                autoPlay={false}
-                ref={animation}
-                progress={1}
-                style={{
-                  width: "100%",
-                  height: "100%",
-                }}
-                source={require("../../animations/alien.json")}
-              />
-            ) : (
-              <Image source={require("../../../assets/img/mascot.png")} />
+                <Text>{currentPosture}</Text>
+                {/* TODO: remove text */}
+              </>
             )}
           </Center>
-        </View>
-        <Center>
+        </Stack>
+        <Center style={styles.sessionButton}>
           <SessionControl />
         </Center>
       </ScrollView>
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  backgroundImage: {
+    position: "absolute",
+    top: 115,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 0,
+  },
+  backgroundImageFill: {
+    flex: 1,
+    transform: [{ scale: 2 }, { translateY: 10 }],
+  },
+  sessionButton: {
+    width: 250,
+    alignSelf: "center",
+  },
+});
 
 export default HomePage;

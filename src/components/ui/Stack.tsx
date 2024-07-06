@@ -16,6 +16,13 @@ const Stack = styled(View, {
     pr: "paddingRight",
     px: "paddingHorizontal",
     py: "paddingVertical",
+    m: "margin",
+    mb: "marginBottom",
+    mt: "marginTop",
+    ml: "marginLeft",
+    mr: "marginRight",
+    mx: "marginHorizontal",
+    my: "marginVertical",
     borderRadius: "borderRadius",
     border: "borderWidth",
     borderRight: "borderRightWidth",
@@ -24,6 +31,7 @@ const Stack = styled(View, {
     w: "width",
     h: "height",
     flex: "flex",
+    backgroundColor: "backgroundColor",
   },
 });
 

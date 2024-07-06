@@ -12,7 +12,7 @@ const SessionControl = () => {
   const router = useRouter();
   const startDate = useRef<string>("");
 
-  const setSessionActive = useUser((state) => state.setSessionActive);
+  const setSessionActive = useUser((state) => state.setSessionStatus);
   const prepareSessionPostureData = useUser(
     (state) => state.prepareSessionPostureData,
   );
@@ -27,26 +27,26 @@ const SessionControl = () => {
     },
     onError: (error) => {
       console.log({ error });
-      setSessionActive(false);
+      setSessionActive("INACTIVE");
     },
     onSettled: () => {},
   });
 
   const onStartSession = () => {
-    setSessionActive(true);
+    setSessionActive("ACTIVE");
     startDate.current = new Date().toISOString();
   };
 
   const onPauseSession = () => {
-    setSessionActive(false);
+    setSessionActive("PAUSED");
   };
 
   const onResumeSession = () => {
-    setSessionActive(true);
+    setSessionActive("ACTIVE");
   };
 
   const onStopSession = () => {
-    setSessionActive(false);
+    setSessionActive("INACTIVE");
 
     const records = prepareSessionPostureData();
     const payload: PostureSessionInput = {

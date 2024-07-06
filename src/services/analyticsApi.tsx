@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 const route = "analytics";
 
 export const getAnalytics = async () => {
-  const start_date = dayjs().subtract(1, "day").format("YYYY-MM-DD");
+  const start_date = dayjs().format("YYYY-MM-DD");
   const { data } = await api.get<{ data: PostureData }>(`${route}`, {
     params: {
       start_date,
