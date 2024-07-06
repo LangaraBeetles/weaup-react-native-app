@@ -5,6 +5,17 @@ export type PostureRecordInput = {
   recorded_at: string;
 };
 
+export type PostureSessionRecord = {
+  good_posture: boolean;
+  recorded_at: string;
+};
+
+export type PostureSessionInput = {
+  started_at: string;
+  ended_at: string;
+  records: Array<PostureSessionRecord>;
+};
+
 interface SessionRecord {
   _id: string;
   user_id: string;

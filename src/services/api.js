@@ -14,8 +14,8 @@ api.interceptors.request.use(
     request.headers.Authorization = authToken;
     console.log({ token });
 
-    console.log(request.baseURL);
-    console.log(request.url);
+    console.log(`${request.baseURL}${request.url}`);
+
     return request;
   },
   (error) => {

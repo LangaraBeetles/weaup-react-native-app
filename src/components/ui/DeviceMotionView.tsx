@@ -4,10 +4,16 @@ import Stack from "@src/components/ui/Stack";
 import { useUser } from "@src/state/useUser";
 import * as Haptics from "expo-haptics";
 import { DeviceMotion } from "expo-sensors";
-import { Switch, Text } from "react-native";
+import { Switch } from "react-native";
+import { Text } from "@src/components/ui/typography";
+import { theme } from "@src/styles/theme";
 
 export default function DeviceMotionViewiOS() {
-  const isTrackingEnabled = useUser((state) => state.isTrackingEnabled);
+  const isRealTimeTracking = useUser((state) => state.isTrackingEnabled);
+
+  const isTrackingEnabled = useUser(
+    (state) => state.isTrackingEnabled || state.sessionStatus !== "INACTIVE",
+  );
   const setTrackingEnabled = useUser((state) => state.setTrackingEnabled);
 
   const currentPosture = useUser((state) => state.currentPosture);
@@ -15,7 +21,7 @@ export default function DeviceMotionViewiOS() {
   const mode = useUser((state) => state.mode);
 
   const toggleTracking = () => {
-    const value = !isTrackingEnabled;
+    const value = !isRealTimeTracking;
 
     if (!value) {
       setCurrentPosture("not_reading");
@@ -91,31 +97,46 @@ export default function DeviceMotionViewiOS() {
   return (
     <Stack
       flexDirection="row"
-      border={1}
       borderRadius={20}
       justifyContent="space-between"
       alignItems="center"
       w="100%"
-      p={10}
+      py={10}
+      px={24}
+      backgroundColor="white"
     >
-      <Text>Realtime Tracking</Text>
-      <Switch onValueChange={toggleTracking} value={isTrackingEnabled} />
+      <Text level="footnote" weight="semibold">
+        Active Monitoring
+      </Text>
+      <Switch
+        trackColor={{
+          true: theme.colors.secondary[600],
+        }}
+        onValueChange={toggleTracking}
+        value={isTrackingEnabled}
+      />
     </Stack>
   );
 }
 
 export function DeviceMotionViewAndroid() {
-  const isTrackingEnabled = useUser((state) => state.isTrackingEnabled);
+  const isRealTimeTracking = useUser((state) => state.isTrackingEnabled);
+
+  const isTrackingEnabled = useUser(
+    (state) => state.isTrackingEnabled || state.sessionStatus !== "INACTIVE",
+  );
   const setTrackingEnabled = useUser((state) => state.setTrackingEnabled);
 
   const setCurrentPosture = useUser((state) => state.setCurrentPosture);
-  const mode = useUser((state) => state.mode);
 
-  const [{ beta, gamma }, setRotationData] = useState({ beta: 0, gamma: 0 });
-  const [orientation, setOrientation] = useState(0);
+  const [{ beta, gamma }, setRotationData] = useState<{
+    beta: number;
+    gamma: number;
+  }>({ beta: 0, gamma: 0 });
+  const [orientation, setOrientation] = useState<number>(0);
 
   const toggleTracking = () => {
-    const value = !isTrackingEnabled;
+    const value = !isRealTimeTracking;
 
     if (!value) {
       setCurrentPosture("not_reading");
@@ -124,19 +145,20 @@ export function DeviceMotionViewAndroid() {
     }
     setTrackingEnabled(value);
   };
-  //Get RotationData
+
+  // Manage device motion subscription
   useEffect(() => {
-    if (isTrackingEnabled && mode === "phone") {
+    if (isTrackingEnabled) {
       _subscribe();
     } else {
-      setCurrentPosture("not_reading");
+      _unsubscribe();
     }
+
     return () => {
       _unsubscribe();
     };
-  }, [isTrackingEnabled, mode]);
+  }, [isTrackingEnabled]);
 
-  //Get rotation and orientation values
   const _subscribe = async () => {
     try {
       DeviceMotion.addListener((devicemotionData) => {
@@ -156,10 +178,15 @@ export function DeviceMotionViewAndroid() {
     DeviceMotion.removeAllListeners();
   };
 
-  //Provide feedback
+  // Provide feedback based on posture
   useEffect(() => {
+    if (!isTrackingEnabled) {
+      setCurrentPosture("not_reading");
+      return;
+    }
+
     if (beta < 0.03 && gamma < 0.03) {
-      //device is on a flat surface
+      // device is on a flat surface
       return;
     }
 
@@ -169,12 +196,12 @@ export function DeviceMotionViewAndroid() {
     } else {
       setCurrentPosture("good");
     }
-  }, [beta, gamma]);
+  }, [beta, gamma, isTrackingEnabled]);
 
   const isBadPosture = () => {
     return (
-      (orientation == 0 && inBadPostureRange(beta)) ||
-      (orientation != 0 && inBadPostureRange(gamma))
+      (orientation === 0 && inBadPostureRange(beta)) ||
+      (orientation !== 0 && inBadPostureRange(gamma))
     );
   };
 
@@ -185,15 +212,24 @@ export function DeviceMotionViewAndroid() {
   return (
     <Stack
       flexDirection="row"
-      border={1}
-      borderRadius={20}
+      borderRadius={12}
       justifyContent="space-between"
       alignItems="center"
       w="100%"
-      p={10}
+      py={10}
+      px={24}
+      backgroundColor={theme.colors.white}
     >
-      <Text>Realtime Tracking</Text>
-      <Switch onValueChange={toggleTracking} value={isTrackingEnabled} />
+      <Text level="footnote" weight="semibold">
+        Active Monitoring
+      </Text>
+      <Switch
+        onValueChange={toggleTracking}
+        trackColor={{
+          true: theme.colors.secondary[600],
+        }}
+        value={isTrackingEnabled}
+      />
     </Stack>
   );
 }

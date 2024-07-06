@@ -8,7 +8,12 @@ import Icon, { IconName } from "@src/components/ui/Icon";
 const Button: React.FC<{
   title: string;
   onPress: () => void;
-  variant?: "primary" | "secondary" | "secondary_coral" | "tertiary";
+  variant?:
+    | "primary"
+    | "secondary"
+    | "secondary_coral"
+    | "tertiary"
+    | "disabled";
   disabled?: boolean;
   leadingIcon?: IconName;
   trailingIcon?: IconName;
@@ -65,7 +70,7 @@ export default Button;
 
 const ButtonRoot = styled(Pressable, {
   paddingHorizontal: 48,
-  paddingVertical: 20,
+  paddingVertical: 16,
   minWidth: "100%",
   display: "flex",
   flexDirection: "row",
@@ -84,6 +89,7 @@ const ButtonRoot = styled(Pressable, {
       tertiary: {
         backgroundColor: theme.colors.error[500],
         borderColor: theme.colors.error[500],
+        borderWidth: 2,
       },
       disabled: {
         backgroundColor: theme.colors.neutral[100],
@@ -120,7 +126,7 @@ const ButtonRoot = styled(Pressable, {
 const ButtonText = styled(Text, {
   fontSize: 20,
   fontFamily: "NunitoBold",
-  lineHeight: 26,
+  lineHeight: 24,
   variants: {
     category: {
       primary: {

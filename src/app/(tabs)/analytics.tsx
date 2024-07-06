@@ -14,7 +14,7 @@ import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 const AnalyticsScreen = () => {
   const { data } = useQuery({
@@ -80,7 +80,7 @@ const AnalyticsScreen = () => {
           <View style={styles.dateHeader}>
             <Icon name="chevron-left" />
             <Text level="headline" style={{ marginTop: 4 }}>
-              {`Yesterday, ${dayjs(data?.start_date).format("MMM DD")}`}
+              {`Today, ${dayjs(data?.start_date).format("MMM DD")}`}
             </Text>
             <Icon name="chevron-right" />
           </View>

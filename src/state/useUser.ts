@@ -3,6 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
 import { TrackingModeType, UserType } from "@interfaces/user.types";
 import { PostureStatus } from "@src/interfaces/posture.types";
+import { SessionStatesEnum } from "@src/interfaces/session.types";
 
 type UserState = {
   isSetupComplete: boolean;
@@ -16,6 +17,9 @@ type UserState = {
 
   postureData: Array<{ status: PostureStatus; date: Date }>;
   preparePostureData: () => Array<{ status: PostureStatus; date: Date }>;
+
+  sessionPostureData: Array<{ status: PostureStatus; date: Date }>;
+  prepareSessionPostureData: () => Array<{ status: PostureStatus; date: Date }>;
 
   isAuth: boolean;
   isGuest: boolean;
@@ -31,6 +35,9 @@ type UserState = {
   setDailyStreakCounter: (newDailyStreakCounter: number) => void;
   mode: TrackingModeType;
   changeMode: (value: TrackingModeType) => void;
+
+  sessionStatus: `${SessionStatesEnum}`;
+  setSessionStatus: (status: `${SessionStatesEnum}`) => void;
 };
 
 const userInitialState: UserType = {
@@ -64,20 +71,35 @@ export const useUser = create<UserState>()(
 
         currentPosture: "not_reading",
         setCurrentPosture: (value) => {
+          const isSession = get().sessionStatus === "ACTIVE";
+
           if (value === "bad" || value === "good") {
-            set((state) => ({
-              currentPosture: value,
-              postureData: [
-                ...state.postureData,
-                { status: value, date: new Date() },
-              ],
-            }));
+            if (isSession) {
+              // Session
+              set((state) => ({
+                currentPosture: value,
+                sessionPostureData: [
+                  ...state.sessionPostureData,
+                  { status: value, date: new Date() },
+                ],
+              }));
+            } else {
+              // Real-time tracking
+              set((state) => ({
+                currentPosture: value,
+                postureData: [
+                  ...state.postureData,
+                  { status: value, date: new Date() },
+                ],
+              }));
+            }
           } else {
             set({ currentPosture: value });
           }
         },
 
         postureData: [],
+
         preparePostureData: () => {
           // This function will get the current posture data that is ready to be sent to the api
           // we clear the object to avoid duplicity
@@ -161,6 +183,17 @@ export const useUser = create<UserState>()(
 
         mode: "phone",
         changeMode: (value: TrackingModeType) => set({ mode: value }),
+
+        sessionStatus: "INACTIVE",
+        setSessionStatus: (isActive) => set({ sessionStatus: isActive }),
+        sessionPostureData: [],
+        prepareSessionPostureData: () => {
+          // This function will get the current posture data that is ready to be sent to the api
+          // we clear the object to avoid duplicity
+          const data = get().sessionPostureData;
+          set({ sessionPostureData: [] });
+          return data;
+        },
       }),
       {
         storage: createJSONStorage(() => AsyncStorage),

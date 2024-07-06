@@ -1,3 +1,6 @@
+import React from "react";
+import { SvgProps } from "react-native-svg";
+
 import ArrowLeft from "assets/icons/arrow-left.svg";
 import ArrowRight from "assets/icons/arrow-right.svg";
 import Add from "assets/icons/add.svg";
@@ -60,7 +63,9 @@ import Trash from "assets/icons/trash.svg";
 import Warning from "assets/icons/warning.svg";
 import XpFill from "assets/icons/xp-fill.svg";
 import XpOutline from "assets/icons/xp-outline.svg";
-import WelcomeMascot from "assets/icons/welcome-mascot.svg";
+import StarIcon from "assets/icons/colorLabelIcon-star.svg";
+import LighteningIcon from "assets/icons/colorLabelIcon-lightening.svg";
+import StreakIcon from "assets/icons/colorLabelIcon-streak.svg";
 import ColorLabelIconLightening from "assets/icons/colorLabelIcon-lightening.svg";
 import ColorLabelIconStreak from "assets/icons/colorLabelIcon-streak.svg";
 import ColorLabelIconStar from "assets/icons/colorLabelIcon-star.svg";
@@ -138,7 +143,9 @@ const IconConfig = {
   warning: Warning,
   "xp-fill": XpFill,
   "xp-outline": XpOutline,
-  "welcome-mascot": WelcomeMascot,
+  star: StarIcon,
+  lightening: LighteningIcon,
+  streak: StreakIcon,
   "colorLabelIcon-lightening": ColorLabelIconLightening,
   "colorLabelIcon-streak": ColorLabelIconStreak,
   "colorLabelIcon-star": ColorLabelIconStar,
@@ -152,17 +159,23 @@ const IconConfig = {
   "challenge-avatar": ChallengeAvatar,
 };
 
-export type IconName = `${keyof typeof IconConfig}`;
+export type IconName = keyof typeof IconConfig;
 
 type IconProps = {
   name: IconName;
   color?: string;
-};
+  size?: number;
+} & Omit<SvgProps, "color">;
 
-const Icon: React.FC<IconProps> = ({ name, color = theme.colors.text }) => {
+const Icon: React.FC<IconProps> = ({
+  name,
+  color = theme.colors.text,
+  size = 20,
+  ...props
+}) => {
   const CustomIcon = IconConfig[name];
 
-  return <CustomIcon color={color} />;
+  return <CustomIcon {...props} color={color} width={size} height={size} />;
 };
 
 export default Icon;
