@@ -4,17 +4,19 @@ import { useRouter } from "expo-router";
 import Center from "@src/components/ui/Center";
 import ChallengeCard from "@src/components/listItems/ChallengeCard";
 import Chip from "@src/components/ui/Chip";
+import { theme } from "@src/styles/theme";
 
 const ChallengeList = (props: any) => {
   const router = useRouter();
   const { challenges, isOngoing } = props;
 
   const viewPastChallenges = () => {
-    router.navigate("pastChallengesScreen");
+    router.navigate("challenges/past-challenges");
   };
 
   return (
     <FlatList
+      style={{ backgroundColor: theme.colors.surface }}
       data={challenges}
       ListFooterComponent={() => {
         return (
