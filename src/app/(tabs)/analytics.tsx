@@ -14,7 +14,7 @@ import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 
 const AnalyticsScreen = () => {
   const { data } = useQuery({
@@ -31,6 +31,10 @@ const AnalyticsScreen = () => {
   return (
     <FormProvider {...form}>
       <Page
+        title="Analytics"
+        renderContainer={(children) => (
+          <ScrollView style={{ height: "100%" }}>{children}</ScrollView>
+        )}
         header={
           <Stack gap={16}>
             <FilterMenu
@@ -44,7 +48,7 @@ const AnalyticsScreen = () => {
             <View style={styles.dateHeader}>
               <Icon name="chevron-left" />
               <Text level="headline" style={{ marginTop: 4 }}>
-                {`Yesterday, ${dayjs(data?.start_date).format("MMM DD")}`}
+                {`Today, ${dayjs(data?.start_date).format("MMM DD")}`}
               </Text>
               <Icon name="chevron-right" />
             </View>

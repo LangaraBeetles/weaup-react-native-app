@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect } from "react";
-import { Alert, Platform } from "react-native";
+import { Platform } from "react-native";
 import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";
 import { theme } from "@src/styles/theme";
@@ -28,7 +28,7 @@ const PushNotificationsProvider: React.FC<{ children: React.ReactNode }> = ({
     const registerForPushNotificationsAsync = async () => {
       try {
         if (!Device.isDevice) {
-          Alert.alert("Must use physical device for Push Notifications");
+          // Alert.alert("Must use physical device for Push Notifications");
           return;
         }
 

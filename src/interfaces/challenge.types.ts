@@ -40,3 +40,41 @@ export type MemberType = {
   joined_at: Date;
   left_at: Date | null;
 };
+
+type ChallengeUserType = {
+  _id: string;
+  daily_goal: number;
+  device_id: string | null;
+  email: string;
+  hp: number;
+  is_setup_complete: boolean;
+  level: number;
+  name: string;
+  preferred_mode: string;
+  provider_id: string;
+  xp: number;
+};
+
+type ChallengeMemberType = {
+  _id: string;
+  joined_at: string;
+  left_at: string | null;
+  points: number;
+  user: ChallengeUserType;
+  user_id: string;
+};
+
+export type ChallengeResponseType = {
+  __v: number;
+  _id: string;
+  color: string;
+  creator_id: string;
+  description: string;
+  duration: number;
+  end_at: string;
+  goal: number;
+  members: Array<ChallengeMemberType>;
+  name: string;
+  start_at: string;
+  status: string;
+};

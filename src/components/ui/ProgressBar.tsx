@@ -6,7 +6,7 @@ const ProgressBar = (props: any) => {
   const {
     currentValue,
     goal,
-    content,
+    children,
     backgroundColor,
     barColor,
     height,
@@ -57,7 +57,7 @@ const ProgressBar = (props: any) => {
           },
         ]}
       />
-      {content}
+      {children}
     </View>
   );
 };
