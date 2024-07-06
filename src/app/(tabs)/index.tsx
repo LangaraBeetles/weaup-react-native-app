@@ -35,7 +35,7 @@ const HomePage = () => {
   const userName = useUser((state) => state.user.name);
   const userLevel = useUser((state) => state.user.level);
   const currentPosture = useUser((state) => state.currentPosture);
-  const isSessionActive = useUser((state) => state.isSessionActive);
+  const sessionStatus = useUser((state) => state.sessionStatus);
 
   const animation = useRef<any>(null);
 
@@ -58,21 +58,20 @@ const HomePage = () => {
   }
 
   return (
-    <SafeAreaView style={{ position: "relative", height: height }}>
-      {!isSessionActive ? (
-        <Gradient
-          color1={theme.colors.primary[300]}
-          color2={theme.colors.white}
-          locations={[0, 0.35]}
-        />
-      ) : (
-        <Gradient
-          color1={theme.colors.primary[300]}
-          color2={theme.colors.white}
-          locations={[0, 0.8]}
-        />
-      )}
-      {!isSessionActive && (
+    <SafeAreaView
+      style={{
+        position: "relative",
+        height: height,
+        backgroundColor: theme.colors.white,
+      }}
+    >
+      <Gradient
+        color1={theme.colors.primary[300]}
+        color2={theme.colors.white}
+        locations={[0, 0.8]}
+      />
+
+      {sessionStatus === "INACTIVE" && (
         <Stack h={height} style={styles.backgroundImage}>
           {currentPosture === "bad" ? (
             <Image name="background-bad" />
@@ -81,7 +80,7 @@ const HomePage = () => {
           )}
         </Stack>
       )}
-      <ScrollView style={{ flex: 1 }}>
+      <ScrollView style={{ flex: 1, zIndex: 2 }}>
         <Stack flexDirection="row" justifyContent="space-between" p={15} pb={0}>
           <Stack
             flexDirection="row"
@@ -137,7 +136,7 @@ const HomePage = () => {
 
         <ScoreComponent />
 
-        {!isSessionActive && (
+        {sessionStatus === "INACTIVE" && (
           <Center p={15}>
             {Platform.OS === "ios" && <DeviceMotionViewiOS />}
             {Platform.OS === "android" && <DeviceMotionViewAndroid />}
@@ -146,35 +145,39 @@ const HomePage = () => {
 
         <Stack h={286} my={15}>
           <Center>
-            {!isSessionActive ? (
+            {sessionStatus === "INACTIVE" ? (
               <Image name="weasel-happy" />
             ) : (
-              <Stack w={290} h={290}>
-                <Image
-                  name="green-gradient"
-                  style={StyleSheet.absoluteFillObject}
-                />
-                <Stack
-                  mt={18}
-                  h={253}
-                  w={253}
-                  borderColor={theme.colors.white}
-                  border={12}
-                  borderRadius={150}
-                  style={{ overflow: "hidden", alignSelf: "center" }}
-                >
+              <>
+                <Stack w={290} h={290}>
                   <Image
-                    name="background-happy"
-                    style={[
-                      StyleSheet.absoluteFillObject,
-                      styles.backgroundImageFill,
-                    ]}
+                    name="green-gradient"
+                    style={StyleSheet.absoluteFillObject}
                   />
-                  <Center style={{ marginTop: 25 }}>
-                    <Image name="weasel-side-peaceful" w={109} h={230} />
-                  </Center>
+                  <Stack
+                    mt={18}
+                    h={253}
+                    w={253}
+                    borderColor={theme.colors.white}
+                    border={12}
+                    borderRadius={150}
+                    style={{ overflow: "hidden", alignSelf: "center" }}
+                  >
+                    <Image
+                      name="background-happy"
+                      style={[
+                        StyleSheet.absoluteFillObject,
+                        styles.backgroundImageFill,
+                      ]}
+                    />
+                    <Center style={{ marginTop: 25 }}>
+                      <Image name="weasel-side-peaceful" w={109} h={230} />
+                    </Center>
+                  </Stack>
                 </Stack>
-              </Stack>
+                <Text>{currentPosture}</Text>
+                {/* TODO: remove text */}
+              </>
             )}
           </Center>
         </Stack>

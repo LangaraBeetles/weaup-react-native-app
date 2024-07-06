@@ -3,6 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
 import { TrackingModeType, UserType } from "@interfaces/user.types";
 import { PostureStatus } from "@src/interfaces/posture.types";
+import { SessionStatesEnum } from "@src/interfaces/session.types";
 
 type UserState = {
   isSetupComplete: boolean;
@@ -35,8 +36,8 @@ type UserState = {
   mode: TrackingModeType;
   changeMode: (value: TrackingModeType) => void;
 
-  isSessionActive: boolean;
-  setSessionActive: (isActive: boolean) => void;
+  sessionStatus: `${SessionStatesEnum}`;
+  setSessionStatus: (status: `${SessionStatesEnum}`) => void;
 };
 
 const userInitialState: UserType = {
@@ -70,7 +71,7 @@ export const useUser = create<UserState>()(
 
         currentPosture: "not_reading",
         setCurrentPosture: (value) => {
-          const isSession = get().isSessionActive;
+          const isSession = get().sessionStatus === "ACTIVE";
 
           if (value === "bad" || value === "good") {
             if (isSession) {
@@ -183,8 +184,8 @@ export const useUser = create<UserState>()(
         mode: "phone",
         changeMode: (value: TrackingModeType) => set({ mode: value }),
 
-        isSessionActive: false,
-        setSessionActive: (isActive) => set({ isSessionActive: isActive }),
+        sessionStatus: "INACTIVE",
+        setSessionStatus: (isActive) => set({ sessionStatus: isActive }),
         sessionPostureData: [],
         prepareSessionPostureData: () => {
           // This function will get the current posture data that is ready to be sent to the api

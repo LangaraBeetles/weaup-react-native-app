@@ -12,7 +12,7 @@ export default function DeviceMotionViewiOS() {
   const isRealTimeTracking = useUser((state) => state.isTrackingEnabled);
 
   const isTrackingEnabled = useUser(
-    (state) => state.isTrackingEnabled || state.isSessionActive,
+    (state) => state.isTrackingEnabled || state.sessionStatus !== "INACTIVE",
   );
   const setTrackingEnabled = useUser((state) => state.setTrackingEnabled);
 
@@ -123,7 +123,7 @@ export function DeviceMotionViewAndroid() {
   const isRealTimeTracking = useUser((state) => state.isTrackingEnabled);
 
   const isTrackingEnabled = useUser(
-    (state) => state.isTrackingEnabled || state.isSessionActive,
+    (state) => state.isTrackingEnabled || state.sessionStatus !== "INACTIVE",
   );
   const setTrackingEnabled = useUser((state) => state.setTrackingEnabled);
 

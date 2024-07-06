@@ -7,6 +7,9 @@ const LevelSystem = () => {
   const userXP = useUser((state) => state.user.xp);
   const userLevel = useUser((state) => state.user.level);
   const setLevel = useUser((state) => state.setLevel);
+  const isSessionActive = useUser(
+    (state) => state.sessionStatus !== "INACTIVE",
+  );
   const [levelModalVisible, setLevelModalVisible] = useState(false);
 
   useEffect(() => {
@@ -31,7 +34,7 @@ const LevelSystem = () => {
 
   return (
     <NewLevelModal
-      isVisible={levelModalVisible}
+      isVisible={!isSessionActive && levelModalVisible}
       onClose={() => setLevelModalVisible(false)}
     />
   );
