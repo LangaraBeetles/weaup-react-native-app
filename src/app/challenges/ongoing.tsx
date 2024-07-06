@@ -8,14 +8,13 @@ import CustomBottomSheetModal from "@src/components/ui/CustomBottomSheetModal";
 import ChallengeList from "@src/components/lists/ChallengeList";
 import Chip from "@src/components/ui/Chip";
 import CreateChallengeContainer from "@src/components/container/CreateChallengeContainer";
-import GoogleSignUp from "@src/components/profile/GoogleSignUp";
 import { useQuery, focusManager } from "@tanstack/react-query";
 import { getOngoingChallenges } from "@src/services/challengeApi";
-import { useUser } from "@src/state/useUser";
 import Page from "@src/components/layout/Page";
 import Icon from "@src/components/ui/Icon";
 import { Text } from "@src/components/ui/typography";
 import { theme } from "@src/styles/theme";
+import ListSkeleton from "@src/components/ui/ListSkeleton";
 
 const TogetherScreen = () => {
   const router = useRouter();
@@ -23,15 +22,12 @@ const TogetherScreen = () => {
 
   const [filterUser, setFilterUser] = useState(false);
   const [sortDesc, setSortDesc] = useState(-1);
-  const isGuest = useUser((data) => data.isGuest);
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
-  const { data } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ["ongoingChallenges", filterUser, sortDesc, path],
     queryFn: () => getOngoingChallenges(filterUser, sortDesc),
     enabled: path === "/together",
-    refetchOnWindowFocus: true,
-    refetchInterval: 0,
   });
 
   const addChallenge = () => {
@@ -62,10 +58,6 @@ const TogetherScreen = () => {
     const subscription = AppState.addEventListener("change", onAppStateChange);
     return () => subscription.remove();
   }, []);
-
-  if (isGuest) {
-    return <GoogleSignUp />;
-  }
 
   return (
     <Page
@@ -99,30 +91,36 @@ const TogetherScreen = () => {
         </Stack>
       }
     >
-      <ChallengeList
-        challenges={data ?? []}
-        ListFooterComponent={() => {
-          return (
-            <Pressable onPress={viewPastChallenges}>
-              <Stack
-                gap={8}
-                flexDirection="row"
-                alignItems="center"
-                justifyContent="center"
-                pb={16}
-              >
-                <Icon
-                  name="history-outline"
-                  color={theme.colors.neutral[300]}
-                />
-                <Text style={{ color: theme.colors.neutral[300] }}>
-                  View past challenges
-                </Text>
-              </Stack>
-            </Pressable>
-          );
-        }}
-      />
+      {isLoading ? (
+        <ListSkeleton />
+      ) : (
+        <ChallengeList
+          challenges={data ?? []}
+          ListFooterComponent={() => {
+            return (
+              <Pressable onPress={viewPastChallenges}>
+                <Stack
+                  gap={8}
+                  flexDirection="row"
+                  alignItems="center"
+                  justifyContent="center"
+                  pb={16}
+                >
+                  <Icon
+                    name="history-outline"
+                    color={theme.colors.neutral[300]}
+                  />
+                  <Text style={{ color: theme.colors.neutral[300] }}>
+                    View past challenges
+                  </Text>
+                </Stack>
+              </Pressable>
+            );
+          }}
+          onRefresh={refetch}
+        />
+      )}
+
       <FloatingButton onPress={addChallenge} />
       <CustomBottomSheetModal
         ref={bottomSheetModalRef}

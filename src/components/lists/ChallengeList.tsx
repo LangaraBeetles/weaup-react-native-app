@@ -4,9 +4,13 @@ import ChallengeCard from "@src/components/listItems/ChallengeCard";
 import { ChallengeResponseType } from "@src/interfaces/challenge.types";
 
 const ChallengeList = ({
+  onRefresh,
   challenges,
   ListFooterComponent,
+  refreshing = false,
 }: {
+  refreshing?: boolean;
+  onRefresh: () => void;
   challenges: ChallengeResponseType[];
   ListFooterComponent?:
     | React.ComponentType<any>
@@ -17,6 +21,8 @@ const ChallengeList = ({
   return (
     <FlatList
       data={challenges}
+      refreshing={refreshing}
+      onRefresh={onRefresh}
       ListFooterComponent={ListFooterComponent}
       renderItem={({ item }) => {
         return <ChallengeCard challenge={item} />;
