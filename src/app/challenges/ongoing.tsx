@@ -96,6 +96,7 @@ const TogetherScreen = () => {
       ) : (
         <ChallengeList
           challenges={data ?? []}
+          onRefresh={refetch}
           ListFooterComponent={() => {
             return (
               <Pressable onPress={viewPastChallenges}>
@@ -117,7 +118,11 @@ const TogetherScreen = () => {
               </Pressable>
             );
           }}
-          onRefresh={refetch}
+          ListEmptyComponent={() => (
+            <Text align="center" style={{ color: theme.colors.neutral[300] }}>
+              No challenges found
+            </Text>
+          )}
         />
       )}
 

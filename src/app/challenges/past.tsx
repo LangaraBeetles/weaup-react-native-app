@@ -9,6 +9,8 @@ import { ChallengeStatusEnum } from "@src/interfaces/challenge.types";
 import Icon from "@src/components/ui/Icon";
 import Page from "@src/components/layout/Page";
 import { theme } from "@src/styles/theme";
+import ListSkeleton from "@src/components/ui/ListSkeleton";
+import { Text } from "@src/components/ui/typography";
 
 const filters: Array<{ label: string; value: `${ChallengeStatusEnum}` }> = [
   {
@@ -33,7 +35,7 @@ const PastChallengesScreen = () => {
   const [sortDesc, setSortDesc] = useState(-1);
   const path = usePathname();
 
-  const { data } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ["pastChallenges", filterStatus, sortDesc],
     queryFn: () => getPastChallenges(filterStatus, sortDesc),
     enabled: path === "/challenges/past",
@@ -84,7 +86,19 @@ const PastChallengesScreen = () => {
         </Stack>
       }
     >
-      <ChallengeList challenges={data ?? []} />
+      {isLoading ? (
+        <ListSkeleton />
+      ) : (
+        <ChallengeList
+          challenges={data ?? []}
+          onRefresh={refetch}
+          ListEmptyComponent={() => (
+            <Text align="center" style={{ color: theme.colors.neutral[300] }}>
+              No challenges found
+            </Text>
+          )}
+        />
+      )}
     </Page>
   );
 };
