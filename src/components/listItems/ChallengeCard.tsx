@@ -4,7 +4,6 @@ import { useRouter } from "expo-router";
 import { Text } from "@src/components/ui/typography";
 import ProgressBar from "@src/components/ui/ProgressBar";
 import safenumber from "@src/utils/safenumber";
-import { globalStyles } from "@src/styles/globalStyles";
 import Stack from "@src/components/ui/Stack";
 import Icon from "@src/components/ui/Icon";
 import { theme } from "@src/styles/theme";
@@ -12,6 +11,8 @@ import { ChallengeResponseType } from "@src/interfaces/challenge.types";
 import Icon1 from "assets/challenges/card/icon1.svg";
 import Icon2 from "assets/challenges/card/icon2.svg";
 import Icon3 from "assets/challenges/card/icon3.svg";
+import formatNumber from "@src/utils/format-number";
+import Avatar from "@src/components/ui/Avatar";
 
 const icon = {
   icon1: Icon1,
@@ -81,11 +82,46 @@ const ChallengeCard = (props: { challenge: ChallengeResponseType }) => {
           currentValue={progress}
           goal={goalPoints ?? 0}
           barColor={challenge.color}
-          backgroundColor={globalStyles.colors.neutral[100]}
+          backgroundColor={theme.colors.neutral[100]}
         />
-        <Text>
-          {progress}/{goalPoints}
-        </Text>
+        <Stack flexDirection="row" justifyContent="space-between">
+          <Stack flexDirection="row">
+            {challenge.members.slice(0, 3).map((member, index) => {
+              return (
+                <Avatar
+                  content={member?.user?.name?.[0] ?? `G${index + 1}`}
+                  borderWidth={3}
+                  borderColor={theme.colors.white}
+                  variant="blue1"
+                  // TODO: save the avatar color in the database with the user
+                  fontSize={10}
+                  style={{
+                    right: index > 0 ? index * 10 : 0,
+                    height: 28,
+                    width: 28,
+                  }}
+                />
+              );
+            })}
+            {challenge.members.length > 3 ? (
+              <Avatar
+                content={challenge.members.length - 3}
+                borderWidth={3}
+                borderColor={theme.colors.white}
+                variant="gray1"
+                fontSize={10}
+                style={{
+                  right: challenge.members.length * 10,
+                  height: 28,
+                  width: 28,
+                }}
+              />
+            ) : null}
+          </Stack>
+          <Text level="footnote" style={{ color: theme.colors.neutral[500] }}>
+            {formatNumber(progress)}/{formatNumber(goalPoints)}
+          </Text>
+        </Stack>
       </TouchableOpacity>
     </View>
   );
