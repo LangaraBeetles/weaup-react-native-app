@@ -66,7 +66,6 @@ import XpOutline from "assets/icons/xp-outline.svg";
 import StarIcon from "assets/icons/colorLabelIcon-star.svg";
 import LighteningIcon from "assets/icons/colorLabelIcon-lightening.svg";
 import StreakIcon from "assets/icons/colorLabelIcon-streak.svg";
-import WelcomeMascot from "assets/icons/welcome-mascot.svg";
 import ColorLabelIconLightening from "assets/icons/colorLabelIcon-lightening.svg";
 import ColorLabelIconStreak from "assets/icons/colorLabelIcon-streak.svg";
 import ColorLabelIconStar from "assets/icons/colorLabelIcon-star.svg";
@@ -147,7 +146,6 @@ const IconConfig = {
   star: StarIcon,
   lightening: LighteningIcon,
   streak: StreakIcon,
-  "welcome-mascot": WelcomeMascot,
   "colorLabelIcon-lightening": ColorLabelIconLightening,
   "colorLabelIcon-streak": ColorLabelIconStreak,
   "colorLabelIcon-star": ColorLabelIconStar,

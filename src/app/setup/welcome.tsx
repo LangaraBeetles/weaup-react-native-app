@@ -1,8 +1,8 @@
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native";
 import { Text } from "@src/components/ui/typography";
-import Icon from "@src/components/ui/Icon";
 import Stack from "@src/components/ui/Stack";
+import WelcomeMascotImage from "assets/icons/welcome-mascot.svg";
 
 const WelcomeScreen = () => {
   setTimeout(() => {
@@ -21,8 +21,8 @@ const WelcomeScreen = () => {
         height: "100%",
       }}
     >
-      <Stack>
-        <Icon name={"welcome-mascot"} />
+      <Stack p={30}>
+        <WelcomeMascotImage />
         <Text align="center" level="title_2" style={{ color: "#FFFFFF" }}>
           Time to sit up straight and shine with WeaUP!
         </Text>
