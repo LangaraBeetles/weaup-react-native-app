@@ -55,8 +55,23 @@ const Chip: React.FC<{
       borderRadius={100}
     >
       {typeof children === "string" ? (
-        <Stack flexDirection="row">
-          {leadingIcon ? <Icon name={leadingIcon} size={20} /> : null}
+        <Stack
+          flexDirection="row"
+          justifyContent="center"
+          alignItems="center"
+          gap={2}
+        >
+          {leadingIcon ? (
+            <Icon
+              name={leadingIcon}
+              size={18}
+              color={
+                colorScheme === "default"
+                  ? theme.colors.text
+                  : theme.colors.white
+              }
+            />
+          ) : null}
           <Text
             weight={colorScheme === "default" ? "regular" : "bold"}
             style={{
