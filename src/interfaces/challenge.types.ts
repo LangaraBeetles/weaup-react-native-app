@@ -64,10 +64,12 @@ type ChallengeMemberType = {
   user_id: string;
 };
 
+export type ChallengeIconType = "icon1" | "icon2" | "icon3";
+
 export type ChallengeResponseType = {
-  __v: number;
   _id: string;
   color: string;
+  icon: ChallengeIconType;
   creator_id: string;
   description: string;
   duration: number;

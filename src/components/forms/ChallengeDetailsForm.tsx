@@ -116,11 +116,11 @@ const ChallengeDetailsForm = (props: any) => {
               {/* TODO: update colors according to style palette OR create a new component  */}
               <TouchableOpacity
                 style={styles.colorSelection1}
-                onPress={() => setColor(globalStyles.colors.error[100])}
+                onPress={() => setColor(globalStyles.colors.error[300])}
               />
               <TouchableOpacity
                 style={styles.colorSelection2}
-                onPress={() => setColor(globalStyles.colors.primary[100])}
+                onPress={() => setColor(globalStyles.colors.primary[300])}
               />
               <TouchableOpacity
                 style={styles.colorSelection3}
