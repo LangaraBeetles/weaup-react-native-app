@@ -15,10 +15,7 @@ const TimePicker: React.FC<TimePickerProps> = ({
   data,
   onValueChange,
 }) => {
-  const [selectedValue, setSelectedValue] = useState<string>(() => {
-    // Ensure we have a valid initial value
-    return data.length > 0 ? data[0] : "";
-  });
+  const [selectedValue, setSelectedValue] = useState<string>(data[0]);
 
   const handleValueChange = (value: string) => {
     setSelectedValue(value);
@@ -26,9 +23,7 @@ const TimePicker: React.FC<TimePickerProps> = ({
   };
 
   useEffect(() => {
-    if (selectedValue) {
-      onValueChange(selectedValue);
-    }
+    onValueChange(selectedValue);
   }, []);
 
   return (
@@ -59,7 +54,7 @@ const styles = StyleSheet.create({
   },
   picker: {
     width: "100%",
-    height: 200, // Specify a fixed height
+    height: 200,
     backgroundColor: theme.colors.white,
   },
 });
