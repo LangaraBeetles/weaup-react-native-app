@@ -53,7 +53,7 @@ const OverviewCard = ({
   useEffect(() => {
     progress.value = withTiming(goodPercentage / 100, { duration: 2000 });
     progressText.value = withTiming(1, { duration: 2000 });
-  }, []);
+  }, [goodPercentage]);
 
   const animatedProps = useAnimatedProps(() => ({
     strokeDashoffset: CIRCLE_LENGTH * (progress.value - 1),

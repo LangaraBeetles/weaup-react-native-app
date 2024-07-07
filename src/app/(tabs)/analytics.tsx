@@ -30,7 +30,7 @@ dayjs.extend(calendar);
 const AnalyticsScreen = () => {
   const [dayFilter, setDayFilter] = useState<string>(dayjs().format());
 
-  const { data, isLoading, refetch } = useQuery({
+  const { data, isLoading, refetch, isRefetching } = useQuery({
     queryKey: ["analytics", dayFilter],
     queryFn: () => getAnalytics(dayFilter),
     enabled: !!dayFilter && dayFilter != "",
@@ -96,7 +96,7 @@ const AnalyticsScreen = () => {
           </Stack>
         }
       >
-        {isLoading ? (
+        {isLoading || isRefetching ? (
           <Stack gap={20}>
             {new Array(4).fill({}).map((_, index) => (
               <Skeleton

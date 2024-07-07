@@ -50,11 +50,13 @@ const PostureScoresCard = () => {
             style={{ height: 160 }}
             data={data}
             yAccessor={({ item }) => item.score ?? 0}
-            contentInset={{ top: 20, bottom: 0 }}
-            curve={shape.curveNatural}
+            contentInset={{ top: 25, bottom: 10 }}
+            curve={shape.curveBasis}
             svg={{
               fill: "url(#area-gradient)",
             }}
+            yMax={100}
+            yMin={0}
             numberOfTicks={4}
           >
             <GraphLine />
