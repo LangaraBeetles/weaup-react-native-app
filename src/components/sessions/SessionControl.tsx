@@ -12,7 +12,11 @@ const SessionControl = () => {
   const router = useRouter();
   const startDate = useRef<string>("");
 
+  const userHP = useUser((state) => state.user.hp);
+
   const setSessionActive = useUser((state) => state.setSessionStatus);
+  const sessionStatus = useUser((state) => state.sessionStatus);
+
   const prepareSessionPostureData = useUser(
     (state) => state.prepareSessionPostureData,
   );
@@ -52,6 +56,7 @@ const SessionControl = () => {
     const payload: PostureSessionInput = {
       started_at: startDate.current,
       ended_at: new Date().toISOString(),
+      score: userHP ?? 0,
       records: records?.map((data) => ({
         good_posture: data.status === "good",
         recorded_at: data?.date?.toISOString?.(),
@@ -68,6 +73,7 @@ const SessionControl = () => {
       </Text>
 
       <Timer
+        isTimerActive={sessionStatus !== "INACTIVE"}
         onStartCallback={onStartSession}
         onStopCallback={onStopSession}
         onPauseCallback={onPauseSession}

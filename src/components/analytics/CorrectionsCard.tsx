@@ -11,11 +11,22 @@ import { useFormContext } from "react-hook-form";
 const CorrectionsCard = () => {
   const { watch } = useFormContext<PostureData>();
 
-  const data = watch("records_by_hour")?.map((data) => data.hour) ?? [];
+  const corrections =
+    watch("records_by_hour")?.map((data) => ({
+      ...data,
+      corrections: data.records.filter((record) => record.good_posture == false)
+        ?.length,
+    })) ?? [];
+
+  const data = corrections?.map((data) => data.corrections ?? null) ?? [];
   //[0, 60, 50, null, 80, null, 20, 70, null, 50, 85, 68, null, null, 55]
 
   const xdata = ["00:00", "06:00", "12:00", "18:00", "23:00"];
-  const ydata = ["25", "50", "75", "100"];
+  const ydata = corrections.map((data) => data.corrections); //["25", "50", "75", "100"];
+
+  const total = corrections?.reduce((accum, curr) => {
+    return accum + curr.corrections;
+  }, 0);
 
   return (
     <Card>
@@ -33,7 +44,7 @@ const CorrectionsCard = () => {
             weight="medium"
             style={{ color: theme.colors.neutral[600] }}
           >
-            72
+            {total}
           </Text>
         </Stack>
       </Stack>

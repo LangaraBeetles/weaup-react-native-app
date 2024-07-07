@@ -15,8 +15,12 @@ type UserState = {
   currentPosture: PostureStatus;
   setCurrentPosture: (value: PostureStatus) => void;
 
-  postureData: Array<{ status: PostureStatus; date: Date }>;
-  preparePostureData: () => Array<{ status: PostureStatus; date: Date }>;
+  postureData: Array<{ status: PostureStatus; date: Date; score: number }>;
+  preparePostureData: () => Array<{
+    status: PostureStatus;
+    date: Date;
+    score: number;
+  }>;
 
   sessionPostureData: Array<{ status: PostureStatus; date: Date }>;
   prepareSessionPostureData: () => Array<{ status: PostureStatus; date: Date }>;
@@ -72,6 +76,7 @@ export const useUser = create<UserState>()(
         currentPosture: "not_reading",
         setCurrentPosture: (value) => {
           const isSession = get().sessionStatus === "ACTIVE";
+          const user = get().user;
 
           if (value === "bad" || value === "good") {
             if (isSession) {
@@ -80,7 +85,7 @@ export const useUser = create<UserState>()(
                 currentPosture: value,
                 sessionPostureData: [
                   ...state.sessionPostureData,
-                  { status: value, date: new Date() },
+                  { status: value, date: new Date(), score: user.hp ?? 0 },
                 ],
               }));
             } else {
@@ -89,7 +94,7 @@ export const useUser = create<UserState>()(
                 currentPosture: value,
                 postureData: [
                   ...state.postureData,
-                  { status: value, date: new Date() },
+                  { status: value, date: new Date(), score: user.hp ?? 0 },
                 ],
               }));
             }
@@ -185,7 +190,8 @@ export const useUser = create<UserState>()(
         changeMode: (value: TrackingModeType) => set({ mode: value }),
 
         sessionStatus: "INACTIVE",
-        setSessionStatus: (isActive) => set({ sessionStatus: isActive }),
+        setSessionStatus: (sessionStatus: `${SessionStatesEnum}`) =>
+          set({ sessionStatus }),
         sessionPostureData: [],
         prepareSessionPostureData: () => {
           // This function will get the current posture data that is ready to be sent to the api

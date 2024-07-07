@@ -13,8 +13,7 @@ import { View } from "react-native";
 import Card from "./Card";
 import { ReText } from "react-native-redash";
 import Stack from "@src/components/ui/Stack";
-import { useFormContext } from "react-hook-form";
-import { PostureData } from "@src/interfaces/posture.types";
+import safenumber from "@src/utils/safenumber";
 
 const outterCircle = {
   backgroundColor: theme.colors.white,
@@ -37,30 +36,34 @@ const R = CIRCLE_LENGTH / (2 * Math.PI);
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
-const OverviewCard = () => {
-  const { watch } = useFormContext<PostureData>();
-
-  const goodCount = watch("overview.good_posture_count") ?? 0;
-  const badCount = watch("overview.good_posture_count") ?? 0;
-  const total = goodCount + badCount;
+const OverviewCard = ({
+  goodCount,
+  badCount,
+}: {
+  goodCount: number;
+  badCount: number;
+}) => {
+  const total = safenumber(goodCount + badCount);
+  const goodPercentage = Math.ceil(safenumber((goodCount / total) * 100));
+  const badPercentage = total > 0 ? 100 - goodPercentage : 0;
 
   const progress = useSharedValue(0);
   const progressText = useSharedValue(0);
 
   useEffect(() => {
-    progress.value = withTiming(goodCount / 100, { duration: 2000 });
+    progress.value = withTiming(goodPercentage / 100, { duration: 2000 });
     progressText.value = withTiming(1, { duration: 2000 });
-  }, []);
+  }, [goodPercentage]);
 
   const animatedProps = useAnimatedProps(() => ({
     strokeDashoffset: CIRCLE_LENGTH * (progress.value - 1),
   }));
 
   const progressGoodCount = useDerivedValue(() => {
-    return `${Math.floor(progressText.value * goodCount)}`;
+    return `${Math.floor(progressText.value * goodPercentage)}`;
   });
   const progressBadCount = useDerivedValue(() => {
-    return `${Math.floor(progressText.value * badCount)}`;
+    return `${Math.floor(progressText.value * badPercentage)}`;
   });
 
   return (

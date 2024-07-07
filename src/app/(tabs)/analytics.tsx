@@ -5,36 +5,54 @@ import SessionHistoryCard from "@src/components/analytics/SessionHistoryCard";
 import Page from "@src/components/layout/Page";
 import FilterMenu from "@src/components/notifications/FilterMenu";
 import Icon from "@src/components/ui/Icon";
+import Skeleton from "@src/components/ui/Skeleton";
 import Stack from "@src/components/ui/Stack";
 import { Text } from "@src/components/ui/typography";
 import { PostureData } from "@src/interfaces/posture.types";
 import { getAnalytics } from "@src/services/analyticsApi";
 import { theme } from "@src/styles/theme";
+import formatCalendarDay from "@src/utils/format-calendar-day";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
-import { useEffect } from "react";
+import calendar from "dayjs/plugin/calendar";
+import { useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { ScrollView, StyleSheet, View } from "react-native";
+import {
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
+
+dayjs.extend(calendar);
 
 const AnalyticsScreen = () => {
-  const { data } = useQuery({
-    queryKey: ["analytics"],
-    queryFn: getAnalytics,
+  const [dayFilter, setDayFilter] = useState<string>(dayjs().format());
+
+  const { data, isLoading, refetch, isRefetching } = useQuery({
+    queryKey: ["analytics", dayFilter],
+    queryFn: () => getAnalytics(dayFilter),
+    enabled: !!dayFilter && dayFilter != "",
   });
+
+  const isToday = useMemo(
+    () => dayjs(dayFilter).isSame(dayjs(), "date"),
+    [dayFilter],
+  );
 
   const form = useForm<PostureData>();
 
   useEffect(() => {
-    data && form.reset(data);
-  }, [data]);
+    if (data) {
+      form.reset(data);
+    }
+  }, [data, dayFilter]);
 
   return (
     <FormProvider {...form}>
       <Page
         title="Analytics"
-        renderContainer={(children) => (
-          <ScrollView style={{ height: "100%" }}>{children}</ScrollView>
-        )}
         header={
           <Stack gap={16}>
             <FilterMenu
@@ -46,58 +64,74 @@ const AnalyticsScreen = () => {
             />
 
             <View style={styles.dateHeader}>
-              <Icon name="chevron-left" />
+              <TouchableOpacity
+                onPress={() => {
+                  setDayFilter((prev) =>
+                    dayjs(prev).subtract(1, "day").format(),
+                  );
+                }}
+              >
+                <Icon name="chevron-left" />
+              </TouchableOpacity>
               <Text level="headline" style={{ marginTop: 4 }}>
-                {`Today, ${dayjs(data?.start_date).format("MMM DD")}`}
+                {dayFilter && formatCalendarDay(dayFilter)}
               </Text>
-              <Icon name="chevron-right" />
+              <TouchableOpacity
+                onPress={() => {
+                  setDayFilter((prev) => {
+                    if (dayjs(prev).isSame(dayjs(), "date")) {
+                      return prev;
+                    }
+
+                    return dayjs(prev).add(1, "day").format();
+                  });
+                }}
+              >
+                <Icon
+                  name="chevron-right"
+                  color={isToday ? "transparent" : undefined}
+                />
+              </TouchableOpacity>
             </View>
           </Stack>
         }
       >
-        <OverviewCard />
+        {isLoading || isRefetching ? (
+          <Stack gap={20}>
+            {new Array(4).fill({}).map((_, index) => (
+              <Skeleton
+                duration={900}
+                delay={200 * index}
+                style={{ height: 150 }}
+                initialOpacity={1 - (index + 1) / 10}
+              />
+            ))}
+          </Stack>
+        ) : (
+          <ScrollView
+            style={{ height: "100%" }}
+            refreshControl={
+              <RefreshControl refreshing={false} onRefresh={refetch} />
+            }
+          >
+            <Stack gap={20} pb={20}>
+              <OverviewCard
+                goodCount={data?.overview.good_posture_count ?? 0}
+                badCount={data?.overview.bad_posture_count ?? 0}
+              />
 
-        <PostureScoresCard />
+              <PostureScoresCard />
 
-        <CorrectionsCard />
+              <CorrectionsCard />
 
-        <SessionHistoryCard />
+              <SessionHistoryCard />
+            </Stack>
+          </ScrollView>
+        )}
       </Page>
     </FormProvider>
   );
 };
-
-{
-  /* <SafeAreaView style={styles.container}>
-      <ScrollView style={{ height: "100%" }}>
-        <View style={styles.header}>
-          <Text level="title_1">Analytics</Text>
-
-          <FilterMenu
-            tabs={[
-              { label: "Day", value: "day" },
-              { label: "Week", value: "week" },
-              { label: "Month", value: "month" },
-            ]}
-          />
-
-          <View style={styles.dateHeader}>
-            <Icon name="chevron-left" />
-            <Text level="headline" style={{ marginTop: 4 }}>
-              {`Today, ${dayjs(data?.start_date).format("MMM DD")}`}
-            </Text>
-            <Icon name="chevron-right" />
-          </View>
-        </View>
-
-      
-          <View style={styles.mainCard}>
-           
-          </View>
-
-      </ScrollView>
-    </SafeAreaView> */
-}
 
 const styles = StyleSheet.create({
   container: {

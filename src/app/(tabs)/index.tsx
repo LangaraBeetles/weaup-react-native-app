@@ -136,12 +136,10 @@ const HomePage = () => {
 
         <ScoreComponent />
 
-        {sessionStatus === "INACTIVE" && (
-          <Center p={15}>
-            {Platform.OS === "ios" && <DeviceMotionViewiOS />}
-            {Platform.OS === "android" && <DeviceMotionViewAndroid />}
-          </Center>
-        )}
+        <Center p={15}>
+          {Platform.OS === "ios" && <DeviceMotionViewiOS />}
+          {Platform.OS === "android" && <DeviceMotionViewAndroid />}
+        </Center>
 
         <Stack h={286} my={15}>
           <Center>

@@ -31,11 +31,13 @@ const minutesData = Array.from({ length: 8 }, (_, i) =>
 ).slice(1, -1);
 
 const Timer = ({
+  isTimerActive: isActive,
   onStartCallback,
   onStopCallback,
   onPauseCallback,
   onResumeCallback,
 }: {
+  isTimerActive: boolean;
   onStartCallback: (seconds: number) => void;
   onStopCallback?: () => void;
   onPauseCallback?: () => void;
@@ -49,7 +51,7 @@ const Timer = ({
   const [showStartSessionModal, setShowStartSessionModal] =
     useState<boolean>(false);
 
-  const [isTimerActive, setTimerActive] = useState<boolean>(false);
+  const [isTimerActive, setTimerActive] = useState<boolean>(isActive);
 
   const [timeInHours, setTimeInHours] = useState(0);
   const [timeInMinutes, setTimeInMinutes] = useState(0);

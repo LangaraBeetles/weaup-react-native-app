@@ -1,12 +1,16 @@
-import { Text } from "@src/components/ui/typography";
-
 import { View } from "react-native";
+
+import { Text } from "@src/components/ui/typography";
+import Center from "@src/components/ui/Center";
+import Icon from "@src/components/ui/Icon";
+import Stack from "@src/components/ui/Stack";
 import Card from "./Card";
-import Stack from "../ui/Stack";
+
 import { theme } from "@src/styles/theme";
-import Icon from "../ui/Icon";
+
 import { useFormContext } from "react-hook-form";
 import { PostureData } from "@src/interfaces/posture.types";
+
 import dayjs from "dayjs";
 
 type SessionRowData = {
@@ -109,18 +113,27 @@ const SessionRow: React.FC<{ data: SessionRowData }> = ({ data }) => {
   return (
     <Stack flexDirection="row" gap={12} justifyContent="space-between" py={18}>
       <Stack flexDirection="row" gap={12}>
-        {/* TODO: implement image */}
-        <View
-          style={{
-            width: 40,
-            height: 40,
-            borderRadius: 8,
-            backgroundColor:
-              data.timeOfDay === "morning"
-                ? theme.colors.primary[50]
-                : theme.colors.secondary[100],
-          }}
-        />
+        <Center
+          bc={
+            data.timeOfDay === "morning"
+              ? theme.colors.primary[50]
+              : theme.colors.secondary[100]
+          }
+          w={40}
+          h={40}
+          borderRadius={8}
+          backgroundColor={
+            data.timeOfDay === "morning"
+              ? theme.colors.primary[50]
+              : theme.colors.secondary[100]
+          }
+        >
+          {data.timeOfDay === "morning" ? (
+            <Icon name="day" color={theme.colors.primary[500]} size={24} />
+          ) : (
+            <Icon name="night" color={theme.colors.secondary[700]} size={24} />
+          )}
+        </Center>
 
         <Stack>
           <Text level="headline">{`${data.startTime} - ${data.endTime}`}</Text>
