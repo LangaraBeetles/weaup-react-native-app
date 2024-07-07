@@ -27,10 +27,8 @@
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
-        <data android:scheme="alginmend"/>
-        <data android:scheme="com.alignmend"/>
-        <data android:scheme="exp+alignmend"/>
         <data android:scheme="weaup"/>
+        <data android:scheme="com.alignmend"/>
         <data android:scheme="exp+weaup"/>
       </intent-filter>
     </activity>

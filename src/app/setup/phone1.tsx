@@ -14,7 +14,6 @@ import { Text } from "@src/components/ui/typography";
 import Gradient from "@src/components/ui/Gradient";
 import { theme } from "@src/styles/theme";
 import Image from "@src/components/ui/Image";
-import Icon from "@src/components/ui/Icon";
 
 const { height, width } = Dimensions.get("screen");
 
@@ -22,7 +21,7 @@ const PhoneTrainingScreen = () => {
   const navigation = useNavigation();
 
   const next = () => {
-    router.push("/setup/phone1");
+    router.push("/setup/enable-notifications");
   };
 
   return (
@@ -32,12 +31,14 @@ const PhoneTrainingScreen = () => {
           style={{
             position: "absolute",
             top: Platform.OS === "android" ? height * 0.08 : height * 0.04,
-            left: width * 0.07,
+            right: width * 0.07,
             zIndex: 2,
           }}
         >
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Icon name={"arrow-left"} size={40} />
+            <Text level="headline" style={{ color: theme.colors.neutral[500] }}>
+              Skip
+            </Text>
           </TouchableOpacity>
         </Stack>
         <Gradient
@@ -49,7 +50,8 @@ const PhoneTrainingScreen = () => {
             top: 0,
             left: 0,
             right: 0,
-            height: "60%",
+            height: "55%",
+            zIndex: 1,
           }}
         />
         <Gradient
@@ -61,7 +63,8 @@ const PhoneTrainingScreen = () => {
             bottom: 0,
             left: 0,
             right: 0,
-            height: "40%",
+            height: "55%",
+            zIndex: 3,
           }}
         />
         <Center
@@ -70,6 +73,7 @@ const PhoneTrainingScreen = () => {
           style={{
             marginHorizontal: "auto",
             marginTop: height * 0.15,
+            zIndex: 2,
           }}
         >
           <Stack style={styles.phone} w={20} h={128} />
@@ -89,17 +93,25 @@ const PhoneTrainingScreen = () => {
                   level="title_1"
                   style={{ color: theme.colors.primary[900] }}
                 >
-                  Track posture with phone
+                  Hold your phone
                 </Text>
                 <Text align="center">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor.
+                  Try hold it upright at 90 degree. This is your ideal posture!
                 </Text>
               </Stack>
-
-              <Button title="Confirm" onPress={next} variant="primary" />
             </Stack>
           </Center>
+        </Stack>
+        <Stack style={{ zIndex: 5 }} flex={"row"}>
+          <Stack w={40} h={8} style={styles.activeNav} />
+        </Stack>
+        <Stack style={styles.button} w={137}>
+          <Button
+            trailingIcon="chevron-right"
+            onPress={next}
+            variant="primary"
+            title={""}
+          />
         </Stack>
       </Stack>
     </SafeAreaView>
@@ -109,11 +121,12 @@ const PhoneTrainingScreen = () => {
 const styles = StyleSheet.create({
   content: {
     position: "absolute",
-    bottom: Platform.OS === "android" ? height * 0.1 : height * 0.15,
+    bottom: Platform.OS === "android" ? height * 0.25 : height * 0.33,
     width: width * 0.9,
     backgroundColor: theme.colors.white,
     padding: 20,
     borderRadius: 20,
+    zIndex: 4,
   },
   phone: {
     position: "absolute",
@@ -121,6 +134,18 @@ const styles = StyleSheet.create({
     left: 0,
     borderRadius: 5,
     backgroundColor: theme.colors.other[100],
+    transform: [{ rotate: "-15deg" }],
+    zIndex: 2,
+  },
+  activeNav: {
+    backgroundColor: theme.colors.primary[700],
+    borderRadius: 40,
+    zIndex: 4,
+  },
+  button: {
+    position: "absolute",
+    bottom: width * 0.4,
+    zIndex: 4,
   },
 });
 

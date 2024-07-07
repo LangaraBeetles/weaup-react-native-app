@@ -30,13 +30,22 @@ const SetupPages = () => {
       <Center
         w={236}
         h={464}
-        style={{ marginHorizontal: "auto", marginTop: height * 0.2 }}
+        style={{
+          marginHorizontal: "auto",
+          marginTop: height * 0.2,
+        }}
       >
+        <Stack style={style.iconStackTop}>
+          <Icon name="colorLabelIcon-target" size={80} />
+          <Icon name="colorLabelIcon-streak" size={80} />
+        </Stack>
+        <Stack style={style.iconStackBottom}>
+          <Icon name="colorLabelIcon-award" size={80} />
+          <Icon name="colorLabelIcon-lightening" size={80} />
+        </Stack>
         <Image name="weasel-happy" />
       </Center>
-      <Stack>
-        <Icon name="colorLabelIcon-target" size={64} />
-      </Stack>
+
       <View style={style.mainContainer}>
         <Stack w={width} pt={40} px={width * 0.05}>
           <Stack gap={height * 0.05}>
@@ -92,6 +101,20 @@ const style = StyleSheet.create({
     borderRadius: 865 / 2,
     flexShrink: 0,
     alignItems: "center",
+  },
+  iconStackTop: {
+    position: "absolute",
+    top: -height * 0.13,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: width * 0.5,
+  },
+  iconStackBottom: {
+    position: "absolute",
+    top: -height * 0.03,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: width * 0.9,
   },
 });
 
