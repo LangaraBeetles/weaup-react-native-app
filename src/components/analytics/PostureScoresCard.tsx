@@ -32,7 +32,7 @@ const PostureScoresCard = () => {
 
         <Stack flexDirection="row" alignItems="center" gap={8}>
           <Text level="caption_1" style={{ color: theme.colors.neutral[400] }}>
-            Final
+            Average
           </Text>
           <Text
             level="callout"
