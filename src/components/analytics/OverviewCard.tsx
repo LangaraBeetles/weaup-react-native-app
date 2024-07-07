@@ -45,7 +45,7 @@ const OverviewCard = ({
 }) => {
   const total = safenumber(goodCount + badCount);
   const goodPercentage = Math.ceil(safenumber((goodCount / total) * 100));
-  const badPercentage = 100 - goodPercentage;
+  const badPercentage = total > 0 ? 100 - goodPercentage : 0;
 
   const progress = useSharedValue(0);
   const progressText = useSharedValue(0);

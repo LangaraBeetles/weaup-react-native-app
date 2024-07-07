@@ -118,7 +118,9 @@ const PastChallengesScreen = () => {
                 align="center"
                 style={{ color: theme.colors.neutral[300], width: 194 }}
               >
-                {filterStatus ? emptyStateMessage[filterStatus] : null}
+                {filterStatus
+                  ? emptyStateMessage[filterStatus]
+                  : emptyStateMessage.in_progress}
               </Text>
             </Stack>
           )}

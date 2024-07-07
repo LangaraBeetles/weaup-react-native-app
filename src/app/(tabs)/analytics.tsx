@@ -11,23 +11,43 @@ import { Text } from "@src/components/ui/typography";
 import { PostureData } from "@src/interfaces/posture.types";
 import { getAnalytics } from "@src/services/analyticsApi";
 import { theme } from "@src/styles/theme";
+import formatCalendarDay from "@src/utils/format-calendar-day";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
-import { useEffect } from "react";
+import calendar from "dayjs/plugin/calendar";
+import { useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { RefreshControl, ScrollView, StyleSheet, View } from "react-native";
+import {
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
+
+dayjs.extend(calendar);
 
 const AnalyticsScreen = () => {
+  const [dayFilter, setDayFilter] = useState<string>(dayjs().format());
+
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ["analytics"],
-    queryFn: getAnalytics,
+    queryKey: ["analytics", dayFilter],
+    queryFn: () => getAnalytics(dayFilter),
+    enabled: !!dayFilter && dayFilter != "",
   });
+
+  const isToday = useMemo(
+    () => dayjs(dayFilter).isSame(dayjs(), "date"),
+    [dayFilter],
+  );
 
   const form = useForm<PostureData>();
 
   useEffect(() => {
-    data && form.reset(data);
-  }, [data]);
+    if (data) {
+      form.reset(data);
+    }
+  }, [data, dayFilter]);
 
   return (
     <FormProvider {...form}>
@@ -44,11 +64,34 @@ const AnalyticsScreen = () => {
             />
 
             <View style={styles.dateHeader}>
-              <Icon name="chevron-left" />
+              <TouchableOpacity
+                onPress={() => {
+                  setDayFilter((prev) =>
+                    dayjs(prev).subtract(1, "day").format(),
+                  );
+                }}
+              >
+                <Icon name="chevron-left" />
+              </TouchableOpacity>
               <Text level="headline" style={{ marginTop: 4 }}>
-                {`Today, ${dayjs(data?.start_date).format("MMM DD")}`}
+                {dayFilter && formatCalendarDay(dayFilter)}
               </Text>
-              <Icon name="chevron-right" />
+              <TouchableOpacity
+                onPress={() => {
+                  setDayFilter((prev) => {
+                    if (dayjs(prev).isSame(dayjs(), "date")) {
+                      return prev;
+                    }
+
+                    return dayjs(prev).add(1, "day").format();
+                  });
+                }}
+              >
+                <Icon
+                  name="chevron-right"
+                  color={isToday ? "transparent" : undefined}
+                />
+              </TouchableOpacity>
             </View>
           </Stack>
         }
@@ -65,9 +108,13 @@ const AnalyticsScreen = () => {
             ))}
           </Stack>
         ) : (
-          <ScrollView style={{ height: "100%" }}>
-            <Stack gap={20} pb={20}>
+          <ScrollView
+            style={{ height: "100%" }}
+            refreshControl={
               <RefreshControl refreshing={false} onRefresh={refetch} />
+            }
+          >
+            <Stack gap={20} pb={20}>
               <OverviewCard
                 goodCount={data?.overview.good_posture_count ?? 0}
                 badCount={data?.overview.bad_posture_count ?? 0}
