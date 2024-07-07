@@ -77,7 +77,8 @@ import ColorLabelIconTarget from "assets/icons/colorLabelIcon-target.svg";
 import StreakCheckmarkUnchecked from "assets/icons/streak-checkmark-unchecked.svg";
 import StreakCheckmarkChecked from "assets/icons/streak-checkmark-checked.svg";
 import ChallengeAvatar from "assets/icons/challenge-avatar.svg";
-import Sort from "assets/icons/sort.svg";
+import SortAscFilled from "assets/icons/sort-asc-filled.svg";
+import SortDescFilled from "assets/icons/sort-desc-filled.svg";
 
 import { theme } from "@src/styles/theme";
 
@@ -158,7 +159,8 @@ const IconConfig = {
   "streak-checkmark-unchecked": StreakCheckmarkUnchecked,
   "streak-checkmark-checked": StreakCheckmarkChecked,
   "challenge-avatar": ChallengeAvatar,
-  sort: Sort,
+  "sort-asc-filled": SortAscFilled,
+  "sort-desc-filled": SortDescFilled,
 };
 
 export type IconName = keyof typeof IconConfig;

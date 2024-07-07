@@ -1,19 +1,17 @@
-import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { useLocalSearchParams, usePathname } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
 
 import { Text } from "@src/components/ui/typography";
 import Stack from "@src/components/ui/Stack";
-import Icon from "@src/components/ui/Icon";
 import MembersList from "@src/components/lists/MembersList";
 import { getChallengeById } from "@src/services/challengeApi";
 import { globalStyles } from "@src/styles/globalStyles";
-import { useNavigation } from "@react-navigation/native";
 import { theme } from "@src/styles/theme";
 import ChallengeDetailCard from "@src/components/listItems/ChallengeDetailCard";
+import BackButton from "@src/components/ui/BackButton";
 
 const ChallengeDetail = () => {
-  const navigation = useNavigation();
   const params = useLocalSearchParams();
   const id = params.id as string;
   const isOngoing: boolean = params.isOngoing as unknown as boolean;
@@ -30,16 +28,10 @@ const ChallengeDetail = () => {
   return (
     <ScrollView style={styles.body}>
       <View style={[styles.container, { backgroundColor: color }]}>
-        <Stack flexDirection="row" p={16} alignItems="center">
-          <TouchableOpacity
-            style={{ flex: 1 }}
-            onPress={() => navigation.goBack()}
-          >
-            <View style={styles.iconBackground}>
-              <Icon name="arrow-left" />
-            </View>
-          </TouchableOpacity>
-          <Text level="title_3" style={{ flex: 3 }}>
+        <Stack flexDirection="row" p={16} alignItems="center" gap={40}>
+          <BackButton />
+
+          <Text level="title_2">
             {isOngoing ? `Challenge Progress` : `Challenge Summary`}
           </Text>
         </Stack>

@@ -58,6 +58,7 @@ const TabsLayout = () => {
         options={{
           headerTitle: "Ongoing Challenges",
           title: "Together",
+          headerShown: false,
           tabBarIcon: ({ focused }) => (
             <Icon
               name={

@@ -1,19 +1,28 @@
-import { globalStyles } from "@src/styles/globalStyles";
+import { theme } from "@src/styles/theme";
 import React, { useEffect, useRef } from "react";
 import { View, StyleSheet, Animated } from "react-native";
 
-const ProgressBar = (props: any) => {
+const ProgressBar = (props: {
+  currentValue: number;
+  goal: number;
+  backgroundColor: string;
+  barColor: string;
+  children?: React.ReactNode;
+  height?: number;
+  borderWidth?: number;
+  borderColor?: string;
+}) => {
   const {
     currentValue,
     goal,
-    content,
+    children,
     backgroundColor,
     barColor,
     height,
     borderWidth,
     borderColor,
   } = props;
-  const progress = (currentValue / goal) * 100;
+  const progress = goal > 0 ? (currentValue / goal) * 100 : 0;
   const animation = new Animated.Value(progress);
   const counter = useRef(new Animated.Value(0)).current;
 
@@ -26,7 +35,7 @@ const ProgressBar = (props: any) => {
   useEffect(() => {
     Animated.timing(counter, {
       toValue: animation,
-      duration: 2000,
+      duration: 1000,
       useNativeDriver: false,
     }).start();
   }, [currentValue]);
@@ -37,11 +46,11 @@ const ProgressBar = (props: any) => {
         style={[
           styles.container,
           {
-            backgroundColor: backgroundColor || "#FFF",
+            backgroundColor: backgroundColor || theme.colors.white,
             height: height || 10,
             borderRadius: (height || 10) / 2,
             borderWidth: borderWidth || 0,
-            borderColor: borderColor || globalStyles.colors.neutral[100],
+            borderColor: borderColor || theme.colors.neutral[100],
           },
         ]}
       />
@@ -57,7 +66,7 @@ const ProgressBar = (props: any) => {
           },
         ]}
       />
-      {content}
+      {children}
     </View>
   );
 };

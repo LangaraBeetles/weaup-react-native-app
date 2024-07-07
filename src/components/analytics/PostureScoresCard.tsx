@@ -9,6 +9,7 @@ import Spacer from "@src/components/ui/Spacer";
 import Stack from "@src/components/ui/Stack";
 import { PostureData } from "@src/interfaces/posture.types";
 import { useFormContext } from "react-hook-form";
+import safenumber from "@src/utils/safenumber";
 
 const PostureScoresCard = () => {
   const { watch } = useFormContext<PostureData>();
@@ -17,9 +18,10 @@ const PostureScoresCard = () => {
   const xdata = ["00:00", "06:00", "12:00", "18:00", "23:00"];
   const ydata = ["25", "50", "75", "100"];
 
+  const records = data.filter((record) => !!record.records.length);
   const avgScore =
-    data?.reduce((accm, curr) => accm + (curr.score ?? 0), 0) /
-    (data.length ?? 1);
+    records?.reduce((accm, curr) => accm + (curr.score ?? 0), 0) /
+    (records.length ?? 1);
 
   return (
     <Card>
@@ -30,14 +32,14 @@ const PostureScoresCard = () => {
 
         <Stack flexDirection="row" alignItems="center" gap={8}>
           <Text level="caption_1" style={{ color: theme.colors.neutral[400] }}>
-            Final
+            Average
           </Text>
           <Text
             level="callout"
             weight="medium"
             style={{ color: theme.colors.neutral[600] }}
           >
-            {avgScore}
+            {safenumber(avgScore)?.toFixed(0)}
           </Text>
         </Stack>
       </Stack>
@@ -48,11 +50,13 @@ const PostureScoresCard = () => {
             style={{ height: 160 }}
             data={data}
             yAccessor={({ item }) => item.score ?? 0}
-            contentInset={{ top: 20, bottom: 0 }}
-            curve={shape.curveNatural}
+            contentInset={{ top: 25, bottom: 10 }}
+            curve={shape.curveBasis}
             svg={{
               fill: "url(#area-gradient)",
             }}
+            yMax={100}
+            yMin={0}
             numberOfTicks={4}
           >
             <GraphLine />

@@ -12,7 +12,7 @@ const SetupPages = () => {
   };
 
   const login = () => {
-    // router.push("provider-signup");
+    router.push("profile");
   };
 
   return (

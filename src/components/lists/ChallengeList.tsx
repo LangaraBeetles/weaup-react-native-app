@@ -1,42 +1,41 @@
-import { FlatList, Text } from "react-native";
-import { useRouter } from "expo-router";
+import { FlatList } from "react-native";
 
-import Center from "@src/components/ui/Center";
 import ChallengeCard from "@src/components/listItems/ChallengeCard";
-import Chip from "@src/components/ui/Chip";
+import { ChallengeResponseType } from "@src/interfaces/challenge.types";
 import { theme } from "@src/styles/theme";
 
-const ChallengeList = (props: any) => {
-  const router = useRouter();
-  const { challenges, isOngoing } = props;
-
-  const viewPastChallenges = () => {
-    router.navigate("challenges/past-challenges");
-  };
-
+const ChallengeList = ({
+  challenges,
+  onRefresh,
+  refreshing = false,
+  ListFooterComponent,
+  ListEmptyComponent,
+}: {
+  refreshing?: boolean;
+  onRefresh: () => void;
+  challenges: ChallengeResponseType[];
+  ListFooterComponent?:
+    | React.ComponentType<any>
+    | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+    | null
+    | undefined;
+  ListEmptyComponent?:
+    | React.ComponentType<any>
+    | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+    | null
+    | undefined;
+}) => {
   return (
     <FlatList
       style={{ backgroundColor: theme.colors.surface }}
       data={challenges}
-      ListFooterComponent={() => {
-        return (
-          isOngoing && (
-            <Center>
-              <Chip
-                borderRadius={50}
-                p={12}
-                h={45}
-                onPress={viewPastChallenges}
-              >
-                <Text>View past challenges</Text>
-              </Chip>
-            </Center>
-          )
-        );
-      }}
+      refreshing={refreshing}
+      onRefresh={onRefresh}
+      ListFooterComponent={ListFooterComponent}
       renderItem={({ item }) => {
-        return <ChallengeCard challenge={item} isOngoing={isOngoing} />;
+        return <ChallengeCard challenge={item} />;
       }}
+      ListEmptyComponent={ListEmptyComponent}
     />
   );
 };

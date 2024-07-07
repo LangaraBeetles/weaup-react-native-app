@@ -1,6 +1,7 @@
 import api from "@src/services/api";
 import {
   ChallengeInputType,
+  ChallengeResponseType,
   ChallengeStatusEnum,
 } from "@src/interfaces/challenge.types";
 
@@ -20,19 +21,24 @@ export const getOngoingChallenges = async (
   filterUser: boolean,
   sortDesc: number,
 ) => {
-  const response = await api.get(
+  const { data } = await api.get<{ data: Array<ChallengeResponseType> }>(
     `${route}/?showOngoing=true&sortDesc=${sortDesc}&filterUser=${filterUser}`,
   );
-  return response.data;
+  return data.data as Array<ChallengeResponseType>;
 };
 
 export const getPastChallenges = async (
-  filterStatus: ChallengeStatusEnum | undefined,
+  filterStatus: `${ChallengeStatusEnum}` | undefined,
   sortDesc: number,
 ) => {
   const status = filterStatus ? `&filterStatus=${filterStatus}` : ``;
-  const response = await api.get(
-    `${route}/?showOngoing=false&sortDesc=${sortDesc}${status}`,
-  );
-  return response.data;
+  const { data } = await api.get(route, {
+    params: {
+      filterUser: true,
+      showOngoing: false,
+      sortDesc,
+      filterStatus: status,
+    },
+  });
+  return data.data as Array<ChallengeResponseType>;
 };

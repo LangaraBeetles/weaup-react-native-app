@@ -3,6 +3,7 @@ export type PostureStatus = "good" | "mid" | "bad" | "not_reading";
 export type PostureRecordInput = {
   good_posture: boolean;
   recorded_at: string;
+  score: number;
 };
 
 export type PostureSessionRecord = {
@@ -13,6 +14,7 @@ export type PostureSessionRecord = {
 export type PostureSessionInput = {
   started_at: string;
   ended_at: string;
+  score: number;
   records: Array<PostureSessionRecord>;
 };
 
