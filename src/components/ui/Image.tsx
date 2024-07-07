@@ -7,6 +7,8 @@ import BackGroundBadImage from "assets/img/background-bad.svg";
 import AvatarImage from "assets/img/avatar.svg";
 import WaeaselSideImage from "assets/img/weasel-side-peaceful.svg";
 import GreenGradientImage from "assets/img/green-gradient.svg";
+import TitltArrow from "assets/img/tilt-arrow.svg";
+import TiltCorrect from "assets/img/tilt-correct.svg";
 
 const ImageConfig = {
   "streak-flames": StreakFlames,
@@ -16,6 +18,8 @@ const ImageConfig = {
   avatar: AvatarImage,
   "weasel-side-peaceful": WaeaselSideImage,
   "green-gradient": GreenGradientImage,
+  "tilt-arrow": TitltArrow,
+  "tilt-correct": TiltCorrect,
 };
 
 export type ImageName = `${keyof typeof ImageConfig}`;

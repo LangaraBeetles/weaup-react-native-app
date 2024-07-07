@@ -1,7 +1,4 @@
-import Button from "@src/components/ui/Button";
-import Center from "@src/components/ui/Center";
-import { useNavigation } from "@react-navigation/native";
-import Stack from "@src/components/ui/Stack";
+import React, { useState } from "react";
 import { router } from "expo-router";
 import {
   Dimensions,
@@ -14,14 +11,42 @@ import { Text } from "@src/components/ui/typography";
 import Gradient from "@src/components/ui/Gradient";
 import { theme } from "@src/styles/theme";
 import Image from "@src/components/ui/Image";
+import Button from "@src/components/ui/Button";
+import Center from "@src/components/ui/Center";
+import Stack from "@src/components/ui/Stack";
 
 const { height, width } = Dimensions.get("screen");
 
 const PhoneTrainingScreen = () => {
-  const navigation = useNavigation();
+  const [step, setStep] = useState(0);
+
+  const steps = [
+    {
+      title: "Hold your phone",
+      text: "Try hold it upright at 90 degrees.\nThis is your ideal posture!",
+      rotation: "-15deg",
+    },
+    {
+      title: "Now, try bend it",
+      text: "Yes, hold it like you normally do.\nNotice the alerts or vibrations?\nWeaUp will notify you whenever your neck is suffering from the wrong posture.",
+      rotation: "-41deg",
+    },
+    {
+      title: "A 10-degree tilt?\n It’s fine!",
+      text: "Don’t worry, we won't alert you if your phone angle is no less than 80 degrees.",
+      rotation: "-10deg",
+    },
+  ];
 
   const next = () => {
-    router.push("/setup/enable-notifications");
+    if (step < steps.length - 1) {
+      setStep(step + 1);
+    } else {
+      router.push("/setup/set-up-goal1");
+    }
+  };
+  const skip = () => {
+    router.push("/setup/set-up-goal1");
   };
 
   return (
@@ -35,7 +60,7 @@ const PhoneTrainingScreen = () => {
             zIndex: 2,
           }}
         >
-          <TouchableOpacity onPress={() => navigation.goBack()}>
+          <TouchableOpacity onPress={skip}>
             <Text level="headline" style={{ color: theme.colors.neutral[500] }}>
               Skip
             </Text>
@@ -72,11 +97,37 @@ const PhoneTrainingScreen = () => {
           h={456}
           style={{
             marginHorizontal: "auto",
-            marginTop: height * 0.15,
+            marginTop: height * 0.08,
             zIndex: 2,
           }}
         >
-          <Stack style={styles.phone} w={20} h={128} />
+          <Stack
+            w={20}
+            h={128}
+            style={{
+              ...styles.phone,
+              transform: [{ rotate: steps[step].rotation }],
+            }}
+          />
+          {step === 1 && (
+            <Stack style={{ position: "absolute", top: -5, left: -40 }}>
+              <Image name="tilt-arrow" w={62} h={43} />
+            </Stack>
+          )}
+          {step === 2 && (
+            <>
+              <Stack style={{ position: "absolute", top: 8, left: 5 }}>
+                <Image name="tilt-correct" w={22} h={15} />
+              </Stack>
+              <Stack
+                w={20}
+                h={128}
+                style={{
+                  ...styles.phoneCorrect,
+                }}
+              />
+            </>
+          )}
           <Image name="weasel-happy" />
         </Center>
         <Stack style={styles.content}>
@@ -93,24 +144,29 @@ const PhoneTrainingScreen = () => {
                   level="title_1"
                   style={{ color: theme.colors.primary[900] }}
                 >
-                  Hold your phone
+                  {steps[step].title}
                 </Text>
-                <Text align="center">
-                  Try hold it upright at 90 degree. This is your ideal posture!
-                </Text>
+                <Text align="center">{steps[step].text}</Text>
               </Stack>
             </Stack>
           </Center>
         </Stack>
-        <Stack style={{ zIndex: 5 }} flex={"row"}>
-          <Stack w={40} h={8} style={styles.activeNav} />
+        <Stack style={styles.navigation} flexDirection={"row"} gap={8}>
+          {steps.map((_, index) => (
+            <Stack
+              key={index}
+              w={index === step ? 40 : 16}
+              h={8}
+              style={index === step ? styles.activeNav : styles.inactiveNav}
+            />
+          ))}
         </Stack>
-        <Stack style={styles.button} w={137}>
+        <Stack style={styles.button} w={step < steps.length - 1 ? 137 : 230}>
           <Button
-            trailingIcon="chevron-right"
+            trailingIcon={step < steps.length - 1 ? "chevron-right" : undefined}
             onPress={next}
             variant="primary"
-            title={""}
+            title={step < steps.length - 1 ? "" : "Continue"}
           />
         </Stack>
       </Stack>
@@ -121,7 +177,7 @@ const PhoneTrainingScreen = () => {
 const styles = StyleSheet.create({
   content: {
     position: "absolute",
-    bottom: Platform.OS === "android" ? height * 0.25 : height * 0.33,
+    top: height > 852 ? height * 0.42 : height * 0.4,
     width: width * 0.9,
     backgroundColor: theme.colors.white,
     padding: 20,
@@ -134,7 +190,17 @@ const styles = StyleSheet.create({
     left: 0,
     borderRadius: 5,
     backgroundColor: theme.colors.other[100],
-    transform: [{ rotate: "-15deg" }],
+    zIndex: 2,
+  },
+  phoneCorrect: {
+    position: "absolute",
+    top: 25,
+    left: 25,
+    borderRadius: 5,
+    backgroundColor: "transparent",
+    borderWidth: 1,
+    borderColor: theme.colors.other[100],
+    borderStyle: "dashed",
     zIndex: 2,
   },
   activeNav: {
@@ -142,9 +208,22 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     zIndex: 4,
   },
+  inactiveNav: {
+    backgroundColor: theme.colors.primary[700],
+    opacity: 0.25,
+    borderRadius: 40,
+    zIndex: 4,
+  },
+  navigation: {
+    position: "absolute",
+    bottom: height * 0.24,
+    left: width * 0.5,
+    transform: [{ translateX: -44 }],
+    zIndex: 5,
+  },
   button: {
     position: "absolute",
-    bottom: width * 0.4,
+    bottom: height * 0.12,
     zIndex: 4,
   },
 });
