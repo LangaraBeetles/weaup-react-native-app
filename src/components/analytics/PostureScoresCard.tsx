@@ -9,6 +9,7 @@ import Spacer from "@src/components/ui/Spacer";
 import Stack from "@src/components/ui/Stack";
 import { PostureData } from "@src/interfaces/posture.types";
 import { useFormContext } from "react-hook-form";
+import safenumber from "@src/utils/safenumber";
 
 const PostureScoresCard = () => {
   const { watch } = useFormContext<PostureData>();
@@ -17,9 +18,10 @@ const PostureScoresCard = () => {
   const xdata = ["00:00", "06:00", "12:00", "18:00", "23:00"];
   const ydata = ["25", "50", "75", "100"];
 
+  const records = data.filter((record) => !!record.records.length);
   const avgScore =
-    data?.reduce((accm, curr) => accm + (curr.score ?? 0), 0) /
-    (data.length ?? 1);
+    records?.reduce((accm, curr) => accm + (curr.score ?? 0), 0) /
+    (records.length ?? 1);
 
   return (
     <Card>
@@ -37,7 +39,7 @@ const PostureScoresCard = () => {
             weight="medium"
             style={{ color: theme.colors.neutral[600] }}
           >
-            {avgScore}
+            {safenumber(avgScore)?.toFixed(0)}
           </Text>
         </Stack>
       </Stack>

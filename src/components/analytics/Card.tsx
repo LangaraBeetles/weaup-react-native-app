@@ -13,6 +13,7 @@ const Card = styled(View, {
   styleProps: {
     flexDirection: "flexDirection",
     gap: "gap",
+    flex: "flex",
   },
 });
 

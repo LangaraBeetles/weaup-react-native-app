@@ -5,6 +5,7 @@ import SessionHistoryCard from "@src/components/analytics/SessionHistoryCard";
 import Page from "@src/components/layout/Page";
 import FilterMenu from "@src/components/notifications/FilterMenu";
 import Icon from "@src/components/ui/Icon";
+import Skeleton from "@src/components/ui/Skeleton";
 import Stack from "@src/components/ui/Stack";
 import { Text } from "@src/components/ui/typography";
 import { PostureData } from "@src/interfaces/posture.types";
@@ -14,10 +15,10 @@ import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { RefreshControl, ScrollView, StyleSheet, View } from "react-native";
 
 const AnalyticsScreen = () => {
-  const { data } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ["analytics"],
     queryFn: getAnalytics,
   });
@@ -32,9 +33,6 @@ const AnalyticsScreen = () => {
     <FormProvider {...form}>
       <Page
         title="Analytics"
-        renderContainer={(children) => (
-          <ScrollView style={{ height: "100%" }}>{children}</ScrollView>
-        )}
         header={
           <Stack gap={16}>
             <FilterMenu
@@ -55,49 +53,38 @@ const AnalyticsScreen = () => {
           </Stack>
         }
       >
-        <OverviewCard />
+        {isLoading ? (
+          <Stack gap={20}>
+            {new Array(4).fill({}).map((_, index) => (
+              <Skeleton
+                duration={900}
+                delay={200 * index}
+                style={{ height: 150 }}
+                initialOpacity={1 - (index + 1) / 10}
+              />
+            ))}
+          </Stack>
+        ) : (
+          <ScrollView style={{ height: "100%" }}>
+            <Stack gap={20} pb={20}>
+              <RefreshControl refreshing={false} onRefresh={refetch} />
+              <OverviewCard
+                goodCount={data?.overview.good_posture_count ?? 0}
+                badCount={data?.overview.bad_posture_count ?? 0}
+              />
 
-        <PostureScoresCard />
+              <PostureScoresCard />
 
-        <CorrectionsCard />
+              <CorrectionsCard />
 
-        <SessionHistoryCard />
+              <SessionHistoryCard />
+            </Stack>
+          </ScrollView>
+        )}
       </Page>
     </FormProvider>
   );
 };
-
-{
-  /* <SafeAreaView style={styles.container}>
-      <ScrollView style={{ height: "100%" }}>
-        <View style={styles.header}>
-          <Text level="title_1">Analytics</Text>
-
-          <FilterMenu
-            tabs={[
-              { label: "Day", value: "day" },
-              { label: "Week", value: "week" },
-              { label: "Month", value: "month" },
-            ]}
-          />
-
-          <View style={styles.dateHeader}>
-            <Icon name="chevron-left" />
-            <Text level="headline" style={{ marginTop: 4 }}>
-              {`Today, ${dayjs(data?.start_date).format("MMM DD")}`}
-            </Text>
-            <Icon name="chevron-right" />
-          </View>
-        </View>
-
-      
-          <View style={styles.mainCard}>
-           
-          </View>
-
-      </ScrollView>
-    </SafeAreaView> */
-}
 
 const styles = StyleSheet.create({
   container: {

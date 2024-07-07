@@ -34,6 +34,7 @@ const PostureDataProvider: React.FC<{ children: React.ReactNode }> = ({
             .map((p) => ({
               good_posture: p.status === "good",
               recorded_at: p?.date?.toISOString?.(),
+              score: p.score,
             }));
 
           console.log({
