@@ -10,10 +10,12 @@ import { theme } from "@src/styles/theme";
 
 export default function DeviceMotionViewiOS() {
   const isRealTimeTracking = useUser((state) => state.isTrackingEnabled);
+  const sessionStatus = useUser((state) => state.sessionStatus);
 
   const isTrackingEnabled = useUser(
     (state) => state.isTrackingEnabled || state.sessionStatus !== "INACTIVE",
   );
+
   const setTrackingEnabled = useUser((state) => state.setTrackingEnabled);
 
   const currentPosture = useUser((state) => state.currentPosture);
@@ -104,6 +106,7 @@ export default function DeviceMotionViewiOS() {
       py={10}
       px={24}
       backgroundColor="white"
+      style={{ display: sessionStatus === "INACTIVE" ? "flex" : "none" }}
     >
       <Text level="footnote" weight="semibold">
         Active Monitoring

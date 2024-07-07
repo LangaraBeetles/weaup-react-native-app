@@ -126,7 +126,10 @@ const TogetherScreen = () => {
             );
           }}
           ListEmptyComponent={() => (
-            <Text align="center" style={{ color: theme.colors.neutral[300] }}>
+            <Text
+              align="center"
+              style={{ color: theme.colors.neutral[300], marginBottom: 8 }}
+            >
               No challenges found
             </Text>
           )}
