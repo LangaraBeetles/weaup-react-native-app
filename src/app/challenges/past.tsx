@@ -6,26 +6,40 @@ import { usePathname } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
 import { getPastChallenges } from "@src/services/challengeApi";
 import { ChallengeStatusEnum } from "@src/interfaces/challenge.types";
-import Icon from "@src/components/ui/Icon";
+import Icon, { IconName } from "@src/components/ui/Icon";
 import Page from "@src/components/layout/Page";
 import { theme } from "@src/styles/theme";
 import ListSkeleton from "@src/components/ui/ListSkeleton";
 import { Text } from "@src/components/ui/typography";
 
-const filters: Array<{ label: string; value: `${ChallengeStatusEnum}` }> = [
+const filters: Array<{
+  label: string;
+  value: `${ChallengeStatusEnum}`;
+  icon: IconName;
+}> = [
   {
     label: "Completed",
     value: "completed",
+    icon: "award-outline",
   },
   {
     label: "Quitted",
     value: "quitted",
+    icon: "face-sad",
   },
   {
     label: "Failed",
     value: "failed",
+    icon: "cancel-outline",
   },
 ];
+
+const emptyStateMessage = {
+  in_progress: "No challenges found",
+  completed: "No challenges found",
+  quitted: "Woohoo! You haven't quitted any challenges yet! Keep going!",
+  failed: "Woohoo! You haven't failed any challenges yet! Keep going!",
+};
 
 const PastChallengesScreen = () => {
   const [filterStatus, setFilterStatus] = useState<
@@ -71,6 +85,7 @@ const PastChallengesScreen = () => {
                 colorScheme={
                   filter.value === filterStatus ? "selected" : "default"
                 }
+                leadingIcon={filter.icon}
                 onPress={() => updateFilter(filter.value)}
               >
                 {filter.label}
@@ -93,9 +108,19 @@ const PastChallengesScreen = () => {
           challenges={data ?? []}
           onRefresh={refetch}
           ListEmptyComponent={() => (
-            <Text align="center" style={{ color: theme.colors.neutral[300] }}>
-              No challenges found
-            </Text>
+            <Stack justifyContent="center" alignItems="center" gap={12}>
+              <Icon
+                name="face-happy"
+                color={theme.colors.random.green}
+                size={24}
+              />
+              <Text
+                align="center"
+                style={{ color: theme.colors.neutral[300], width: 194 }}
+              >
+                {filterStatus ? emptyStateMessage[filterStatus] : null}
+              </Text>
+            </Stack>
           )}
         />
       )}
