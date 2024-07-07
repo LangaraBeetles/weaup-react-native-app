@@ -44,11 +44,10 @@ const ChallengeCard = (props: { challenge: ChallengeResponseType }) => {
     safenumber(challenge.duration, 0) *
     safenumber(challenge.members.length, 1);
 
-  const progress =
-    challenge.members.reduce(
-      (accu: any, curr: any) => accu + safenumber(curr.points),
-      0,
-    ) || 100;
+  const progress = challenge.members.reduce(
+    (accu: any, curr: any) => accu + safenumber(curr.points),
+    0,
+  );
 
   return (
     <View style={styles.container}>
