@@ -36,7 +36,11 @@ type UserState = {
   setLevel: (newLevel: number) => void;
   setXP: (newXP: number | ((prevXP: number) => number)) => void;
   setHP: (newHP: number | ((prevHP: number) => number)) => void;
-  setDailyStreakCounter: (newDailyStreakCounter: number) => void;
+  setDailyStreakCounter: (
+    newDailyStreakCounter:
+      | number
+      | ((prevDailyStreakCounter: number) => number),
+  ) => void;
   mode: TrackingModeType;
   changeMode: (value: TrackingModeType) => void;
 
@@ -177,12 +181,19 @@ export const useUser = create<UserState>()(
               hp: typeof newHP === "function" ? newHP(state.user.hp) : newHP,
             },
           })),
-        setDailyStreakCounter: (newDailyStreakCounter: number) =>
+        setDailyStreakCounter: (
+          newDailyStreakCounter:
+            | number
+            | ((prevDailyStreakCounter: number) => number),
+        ) =>
           set((state: { isAuth: boolean; user: UserType }) => ({
             ...state,
             user: {
               ...state.user,
-              daily_streak_counter: newDailyStreakCounter,
+              dailyStreakCounter:
+                typeof newDailyStreakCounter === "function"
+                  ? newDailyStreakCounter(state.user.dailyStreakCounter)
+                  : newDailyStreakCounter,
             },
           })),
 

@@ -182,11 +182,6 @@ const HomePage = () => {
         <Center style={styles.sessionButton}>
           <SessionControl />
         </Center>
-
-        {/* REMOVE */}
-        <Link href="/streak" asChild>
-          <Text>Streak</Text>
-        </Link>
       </ScrollView>
     </SafeAreaView>
   );

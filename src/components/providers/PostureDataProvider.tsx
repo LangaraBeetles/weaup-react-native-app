@@ -50,6 +50,7 @@ const PostureDataProvider: React.FC<{ children: React.ReactNode }> = ({
                 xp: _user.xp,
                 hp: _user.hp,
                 level: _user.level,
+                daily_streak_counter: _user.dailyStreakCounter,
               })
                 .then(() => {
                   console.log("user data saved");

@@ -1,18 +1,24 @@
 import { View } from "react-native";
-import React, { useRef } from "react";
+import React, { useCallback, useRef } from "react";
 import Timer from "@src/components/ui/Timer";
 import { useRouter } from "expo-router";
 import { PostureSessionInput } from "@src/interfaces/posture.types";
 import { saveSessionRecords } from "@src/services/sessionApi";
 import { useUser } from "@src/state/useUser";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { Text } from "@src/components/ui/typography";
+import { getAnalytics } from "@src/services/analyticsApi";
+import dayjs from "dayjs";
 
 const SessionControl = () => {
   const router = useRouter();
   const startDate = useRef<string>("");
 
   const userHP = useUser((state) => state.user.hp);
+
+  const setDailyStreakCounter = useUser((state) => state.setDailyStreakCounter);
+  const userStreak = useUser((state) => state.user.dailyStreakCounter);
+  const [isDailyStreak, setIsDailyStreak] = React.useState(false);
 
   const setSessionActive = useUser((state) => state.setSessionStatus);
   const sessionStatus = useUser((state) => state.sessionStatus);
@@ -21,19 +27,34 @@ const SessionControl = () => {
     (state) => state.prepareSessionPostureData,
   );
 
+  const dayFilter = dayjs().format();
+
+  const { data: analyticsData, refetch: refetchAnalytics } = useQuery({
+    queryKey: ["analytics", dayFilter],
+    queryFn: () => getAnalytics(dayFilter),
+    enabled: !!dayFilter && dayFilter != "",
+  });
+
   const { isPending, mutate } = useMutation({
     mutationKey: ["save-session-data"],
     mutationFn: (payload: PostureSessionInput) => saveSessionRecords(payload),
     onSuccess: () => {
       setTimeout(() => {
-        router.push("/session-summary");
+        if (isDailyStreak) {
+          router.push("/session-summary");
+          router.push("/streak");
+        } else {
+          router.push("/session-summary");
+        }
       }, 500);
     },
     onError: (error) => {
       console.log({ error });
       setSessionActive("INACTIVE");
     },
-    onSettled: () => {},
+    onSettled: () => {
+      refetchAnalytics();
+    },
   });
 
   const onStartSession = () => {
@@ -49,14 +70,56 @@ const SessionControl = () => {
     setSessionActive("ACTIVE");
   };
 
+  const updateStreak = useCallback(() => {
+    const today = new Date().toDateString();
+
+    if (
+      !analyticsData ||
+      !analyticsData.sessions ||
+      analyticsData.sessions.length === 0
+    ) {
+      console.log("No previous sessions, start a new streak");
+      // No previous sessions, start a new streak
+      setIsDailyStreak(true);
+      setDailyStreakCounter(1);
+      return;
+    }
+
+    const lastSession =
+      analyticsData.sessions[analyticsData.sessions.length - 1];
+    const lastSessionDate = lastSession?.ended_at;
+
+    if (lastSessionDate) {
+      const lastSessionDay = new Date(lastSessionDate).toDateString();
+
+      if (today !== lastSessionDay) {
+        console.log("New day, increment streak");
+
+        // New day, increment streak
+        setIsDailyStreak(true);
+        setDailyStreakCounter(userStreak + 1);
+      } else {
+        console.log("Same day, maintain streak");
+
+        // Same day, maintain streak
+        setIsDailyStreak(false);
+        setDailyStreakCounter(userStreak);
+      }
+    }
+  }, [analyticsData, userStreak, setDailyStreakCounter]);
+
   const onStopSession = () => {
     setSessionActive("INACTIVE");
 
     const records = prepareSessionPostureData();
+
+    updateStreak();
+
     const payload: PostureSessionInput = {
       started_at: startDate.current,
       ended_at: new Date().toISOString(),
       score: userHP ?? 0,
+      dailyStreakCounter: userStreak ?? 0,
       records: records?.map((data) => ({
         good_posture: data.status === "good",
         recorded_at: data?.date?.toISOString?.(),

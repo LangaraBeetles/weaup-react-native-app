@@ -30,4 +30,5 @@ export type UserInputType = {
   xp: number;
   hp: number;
   level: number;
+  daily_streak_counter: number;
 };
