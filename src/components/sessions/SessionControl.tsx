@@ -44,7 +44,6 @@ const SessionControl = () => {
     onSuccess: () => {
       setTimeout(() => {
         if (isDailyStreak) {
-          router.push("/session-summary");
           router.push("/streak");
         } else {
           router.push("/session-summary");
@@ -84,6 +83,7 @@ const SessionControl = () => {
       console.log("No previous sessions, start a new streak");
       // No previous sessions, start a new streak
       setIsDailyStreak(true);
+      setUserXP(userXP + 100);
       setDailyStreakCounter(1);
       return;
     }
