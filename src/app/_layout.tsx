@@ -109,7 +109,7 @@ const RootLayout = () => {
 
                     <Stack.Screen
                       name="streak"
-                      options={{ headerShown: false }}
+                      options={{ headerShown: false, animation: "fade" }}
                     />
                   </Stack>
                 </PostureDataProvider>
