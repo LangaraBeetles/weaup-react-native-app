@@ -12,7 +12,7 @@ export const globalStyles = {
       50: "#FFF8E6",
       100: "#FFF1CC",
       200: "#FEE39A",
-      300: "#FDD462",
+      300: "#FFDF88",
       400: "#FDD462",
       500: "#F7B602",
       600: "#E4A501",
@@ -62,6 +62,7 @@ export const globalStyles = {
     },
     other: {
       50: "#D3E7FF",
+      100: "#545F71",
     },
   },
 };
