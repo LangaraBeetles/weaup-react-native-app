@@ -16,6 +16,9 @@ const SessionControl = () => {
 
   const userHP = useUser((state) => state.user.hp);
 
+  const userXP = useUser((state) => state.user.xp);
+  const setUserXP = useUser((state) => state.setXP);
+
   const setDailyStreakCounter = useUser((state) => state.setDailyStreakCounter);
   const userStreak = useUser((state) => state.user.dailyStreakCounter);
   const [isDailyStreak, setIsDailyStreak] = React.useState(false);
@@ -97,7 +100,13 @@ const SessionControl = () => {
 
         // New day, increment streak
         setIsDailyStreak(true);
-        setDailyStreakCounter(userStreak + 1);
+        if (userStreak === 7) {
+          setUserXP(userXP + 1000);
+          setDailyStreakCounter(1);
+        } else {
+          setUserXP(userXP + 100);
+          setDailyStreakCounter(userStreak + 1);
+        }
       } else {
         console.log("Same day, maintain streak");
 
