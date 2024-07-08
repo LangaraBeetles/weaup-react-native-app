@@ -171,7 +171,7 @@ const SelectModeScreen: React.FC<{
       if (!transitioning.current) {
         setTimeout(() => {
           transitioning.current = true;
-          router.push("/setup/phone-training");
+          router.push("/setup/phone-mode-confirmation");
         }, 500);
       }
     });

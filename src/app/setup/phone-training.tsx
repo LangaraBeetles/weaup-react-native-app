@@ -1,7 +1,4 @@
-import Button from "@src/components/ui/Button";
-import Center from "@src/components/ui/Center";
-import { useNavigation } from "@react-navigation/native";
-import Stack from "@src/components/ui/Stack";
+import React, { useState } from "react";
 import { router } from "expo-router";
 import {
   Dimensions,
@@ -14,15 +11,42 @@ import { Text } from "@src/components/ui/typography";
 import Gradient from "@src/components/ui/Gradient";
 import { theme } from "@src/styles/theme";
 import Image from "@src/components/ui/Image";
-import Icon from "@src/components/ui/Icon";
+import Button from "@src/components/ui/Button";
+import Center from "@src/components/ui/Center";
+import Stack from "@src/components/ui/Stack";
 
 const { height, width } = Dimensions.get("screen");
 
 const PhoneTrainingScreen = () => {
-  const navigation = useNavigation();
+  const [step, setStep] = useState(0);
+
+  const steps = [
+    {
+      title: "Hold your phone",
+      text: "Try hold it upright at 90 degrees.\nThis is your ideal posture!",
+      rotation: "-15deg",
+    },
+    {
+      title: "Now, try bend it",
+      text: "Yes, hold it like you normally do.\nNotice the alerts or vibrations?\nWeaUp will notify you whenever your neck is suffering from the wrong posture.",
+      rotation: "-41deg",
+    },
+    {
+      title: "A 10-degree tilt?\n It’s fine!",
+      text: "Don’t worry, we won't alert you if your phone angle is no less than 80 degrees.",
+      rotation: "-10deg",
+    },
+  ];
 
   const next = () => {
-    router.push("/setup/phone1");
+    if (step < steps.length - 1) {
+      setStep(step + 1);
+    } else {
+      router.push("/setup/enabled-notifications");
+    }
+  };
+  const skip = () => {
+    router.push("/setup/enabled-notifications");
   };
 
   return (
@@ -32,12 +56,14 @@ const PhoneTrainingScreen = () => {
           style={{
             position: "absolute",
             top: Platform.OS === "android" ? height * 0.08 : height * 0.04,
-            left: width * 0.07,
+            right: width * 0.07,
             zIndex: 2,
           }}
         >
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Icon name={"arrow-left"} size={40} />
+          <TouchableOpacity onPress={skip}>
+            <Text level="headline" style={{ color: theme.colors.neutral[500] }}>
+              Skip
+            </Text>
           </TouchableOpacity>
         </Stack>
         <Gradient
@@ -49,7 +75,8 @@ const PhoneTrainingScreen = () => {
             top: 0,
             left: 0,
             right: 0,
-            height: "60%",
+            height: "55%",
+            zIndex: 1,
           }}
         />
         <Gradient
@@ -61,7 +88,8 @@ const PhoneTrainingScreen = () => {
             bottom: 0,
             left: 0,
             right: 0,
-            height: "40%",
+            height: "55%",
+            zIndex: 3,
           }}
         />
         <Center
@@ -69,10 +97,37 @@ const PhoneTrainingScreen = () => {
           h={456}
           style={{
             marginHorizontal: "auto",
-            marginTop: height * 0.15,
+            marginTop: height * 0.08,
+            zIndex: 2,
           }}
         >
-          <Stack style={styles.phone} w={20} h={128} />
+          <Stack
+            w={20}
+            h={128}
+            style={{
+              ...styles.phone,
+              transform: [{ rotate: steps[step].rotation }],
+            }}
+          />
+          {step === 1 && (
+            <Stack style={{ position: "absolute", top: -5, left: -40 }}>
+              <Image name="tilt-arrow" w={62} h={43} />
+            </Stack>
+          )}
+          {step === 2 && (
+            <>
+              <Stack style={{ position: "absolute", top: 8, left: 5 }}>
+                <Image name="tilt-correct" w={22} h={15} />
+              </Stack>
+              <Stack
+                w={20}
+                h={128}
+                style={{
+                  ...styles.phoneCorrect,
+                }}
+              />
+            </>
+          )}
           <Image name="weasel-happy" />
         </Center>
         <Stack style={styles.content}>
@@ -89,17 +144,30 @@ const PhoneTrainingScreen = () => {
                   level="title_1"
                   style={{ color: theme.colors.primary[900] }}
                 >
-                  Track posture with phone
+                  {steps[step].title}
                 </Text>
-                <Text align="center">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor.
-                </Text>
+                <Text align="center">{steps[step].text}</Text>
               </Stack>
-
-              <Button title="Confirm" onPress={next} variant="primary" />
             </Stack>
           </Center>
+        </Stack>
+        <Stack style={styles.navigation} flexDirection={"row"} gap={8}>
+          {steps.map((_, index) => (
+            <Stack
+              key={index}
+              w={index === step ? 40 : 16}
+              h={8}
+              style={index === step ? styles.activeNav : styles.inactiveNav}
+            />
+          ))}
+        </Stack>
+        <Stack style={styles.button} w={step < steps.length - 1 ? 137 : 230}>
+          <Button
+            trailingIcon={step < steps.length - 1 ? "chevron-right" : undefined}
+            onPress={next}
+            variant="primary"
+            title={step < steps.length - 1 ? "" : "Continue"}
+          />
         </Stack>
       </Stack>
     </SafeAreaView>
@@ -109,11 +177,12 @@ const PhoneTrainingScreen = () => {
 const styles = StyleSheet.create({
   content: {
     position: "absolute",
-    bottom: Platform.OS === "android" ? height * 0.1 : height * 0.15,
+    top: height > 852 ? height * 0.42 : height * 0.4,
     width: width * 0.9,
     backgroundColor: theme.colors.white,
     padding: 20,
     borderRadius: 20,
+    zIndex: 4,
   },
   phone: {
     position: "absolute",
@@ -121,6 +190,41 @@ const styles = StyleSheet.create({
     left: 0,
     borderRadius: 5,
     backgroundColor: theme.colors.other[100],
+    zIndex: 2,
+  },
+  phoneCorrect: {
+    position: "absolute",
+    top: 25,
+    left: 25,
+    borderRadius: 5,
+    backgroundColor: "transparent",
+    borderWidth: 1,
+    borderColor: theme.colors.other[100],
+    borderStyle: "dashed",
+    zIndex: 2,
+  },
+  activeNav: {
+    backgroundColor: theme.colors.primary[700],
+    borderRadius: 40,
+    zIndex: 4,
+  },
+  inactiveNav: {
+    backgroundColor: theme.colors.primary[700],
+    opacity: 0.25,
+    borderRadius: 40,
+    zIndex: 4,
+  },
+  navigation: {
+    position: "absolute",
+    bottom: height * 0.24,
+    left: width * 0.5,
+    transform: [{ translateX: -44 }],
+    zIndex: 5,
+  },
+  button: {
+    position: "absolute",
+    bottom: height * 0.12,
+    zIndex: 4,
   },
 });
 
