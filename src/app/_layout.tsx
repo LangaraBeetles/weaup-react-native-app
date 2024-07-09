@@ -13,6 +13,7 @@ import HPSystem from "@src/components/scoring/HPSystem";
 import XPSystem from "@src/components/scoring/XPSystem";
 import LevelSystem from "@src/components/scoring/LevelSystem";
 import PostureDataProvider from "@src/components/providers/PostureDataProvider";
+import BadgeSystem from "@src/components/scoring/BadgeSystem";
 
 const queryClient = new QueryClient();
 
@@ -67,6 +68,7 @@ const RootLayout = () => {
             <HPSystem />
             <XPSystem />
             <LevelSystem />
+            <BadgeSystem />
             <GestureHandlerRootView>
               <BottomSheetModalProvider>
                 <PostureDataProvider>
