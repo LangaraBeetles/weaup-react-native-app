@@ -2,6 +2,8 @@ import api from "../../services/api";
 import { useUser } from "@src/state/useUser";
 import { TrackingModeType, UserType } from "@interfaces/user.types";
 import { useNavigation, CommonActions } from "@react-navigation/native";
+import { UserBadgeType } from "@src/interfaces/badges.types";
+import { getUserById } from "@src/services/userApi";
 
 type AuthUserResponse = {
   _id: string;
@@ -16,16 +18,21 @@ type AuthUserResponse = {
   device_id: string;
   provider_id: string;
   token: string;
+  daily_streak_counter: number;
+  badges: UserBadgeType[];
 };
 
 const useAuth = () => {
   const { setAuth, setGuest, user } = useUser();
   const navigation = useNavigation();
 
-  const handleGoogleAuthCallback = (params: AuthUserResponse) => {
+  const handleGoogleAuthCallback = async (params: AuthUserResponse) => {
     if (!params || !params._id || !params.token) {
       return;
     }
+
+    const response = await getUserById(params._id);
+    const badges = response.data.badges;
 
     const user: UserType = {
       id: params._id,
@@ -42,7 +49,8 @@ const useAuth = () => {
 
       token: params.token,
 
-      dailyStreakCounter: 0,
+      dailyStreakCounter: params.daily_streak_counter || 0,
+      badges: badges || [],
     };
 
     setGuest(false);
@@ -89,6 +97,7 @@ const useAuth = () => {
         preferredMode: createdUser.preferred_mode,
         isSetupComplete: createdUser.is_setup_complete,
         dailyStreakCounter: 0,
+        badges: [],
       };
 
       setGuest(true);
