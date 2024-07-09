@@ -8,12 +8,13 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Text } from "@src/components/ui/typography";
-import Gradient from "@src/components/ui/Gradient";
 import { theme } from "@src/styles/theme";
 import Image from "@src/components/ui/Image";
 import Button from "@src/components/ui/Button";
 import Center from "@src/components/ui/Center";
 import Stack from "@src/components/ui/Stack";
+import ContentCard from "@src/components/setup/ContentCard";
+import BackgroundGradient from "@src/components/setup/BackgroundGradient";
 
 const { height, width } = Dimensions.get("screen");
 
@@ -63,32 +64,7 @@ const EarbudsTrainingScreen = () => {
             </Text>
           </TouchableOpacity>
         </Stack>
-        <Gradient
-          color1={theme.colors.primary[300]}
-          color2={theme.colors.white}
-          locations={[0, 1]}
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            height: "55%",
-            zIndex: 1,
-          }}
-        />
-        <Gradient
-          color2={theme.colors.primary[300]}
-          color1={theme.colors.white}
-          locations={[0, 1]}
-          style={{
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: "55%",
-            zIndex: 3,
-          }}
-        />
+        <BackgroundGradient />
         <Center
           w={236}
           h={456}
@@ -121,27 +97,7 @@ const EarbudsTrainingScreen = () => {
             <Image name="weasel-happy" />
           </Center>
         </Center>
-        <Stack style={styles.content}>
-          <Center
-            justifyContent="center"
-            height="100%"
-            py={height * 0.04}
-            px={20}
-          >
-            <Stack gap={32}>
-              <Stack gap={16}>
-                <Text
-                  align="center"
-                  level="title_1"
-                  style={{ color: theme.colors.primary[900] }}
-                >
-                  {steps[step].title}
-                </Text>
-                <Text align="center">{steps[step].text}</Text>
-              </Stack>
-            </Stack>
-          </Center>
-        </Stack>
+        <ContentCard title={steps[step].title} text={steps[step].text} />
         <Stack style={styles.navigation} flexDirection={"row"} gap={8}>
           {steps.map((_, index) => (
             <Stack
@@ -166,15 +122,6 @@ const EarbudsTrainingScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  content: {
-    position: "absolute",
-    top: height * 0.42,
-    width: width * 0.9,
-    backgroundColor: theme.colors.white,
-    padding: 10,
-    borderRadius: 20,
-    zIndex: 4,
-  },
   activeNav: {
     backgroundColor: theme.colors.primary[700],
     borderRadius: 40,

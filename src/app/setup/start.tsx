@@ -14,7 +14,7 @@ const { width, height } = Dimensions.get("window");
 
 const SetupPages = () => {
   const next = () => {
-    router.push("/setup/enable-motion");
+    router.push("/setup/select-mode");
   };
 
   const login = () => {
