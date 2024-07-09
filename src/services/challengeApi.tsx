@@ -42,3 +42,8 @@ export const getPastChallenges = async (
   });
   return data.data as Array<ChallengeResponseType>;
 };
+
+export const joinChallenge = async (id: string) => {
+  const { data } = await api.post(`${route}/${id}/join`);
+  return data.data as ChallengeResponseType;
+};
