@@ -1,24 +1,26 @@
-import { Dimensions, Text, View } from "react-native";
+import { Dimensions, View } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { interpolate } from "react-native-reanimated";
 import Carousel from "react-native-reanimated-carousel";
 
-import { useState, useCallback } from "react";
+import { useCallback } from "react";
 
 import Icon1 from "assets/challenges/card/icon1.svg";
 import Icon2 from "assets/challenges/card/icon2.svg";
 import Icon3 from "assets/challenges/card/icon3.svg";
+import { ChallengeIconType } from "@src/interfaces/challenge.types";
 
 const dimensions = Dimensions.get("screen");
 
 const ChallengeAvatarCarousel = ({
   width = dimensions.width,
   height,
+  onChange,
 }: {
   width?: number;
   height: number;
+  onChange: (value: ChallengeIconType) => void;
 }) => {
-  const [isFast, setIsFast] = useState(false);
   const itemSize = 50;
   const centerOffset = width / 2 - itemSize / 2;
 
@@ -29,7 +31,7 @@ const ChallengeAvatarCarousel = ({
       const itemGap = interpolate(
         value,
         [-3, -2, -1, 0, 1, 2, 3],
-        [-30, -15, 0, 0, 0, 15, 30]
+        [-30, -15, 0, 0, 0, 15, 30],
       );
 
       const translateX =
@@ -40,13 +42,13 @@ const ChallengeAvatarCarousel = ({
       const translateY = interpolate(
         value,
         [-1, -0.5, 0, 0.5, 1],
-        [20, 20, 20, 20, 20]
+        [20, 20, 20, 20, 20],
       );
 
       const scale = interpolate(
         value,
         [-1, -0.5, 0, 0.5, 1],
-        [0.8, 0.85, 1.1, 0.85, 0.8]
+        [0.8, 0.85, 1.1, 0.85, 0.8],
       );
 
       return {
@@ -61,7 +63,7 @@ const ChallengeAvatarCarousel = ({
         ],
       };
     },
-    [centerOffset]
+    [centerOffset],
   );
 
   return (
@@ -79,7 +81,7 @@ const ChallengeAvatarCarousel = ({
           height: height,
         }}
         loop
-        autoPlayInterval={isFast ? 100 : 2000}
+        autoPlayInterval={2000}
         data={[...new Array(3).keys()]}
         renderItem={({ index }) => {
           let Icon = Icon2;
@@ -115,6 +117,9 @@ const ChallengeAvatarCarousel = ({
               </View>
             </TouchableWithoutFeedback>
           );
+        }}
+        onSnapToItem={(index) => {
+          onChange(`icon${index + 1}` as ChallengeIconType);
         }}
         customAnimation={animationStyle}
       />

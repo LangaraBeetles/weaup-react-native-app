@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { View, BackHandler, Alert } from "react-native";
 
 import { ChallengeInputType } from "@src/interfaces/challenge.types";
@@ -25,7 +25,7 @@ const CreateChallengeContainer = (props: {
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
-      confirmExit
+      confirmExit,
     );
     return () => backHandler.remove();
   }, [step]);

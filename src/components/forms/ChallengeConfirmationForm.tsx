@@ -1,4 +1,4 @@
-import { View, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { useFormContext } from "react-hook-form";
 
 import Stack from "@src/components/ui/Stack";
@@ -7,16 +7,25 @@ import { Text } from "@src/components/ui/typography";
 import { createChallenge } from "@src/services/challengeApi";
 import { ChallengeInputType } from "@src/interfaces/challenge.types";
 import CloseButton from "../ui/CloseButton";
+import Card from "../analytics/Card";
+import challengeIcons from "@src/utils/challenge-icons";
+import Icon from "../ui/Icon";
+import { theme } from "@src/styles/theme";
+import dayjs from "dayjs";
+import isChallengeActive from "@src/utils/is-challenge-active";
+
+const { icon1: Icon1 } = challengeIcons;
 
 const ChallengeConfirmationForm = () => {
   const { handleSubmit, getValues, setValue } =
     useFormContext<ChallengeInputType>();
-  const [start_at, end_at, duration, name] = getValues([
-    "start_at",
-    "end_at",
-    "duration",
-    "name",
-  ]);
+  const challenge = getValues();
+
+  const DisplayIcon = challenge?.icon
+    ? challengeIcons[challenge.icon] || Icon1
+    : Icon1;
+
+  const { diff } = isChallengeActive(challenge.end_at);
 
   const validate = (data: ChallengeInputType) => {
     createChallenge(data)
@@ -42,20 +51,81 @@ const ChallengeConfirmationForm = () => {
         <Stack w={40} h={40} />
       </Stack>
 
-      <Stack px={16} h="100%" justifyContent="space-around" alignItems="center">
-        <Stack alignItems="center">
-          <Text>{name}</Text>
-          <Text>{duration} days</Text>
-          <Text>
-            From {start_at} to {end_at}
-          </Text>
-        </Stack>
+      <Stack
+        flexDirection="column"
+        px={16}
+        flexGrow={1}
+        gap={40}
+        alignItems="center"
+      >
+        <Stack
+          px={16}
+          py={8}
+          w="100%"
+          flexGrow={1}
+          gap={12}
+          alignItems="center"
+        >
+          <Card
+            style={{
+              shadowColor: theme.colors.neutral[500],
+              shadowOffset: {
+                height: 1,
+                width: 1,
+              },
+              shadowRadius: 10,
+              shadowOpacity: 0.1,
+            }}
+          >
+            <Stack flexDirection="row" gap={12}>
+              <DisplayIcon
+                height="100%"
+                style={{
+                  aspectRatio: 0.5,
+                }}
+              />
 
-        <Button
-          variant="primary"
-          title="Create Challenge"
-          onPress={handleSubmit(validate)}
-        />
+              <Stack justifyContent="center" w="85%" gap={8}>
+                <Text level="title_3">{challenge.name}</Text>
+
+                <Stack flexDirection="row" gap={4} alignItems="center">
+                  <Icon
+                    name="clock-outline"
+                    size={17}
+                    color={theme.colors.neutral[400]}
+                  />
+                  <Text
+                    level="caption_1"
+                    style={{ color: theme.colors.neutral[400], height: 16 }}
+                  >
+                    {`Spans ${diff} ${diff === 1 ? "day" : "days"}`}
+                  </Text>
+                </Stack>
+
+                <Stack flexDirection="row" gap={4} alignItems="center">
+                  <Icon
+                    name="calendar-outline"
+                    size={17}
+                    color={theme.colors.neutral[400]}
+                  />
+                  <Text
+                    level="caption_1"
+                    style={{ color: theme.colors.neutral[400], height: 16 }}
+                  >
+                    {`From ${dayjs(challenge.start_at).format("MMM DD")} to ${dayjs(challenge.end_at).format("MMM DD")} `}
+                  </Text>
+                </Stack>
+              </Stack>
+            </Stack>
+          </Card>
+        </Stack>
+        <Stack flexGrow={0} justifyContent="flex-end">
+          <Button
+            variant="primary"
+            title="Create Challenge"
+            onPress={handleSubmit(validate)}
+          />
+        </Stack>
       </Stack>
     </View>
   );
@@ -64,21 +134,10 @@ const ChallengeConfirmationForm = () => {
 const styles = StyleSheet.create({
   main: {
     height: "100%",
-    paddingBottom: 20,
-    justifyContent: "space-between",
+    paddingBottom: 40,
   },
   content: {
     flexGrow: 2,
-  },
-  button: {
-    flexGrow: 1,
-  },
-  closeButton: {
-    width: 49.5,
-    height: 49.5,
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
   },
 });
 

@@ -39,16 +39,21 @@ const ChallengeGoalForm = () => {
         <Stack
           flexDirection="column"
           px={16}
-          // h="100%"
+          flexGrow={1}
           gap={40}
-          justifyContent="space-between"
           alignItems="center"
         >
-          <Text align="center" style={{ color: theme.colors.neutral[400] }}>
-            A score setting of 70–85% of good posture is perfect for beginners.
-          </Text>
-
-          <Stack gap={40} w="100%" backgroundColor="blue" h="80%">
+          <Stack
+            w="100%"
+            flexGrow={1}
+            gap={12}
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Text align="center" style={{ color: theme.colors.neutral[400] }}>
+              A score setting of 70–85% of good posture is perfect for
+              beginners.
+            </Text>
             <Controller
               control={control}
               defaultValue="80"
@@ -84,7 +89,8 @@ const ChallengeGoalForm = () => {
                 </Stack>
               )}
             />
-
+          </Stack>
+          <Stack flexGrow={0} justifyContent="flex-end">
             <Button
               variant="primary"
               title="Next"
@@ -102,9 +108,7 @@ const ChallengeGoalForm = () => {
 const styles = StyleSheet.create({
   main: {
     height: "100%",
-    paddingBottom: 20,
-    // justifyContent: "space-between",
-    backgroundColor: "red",
+    paddingBottom: 40,
   },
   content: {
     flexGrow: 2,

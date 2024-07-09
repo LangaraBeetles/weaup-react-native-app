@@ -2,9 +2,8 @@ import { View } from "react-native";
 
 import { Text } from "@src/components/ui/typography";
 import Stack from "@src/components/ui/Stack";
-import Icon from "@src/components/ui/Icon";
-import { globalStyles } from "@src/styles/globalStyles";
 import Avatar from "@src/components/ui/Avatar";
+import ScoreChip from "@src/components/scoring/ScoreChip";
 
 const MemberCard = (props: any) => {
   const { itemStyle, item } = props;
@@ -18,21 +17,7 @@ const MemberCard = (props: any) => {
             <Text level="footnote">{item?.points} points</Text>
           </View>
         </Stack>
-        <Stack
-          flexDirection="row"
-          alignItems="center"
-          gap={8}
-          border={1}
-          borderColor={globalStyles.colors.neutral[100]}
-          borderRadius={100}
-          px={8}
-          py={12}
-          w={"100%"}
-          flex={1}
-        >
-          <Icon name="colorLabelIcon-star" />
-          <Text level="callout">{item?.user?.hp}</Text>
-        </Stack>
+        <ScoreChip score={item?.user?.hp ?? 0} />
       </Stack>
     </View>
   );

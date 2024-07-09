@@ -10,14 +10,15 @@ import { globalStyles } from "@src/styles/globalStyles";
 import { theme } from "@src/styles/theme";
 import ChallengeDetailCard from "@src/components/listItems/ChallengeDetailCard";
 import BackButton from "@src/components/ui/BackButton";
+import isChallengeActive from "@src/utils/is-challenge-active";
+import Skeleton from "@src/components/ui/Skeleton";
 
 const ChallengeDetail = () => {
   const params = useLocalSearchParams();
   const id = params.id as string;
-  const isOngoing: boolean = params.isOngoing as unknown as boolean;
   const path = usePathname();
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["getChallengeById", path, id],
     queryFn: () => getChallengeById(id),
     enabled: path === "/challenges/challenge-details",
@@ -25,6 +26,8 @@ const ChallengeDetail = () => {
 
   const members = data?.data.members;
   const color = data?.data.color ?? theme.colors.secondary[100];
+  const { isOngoing } = isChallengeActive(data?.data?.end_at);
+
   return (
     <ScrollView style={styles.body}>
       <View style={[styles.container, { backgroundColor: color }]}>
@@ -37,14 +40,24 @@ const ChallengeDetail = () => {
         </Stack>
         <View style={styles.background} />
         <View style={styles.innerContainer}>
-          <View style={styles.card}>
-            <ChallengeDetailCard
-              data={data?.data}
-              isOngoing={isOngoing}
-              color={color}
+          {isLoading ? (
+            <Skeleton
+              duration={900}
+              style={{ height: 200 }}
+              bg={theme.colors.neutral[50]}
             />
-          </View>
-          <MembersList members={members} />
+          ) : (
+            <>
+              <View style={styles.card}>
+                <ChallengeDetailCard
+                  data={data?.data}
+                  isOngoing={isOngoing}
+                  color={color}
+                />
+              </View>
+              <MembersList members={members} />
+            </>
+          )}
         </View>
       </View>
     </ScrollView>

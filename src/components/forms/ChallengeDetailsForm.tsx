@@ -1,10 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
   TextInput,
   TouchableOpacity,
-  Image,
   TouchableWithoutFeedback,
   Keyboard,
   Alert,
@@ -17,11 +16,7 @@ import Button from "@src/components/ui/Button";
 import DatePickerModal from "@src/components/ui/DatePickerModal";
 import { Controller, useFormContext } from "react-hook-form";
 import { ChallengeInputType } from "@src/interfaces/challenge.types";
-import { globalStyles } from "@src/styles/globalStyles";
 import CloseButton from "../ui/CloseButton";
-import Box from "../ui/Box";
-import Carousel, { ICarouselInstance } from "react-native-reanimated-carousel";
-import { useSharedValue } from "react-native-reanimated";
 import ChallengeAvatarCarousel from "../challenges/ChallengeAvatarCarousel";
 import { theme } from "@src/styles/theme";
 import Icon, { IconName } from "../ui/Icon";
@@ -40,9 +35,6 @@ const ChallengeDetailsForm = ({
   onClose: () => void;
 }) => {
   const [openDatePicker, setOpenDatePicker] = useState(false);
-
-  const ref = useRef<ICarouselInstance>(null);
-  const progress = useSharedValue<number>(0);
 
   const {
     control,
@@ -72,17 +64,6 @@ const ChallengeDetailsForm = ({
     onHandleClose();
   };
 
-  const onPressPagination = (index: number) => {
-    ref.current?.scrollTo({
-      /**
-       * Calculate the difference between the current index and the target index
-       * to ensure that the carousel scrolls to the nearest index
-       */
-      count: index - progress.value,
-      animated: true,
-    });
-  };
-
   useEffect(() => {
     if (watchDuration) {
       const startDate = getValues("start_at");
@@ -108,31 +89,198 @@ const ChallengeDetailsForm = ({
           <CloseButton onClose={onClose} />
         </Stack>
 
-        <Stack h="100%" gap={40} px={16} justifyContent="space-between">
-          <Stack alignItems="center" gap={34}>
-            <ChallengeAvatarCarousel height={80} />
+        <Stack
+          flexDirection="column"
+          px={16}
+          flexGrow={1}
+          gap={40}
+          alignItems="center"
+        >
+          <Stack
+            w="100%"
+            flexGrow={1}
+            gap={12}
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Stack alignItems="center" gap={34}>
+              <ChallengeAvatarCarousel
+                height={80}
+                onChange={(icon) => {
+                  setValue("icon", icon);
+                }}
+              />
 
-            <Controller
-              control={control}
-              name="name"
-              rules={{
-                required: true,
-              }}
-              render={({ field }) => (
-                <Stack gap={2} flexDirection="row">
-                  <TextInput
-                    placeholder="Type Challenge Name"
-                    {...field}
-                    placeholderTextColor={theme.colors.neutral[400]}
-                    style={{
-                      fontSize: 22,
-                      fontStyle: "normal",
-                      fontFamily: "NunitoBold",
-                      color: theme.colors.text,
+              <Controller
+                control={control}
+                name="name"
+                rules={{
+                  required: true,
+                }}
+                render={({ field }) => (
+                  <Stack gap={2} flexDirection="row">
+                    <TextInput
+                      placeholder="Type Challenge Name"
+                      {...field}
+                      placeholderTextColor={theme.colors.neutral[400]}
+                      style={{
+                        fontSize: 22,
+                        fontStyle: "normal",
+                        fontFamily: "NunitoBold",
+                        color: theme.colors.text,
+                      }}
+                      onChangeText={field.onChange}
+                    />
+                    {errors.name && (
+                      <Text
+                        align="center"
+                        style={{ color: theme.colors.error[500] }}
+                      >
+                        *
+                      </Text>
+                    )}
+                  </Stack>
+                )}
+              />
+
+              <Controller
+                control={control}
+                name="color"
+                render={({ field }) => {
+                  return (
+                    <Stack flexDirection="row" gap={8} justifyContent="center">
+                      {colors.map((color) => {
+                        return (
+                          <Pressable
+                            onPress={() => {
+                              field.onChange(color);
+                            }}
+                          >
+                            <Stack
+                              borderColor={
+                                field.value == color
+                                  ? theme.colors.neutral[500]
+                                  : theme.colors.white
+                              }
+                              border={2.5}
+                              borderRadius={32}
+                              h={32}
+                              w={32}
+                              backgroundColor={color}
+                            />
+                          </Pressable>
+                        );
+                      })}
+                    </Stack>
+                  );
+                }}
+              />
+            </Stack>
+
+            <Stack
+              gap={20}
+              p={20}
+              borderRadius={16}
+              border={1}
+              borderColor={theme.colors.neutral[100]}
+              backgroundColor={theme.colors.white}
+              w="100%"
+            >
+              <Controller
+                control={control}
+                name="description"
+                rules={{
+                  required: false,
+                }}
+                render={({ field }) => {
+                  return (
+                    <TextInput
+                      placeholder="Description (optional)"
+                      {...field}
+                      placeholderTextColor={theme.colors.neutral[400]}
+                      style={{
+                        fontSize: 16,
+                        fontStyle: "normal",
+                        fontFamily: "NunitoMedium",
+                        color: theme.colors.text,
+                      }}
+                      onChangeText={field.onChange}
+                    />
+                  );
+                }}
+              />
+              <Divider />
+              <Stack flexDirection="row" justifyContent="space-between">
+                <Label icon="calendar-outline" text="Start date" />
+                <Controller
+                  control={control}
+                  defaultValue={undefined}
+                  name="start_at"
+                  rules={{
+                    required: false,
+                  }}
+                  render={({ field }) => {
+                    return (
+                      <TouchableOpacity onPress={() => setOpenDatePicker(true)}>
+                        {!!field.value ? (
+                          <Text level="body">{field.value}</Text>
+                        ) : (
+                          <Text
+                            level="body"
+                            style={{ color: theme.colors.neutral[300] }}
+                          >
+                            Select date
+                          </Text>
+                        )}
+
+                        <DatePickerModal
+                          mode={"date"}
+                          date={
+                            field.value ? new Date(field.value) : new Date()
+                          }
+                          open={openDatePicker}
+                          setOpen={setOpenDatePicker}
+                          onChangeText={(e: Date) =>
+                            field.onChange(e.toDateString())
+                          }
+                        ></DatePickerModal>
+                      </TouchableOpacity>
+                    );
+                  }}
+                />
+              </Stack>
+              <Divider />
+
+              <Stack flexDirection="row" justifyContent="space-between">
+                <Label icon="clock-outline" text="Duration (days)" />
+                <Stack flexDirection="row">
+                  <Controller
+                    control={control}
+                    defaultValue={undefined}
+                    name="duration"
+                    rules={{
+                      required: true,
                     }}
-                    onChangeText={field.onChange}
+                    render={({ field }) => {
+                      return (
+                        <TextInput
+                          inputMode="numeric"
+                          keyboardType="numeric"
+                          placeholder="Select challenge span"
+                          {...field}
+                          placeholderTextColor={theme.colors.neutral[300]}
+                          style={{
+                            fontSize: 16,
+                            fontStyle: "normal",
+                            fontFamily: "NunitoMedium",
+                          }}
+                          onChangeText={field.onChange}
+                        />
+                      );
+                    }}
                   />
-                  {errors.name && (
+                  {/* TODO: change based on design flow */}
+                  {errors.duration && (
                     <Text
                       align="center"
                       style={{ color: theme.colors.error[500] }}
@@ -141,166 +289,19 @@ const ChallengeDetailsForm = ({
                     </Text>
                   )}
                 </Stack>
-              )}
-            />
-
-            <Controller
-              control={control}
-              name="color"
-              render={({ field }) => {
-                return (
-                  <Stack flexDirection="row" gap={8} justifyContent="center">
-                    {colors.map((color) => {
-                      return (
-                        <Pressable
-                          onPress={() => {
-                            field.onChange(color);
-                          }}
-                        >
-                          <Stack
-                            borderColor={
-                              field.value == color
-                                ? theme.colors.neutral[500]
-                                : theme.colors.white
-                            }
-                            border={2.5}
-                            borderRadius={32}
-                            h={32}
-                            w={32}
-                            backgroundColor={color}
-                          />
-                        </Pressable>
-                      );
-                    })}
-                  </Stack>
-                );
-              }}
-            />
-          </Stack>
-
-          <Stack
-            gap={20}
-            p={20}
-            borderRadius={16}
-            border={1}
-            borderColor={theme.colors.neutral[100]}
-            backgroundColor={theme.colors.white}
-            w="100%"
-          >
-            <Controller
-              control={control}
-              name="description"
-              rules={{
-                required: false,
-              }}
-              render={({ field }) => {
-                return (
-                  <TextInput
-                    placeholder="Description (optional)"
-                    {...field}
-                    placeholderTextColor={theme.colors.neutral[400]}
-                    style={{
-                      fontSize: 16,
-                      fontStyle: "normal",
-                      fontFamily: "NunitoMedium",
-                      color: theme.colors.text,
-                    }}
-                    onChangeText={field.onChange}
-                  />
-                );
-              }}
-            />
-            <Divider />
-            <Stack flexDirection="row" justifyContent="space-between">
-              <Label icon="calendar-outline" text="Start date" />
-              <Controller
-                control={control}
-                defaultValue={undefined}
-                name="start_at"
-                rules={{
-                  required: false,
-                }}
-                render={({ field }) => {
-                  return (
-                    <TouchableOpacity onPress={() => setOpenDatePicker(true)}>
-                      {!!field.value ? (
-                        <Text level="body">{field.value}</Text>
-                      ) : (
-                        <Text
-                          level="body"
-                          style={{ color: theme.colors.neutral[300] }}
-                        >
-                          Select date
-                        </Text>
-                      )}
-
-                      <DatePickerModal
-                        mode={"date"}
-                        date={field.value ? new Date(field.value) : new Date()}
-                        open={openDatePicker}
-                        setOpen={setOpenDatePicker}
-                        onChangeText={(e: Date) =>
-                          field.onChange(e.toDateString())
-                        }
-                      ></DatePickerModal>
-                    </TouchableOpacity>
-                  );
-                }}
-              />
-            </Stack>
-            <Divider />
-
-            <Stack flexDirection="row" justifyContent="space-between">
-              <Label icon="clock-outline" text="Duration (days)" />
-              <Stack flexDirection="row">
-                <Controller
-                  control={control}
-                  defaultValue={undefined}
-                  name="duration"
-                  rules={{
-                    required: true,
-                  }}
-                  render={({ field }) => {
-                    return (
-                      <TextInput
-                        inputMode="numeric"
-                        keyboardType="numeric"
-                        placeholder="Select challenge span"
-                        {...field}
-                        placeholderTextColor={theme.colors.neutral[300]}
-                        style={{
-                          fontSize: 16,
-                          fontStyle: "normal",
-                          fontFamily: "NunitoMedium",
-                        }}
-                        onChangeText={field.onChange}
-                      />
-                    );
-                  }}
-                />
-                {/* TODO: change based on design flow */}
-                {errors.duration && (
-                  <Text
-                    align="center"
-                    style={{ color: theme.colors.error[500] }}
-                  >
-                    *
-                  </Text>
-                )}
+                {/* TODO: create bottomsheet for duration */}
               </Stack>
-              {/* TODO: create bottomsheet for duration */}
             </Stack>
           </Stack>
-
-          <View style={{ height: "auto" }} />
-
-          <Button
-            variant="primary"
-            title="Next"
-            onPress={handleSubmit(() => {
-              setValue("step", "goal");
-            })}
-          />
+          <Stack flexGrow={0} justifyContent="flex-end">
+            <Button
+              variant="primary"
+              title="Next"
+              onPress={handleSubmit(() => {
+                setValue("step", "goal");
+              })}
+            />
+          </Stack>
         </Stack>
       </View>
     </TouchableWithoutFeedback>
@@ -320,8 +321,8 @@ const Label = ({ icon, text }: { icon: IconName; text: string }) => {
 
 const styles = StyleSheet.create({
   main: {
-    height: "92%",
-    gap: 40,
+    height: "100%",
+    paddingBottom: 40,
   },
   content: {
     flexGrow: 2,

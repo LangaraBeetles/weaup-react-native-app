@@ -7,7 +7,7 @@ export type ChallengeInputType = {
   goal: string;
   duration: string;
   color: string;
-  icon: string;
+  icon: ChallengeIconType;
   status: ChallengeStatusType;
 
   step: CreateChallengeStep;
@@ -83,6 +83,5 @@ export type ChallengeResponseType = {
   start_at: string;
   status: string;
 };
-
 
 export type CreateChallengeStep = "detail" | "goal" | "confirmation" | "result";
