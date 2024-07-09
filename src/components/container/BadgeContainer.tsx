@@ -5,24 +5,28 @@ import { styled } from "@fast-styles/react";
 import { globalStyles } from "@src/styles/globalStyles";
 
 const BadgeContainer: React.FC<{
+  id: number;
   title: string;
   subtitle: string;
+  description: string;
+  color?: string;
   unlocked?: boolean;
   badge: BadgeName;
-}> = ({ title, subtitle, unlocked = false, badge }) => {
+}> = ({ title, subtitle, description, badge, unlocked = true }) => {
   return (
     <BadgeRoot>
-      <Badge name={unlocked ? badge : "locked"} />
+      <Badge name={unlocked ? badge : "locked"} title={title} />
       <Text
         level="caption_1"
         weight="bold"
+        numberOfLines={1}
         style={{
           color: unlocked
             ? globalStyles.colors.text
             : globalStyles.colors.neutral[100],
         }}
       >
-        {title}
+        {subtitle}
       </Text>
       <Text
         level="caption_2"
@@ -32,7 +36,7 @@ const BadgeContainer: React.FC<{
             : globalStyles.colors.neutral[100],
         }}
       >
-        {subtitle}
+        {description}
       </Text>
     </BadgeRoot>
   );

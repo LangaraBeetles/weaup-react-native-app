@@ -46,6 +46,8 @@ type UserState = {
 
   sessionStatus: `${SessionStatesEnum}`;
   setSessionStatus: (status: `${SessionStatesEnum}`) => void;
+
+  setBadge: (badge: { id: number; date: string }) => void;
 };
 
 const userInitialState: UserType = {
@@ -62,6 +64,7 @@ const userInitialState: UserType = {
   email: "",
   preferredMode: "phone",
   isSetupComplete: false,
+  badges: [],
 };
 
 // Clear AsyncStorage:
@@ -211,6 +214,15 @@ export const useUser = create<UserState>()(
           set({ sessionPostureData: [] });
           return data;
         },
+
+        setBadge: (badge) =>
+          set((state) => ({
+            ...state,
+            user: {
+              ...state.user,
+              badges: [...(state.user.badges || []), badge],
+            },
+          })),
       }),
       {
         storage: createJSONStorage(() => AsyncStorage),

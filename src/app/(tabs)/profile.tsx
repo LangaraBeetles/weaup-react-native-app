@@ -53,6 +53,14 @@ const ProfileScreen = () => {
           />
         )}
         <Spacer height={64} />
+        {/* <Button
+          title="Set Badge"
+          onPress={() => {
+            console.log("setBadge:", setBadge);
+            console.log("Badge object:", { id: 1, date: "" });
+            setBadge({ id: 1, date: "" });
+          }}
+        /> */}
       </View>
     </ScrollView>
   );

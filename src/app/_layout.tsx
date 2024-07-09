@@ -42,6 +42,7 @@ const RootLayout = () => {
     NunitoItalic: require("../../assets/fonts/NunitoItalic.ttf"),
     NunitoLightItalic: require("../../assets/fonts/NunitoLightItalic.ttf"),
     NunitoExtraLightItalic: require("../../assets/fonts/NunitoExtraLightItalic.ttf"),
+    FredokaOneRegular: require("../../assets/fonts/FredokaOneRegular.ttf"),
   });
 
   useEffect(() => {
