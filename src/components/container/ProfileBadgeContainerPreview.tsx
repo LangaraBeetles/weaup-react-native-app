@@ -5,9 +5,6 @@ import badges from "@src/badges";
 
 const ProfileBadgeContainerPreview = () => {
   const userBadges = useUser((state) => state.user.badges);
-  console.log({ userBadges });
-
-  // check which badges are unlocked by matching the id in the userBadges with the bages array
 
   const latestBadges = userBadges
     .map((userBadge) => {
@@ -20,8 +17,6 @@ const ProfileBadgeContainerPreview = () => {
     .filter((badge) => badge !== null)
     .sort((a, b) => new Date(b.date!).getTime() - new Date(a.date!).getTime())
     .slice(0, 3);
-
-  console.log({ latestBadges });
 
   const renderBadges = () => {
     return latestBadges.map((badge, index) => (
