@@ -34,4 +34,5 @@ export type UserInputType = {
   hp: number;
   level: number;
   daily_streak_counter: number;
+  badges: UserBadgeType[];
 };

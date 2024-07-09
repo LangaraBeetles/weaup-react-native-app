@@ -1,21 +1,35 @@
+import { updateUser } from "@src/services/userApi";
 import { useUser } from "@src/state/useUser";
 import { useRouter } from "expo-router";
 import { useEffect } from "react";
 
 const BadgeSystem = () => {
   const router = useRouter();
-  const userBadges = useUser((state) => state.user.badges);
+  const user = useUser((state) => state.user);
   const setBadge = useUser((state) => state.setBadge);
-  const userXP = useUser((state) => state.user.xp);
 
   useEffect(() => {
-    if (userXP >= 1000 && !userBadges?.some((badge) => badge.id === 1)) {
-      // Unlock badge with id 1 when userXP is greater than 1000
-      setBadge({ id: 1, date: new Date().toISOString() });
+    // Unlock badge with id 1 when userXP is greater than 1000
+    if (user.xp >= 1000 && !user?.badges?.some((badge) => badge.id === 1)) {
+      const newBadge = { id: 1, date: new Date().toISOString() };
+      setBadge(newBadge);
+
       // TODO: Redirect to badge unlocked screen
       router.push("/session-summary");
+
+      updateUser(user.id, {
+        badges: [...(user?.badges || []), newBadge],
+      })
+        .then(() => {
+          console.log("Badge saved");
+        })
+        .catch(() => {
+          console.log("[ERROR] Badge not saved");
+        });
     }
-  }, [userXP, userBadges, setBadge]);
+
+    // TODO: Add more badge conditions
+  }, [user?.xp, user?.badges, setBadge]);
 
   return null;
 };
