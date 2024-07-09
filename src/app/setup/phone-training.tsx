@@ -42,11 +42,11 @@ const PhoneTrainingScreen = () => {
     if (step < steps.length - 1) {
       setStep(step + 1);
     } else {
-      router.push("/setup/enabled-notifications");
+      router.push("/setup/enable-notifications");
     }
   };
   const skip = () => {
-    router.push("/setup/enabled-notifications");
+    router.push("/setup/enable-notifications");
   };
 
   return (

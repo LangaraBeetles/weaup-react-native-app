@@ -77,6 +77,12 @@ const EarbudsTrainingScreen = () => {
         >
           <Image name="weasel-happy" />
         </Center>
+        <Stack w={61} h={53} style={styles.sparkling}>
+          <Image name="sparkling" />
+        </Stack>
+        <Stack w={24} h={24} style={styles.star}>
+          <Image name="four-corner-star" />
+        </Stack>
         <Stack style={styles.content}>
           <Center
             justifyContent="center"
@@ -125,6 +131,16 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     alignItems: "center",
     justifyContent: "center",
+  },
+  sparkling: {
+    position: "absolute",
+    top: height * 0.18,
+    left: width * 0.13,
+  },
+  star: {
+    position: "absolute",
+    top: height * 0.15,
+    right: width * 0.15,
   },
 });
 
