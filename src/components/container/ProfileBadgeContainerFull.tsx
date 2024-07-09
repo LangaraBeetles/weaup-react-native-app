@@ -2,10 +2,20 @@ import { StyleSheet } from "react-native";
 import Stack from "../ui/Stack";
 import BadgeContainer from "./BadgeContainer";
 import badges from "@src/badges";
+import { useUser } from "@src/state/useUser";
 
 const ProfileBadgeContainerFull = () => {
+  const userBadges = useUser((state) => state.user.badges);
+
+  const userBadgeIds = new Set(userBadges.map((userBadge) => userBadge.id));
+
+  const allBadges = badges.map((badge) => ({
+    ...badge,
+    unlocked: userBadgeIds.has(badge.id),
+  }));
+
   const renderBadges = () => {
-    return badges.map((badge, index) => (
+    return allBadges.map((badge, index) => (
       <BadgeContainer
         key={index}
         id={badge.id}
