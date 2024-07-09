@@ -8,35 +8,50 @@ import ChallengeConfirmationForm from "@src/components/forms/ChallengeConfirmati
 import ChallengeInvitationForm from "@src/components/forms/ChallengeInvitationForm";
 import { FormProvider, useForm } from "react-hook-form";
 
-const CreateChallengeContainer = (props: any) => {
+const CreateChallengeContainer = (props: {
+  handleCloseModalPress: () => void;
+}) => {
   const handleCloseModalPress = props.handleCloseModalPress;
-  const [step, setStep] = useState(0);
-  const [url, setUrl] = useState("");
-  const form = useForm<ChallengeInputType>();
+
+  const form = useForm<ChallengeInputType>({
+    defaultValues: {
+      step: "detail",
+    },
+  });
+
+  const step = form.watch("step") ?? "detail";
 
   //handles back press
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
-      confirmExit,
+      confirmExit
     );
     return () => backHandler.remove();
   }, [step]);
 
   const confirmExit = () => {
-    if (step == 0) {
+    if (step == "detail") {
       Alert.alert("Hold on!", "Are you sure you want to cancel?", [
         {
           text: "Cancel",
           onPress: () => null,
           style: "cancel",
         },
-        { text: "YES", onPress: () => handleCloseModalPress() },
+        { text: "Yes", onPress: () => handleCloseModalPress() },
       ]);
-    } else if (step == 3) {
+    }
+
+    if (step == "result") {
       handleCloseModalPress();
-    } else {
-      setStep(step - 1);
+    }
+
+    if (step === "goal") {
+      form.setValue("step", "detail");
+    }
+
+    if (step === "confirmation") {
+      form.setValue("step", "goal");
     }
 
     return true;
@@ -45,20 +60,14 @@ const CreateChallengeContainer = (props: any) => {
   return (
     <View>
       <FormProvider {...form}>
-        {step == 0 && (
-          <ChallengeDetailsForm
-            handleCloseModalPress={confirmExit}
-            handleStep={setStep}
-          />
+        {step === "detail" && (
+          <ChallengeDetailsForm onClose={handleCloseModalPress} />
         )}
-        {step == 1 && <ChallengeGoalForm handleStep={setStep} />}
-        {step == 2 && (
-          <ChallengeConfirmationForm handleStep={setStep} setUrl={setUrl} />
-        )}
-        {step == 3 && (
+        {step === "goal" && <ChallengeGoalForm />}
+        {step === "confirmation" && <ChallengeConfirmationForm />}
+        {step === "result" && (
           <ChallengeInvitationForm
             handleCloseModalPress={handleCloseModalPress}
-            url={url}
           />
         )}
       </FormProvider>

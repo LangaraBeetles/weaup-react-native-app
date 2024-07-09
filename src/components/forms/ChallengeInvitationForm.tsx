@@ -5,9 +5,16 @@ import Center from "@src/components/ui/Center";
 import Stack from "@src/components/ui/Stack";
 import Button from "@src/components/ui/Button";
 import ShareButton from "@src/components/ui/ShareButton";
+import { ChallengeInputType } from "@src/interfaces/challenge.types";
+import { useFormContext } from "react-hook-form";
 
-const ChallengeInvitationForm = (props: any) => {
-  const { url, handleCloseModalPress } = props;
+const ChallengeInvitationForm = (props: {
+  handleCloseModalPress: () => void;
+}) => {
+  const { handleCloseModalPress } = props;
+  const { watch } = useFormContext<ChallengeInputType>();
+
+  const url = watch("url");
 
   return (
     <View style={styles.main}>
@@ -23,7 +30,6 @@ const ChallengeInvitationForm = (props: any) => {
         <Text>
           Invite your teammates to New Challenge by sharing the code below
         </Text>
-        <Image source={require("../../../assets/img/confetti.png")} />
 
         <Stack justifyContent="flex-end" alignItems="center">
           <ShareButton url={url} />

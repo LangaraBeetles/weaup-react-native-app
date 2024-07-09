@@ -6,10 +6,11 @@ import Button from "@src/components/ui/Button";
 import { Text } from "@src/components/ui/typography";
 import { createChallenge } from "@src/services/challengeApi";
 import { ChallengeInputType } from "@src/interfaces/challenge.types";
+import CloseButton from "../ui/CloseButton";
 
-const ChallengeConfirmationForm = (props: any) => {
-  const { handleStep, setUrl } = props;
-  const { handleSubmit, getValues } = useFormContext<ChallengeInputType>();
+const ChallengeConfirmationForm = () => {
+  const { handleSubmit, getValues, setValue } =
+    useFormContext<ChallengeInputType>();
   const [start_at, end_at, duration, name] = getValues([
     "start_at",
     "end_at",
@@ -20,8 +21,8 @@ const ChallengeConfirmationForm = (props: any) => {
   const validate = (data: ChallengeInputType) => {
     createChallenge(data)
       .then((res) => {
-        setUrl(res.data.url);
-        handleStep(3);
+        setValue("url", res.data.url);
+        setValue("step", "result");
       })
       .catch((err) => {
         console.log(err);
@@ -30,26 +31,18 @@ const ChallengeConfirmationForm = (props: any) => {
 
   return (
     <View style={styles.main}>
-      <Stack flexDirection="row" gap={18} p={16} justifyContent="flex-start">
-        <View style={styles.button}>
-          <TouchableOpacity
-            onPress={() => handleStep(1)}
-            style={styles.closeButton}
-          >
-            <Image source={require("../../../assets/img/backIcon.png")} />
-          </TouchableOpacity>
-        </View>
+      <Stack flexDirection="row" gap={42} p={16} alignItems="center">
+        <CloseButton
+          icon="arrow-left"
+          onClose={() => setValue("step", "goal")}
+        />
         <Text style={styles.content} level="title_2">
           All set?
         </Text>
+        <Stack w={40} h={40} />
       </Stack>
 
-      <Stack
-        px={16}
-        h={"100%"}
-        justifyContent="space-around"
-        alignItems="center"
-      >
+      <Stack px={16} h="100%" justifyContent="space-around" alignItems="center">
         <Stack alignItems="center">
           <Text>{name}</Text>
           <Text>{duration} days</Text>
@@ -72,6 +65,7 @@ const styles = StyleSheet.create({
   main: {
     height: "100%",
     paddingBottom: 20,
+    justifyContent: "space-between",
   },
   content: {
     flexGrow: 2,

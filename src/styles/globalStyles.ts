@@ -7,6 +7,7 @@ export const globalStyles = {
     text: "#201F1D",
     random: {
       green: "#549B32",
+      blue: "#D3E7FF",
     },
     primary: {
       50: "#FFF8E6",

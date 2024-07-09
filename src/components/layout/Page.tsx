@@ -39,13 +39,13 @@ const Page: React.FC<{
             <View style={styles.header}>
               <Stack flexDirection="row" gap={40}>
                 {backButtonShown ? <BackButton /> : null}
-                <Text level="title_2">{title}</Text>
+                <Text level="title_1">{title}</Text>
               </Stack>
               {header}
             </View>
 
             <View style={styles.mainCard}>{children}</View>
-          </>,
+          </>
         )}
       </SafeAreaView>
     </View>
