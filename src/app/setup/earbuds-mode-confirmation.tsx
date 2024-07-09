@@ -22,7 +22,7 @@ const EarbudsTrainingScreen = () => {
   const navigation = useNavigation();
 
   const next = () => {
-    router.push("/setup/earbuds-training");
+    router.push("/setup/earbuds-connected");
   };
 
   return (
@@ -91,11 +91,11 @@ const EarbudsTrainingScreen = () => {
                   level="title_1"
                   style={{ color: theme.colors.primary[900] }}
                 >
-                  You’re connected!
+                  Track posture with Earbuds
                 </Text>
                 <Text align="center">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor.
+                  In order for WeaUp to successfully connect with you earbuds,
+                  bluetooth needs to be turned on.
                 </Text>
               </Stack>
 
@@ -111,8 +111,7 @@ const EarbudsTrainingScreen = () => {
 const styles = StyleSheet.create({
   content: {
     position: "absolute",
-    bottom:
-      height < 850 && Platform.OS === "android" ? height * 0.1 : height * 0.2,
+    bottom: Platform.OS === "android" ? height * 0.1 : height * 0.15,
     width: width * 0.9,
     backgroundColor: theme.colors.white,
     padding: 20,

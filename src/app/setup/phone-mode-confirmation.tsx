@@ -36,8 +36,11 @@ const PhoneTrainingScreen = () => {
             zIndex: 2,
           }}
         >
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Icon name={"arrow-left"} size={40} />
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={styles.back}
+          >
+            <Icon name={"arrow-left"} size={20} />
           </TouchableOpacity>
         </Stack>
         <Gradient
@@ -121,6 +124,14 @@ const styles = StyleSheet.create({
     left: 0,
     borderRadius: 5,
     backgroundColor: theme.colors.other[100],
+  },
+  back: {
+    backgroundColor: theme.colors.white,
+    height: 40,
+    width: 40,
+    borderRadius: 100,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 
