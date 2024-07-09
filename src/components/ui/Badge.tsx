@@ -24,9 +24,10 @@ type BadgeProps = {
   color?: string;
   title?: string;
   subtitle?: string;
+  unlocked?: boolean;
 };
 
-const Badge: React.FC<BadgeProps> = ({ name, title = "" }) => {
+const Badge: React.FC<BadgeProps> = ({ name, title = "", unlocked }) => {
   const CustomBadge = BadgeConfig[name];
 
   return (
@@ -35,8 +36,8 @@ const Badge: React.FC<BadgeProps> = ({ name, title = "" }) => {
         <StrokeText
           text={title}
           fontSize={24}
-          color="#ffffff"
-          strokeColor="#FDB022"
+          color={unlocked ? "#ffffff" : "#7f7f7f"}
+          strokeColor={unlocked ? "#FDB022" : "#72767e"}
           strokeWidth={5}
           fontFamily="FredokaOneRegular"
         />

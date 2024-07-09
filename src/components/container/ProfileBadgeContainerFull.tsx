@@ -7,7 +7,7 @@ import { useUser } from "@src/state/useUser";
 const ProfileBadgeContainerFull = () => {
   const userBadges = useUser((state) => state.user.badges);
 
-  const userBadgeIds = new Set(userBadges.map((userBadge) => userBadge.id));
+  const userBadgeIds = new Set(userBadges?.map((userBadge) => userBadge.id));
 
   const allBadges = badges.map((badge) => ({
     ...badge,
