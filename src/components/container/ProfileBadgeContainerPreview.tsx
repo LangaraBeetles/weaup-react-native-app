@@ -7,19 +7,23 @@ const ProfileBadgeContainerPreview = () => {
   const userBadges = useUser((state) => state.user.badges);
 
   const latestBadges = userBadges
-    .map((userBadge) => {
-      const badge = badges.find((b) => b.id === userBadge.id);
-      if (badge) {
-        return { ...badge, date: userBadge.date };
-      }
-      return null;
-    })
-    .filter((badge) => badge !== null)
-    .sort((a, b) => new Date(b.date!).getTime() - new Date(a.date!).getTime())
-    .slice(0, 3);
+    ? userBadges
+        .map((userBadge) => {
+          const badge = badges.find((b) => b.id === userBadge.id);
+          if (badge) {
+            return { ...badge, date: userBadge.date };
+          }
+          return null;
+        })
+        .filter((badge) => badge !== null)
+        .sort(
+          (a, b) => new Date(b.date!).getTime() - new Date(a.date!).getTime(),
+        )
+        .slice(0, 3)
+    : [];
 
   const renderBadges = () => {
-    return latestBadges.map((badge, index) => (
+    return latestBadges?.map((badge, index) => (
       <BadgeContainer
         key={index}
         id={badge.id}
