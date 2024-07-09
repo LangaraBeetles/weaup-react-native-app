@@ -79,6 +79,7 @@
       <string>NunitoItalic.ttf</string>
       <string>NunitoLightItalic.ttf</string>
       <string>NunitoExtraLightItalic.ttf</string>
+      <string>FredokaOneRegular.ttf</string>
     </array>
     <key>UILaunchStoryboardName</key>
     <string>SplashScreen</string>
