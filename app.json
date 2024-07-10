@@ -58,7 +58,8 @@
             "./assets/fonts/NunitoMediumItalic.ttf",
             "./assets/fonts/NunitoItalic.ttf",
             "./assets/fonts/NunitoLightItalic.ttf",
-            "./assets/fonts/NunitoExtraLightItalic.ttf"
+            "./assets/fonts/NunitoExtraLightItalic.ttf",
+            "./assets/fonts/FredokaOneRegular.ttf"
           ]
         }
       ],

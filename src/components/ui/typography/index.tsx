@@ -14,7 +14,8 @@ type BodyTextVariant = {
     | "title_1"
     | "title_2"
     | "title_3"
-    | "headline";
+    | "headline"
+    | "badge_title";
   weight?: "bold" | "semibold" | "medium" | "regular" | "default";
   align?: "auto" | "left" | "right" | "center" | "justify";
 };
@@ -126,6 +127,11 @@ export const StyledText = styled(RNText, {
         fontFamily: "NunitoBold",
         // lineHeight: 13,
         textTransform: "uppercase",
+      },
+      badge_title: {
+        fontSize: 24,
+        fontStyle: "normal",
+        fontFamily: "FredokaOneRegular",
       },
     },
     weight: {
