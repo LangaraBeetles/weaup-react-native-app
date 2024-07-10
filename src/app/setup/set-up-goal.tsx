@@ -31,7 +31,7 @@ const PhoneTrainingScreen = () => {
     if (step < 1) {
       setStep(step + 1);
     } else {
-      router.push("/setup/set-up-goal-picker");
+      router.push("/setup/set-up-goal-onboarding");
     }
   };
 

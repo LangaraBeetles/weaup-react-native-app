@@ -11,7 +11,7 @@ import { useRouter } from "expo-router";
 
 const BadgesCard = () => {
   const router = useRouter();
-  const userXP = useUser((state) => state.user.xp);
+  const userBadges = useUser((state) => state.user.badges);
 
   const viewBadges = () => {
     router.navigate("/badges/");
@@ -33,8 +33,7 @@ const BadgesCard = () => {
             </Text>
           </Stack>
 
-          {/* TODO: get user badges count */}
-          <Text level="headline">{userXP}</Text>
+          <Text level="headline">{userBadges?.length || 0}</Text>
         </Stack>
         <ProfileBadgeContainerPreview />
 

@@ -1,3 +1,5 @@
+import { UserBadgeType } from "./badges.types";
+
 export type UserType = {
   id: string;
   deviceId: string;
@@ -12,6 +14,7 @@ export type UserType = {
   dailyStreakCounter: number;
   token: string | null;
   isSetupComplete: boolean;
+  badges: UserBadgeType[];
 };
 
 export enum TrackingModeEnum {
@@ -31,4 +34,5 @@ export type UserInputType = {
   hp: number;
   level: number;
   daily_streak_counter: number;
+  badges: UserBadgeType[];
 };

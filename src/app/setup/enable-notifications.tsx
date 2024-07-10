@@ -24,11 +24,11 @@ const EnableNotificationsScreen = () => {
           <Stack
             style={{ position: "absolute", left: width * 0.5 - 170, top: -20 }}
           >
-            <Image name="notification-window" w={340} h={200} />
+            <Image name="notification-window" width={340} height={200} />
           </Stack>
         )}
         <Stack style={{ position: "absolute", left: 70, top: 160 }}>
-          <Image name="notification" w={32} h={121} />
+          <Image name="notification" width={32} height={121} />
         </Stack>
         <Center
           w={236}

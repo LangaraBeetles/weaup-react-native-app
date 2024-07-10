@@ -83,7 +83,7 @@ const EarbudsTrainingScreen = () => {
                 transform: [{ rotate: "-60deg" }],
               }}
             >
-              <Image name="tilt-arrow" w={62} h={43} />
+              <Image name="tilt-arrow" width={62} height={43} />
             </Stack>
           )}
           <Center
