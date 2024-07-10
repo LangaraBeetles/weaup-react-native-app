@@ -1,108 +1,57 @@
+import { useUser } from "@src/state/useUser";
 import Stack from "../ui/Stack";
 import BadgeContainer from "./BadgeContainer";
-import { BadgeType } from "@src/interfaces/badges.types";
-
-// TODO: get the badges from the user
-const badgeData: BadgeType[] = [
-  {
-    title: "Fire Weasel",
-    subtitle: "Level 3",
-    badge: "dummy-badge",
-    unlocked: true,
-    date: "2023-08-01",
-  },
-  {
-    title: "Fire Weasel",
-    subtitle: "Level 3",
-    badge: "dummy-badge",
-    unlocked: false,
-    date: null,
-  },
-  {
-    title: "Fire Weasel",
-    subtitle: "Level 3",
-    badge: "dummy-badge",
-    unlocked: true,
-    date: "2024-04-01",
-  },
-  {
-    title: "Fire Weasel",
-    subtitle: "Level 3",
-    badge: "dummy-badge",
-    unlocked: false,
-    date: "2023-04-01",
-  },
-  {
-    title: "Fire Weasel",
-    subtitle: "Level 3",
-    badge: "dummy-badge",
-    unlocked: false,
-    date: null,
-  },
-  {
-    title: "Fire Weasel",
-    subtitle: "Level 3",
-    badge: "dummy-badge",
-    unlocked: false,
-    date: null,
-  },
-  {
-    title: "Fire Weasel",
-    subtitle: "Level 3",
-    badge: "dummy-badge",
-    unlocked: false,
-    date: null,
-  },
-  {
-    title: "Fire Weasel",
-    subtitle: "Level 3",
-    badge: "dummy-badge",
-    unlocked: false,
-    date: "2021-08-01",
-  },
-  {
-    title: "Fire Weasel",
-    subtitle: "Level 3",
-    badge: "dummy-badge",
-    unlocked: false,
-    date: "2021-08-01",
-  },
-];
+import badges from "@src/badges";
 
 const ProfileBadgeContainerPreview = () => {
-  const renderBadges = () => {
-    const latestBadges = badgeData
-      .filter((badge) => badge.unlocked)
-      .sort((a, b) => new Date(b.date!).getTime() - new Date(a.date!).getTime())
-      .slice(0, 3);
+  const userBadges = useUser((state) => state.user.badges);
 
-    return latestBadges.map((badge, index) => (
+  const latestBadges = userBadges
+    ? userBadges
+        .map((userBadge) => {
+          const badge = badges.find((b) => b.id === userBadge.id);
+          if (badge) {
+            return { ...badge, date: userBadge.date };
+          }
+          return null;
+        })
+        .filter((badge) => badge !== null)
+        .sort(
+          (a, b) => new Date(b.date!).getTime() - new Date(a.date!).getTime(),
+        )
+        .slice(0, 3)
+    : [];
+
+  const renderBadges = () => {
+    return latestBadges?.map((badge, index) => (
       <BadgeContainer
         key={index}
+        id={badge.id}
         title={badge.title}
         subtitle={badge.subtitle}
+        description={badge.description}
         badge={badge.badge}
-        unlocked={badge.unlocked}
+        color={badge.color}
+        unlocked={true}
       />
     ));
   };
 
-  const latestBadges = badgeData
-    .filter((badge) => badge.unlocked)
-    .sort((a, b) => new Date(b.date!).getTime() - new Date(a.date!).getTime())
-    .slice(0, 3);
-
   const renderLockedBadges = () => {
-    const lockedBadges = badgeData.slice(0, 3);
-    return lockedBadges.map((badge, index) => (
-      <BadgeContainer
-        key={index}
-        title={badge.title}
-        subtitle={badge.subtitle}
-        badge={badge.badge}
-        unlocked={badge.unlocked}
-      />
-    ));
+    return badges
+      .slice(0, 3)
+      .map((badge, index) => (
+        <BadgeContainer
+          key={index}
+          id={badge.id}
+          title={badge.title}
+          subtitle={badge.subtitle}
+          description={badge.description}
+          badge={badge.badge}
+          color={badge.color}
+          unlocked={false}
+        />
+      ));
   };
 
   return (
