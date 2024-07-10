@@ -14,7 +14,10 @@ type BodyTextVariant = {
     | "title_1"
     | "title_2"
     | "title_3"
-    | "headline";
+    | "giant_title"
+    | "large_title"
+    | "headline"
+    | "badge_title";
   weight?: "bold" | "semibold" | "medium" | "regular" | "default";
   align?: "auto" | "left" | "right" | "center" | "justify";
 };
@@ -51,6 +54,16 @@ export const StyledText = styled(RNText, {
       },
     },
     level: {
+      giant_title: {
+        fontSize: 96,
+        fontStyle: "normal",
+        fontFamily: "NunitoBold",
+      },
+      large_title: {
+        fontSize: 40,
+        fontStyle: "normal",
+        fontFamily: "NunitoBold",
+      },
       // Heading
       title_1: {
         fontSize: 28,
@@ -126,6 +139,11 @@ export const StyledText = styled(RNText, {
         fontFamily: "NunitoBold",
         // lineHeight: 13,
         textTransform: "uppercase",
+      },
+      badge_title: {
+        fontSize: 24,
+        fontStyle: "normal",
+        fontFamily: "FredokaOneRegular",
       },
     },
     weight: {

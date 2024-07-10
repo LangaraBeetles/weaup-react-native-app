@@ -13,6 +13,7 @@ import HPSystem from "@src/components/scoring/HPSystem";
 import XPSystem from "@src/components/scoring/XPSystem";
 import LevelSystem from "@src/components/scoring/LevelSystem";
 import PostureDataProvider from "@src/components/providers/PostureDataProvider";
+import BadgeSystem from "@src/components/scoring/BadgeSystem";
 
 const queryClient = new QueryClient();
 
@@ -42,6 +43,7 @@ const RootLayout = () => {
     NunitoItalic: require("../../assets/fonts/NunitoItalic.ttf"),
     NunitoLightItalic: require("../../assets/fonts/NunitoLightItalic.ttf"),
     NunitoExtraLightItalic: require("../../assets/fonts/NunitoExtraLightItalic.ttf"),
+    FredokaOneRegular: require("../../assets/fonts/FredokaOneRegular.ttf"),
   });
 
   useEffect(() => {
@@ -66,6 +68,7 @@ const RootLayout = () => {
             <HPSystem />
             <XPSystem />
             <LevelSystem />
+            <BadgeSystem />
             <GestureHandlerRootView>
               <BottomSheetModalProvider>
                 <PostureDataProvider>
