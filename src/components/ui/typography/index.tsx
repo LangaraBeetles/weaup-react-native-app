@@ -14,6 +14,8 @@ type BodyTextVariant = {
     | "title_1"
     | "title_2"
     | "title_3"
+    | "giant_title"
+    | "large_title"
     | "headline";
   weight?: "bold" | "semibold" | "medium" | "regular" | "default";
   align?: "auto" | "left" | "right" | "center" | "justify";
@@ -51,6 +53,16 @@ export const StyledText = styled(RNText, {
       },
     },
     level: {
+      giant_title: {
+        fontSize: 96,
+        fontStyle: "normal",
+        fontFamily: "NunitoBold",
+      },
+      large_title: {
+        fontSize: 40,
+        fontStyle: "normal",
+        fontFamily: "NunitoBold",
+      },
       // Heading
       title_1: {
         fontSize: 28,
