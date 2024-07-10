@@ -13,7 +13,7 @@ const DailyGoalCard = () => {
   const userDailyGoal = useUser((state) => state.user.dailyGoal);
 
   const changeGoal = () => {
-    router.navigate("/setup/set-up-goal3");
+    router.navigate("/setup/set-up-goal-profile");
   };
 
   return (

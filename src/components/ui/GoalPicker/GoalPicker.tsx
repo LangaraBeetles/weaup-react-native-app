@@ -39,7 +39,11 @@ const GoalPicker = (props: {
           %
         </Text>
       </Stack>
-      <Text level="body" align="center">
+      <Text
+        level="body"
+        align="center"
+        style={{ color: theme.colors.neutral[400], paddingHorizontal: 16 }}
+      >
         A score setting of 70–85% of good posture is perfect for beginners.
       </Text>
       <FlatList
@@ -61,14 +65,14 @@ const GoalPicker = (props: {
           const xPosition = event.nativeEvent.contentOffset.x;
           const newIndex = Math.round(xPosition / listItemWidth);
           contentOffset.value = xPosition;
-          setGoal(data[newIndex]);
+          data[newIndex] && setGoal(data[newIndex]);
         }}
         contentContainerStyle={{
           height: "100%",
           justifyContent: "center",
           alignItems: "center",
-          paddingRight: listItemWidth * 1.65,
-          paddingLeft: listItemWidth * 1.65,
+          paddingRight: listItemWidth * 2,
+          paddingLeft: listItemWidth * 2,
         }}
         renderItem={({ item, index }) => {
           return (

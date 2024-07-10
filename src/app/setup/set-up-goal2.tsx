@@ -10,7 +10,7 @@ import PaginationDot from "react-native-animated-pagination-dot";
 
 const SetUpGoalScreen2 = () => {
   const next = () => {
-    router.push("/setup/set-up-goal3");
+    router.push("/setup/set-up-goal-profile");
   };
 
   return (
