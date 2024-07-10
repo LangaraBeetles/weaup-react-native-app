@@ -20,7 +20,7 @@ import { useState } from "react";
 const { width, height } = Dimensions.get("window");
 
 const SetupPages = () => {
-  const [checked, setChecked] = useState<boolean>(false);
+  const [checked, setChecked] = useState<boolean>(true);
 
   const next = () => {
     router.push("/setup/select-mode");
@@ -29,6 +29,7 @@ const SetupPages = () => {
   const login = () => {
     router.push("profile");
   };
+
   return (
     <SafeAreaView style={{ flex: 1, alignItems: "center" }}>
       <Gradient
@@ -81,9 +82,15 @@ const SetupPages = () => {
                 title="Start the Journey"
                 onPress={next}
                 variant="primary"
+                disabled={!checked}
               />
 
-              <Button title="Log in" onPress={login} variant="secondary" />
+              <Button
+                title="Log in"
+                onPress={login}
+                variant="secondary"
+                disabled={!checked}
+              />
             </Stack>
 
             <Stack flexDirection="row" gap={12} px={6}>
