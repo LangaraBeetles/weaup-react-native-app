@@ -4,7 +4,9 @@
     "slug": "weaup",
     "scheme": "weaup",
     "version": "1.0.0",
-    "assetBundlePatterns": ["./assets/fonts/*"],
+    "assetBundlePatterns": [
+      "./assets/fonts/*"
+    ],
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -15,7 +17,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.alignmend",
+      "bundleIdentifier": "com.weaup",
       "minSdkVersion": "15.0",
       "runtimeVersion": "1.0.0"
     },
@@ -24,7 +26,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.alignmend",
+      "package": "com.weaup",
       "runtimeVersion": {
         "policy": "appVersion"
       }
@@ -33,12 +35,17 @@
       "favicon": "./assets/favicon.png"
     },
     "extra": {
+      "router": {
+        "origin": false
+      },
       "eas": {
-        "projectId": "b61aa28d-218d-4007-b696-97c4a2208074"
+        "projectId": "9c8ca002-cd42-4473-948a-205de81a93b3"
       }
     },
     "plugins": [
-      ["expo-router"],
+      [
+        "expo-router"
+      ],
       [
         "expo-font",
         {
@@ -74,7 +81,7 @@
       ]
     ],
     "updates": {
-      "url": "https://u.expo.dev/b61aa28d-218d-4007-b696-97c4a2208074"
+      "url": "https://u.expo.dev/9c8ca002-cd42-4473-948a-205de81a93b3"
     }
   }
 }

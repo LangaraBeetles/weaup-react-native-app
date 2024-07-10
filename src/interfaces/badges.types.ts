@@ -6,7 +6,6 @@ export type BadgeType = {
   subtitle: string;
   description: string;
   badge: BadgeName;
-  message?: string;
   color?: string;
   unlocked?: boolean;
   date?: string | null;

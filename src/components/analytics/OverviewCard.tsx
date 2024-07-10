@@ -62,6 +62,7 @@ const OverviewCard = ({
   const progressGoodCount = useDerivedValue(() => {
     return `${Math.floor(progressText.value * goodPercentage)}`;
   });
+
   const progressBadCount = useDerivedValue(() => {
     return `${Math.floor(progressText.value * badPercentage)}`;
   });

@@ -16,7 +16,14 @@ const Skeleton: React.FC<{
   delay?: number;
   style?: ViewStyle;
   initialOpacity?: number;
-}> = ({ initialOpacity, duration = 900, delay = 0, style }) => {
+  bg?: string;
+}> = ({
+  initialOpacity,
+  style,
+  duration = 900,
+  delay = 0,
+  bg = theme.colors.neutral[100],
+}) => {
   const opacity = useSharedValue(initialOpacity ?? 1);
 
   const animatedStyles = useAnimatedStyle(() => ({
@@ -43,7 +50,7 @@ const Skeleton: React.FC<{
         {
           width: "100%",
           height: 100,
-          backgroundColor: theme.colors.neutral[100],
+          backgroundColor: bg,
           borderRadius: 16,
           ...style,
         },

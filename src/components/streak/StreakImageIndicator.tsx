@@ -8,7 +8,7 @@ const StreakImageIndicator: React.FC<{
 }> = ({ streak }) => {
   return (
     <StreakImageIndicatorRoot>
-      <Image name="streak-flames" h={72} />
+      <Image name="streak-flames" height={72} />
       <StreakNumberRoot>
         <Text level="title_1" weight="bold" style={{ color: "#fff" }}>
           {streak}

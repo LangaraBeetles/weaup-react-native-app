@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import {
   Platform,
@@ -22,11 +22,12 @@ import Icon from "@src/components/ui/Icon";
 import TrackingModeIcon from "@src/components/homepage/TrackingModeIcon";
 import { Text } from "@src/components/ui/typography";
 
-import { useRef } from "react";
 import { theme } from "@src/styles/theme";
 import ScoreComponent from "@src/components/homepage/ScoreComponent";
 import Gradient from "@src/components/ui/Gradient";
 import Image from "@src/components/ui/Image";
+import RealtimeTrackingBackground from "@src/components/posture/RealtimeTrackingBackground";
+import SessionBackground from "@src/components/posture/SessionBackground";
 
 const { height } = Dimensions.get("screen");
 
@@ -34,24 +35,7 @@ const HomePage = () => {
   const isSetupComplete = useUser((state) => state.isSetupComplete);
   const userName = useUser((state) => state.user.name);
   const userLevel = useUser((state) => state.user.level);
-  const currentPosture = useUser((state) => state.currentPosture);
   const sessionStatus = useUser((state) => state.sessionStatus);
-
-  const animation = useRef<any>(null);
-
-  useEffect(() => {
-    if (animation.current) {
-      animation.current?.play?.(0, 0);
-
-      if (currentPosture === "mid") {
-        animation.current?.play?.(6, 6);
-      }
-
-      if (currentPosture === "bad") {
-        animation.current?.play?.(15, 50);
-      }
-    }
-  }, [currentPosture]);
 
   if (!isSetupComplete) {
     return <Redirect href="/setup/start" />;
@@ -71,15 +55,8 @@ const HomePage = () => {
         locations={[0, 0.8]}
       />
 
-      {sessionStatus === "INACTIVE" && (
-        <Stack h={height} style={styles.backgroundImage}>
-          {currentPosture === "bad" ? (
-            <Image name="background-bad" />
-          ) : (
-            <Image name="background-happy" />
-          )}
-        </Stack>
-      )}
+      {sessionStatus === "INACTIVE" && <RealtimeTrackingBackground />}
+
       <ScrollView style={{ flex: 1, zIndex: 2 }}>
         <Stack flexDirection="row" justifyContent="space-between" p={15} pb={0}>
           <Stack
@@ -93,7 +70,7 @@ const HomePage = () => {
             alignItems="center"
           >
             <Stack flexDirection="row" gap={4}>
-              <Image name="avatar" w={25} h={25} />
+              {/* <Image name="avatar" w={25} h={25} /> */}
               {userName !== "null" ? (
                 <Text
                   style={{ color: theme.colors.neutral[800] }}
@@ -146,36 +123,7 @@ const HomePage = () => {
             {sessionStatus === "INACTIVE" ? (
               <Image name="weasel-happy" />
             ) : (
-              <>
-                <Stack w={290} h={290}>
-                  <Image
-                    name="green-gradient"
-                    style={StyleSheet.absoluteFillObject}
-                  />
-                  <Stack
-                    mt={18}
-                    h={253}
-                    w={253}
-                    borderColor={theme.colors.white}
-                    border={12}
-                    borderRadius={150}
-                    style={{ overflow: "hidden", alignSelf: "center" }}
-                  >
-                    <Image
-                      name="background-happy"
-                      style={[
-                        StyleSheet.absoluteFillObject,
-                        styles.backgroundImageFill,
-                      ]}
-                    />
-                    <Center style={{ marginTop: 25 }}>
-                      <Image name="weasel-side-peaceful" w={109} h={230} />
-                    </Center>
-                  </Stack>
-                </Stack>
-                <Text>{currentPosture}</Text>
-                {/* TODO: remove text */}
-              </>
+              <SessionBackground />
             )}
           </Center>
         </Stack>
@@ -188,14 +136,6 @@ const HomePage = () => {
 };
 
 const styles = StyleSheet.create({
-  backgroundImage: {
-    position: "absolute",
-    top: 115,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    zIndex: 0,
-  },
   backgroundImageFill: {
     flex: 1,
     transform: [{ scale: 2 }, { translateY: 10 }],

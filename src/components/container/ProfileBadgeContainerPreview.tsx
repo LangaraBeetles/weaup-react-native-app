@@ -15,26 +15,28 @@ const ProfileBadgeContainerPreview = () => {
           }
           return null;
         })
-        .filter((badge) => badge !== null)
+        .filter((badge) => badge?.date !== null)
         .sort(
-          (a, b) => new Date(b.date!).getTime() - new Date(a.date!).getTime(),
+          (a, b) => new Date(b!.date!).getTime() - new Date(a!.date!).getTime(),
         )
         .slice(0, 3)
     : [];
 
   const renderBadges = () => {
-    return latestBadges?.map((badge, index) => (
-      <BadgeContainer
-        key={index}
-        id={badge.id}
-        title={badge.title}
-        subtitle={badge.subtitle}
-        description={badge.description}
-        badge={badge.badge}
-        color={badge.color}
-        unlocked={true}
-      />
-    ));
+    return latestBadges?.map((badge, index) =>
+      badge ? (
+        <BadgeContainer
+          key={index}
+          id={badge.id}
+          title={badge.title}
+          subtitle={badge.subtitle}
+          description={badge.description}
+          badge={badge.badge}
+          color={badge.color}
+          unlocked={true}
+        />
+      ) : null,
+    );
   };
 
   const renderLockedBadges = () => {

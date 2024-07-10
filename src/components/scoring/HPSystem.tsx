@@ -5,9 +5,17 @@ const HPSystem = () => {
   const userHP = useUser((state) => state.user.hp);
   const setHP = useUser((state) => state.setHP);
   const currentPosture = useUser((state) => state.currentPosture);
+  const isTrackingActive = useUser(
+    (state) => state.sessionStatus === "ACTIVE" || state.isTrackingEnabled,
+  );
   const postureData = useUser((state) => state.postureData);
+  const sessionPostureData = useUser((state) => state.sessionPostureData);
 
   useEffect(() => {
+    if (!isTrackingActive) {
+      return;
+    }
+
     if (userHP >= 0 && userHP <= 100) {
       if (currentPosture === "bad") {
         if (userHP - 1 < 0) {
@@ -24,9 +32,12 @@ const HPSystem = () => {
         }
       }
     }
-
-    return;
-  }, [currentPosture, postureData.length]);
+  }, [
+    currentPosture,
+    postureData.length,
+    isTrackingActive,
+    sessionPostureData.length,
+  ]);
 
   return null;
 
