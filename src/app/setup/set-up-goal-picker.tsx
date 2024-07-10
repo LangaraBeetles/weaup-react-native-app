@@ -3,26 +3,17 @@ import Button from "@src/components/ui/Button";
 import Center from "@src/components/ui/Center";
 import Spacer from "@src/components/ui/Spacer";
 import Stack from "@src/components/ui/Stack";
-import useAuth from "@src/components/hooks/useAuth";
 import { useUser } from "@src/state/useUser";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native";
 import { Text } from "@src/components/ui/typography";
 
-const SetUpGoalScreen3 = () => {
-  const completeSetup = useUser((state) => state.completeSetup);
+const SetUpGoalScreenPicker = () => {
   const setupComplete = useUser((state) => state.user.isSetupComplete);
   // const setDailyGoal = useUser((state) => state.setDailyGoal);
 
-  const isAuth = useUser((data) => data.isAuth);
-  const { createGuestUser } = useAuth();
-
   const handleButtonPress = () => {
-    completeSetup();
-    if (!isAuth) {
-      createGuestUser();
-    }
-    router.navigate("/setup/welcome");
+    router.navigate("/setup/signUp");
   };
 
   const next = () => {
@@ -79,4 +70,4 @@ const SetUpGoalScreen3 = () => {
   );
 };
 
-export default SetUpGoalScreen3;
+export default SetUpGoalScreenPicker;

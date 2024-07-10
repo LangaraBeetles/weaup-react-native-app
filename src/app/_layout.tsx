@@ -106,6 +106,11 @@ const RootLayout = () => {
                       name="badges"
                       options={{ headerShown: false }}
                     />
+
+                    <Stack.Screen
+                      name="streak"
+                      options={{ headerShown: false, animation: "fade" }}
+                    />
                   </Stack>
                 </PostureDataProvider>
               </BottomSheetModalProvider>

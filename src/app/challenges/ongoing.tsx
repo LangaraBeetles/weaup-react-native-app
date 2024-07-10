@@ -17,6 +17,7 @@ import { theme } from "@src/styles/theme";
 import ListSkeleton from "@src/components/ui/ListSkeleton";
 import { useUser } from "@src/state/useUser";
 import GoogleSignUp from "@src/components/profile/GoogleSignUp";
+import JoinChallenge from "./join-challenge";
 
 const TogetherScreen = () => {
   const router = useRouter();
@@ -145,6 +146,7 @@ const TogetherScreen = () => {
           />
         }
       />
+      <JoinChallenge />
     </Page>
   );
 };

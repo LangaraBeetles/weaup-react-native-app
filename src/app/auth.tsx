@@ -30,6 +30,7 @@ const AuthCallback = () => {
   useEffect(() => {
     if (params && params._id && params.token) {
       handleGoogleAuthCallback(params as any);
+      router.replace("/setup/welcome");
     }
   }, [params]);
 

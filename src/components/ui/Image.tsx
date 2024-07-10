@@ -9,7 +9,14 @@ import WaeaselSideImage from "assets/img/weasel-side-peaceful.svg";
 // import GreenGradientImage from "assets/img/green-gradient.svg";
 import TitltArrow from "assets/img/tilt-arrow.svg";
 import TiltCorrect from "assets/img/tilt-correct.svg";
-
+import Sparkling from "assets/img/sparkling-image.svg";
+import FourCornerStar from "assets/img/four-corner-star.svg";
+import NotificationImage from "assets/img/notification.svg";
+import NotificationWindow from "assets/img/notification-window.svg";
+import HomeScreenImage from "assets/img/Home-screen-image .svg";
+import ProfileXpImage from "assets/img/profile-XP-image.svg";
+import LevelUpImage from "assets/img/level-up-image.svg";
+import Confeties from "assets/img/confeties.svg";
 
 const ImageConfig = {
   "streak-flames": StreakFlames,
@@ -21,6 +28,14 @@ const ImageConfig = {
   // "green-gradient": GreenGradientImage,
   "tilt-arrow": TitltArrow,
   "tilt-correct": TiltCorrect,
+  sparkling: Sparkling,
+  "four-corner-star": FourCornerStar,
+  notification: NotificationImage,
+  "notification-window": NotificationWindow,
+  "home-screen-image": HomeScreenImage,
+  "profile-XP-image": ProfileXpImage,
+  "level-up-image": LevelUpImage,
+  confeties: Confeties,
 };
 
 export type ImageName = `${keyof typeof ImageConfig}`;

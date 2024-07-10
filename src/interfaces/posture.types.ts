@@ -15,6 +15,7 @@ export type PostureSessionInput = {
   started_at: string;
   ended_at: string;
   score: number;
+  dailyStreakCounter: number;
   records: Array<PostureSessionRecord>;
 };
 
