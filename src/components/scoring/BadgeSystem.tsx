@@ -14,8 +14,7 @@ const BadgeSystem = () => {
       const newBadge = { id: 1, date: new Date().toISOString() };
       setBadge(newBadge);
 
-      // TODO: Redirect to badge unlocked screen
-      router.push("/session-summary");
+      router.push({ pathname: "/earn-badge", params: { badgeId: 1 } });
 
       updateUser(user.id, {
         badges: [...(user?.badges || []), newBadge],

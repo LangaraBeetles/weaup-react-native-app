@@ -25,24 +25,44 @@ type BadgeProps = {
   title?: string;
   subtitle?: string;
   unlocked?: boolean;
+  size?: "small" | "large";
 };
 
-const Badge: React.FC<BadgeProps> = ({ name, title = "", unlocked }) => {
+const Badge: React.FC<BadgeProps> = ({
+  name,
+  color = "#7457DD",
+  title = "",
+  subtitle = "",
+  unlocked,
+  size = "small",
+}) => {
   const CustomBadge = BadgeConfig[name];
 
   return (
-    <StyledView>
+    <StyledView category={size}>
       <BadgeTitle>
         <StrokeText
           text={title}
-          fontSize={24}
+          fontSize={size === "small" ? 24 : 52}
           color={unlocked ? "#ffffff" : "#7f7f7f"}
           strokeColor={unlocked ? "#FDB022" : "#72767e"}
-          strokeWidth={5}
+          strokeWidth={size === "small" ? 5 : 10}
           fontFamily="FredokaOneRegular"
         />
       </BadgeTitle>
       <CustomBadge width="100%" height="100%" />
+      <BadgeSubtitle>
+        <StrokeText
+          text={subtitle}
+          fontSize={size === "small" ? 24 : 32}
+          color={"#ffffff"}
+          strokeColor={color}
+          strokeWidth={8}
+          numberOfLines={2}
+          width={200}
+          fontFamily="FredokaOneRegular"
+        />
+      </BadgeSubtitle>
     </StyledView>
   );
 };
@@ -54,9 +74,27 @@ const StyledView = styled(View, {
   height: 63,
   justifyContent: "center",
   alignItems: "center",
+  variants: {
+    category: {
+      small: {
+        width: 63,
+        height: 63,
+      },
+      large: {
+        width: 200,
+        height: 200,
+      },
+    },
+  },
 });
 
 const BadgeTitle = styled(View, {
   position: "absolute",
+  zIndex: 1,
+});
+
+const BadgeSubtitle = styled(View, {
+  position: "absolute",
+  bottom: -20,
   zIndex: 1,
 });

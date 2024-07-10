@@ -7,6 +7,8 @@ const badges: BadgeType[] = [
     subtitle: "XP Champion",
     description: "1,000 XP",
     badge: "xp",
+    message: "You've aced your way to 1000 XP! Keep up the excellent work!",
+    color: "#7457DD",
   },
   {
     id: 2,
@@ -14,6 +16,8 @@ const badges: BadgeType[] = [
     subtitle: "Community Builder",
     description: "20 Friends",
     badge: "challenge",
+    message: "You've aced your way to 1000 XP! Keep up the excellent work!",
+    color: "#4DB87A",
   },
   {
     id: 3,
@@ -21,6 +25,8 @@ const badges: BadgeType[] = [
     subtitle: "Streak Master",
     description: "7 Days",
     badge: "streak",
+    message: "You've aced your way to 1000 XP! Keep up the excellent work!",
+    color: "#FD9226",
   },
   {
     id: 4,
@@ -28,6 +34,7 @@ const badges: BadgeType[] = [
     subtitle: "???",
     description: "??????",
     badge: "dummy-badge",
+    message: "You've aced your way to 1000 XP! Keep up the excellent work!",
   },
   {
     id: 5,
@@ -35,6 +42,7 @@ const badges: BadgeType[] = [
     subtitle: "???",
     description: "??????",
     badge: "dummy-badge",
+    message: "You've aced your way to 1000 XP! Keep up the excellent work!",
   },
   {
     id: 6,
@@ -42,6 +50,7 @@ const badges: BadgeType[] = [
     subtitle: "???",
     description: "??????",
     badge: "dummy-badge",
+    message: "You've aced your way to 1000 XP! Keep up the excellent work!",
   },
   {
     id: 7,
@@ -49,6 +58,7 @@ const badges: BadgeType[] = [
     subtitle: "???",
     description: "??????",
     badge: "dummy-badge",
+    message: "You've aced your way to 1000 XP! Keep up the excellent work!",
   },
   {
     id: 8,
@@ -56,6 +66,7 @@ const badges: BadgeType[] = [
     subtitle: "???",
     description: "??????",
     badge: "dummy-badge",
+    message: "You've aced your way to 1000 XP! Keep up the excellent work!",
   },
   {
     id: 9,
@@ -63,6 +74,7 @@ const badges: BadgeType[] = [
     subtitle: "???",
     description: "??????",
     badge: "dummy-badge",
+    message: "You've aced your way to 1000 XP! Keep up the excellent work!",
   },
 ];
 
