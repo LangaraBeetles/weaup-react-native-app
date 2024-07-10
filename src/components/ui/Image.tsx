@@ -4,9 +4,8 @@ import StreakFlames from "assets/img/streak-flames.svg";
 import WeaselHappyImage from "assets/img/weasel-happy.svg";
 import BackGroundHappyImage from "assets/img/background-happy.svg";
 import BackGroundBadImage from "assets/img/background-bad.svg";
-// import AvatarImage from "assets/img/avatar.svg";
 import WaeaselSideImage from "assets/img/weasel-side-peaceful.svg";
-// import GreenGradientImage from "assets/img/green-gradient.svg";
+import WaeaselSideSadImage from "assets/img/weasel-side-sad.svg";
 import TitltArrow from "assets/img/tilt-arrow.svg";
 import TiltCorrect from "assets/img/tilt-correct.svg";
 import Sparkling from "assets/img/sparkling-image.svg";
@@ -23,9 +22,8 @@ const ImageConfig = {
   "weasel-happy": WeaselHappyImage,
   "background-happy": BackGroundHappyImage,
   "background-bad": BackGroundBadImage,
-  // avatar: AvatarImage,
   "weasel-side-peaceful": WaeaselSideImage,
-  // "green-gradient": GreenGradientImage,
+  "weasel-side-sad": WaeaselSideSadImage,
   "tilt-arrow": TitltArrow,
   "tilt-correct": TiltCorrect,
   sparkling: Sparkling,
