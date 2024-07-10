@@ -1,44 +1,110 @@
-import Main from "@src/components/layout/Main";
-import Button from "@src/components/ui/Button";
-import Center from "@src/components/ui/Center";
-import Spacer from "@src/components/ui/Spacer";
-import Stack from "@src/components/ui/Stack";
+import { useState } from "react";
+import { Dimensions, Platform, SafeAreaView, StyleSheet } from "react-native";
 import { router } from "expo-router";
-import { SafeAreaView } from "react-native";
-import { Text } from "@src/components/ui/typography";
-import PaginationDot from "react-native-animated-pagination-dot";
 
-const SetUpGoalOnboardingScreen = () => {
-  const next = () => {
+import Button from "@src/components/ui/Button";
+import Stack from "@src/components/ui/Stack";
+import { useUser } from "@src/state/useUser";
+import { Text } from "@src/components/ui/typography";
+import GoalPicker from "@src/components/ui/GoalPicker/GoalPicker";
+import { theme } from "@src/styles/theme";
+import { LinearGradient } from "expo-linear-gradient";
+import BackButton from "@src/components/ui/BackButton";
+
+const { height } = Dimensions.get("screen");
+
+const SetUpGoalScreenOnboarding = () => {
+  const setDailyGoal = useUser((state) => state.setDailyGoal);
+  const [goal, setGoal] = useState(80);
+
+  const updateGoal = () => {
+    setDailyGoal(goal);
+    router.push("/setup/signup");
+  };
+
+  const maybeLater = () => {
     router.push("/setup/signup");
   };
 
   return (
-    <SafeAreaView>
-      <Main>
-        <Center justifyContent="center" height="100%" px={2}>
-          <Spacer height="60%" />
+    <SafeAreaView style={styles.main}>
+      <LinearGradient
+        colors={[
+          theme.colors.primary[200],
+          theme.colors.white,
+          theme.colors.white,
+          theme.colors.primary[100],
+          theme.colors.primary[200],
+        ]}
+        locations={[0.2, 0.4, 0.6, 0.8, 1]}
+        style={{
+          position: "absolute",
+          left: 0,
+          right: 0,
+          top: 0,
+          height: "120%",
+          zIndex: -1,
+        }}
+      />
 
-          <Stack gap={80}>
-            <Stack gap={16}>
-              <Text align="center" level="title_2">
-                Achieve you Daily Goal and Level Up
-              </Text>
-              <Text align="center">
-                You can earn XP by achieving your daily score goal and complete
-                sessions. Level up and unlock badges and other exciting rewards
-                as you progress.
-              </Text>
-            </Stack>
-            <Button title="Continue" onPress={next} variant="primary" />
+      <Stack
+        py={16}
+        pt={Platform.OS === "android" ? height * 0.08 : 16}
+        flex={1}
+      >
+        <Stack flexGrow={1}>
+          <Stack
+            flexDirection="row"
+            gap={32}
+            alignItems="center"
+            flexGrow={0}
+            style={styles.paddedContent}
+          >
+            <BackButton />
+
+            <Text style={styles.content} level="title_2">
+              Set your daily goal
+            </Text>
+
+            <Stack w={40} h={40} />
           </Stack>
-          <Center>
-            <PaginationDot activeDotColor={"black"} curPage={1} maxPage={2} />
-          </Center>
-        </Center>
-      </Main>
+
+          <Stack flexGrow={1} justifyContent="center" alignItems="center">
+            <GoalPicker flex={4} setGoal={setGoal} goal={goal} />
+          </Stack>
+
+          <Stack flexGrow={0} alignItems="center" style={styles.paddedContent}>
+            <Stack pb={20} gap={16}>
+              <Button
+                trailingIcon="sparkle"
+                title="I’m all set"
+                onPress={updateGoal}
+                variant="primary"
+              />
+              <Button
+                title="Maybe Later"
+                onPress={maybeLater}
+                variant="secondary"
+              />
+            </Stack>
+          </Stack>
+        </Stack>
+      </Stack>
     </SafeAreaView>
   );
 };
 
-export default SetUpGoalOnboardingScreen;
+const styles = StyleSheet.create({
+  main: {
+    height: "100%",
+  },
+  content: {
+    flexGrow: 2,
+    color: theme.colors.primary[900],
+  },
+  paddedContent: {
+    paddingHorizontal: 16,
+  },
+});
+
+export default SetUpGoalScreenOnboarding;

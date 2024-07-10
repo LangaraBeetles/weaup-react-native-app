@@ -13,7 +13,7 @@ import BackButton from "@src/components/ui/BackButton";
 
 const { height } = Dimensions.get("screen");
 
-const SetUpGoalScreen3 = () => {
+const SetUpGoalScreenProfile = () => {
   const setDailyGoal = useUser((state) => state.setDailyGoal);
   const [goal, setGoal] = useState(80);
 
@@ -98,4 +98,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SetUpGoalScreen3;
+export default SetUpGoalScreenProfile;
