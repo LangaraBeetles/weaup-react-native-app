@@ -13,7 +13,6 @@ const ScoreComponent = () => {
   const isSessionActive = useUser(
     (state) => state.sessionStatus !== "INACTIVE",
   );
-  // const isSessionActive = false;
 
   if (!isSessionActive) {
     return (
@@ -35,7 +34,11 @@ const ScoreComponent = () => {
             borderColor={theme.colors.neutral[100]}
           >
             <Center pr={10}>
-              <Icon name="star" size={40} />
+              <Icon
+                name="star-fill"
+                size={40}
+                color={theme.colors.primary[500]}
+              />
             </Center>
 
             <Stack flexDirection="column" justifyContent="space-evenly" gap={4}>
@@ -114,7 +117,7 @@ const ScoreComponent = () => {
         <Stack
           border={1}
           borderRadius={20}
-          w={"100%"}
+          w="100%"
           p={16}
           borderColor={theme.colors.neutral[100]}
           backgroundColor={theme.colors.white}
@@ -122,7 +125,11 @@ const ScoreComponent = () => {
           <Stack flexDirection="row" justifyContent="space-between">
             <Stack flexDirection="row" alignItems="center">
               <Center pr={8}>
-                <Icon name="star" size={24} />
+                <Icon
+                  name="star-fill"
+                  size={24}
+                  color={theme.colors.primary[500]}
+                />
               </Center>
               <Text
                 level="subhead"
