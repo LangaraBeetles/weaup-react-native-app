@@ -5,14 +5,21 @@ import Stack from "@src/components/ui/Stack";
 import { Text } from "@src/components/ui/typography";
 import Spacer from "@src/components/ui/Spacer";
 import Button from "@src/components/ui/Button";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import Badge from "@src/components/ui/Badge";
 import Image from "@src/components/ui/Image";
 import type { EasingFunction } from "react-native";
 import { theme } from "@src/styles/theme";
+import badges from "@src/badges";
 
 const EarnBadgeScreen = () => {
   const router = useRouter();
+
+  const params = useLocalSearchParams();
+  const { badgeId } = params;
+
+  const badge = badges.find((badge) => badge.id === Number(badgeId));
+
   const backgroundOpacity = useRef(new Animated.Value(0)).current;
   const backgroundScale = useRef(new Animated.Value(0)).current;
   const buttonOpacity = useRef(new Animated.Value(0)).current;
@@ -80,7 +87,7 @@ const EarnBadgeScreen = () => {
 
         <View style={styles.message}>
           <Text level="footnote" align="center">
-            You've aced your way to 1000 XP! Keep up the excellent work!
+            {badge?.message}
           </Text>
         </View>
       </Stack>
@@ -88,11 +95,12 @@ const EarnBadgeScreen = () => {
       <View style={styles.badge}>
         <Animated.View style={backgroundAnimatedStyles}>
           <Badge
-            name="xp"
-            title="1k"
+            name={badge?.badge || "xp"}
+            title={badge?.title}
             unlocked={true}
-            subtitle="XP Champion"
+            subtitle={badge?.subtitle}
             size="large"
+            color={badge?.color}
           />
         </Animated.View>
       </View>
