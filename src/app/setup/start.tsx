@@ -27,7 +27,7 @@ const SetupPages = () => {
   };
 
   const login = () => {
-    router.push("profile");
+    router.navigate("/signin");
   };
 
   return (

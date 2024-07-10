@@ -37,7 +37,7 @@ const SessionControl = () => {
     enabled: !!dayFilter && dayFilter != "",
   });
 
-  const { isPending, mutate } = useMutation({
+  const { mutate } = useMutation({
     mutationKey: ["save-session-data"],
     mutationFn: (payload: PostureSessionInput) => saveSessionRecords(payload),
     onSuccess: () => {

@@ -100,6 +100,15 @@ const RootLayout = () => {
                       name="session-summary"
                       options={{ headerShown: false }}
                     />
+
+                    <Stack.Screen
+                      name="signin"
+                      options={{
+                        headerShown: false,
+                        presentation: "fullScreenModal",
+                      }}
+                    />
+
                     <Stack.Screen
                       name="notifications"
                       options={{ headerShown: false }}

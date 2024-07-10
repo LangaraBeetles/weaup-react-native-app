@@ -15,17 +15,16 @@ import Icon from "@src/components/ui/Icon";
 import { Text } from "@src/components/ui/typography";
 import { theme } from "@src/styles/theme";
 import ListSkeleton from "@src/components/ui/ListSkeleton";
-import { useUser } from "@src/state/useUser";
-import GoogleSignUp from "@src/components/profile/GoogleSignUp";
 import JoinChallenge from "./join-challenge";
+import { useUser } from "@src/state/useUser";
 
 const TogetherScreen = () => {
   const router = useRouter();
   const path = usePathname();
+  const isGuest = useUser((state) => state.isGuest);
 
   const [filterUser, setFilterUser] = useState(false);
   const [sortDesc, setSortDesc] = useState(-1);
-  const isGuest = useUser((state) => state.isGuest);
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   const { data, isLoading, refetch } = useQuery({
@@ -64,7 +63,8 @@ const TogetherScreen = () => {
   }, []);
 
   if (isGuest) {
-    return <GoogleSignUp />;
+    router.replace("signin");
+    return;
   }
 
   return (

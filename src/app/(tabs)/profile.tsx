@@ -2,7 +2,6 @@ import React from "react";
 import { useUser } from "@src/state/useUser";
 import { useRouter } from "expo-router";
 import Button from "@src/components/ui/Button";
-import GoogleSignUp from "@src/components/profile/GoogleSignUp";
 import useAuth from "@src/components/hooks/useAuth";
 import Stack from "@src/components/ui/Stack";
 import { ScrollView, StyleSheet, View } from "react-native";
@@ -17,17 +16,19 @@ import StreakCard from "@src/components/profile/StreakCard";
 
 const ProfileScreen = () => {
   const isGuest = useUser((data) => data.isGuest);
+  const setAuth = useUser((data) => data.setAuth);
   const router = useRouter();
   const { logout } = useAuth();
 
   const handleLogout = async () => {
+    setAuth(false);
     logout();
     router.replace("/");
   };
 
-  if (isGuest) {
-    return <GoogleSignUp />;
-  }
+  const login = () => {
+    router.navigate("/signin");
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -44,15 +45,17 @@ const ProfileScreen = () => {
         </Stack>
         <Spacer height={40} />
 
-        {!isGuest && (
+        {!isGuest ? (
           <Button
             title="Log out"
             variant="secondary_coral"
             onPress={handleLogout}
             leadingIcon="logout"
           />
+        ) : (
+          <Button title="Log in" onPress={login} variant="secondary" />
         )}
-        <Spacer height={64} />
+        <Spacer height={20} />
       </View>
     </ScrollView>
   );

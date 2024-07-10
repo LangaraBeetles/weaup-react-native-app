@@ -3,7 +3,7 @@ import Button from "@src/components/ui/Button";
 import Center from "@src/components/ui/Center";
 import Stack from "@src/components/ui/Stack";
 import { Text } from "@src/components/ui/typography";
-import { useGlobalSearchParams, useRouter } from "expo-router";
+import { useGlobalSearchParams, router } from "expo-router";
 import { SafeAreaView } from "react-native";
 import useAuth from "@src/components/hooks/useAuth";
 
@@ -24,18 +24,23 @@ type AuthParams = {
 
 const AuthCallback = () => {
   const params = useGlobalSearchParams<AuthParams>();
-  const router = useRouter();
+  // const router = useRouter();
   const { handleGoogleAuthCallback } = useAuth();
 
   useEffect(() => {
     if (params && params._id && params.token) {
-      handleGoogleAuthCallback(params as any);
-      router.replace("/setup/welcome");
+      const completeSignIn = async () => {
+        await handleGoogleAuthCallback(params as any);
+
+        router.navigate("/");
+      };
+
+      completeSignIn();
     }
   }, [params]);
 
   const handleContinuePress = () => {
-    router.push("/");
+    router.navigate("/");
   };
 
   return (
