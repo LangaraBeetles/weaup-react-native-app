@@ -6,8 +6,9 @@ import {
   ScrollView,
   StyleSheet,
   Dimensions,
+  Button,
 } from "react-native";
-import { Link, Redirect } from "expo-router";
+import { Link, Redirect, useRouter } from "expo-router";
 import DeviceMotionViewiOS, {
   DeviceMotionViewAndroid,
 } from "@src/components/ui/DeviceMotionView";
@@ -129,6 +130,12 @@ const HomePage = () => {
         </Stack>
         <Center style={styles.sessionButton}>
           <SessionControl />
+          <Button
+            title="Badge"
+            onPress={() => {
+              router.push("/earn-badge");
+            }}
+          />
         </Center>
       </ScrollView>
     </SafeAreaView>
