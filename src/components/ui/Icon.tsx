@@ -69,7 +69,6 @@ import StreakIcon from "assets/icons/colorLabelIcon-streak.svg";
 import ColorLabelIconLightening from "assets/icons/colorLabelIcon-lightening.svg";
 import ColorLabelIconStreak from "assets/icons/colorLabelIcon-streak.svg";
 import ColorLabelIconStar from "assets/icons/colorLabelIcon-star.svg";
-import ProfileAvatar from "assets/icons/profile-avatar.svg";
 import ColorLabelIconXp from "assets/icons/colorLabelIcon-xp.svg";
 import ColorLabelIconAward from "assets/icons/colorLabelIcon-award.svg";
 import Logout from "assets/icons/logout.svg";
@@ -79,6 +78,7 @@ import StreakCheckmarkChecked from "assets/icons/streak-checkmark-checked.svg";
 import ChallengeAvatar from "assets/icons/challenge-avatar.svg";
 import SortAscFilled from "assets/icons/sort-asc-filled.svg";
 import SortDescFilled from "assets/icons/sort-desc-filled.svg";
+import GoogleIcon from "assets/icons/google-icon.svg";
 
 import { theme } from "@src/styles/theme";
 
@@ -151,7 +151,6 @@ const IconConfig = {
   "colorLabelIcon-lightening": ColorLabelIconLightening,
   "colorLabelIcon-streak": ColorLabelIconStreak,
   "colorLabelIcon-star": ColorLabelIconStar,
-  "profile-avatar": ProfileAvatar,
   "colorLabelIcon-xp": ColorLabelIconXp,
   "colorLabelIcon-award": ColorLabelIconAward,
   logout: Logout,
@@ -161,6 +160,7 @@ const IconConfig = {
   "challenge-avatar": ChallengeAvatar,
   "sort-asc-filled": SortAscFilled,
   "sort-desc-filled": SortDescFilled,
+  "google-icon": GoogleIcon,
 };
 
 export type IconName = keyof typeof IconConfig;

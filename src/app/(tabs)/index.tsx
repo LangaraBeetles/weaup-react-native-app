@@ -93,7 +93,7 @@ const HomePage = () => {
             alignItems="center"
           >
             <Stack flexDirection="row" gap={4}>
-              <Image name="avatar" w={25} h={25} />
+              {/* <Image name="avatar" w={25} h={25} /> */}
               {userName !== "null" ? (
                 <Text
                   style={{ color: theme.colors.neutral[800] }}
@@ -148,10 +148,10 @@ const HomePage = () => {
             ) : (
               <>
                 <Stack w={290} h={290}>
-                  <Image
+                  {/* <Image
                     name="green-gradient"
                     style={StyleSheet.absoluteFillObject}
-                  />
+                  /> */}
                   <Stack
                     mt={18}
                     h={253}
@@ -169,7 +169,11 @@ const HomePage = () => {
                       ]}
                     />
                     <Center style={{ marginTop: 25 }}>
-                      <Image name="weasel-side-peaceful" w={109} h={230} />
+                      <Image
+                        name="weasel-side-peaceful"
+                        width={109}
+                        height={230}
+                      />
                     </Center>
                   </Stack>
                 </Stack>

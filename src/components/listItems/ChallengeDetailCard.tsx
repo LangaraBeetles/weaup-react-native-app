@@ -9,6 +9,10 @@ import Icon from "@src/components/ui/Icon";
 import Center from "@src/components/ui/Center";
 import { theme } from "@src/styles/theme";
 import Divider from "@src/components/ui/Divider";
+import challengeIcons from "@src/utils/challenge-icons";
+import { ChallengeIconType } from "@src/interfaces/challenge.types";
+
+const { icon1: Icon1 } = challengeIcons;
 
 const ChallengeDetailCard = (props: any) => {
   const { data, isOngoing, color } = props;
@@ -20,31 +24,29 @@ const ChallengeDetailCard = (props: any) => {
   const remainingTime = isOngoing
     ? `Ends in ${endAt.diff(dayjs(), "days")} days`
     : `Ended on ${endAt.format("MMM DD")}`;
+
+  const icon = data?.data?.icon as ChallengeIconType;
+
+  const DisplayIcon = icon ? challengeIcons[icon] || Icon1 : Icon1;
+
   const goalPoints =
     safenumber(data?.goal) *
     safenumber(data?.duration) *
     safenumber(data?.members.length, 1);
+
   const progress = data?.members.reduce(
     (accu: any, curr: any) => accu + curr.points,
     0,
   );
+
   const percentage = safenumber(progress / goalPoints) * 100;
+
   return (
     <Stack justifyContent="center" gap={12}>
       {/* image and challenge details */}
       <Stack flexDirection="row" gap={12}>
-        {/* TODO: change to selected icon */}
-        <Center
-          style={{
-            backgroundColor: color,
-            flex: 1,
-            borderRadius: 8,
-            padding: "auto",
-            justifyContent: "flex-end",
-          }}
-        >
-          <Icon name="challenge-avatar" />
-        </Center>
+        <DisplayIcon width={56} height={56} />
+
         <Stack gap={4} flex={4}>
           <Text level="title_3">{name}</Text>
           {isOngoing && (
@@ -64,7 +66,7 @@ const ChallengeDetailCard = (props: any) => {
         goal={goalPoints}
         backgroundColor={theme.colors.neutral[100]}
         barColor={color}
-      ></ProgressBar>
+      />
 
       {/* scores */}
       <Stack flexDirection="row" gap={10} justifyContent="space-around">
@@ -106,9 +108,14 @@ const ChallengeDetailCard = (props: any) => {
           </Stack>
         ) : (
           <Stack flexDirection="row" gap={8}>
-            <Icon name="award-outline" color={theme.colors.secondary[700]} />
-            <Text level="footnote_2" style={styles.footnote}>
-              {data?.status}
+            {percentage === 100 ? (
+              <Icon name="award-outline" color={theme.colors.secondary[700]} />
+            ) : null}
+
+            <Text level="footnote_2" style={styles.footnote} align="center">
+              {percentage === 100
+                ? "Completed"
+                : "Nice try! Don't worry, we'll get it next time"}
             </Text>
           </Stack>
         )}
