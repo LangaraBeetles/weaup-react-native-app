@@ -16,10 +16,12 @@ import StreakCard from "@src/components/profile/StreakCard";
 
 const ProfileScreen = () => {
   const isGuest = useUser((data) => data.isGuest);
+  const setAuth = useUser((data) => data.setAuth);
   const router = useRouter();
   const { logout } = useAuth();
 
   const handleLogout = async () => {
+    setAuth(false);
     logout();
     router.replace("/");
   };

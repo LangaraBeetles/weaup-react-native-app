@@ -29,7 +29,7 @@ type UserState = {
   isGuest: boolean;
   user: UserType;
   greeting: () => string;
-  setAuth: (isAuth: boolean, user: UserType) => void;
+  setAuth: (isAuth: boolean, user?: UserType) => void;
   setGuest: (isGuest: boolean) => void;
   setDailyGoal: (newDailyGoal: number) => void;
 
@@ -124,12 +124,12 @@ export const useUser = create<UserState>()(
         isGuest: true,
         user: userInitialState,
         greeting: () => `Hello ${get().user.name}!`,
-        setAuth: (isAuth: boolean, user: UserType) => {
+        setAuth: (isAuth: boolean, user?: UserType) => {
           if (isAuth) {
             set({
               isAuth: true,
               user,
-              isSetupComplete: !!user.isSetupComplete,
+              isSetupComplete: !!user?.isSetupComplete,
             });
           } else {
             set({
