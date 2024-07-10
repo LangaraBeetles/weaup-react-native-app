@@ -27,6 +27,7 @@ import ScoreComponent from "@src/components/homepage/ScoreComponent";
 import Gradient from "@src/components/ui/Gradient";
 import Image from "@src/components/ui/Image";
 import RealtimeTrackingBackground from "@src/components/posture/RealtimeTrackingBackground";
+import SessionBackground from "@src/components/posture/SessionBackground";
 
 const { height } = Dimensions.get("screen");
 
@@ -34,7 +35,6 @@ const HomePage = () => {
   const isSetupComplete = useUser((state) => state.isSetupComplete);
   const userName = useUser((state) => state.user.name);
   const userLevel = useUser((state) => state.user.level);
-  const currentPosture = useUser((state) => state.currentPosture);
   const sessionStatus = useUser((state) => state.sessionStatus);
 
   if (!isSetupComplete) {
@@ -123,40 +123,7 @@ const HomePage = () => {
             {sessionStatus === "INACTIVE" ? (
               <Image name="weasel-happy" />
             ) : (
-              <>
-                <Stack w={290} h={290}>
-                  {/* <Image
-                    name="green-gradient"
-                    style={StyleSheet.absoluteFillObject}
-                  /> */}
-                  <Stack
-                    mt={18}
-                    h={253}
-                    w={253}
-                    borderColor={theme.colors.white}
-                    border={12}
-                    borderRadius={150}
-                    style={{ overflow: "hidden", alignSelf: "center" }}
-                  >
-                    <Image
-                      name="background-happy"
-                      style={[
-                        StyleSheet.absoluteFillObject,
-                        styles.backgroundImageFill,
-                      ]}
-                    />
-                    <Center style={{ marginTop: 25 }}>
-                      <Image
-                        name="weasel-side-peaceful"
-                        width={109}
-                        height={230}
-                      />
-                    </Center>
-                  </Stack>
-                </Stack>
-                <Text>{currentPosture}</Text>
-                {/* TODO: remove text */}
-              </>
+              <SessionBackground />
             )}
           </Center>
         </Stack>
