@@ -6,7 +6,6 @@ import { PostureSessionInput } from "@src/interfaces/posture.types";
 import { saveSessionRecords } from "@src/services/sessionApi";
 import { useUser } from "@src/state/useUser";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { Text } from "@src/components/ui/typography";
 import { getAnalytics } from "@src/services/analyticsApi";
 import dayjs from "dayjs";
 
@@ -140,9 +139,9 @@ const SessionControl = () => {
 
   return (
     <View>
-      <Text level="subhead" align="center">
+      {/* <Text level="subhead" align="center">
         {isPending ? "Saving..." : null}
-      </Text>
+      </Text> */}
 
       <Timer
         isTimerActive={sessionStatus !== "INACTIVE"}

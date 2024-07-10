@@ -54,7 +54,7 @@ const SessionBackground = () => {
             left: 0,
             right: 0,
             shadowColor: theme.colors.random.green,
-            shadowRadius: shadowRadius,
+            shadowRadius: currentPosture !== "not_reading" ? shadowRadius : 0,
             shadowOpacity: 1,
             shadowOffset: {
               width: 0,
@@ -94,7 +94,7 @@ const SessionBackground = () => {
             left: 0,
             right: 0,
             shadowColor: theme.colors.random.red,
-            shadowRadius: shadowRadius,
+            shadowRadius: currentPosture !== "not_reading" ? shadowRadius : 0,
             shadowOpacity: 1,
             shadowOffset: {
               width: 0,
