@@ -10,10 +10,10 @@ const BackgroundGradient = () => {
         locations={[0, 1]}
         style={{
           position: "absolute",
-          top: 0,
+          top: -80,
           left: 0,
           right: 0,
-          height: "55%",
+          height: "60%",
           zIndex: -1,
         }}
       />

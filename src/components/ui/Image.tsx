@@ -16,6 +16,7 @@ import NotificationWindow from "assets/img/notification-window.svg";
 import HomeScreenImage from "assets/img/Home-screen-image .svg";
 import ProfileXpImage from "assets/img/profile-XP-image.svg";
 import LevelUpImage from "assets/img/level-up-image.svg";
+import Confeties from "assets/img/confeties.svg";
 
 const ImageConfig = {
   "streak-flames": StreakFlames,
@@ -34,6 +35,7 @@ const ImageConfig = {
   "home-screen-image": HomeScreenImage,
   "profile-XP-image": ProfileXpImage,
   "level-up-image": LevelUpImage,
+  confeties: Confeties,
 };
 
 export type ImageName = `${keyof typeof ImageConfig}`;
