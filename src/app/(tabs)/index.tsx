@@ -187,7 +187,7 @@ const HomePage = () => {
           <Button
             title="Badge"
             onPress={() => {
-              router.push("/earn-badge");
+              router.push({ pathname: "/earn-badge", params: { badgeId: 1 } });
             }}
           />
         </Center>

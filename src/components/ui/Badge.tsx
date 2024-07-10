@@ -30,6 +30,7 @@ type BadgeProps = {
 
 const Badge: React.FC<BadgeProps> = ({
   name,
+  color = "#7457DD",
   title = "",
   subtitle = "",
   unlocked,
@@ -55,7 +56,7 @@ const Badge: React.FC<BadgeProps> = ({
           text={subtitle}
           fontSize={size === "small" ? 24 : 32}
           color={"#ffffff"}
-          strokeColor={"#7457DD"}
+          strokeColor={color}
           strokeWidth={8}
           numberOfLines={2}
           width={200}

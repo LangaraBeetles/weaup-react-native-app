@@ -8,6 +8,7 @@ const badges: BadgeType[] = [
     description: "1,000 XP",
     badge: "xp",
     message: "You've aced your way to 1000 XP! Keep up the excellent work!",
+    color: "#7457DD",
   },
   {
     id: 2,
@@ -16,6 +17,7 @@ const badges: BadgeType[] = [
     description: "20 Friends",
     badge: "challenge",
     message: "You've aced your way to 1000 XP! Keep up the excellent work!",
+    color: "#4DB87A",
   },
   {
     id: 3,
@@ -24,6 +26,7 @@ const badges: BadgeType[] = [
     description: "7 Days",
     badge: "streak",
     message: "You've aced your way to 1000 XP! Keep up the excellent work!",
+    color: "#FD9226",
   },
   {
     id: 4,
