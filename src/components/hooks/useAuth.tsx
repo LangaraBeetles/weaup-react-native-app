@@ -42,7 +42,6 @@ const useAuth = () => {
 
       token: params.token,
 
-      // This field doesn't exist in the api
       dailyStreakCounter: 0,
     };
 
@@ -89,8 +88,6 @@ const useAuth = () => {
         email: createdUser.email ?? "",
         preferredMode: createdUser.preferred_mode,
         isSetupComplete: createdUser.is_setup_complete,
-
-        // This values is not in the api
         dailyStreakCounter: 0,
       };
 

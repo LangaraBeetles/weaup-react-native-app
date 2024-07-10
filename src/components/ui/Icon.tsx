@@ -78,6 +78,7 @@ import StreakCheckmarkChecked from "assets/icons/streak-checkmark-checked.svg";
 import ChallengeAvatar from "assets/icons/challenge-avatar.svg";
 import SortAscFilled from "assets/icons/sort-asc-filled.svg";
 import SortDescFilled from "assets/icons/sort-desc-filled.svg";
+import GoogleIcon from "assets/icons/google-icon.svg";
 
 import { theme } from "@src/styles/theme";
 
@@ -159,6 +160,7 @@ const IconConfig = {
   "challenge-avatar": ChallengeAvatar,
   "sort-asc-filled": SortAscFilled,
   "sort-desc-filled": SortDescFilled,
+  "google-icon": GoogleIcon,
 };
 
 export type IconName = keyof typeof IconConfig;

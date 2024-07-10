@@ -11,3 +11,8 @@ export const updateUser = async (
 
   return data;
 };
+
+export const getUserById = async (id: string) => {
+  const response = await api.get(`${route}/${id}`);
+  return response.data;
+};

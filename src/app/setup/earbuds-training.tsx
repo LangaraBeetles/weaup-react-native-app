@@ -18,24 +18,21 @@ import BackgroundGradient from "@src/components/setup/BackgroundGradient";
 
 const { height, width } = Dimensions.get("screen");
 
-const PhoneTrainingScreen = () => {
+const EarbudsTrainingScreen = () => {
   const [step, setStep] = useState(0);
 
   const steps = [
     {
-      title: "Hold your phone",
-      text: "Try hold it upright at 90 degrees.\nThis is your ideal posture!",
-      rotation: "-15deg",
+      title: "Sit or stand up straight",
+      text: "WeaUp detects your posture by sensing the movement of your earbuds. Keep your head aligned and upright.",
     },
     {
-      title: "Now, try bend it",
-      text: "Yes, hold it like you normally do.\nNotice the alerts or vibrations?\nWeaUp will notify you whenever your neck is suffering from the wrong posture.",
-      rotation: "-41deg",
+      title: "Try dropping your head",
+      text: "Notice the alerts or vibrations? WeaUp uses the movement of your earbuds to remind you to correct your posture.",
     },
     {
       title: "A 10-degree tilt?\n It’s fine!",
-      text: "Don’t worry, we won't alert you if your phone angle is no less than 80 degrees.",
-      rotation: "-10deg",
+      text: "Don’t worry, we only alert you when your head angle becomes too steep. ",
     },
   ];
 
@@ -77,32 +74,17 @@ const PhoneTrainingScreen = () => {
             zIndex: 2,
           }}
         >
-          <Stack
-            w={20}
-            h={128}
-            style={{
-              ...styles.phone,
-              transform: [{ rotate: steps[step].rotation }],
-            }}
-          />
-          {step === 1 && (
-            <Stack style={{ position: "absolute", top: 50, left: -40 }}>
-              <Image name="tilt-arrow" width={62} height={43} />
+          {step !== 0 && (
+            <Stack
+              style={{
+                position: "absolute",
+                top: 100,
+                left: -15,
+                transform: [{ rotate: "-60deg" }],
+              }}
+            >
+              <Image name="tilt-arrow" w={62} h={43} />
             </Stack>
-          )}
-          {step === 2 && (
-            <>
-              <Stack style={{ position: "absolute", top: 60, left: 5 }}>
-                <Image name="tilt-correct" width={22} height={15} />
-              </Stack>
-              <Stack
-                w={20}
-                h={128}
-                style={{
-                  ...styles.phoneCorrect,
-                }}
-              />
-            </>
           )}
           <Center
             w={236}
@@ -140,34 +122,6 @@ const PhoneTrainingScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  content: {
-    position: "absolute",
-    top: height * 0.42,
-    width: width * 0.9,
-    backgroundColor: theme.colors.white,
-    padding: 10,
-    borderRadius: 20,
-    zIndex: 4,
-  },
-  phone: {
-    position: "absolute",
-    top: 80,
-    left: 0,
-    borderRadius: 5,
-    backgroundColor: theme.colors.other[100],
-    zIndex: 2,
-  },
-  phoneCorrect: {
-    position: "absolute",
-    top: 80,
-    left: 25,
-    borderRadius: 5,
-    backgroundColor: "transparent",
-    borderWidth: 1,
-    borderColor: theme.colors.other[100],
-    borderStyle: "dashed",
-    zIndex: 2,
-  },
   activeNav: {
     backgroundColor: theme.colors.primary[700],
     borderRadius: 40,
@@ -193,4 +147,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PhoneTrainingScreen;
+export default EarbudsTrainingScreen;

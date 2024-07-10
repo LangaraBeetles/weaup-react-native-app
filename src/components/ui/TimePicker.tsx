@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Platform } from "react-native";
 import { Picker } from "react-native-wheel-pick";
 import { Text } from "./typography";
 import { theme } from "@src/styles/theme";
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   },
   picker: {
     width: "100%",
-    height: "100%",
+    height: Platform.OS === "android" ? 200 : "100%",
     backgroundColor: theme.colors.white,
   },
 });

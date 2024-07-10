@@ -1,13 +1,6 @@
 import React, { useState } from "react";
 import { router } from "expo-router";
-import {
-  Dimensions,
-  Platform,
-  SafeAreaView,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
-import { Text } from "@src/components/ui/typography";
+import { Dimensions, SafeAreaView, StyleSheet } from "react-native";
 import { theme } from "@src/styles/theme";
 import Image from "@src/components/ui/Image";
 import Button from "@src/components/ui/Button";
@@ -23,97 +16,88 @@ const PhoneTrainingScreen = () => {
 
   const steps = [
     {
-      title: "Hold your phone",
-      text: "Try hold it upright at 90 degrees.\nThis is your ideal posture!",
-      rotation: "-15deg",
+      title: "Gain Your Daily Progress with Weabo",
+      text: "Gain daily progress by improving your posture score and finishing sessions with your posture pal Weabo.",
     },
     {
-      title: "Now, try bend it",
-      text: "Yes, hold it like you normally do.\nNotice the alerts or vibrations?\nWeaUp will notify you whenever your neck is suffering from the wrong posture.",
+      title: "Achieve you Daily Goal and Level Up",
+      text: "You can earn XP by achieving your daily score goal and complete sessions.\nLevel up and unlock badges and other exciting rewards as you progress.",
       rotation: "-41deg",
     },
-    {
-      title: "A 10-degree tilt?\n It’s fine!",
-      text: "Don’t worry, we won't alert you if your phone angle is no less than 80 degrees.",
-      rotation: "-10deg",
-    },
+    {},
   ];
 
   const next = () => {
-    if (step < steps.length - 1) {
+    if (step < 1) {
       setStep(step + 1);
     } else {
-      router.push("/setup/enable-notifications");
+      router.push("/setup/set-up-goal-picker");
     }
-  };
-  const skip = () => {
-    router.push("/setup/enable-notifications");
   };
 
   return (
     <SafeAreaView>
       <Stack h={height} style={{ alignItems: "center" }}>
-        <Stack
-          style={{
-            position: "absolute",
-            top: Platform.OS === "android" ? height * 0.08 : height * 0.04,
-            right: width * 0.07,
-            zIndex: 2,
-          }}
-        >
-          <TouchableOpacity onPress={skip}>
-            <Text level="headline" style={{ color: theme.colors.neutral[500] }}>
-              Skip
-            </Text>
-          </TouchableOpacity>
-        </Stack>
         <BackgroundGradient />
         <Center
           w={236}
           h={456}
           style={{
-            marginHorizontal: "auto",
             marginTop: height * 0.08,
             zIndex: 2,
           }}
         >
-          <Stack
-            w={20}
-            h={128}
-            style={{
-              ...styles.phone,
-              transform: [{ rotate: steps[step].rotation }],
-            }}
-          />
-          {step === 1 && (
-            <Stack style={{ position: "absolute", top: 50, left: -40 }}>
-              <Image name="tilt-arrow" width={62} height={43} />
-            </Stack>
-          )}
-          {step === 2 && (
+          {step === 0 && (
             <>
-              <Stack style={{ position: "absolute", top: 60, left: 5 }}>
-                <Image name="tilt-correct" width={22} height={15} />
+              <Stack
+                w={250}
+                h={500}
+                style={{
+                  borderRadius: 12,
+                  position: "absolute",
+                  top: 10,
+                  right: 10,
+                  transform: [{ rotate: "-7deg" }],
+                }}
+              >
+                <Image name="home-screen-image" style={{ opacity: 0.8 }} />
               </Stack>
               <Stack
-                w={20}
-                h={128}
+                w={236}
+                h={456}
                 style={{
-                  ...styles.phoneCorrect,
+                  marginTop: height * 0.15,
+                  left: width * 0.2,
                 }}
-              />
+              >
+                <Image name="weasel-happy" />
+              </Stack>
             </>
           )}
-          <Center
-            w={236}
-            h={456}
-            style={{
-              marginHorizontal: "auto",
-              marginTop: height * 0.15,
-            }}
-          >
-            <Image name="weasel-happy" />
-          </Center>
+          {step === 1 && (
+            <>
+              <Stack
+                w={360}
+                h={190}
+                style={{
+                  position: "absolute",
+                  top: 40,
+                  transform: [{ rotate: "-5deg" }],
+                }}
+              >
+                <Image name="profile-XP-image" />
+              </Stack>
+              <Stack
+                w={115}
+                h={123}
+                style={{
+                  top: -10,
+                }}
+              >
+                <Image name="level-up-image" />
+              </Stack>
+            </>
+          )}
         </Center>
         <ContentCard title={steps[step].title} text={steps[step].text} />
         <Stack style={styles.navigation} flexDirection={"row"} gap={8}>

@@ -18,11 +18,11 @@ import Icon from "@src/components/ui/Icon";
 
 const { height, width } = Dimensions.get("screen");
 
-const EarbudsTrainingScreen = () => {
+const PhoneTrainingScreen = () => {
   const navigation = useNavigation();
 
   const next = () => {
-    router.push("/setup/earbuds-training");
+    router.push("/setup/phone-training");
   };
 
   return (
@@ -75,14 +75,9 @@ const EarbudsTrainingScreen = () => {
             marginTop: height * 0.15,
           }}
         >
+          <Stack style={styles.phone} w={20} h={128} />
           <Image name="weasel-happy" />
         </Center>
-        <Stack w={61} h={53} style={styles.sparkling}>
-          <Image name="sparkling" />
-        </Stack>
-        <Stack w={24} h={24} style={styles.star}>
-          <Image name="four-corner-star" />
-        </Stack>
         <Stack style={styles.content}>
           <Center
             justifyContent="center"
@@ -97,7 +92,7 @@ const EarbudsTrainingScreen = () => {
                   level="title_1"
                   style={{ color: theme.colors.primary[900] }}
                 >
-                  You’re connected!
+                  Track posture with phone
                 </Text>
                 <Text align="center">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
@@ -117,12 +112,18 @@ const EarbudsTrainingScreen = () => {
 const styles = StyleSheet.create({
   content: {
     position: "absolute",
-    bottom:
-      height < 850 && Platform.OS === "android" ? height * 0.1 : height * 0.2,
+    bottom: Platform.OS === "android" ? height * 0.1 : height * 0.15,
     width: width * 0.9,
     backgroundColor: theme.colors.white,
     padding: 20,
     borderRadius: 20,
+  },
+  phone: {
+    position: "absolute",
+    top: 25,
+    left: 0,
+    borderRadius: 5,
+    backgroundColor: theme.colors.other[100],
   },
   back: {
     backgroundColor: theme.colors.white,
@@ -132,16 +133,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  sparkling: {
-    position: "absolute",
-    top: height * 0.18,
-    left: width * 0.13,
-  },
-  star: {
-    position: "absolute",
-    top: height * 0.15,
-    right: width * 0.15,
-  },
 });
 
-export default EarbudsTrainingScreen;
+export default PhoneTrainingScreen;
