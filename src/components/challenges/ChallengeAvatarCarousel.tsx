@@ -95,9 +95,6 @@ const ChallengeAvatarCarousel = ({
           return (
             <TouchableWithoutFeedback
               key={index}
-              onPress={() => {
-                console.log(index);
-              }}
               containerStyle={{ flex: 1 }}
               style={{ flex: 1 }}
             >
