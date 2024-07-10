@@ -15,8 +15,6 @@ import Icon from "@src/components/ui/Icon";
 import { Text } from "@src/components/ui/typography";
 import { theme } from "@src/styles/theme";
 import ListSkeleton from "@src/components/ui/ListSkeleton";
-import { useUser } from "@src/state/useUser";
-import GoogleSignUp from "@src/components/profile/GoogleSignUp";
 import JoinChallenge from "./join-challenge";
 
 const TogetherScreen = () => {
@@ -25,7 +23,6 @@ const TogetherScreen = () => {
 
   const [filterUser, setFilterUser] = useState(false);
   const [sortDesc, setSortDesc] = useState(-1);
-  const isGuest = useUser((state) => state.isGuest);
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   const { data, isLoading, refetch } = useQuery({
@@ -62,10 +59,6 @@ const TogetherScreen = () => {
     const subscription = AppState.addEventListener("change", onAppStateChange);
     return () => subscription.remove();
   }, []);
-
-  if (isGuest) {
-    return <GoogleSignUp />;
-  }
 
   return (
     <Page

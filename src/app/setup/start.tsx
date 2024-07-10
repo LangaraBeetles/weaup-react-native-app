@@ -18,7 +18,7 @@ const SetupPages = () => {
   };
 
   const login = () => {
-    router.push("profile");
+    router.navigate("/signin");
   };
   return (
     <SafeAreaView style={{ flex: 1, alignItems: "center" }}>
