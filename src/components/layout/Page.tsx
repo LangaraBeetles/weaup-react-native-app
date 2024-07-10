@@ -45,7 +45,7 @@ const Page: React.FC<{
             </View>
 
             <View style={styles.mainCard}>{children}</View>
-          </>
+          </>,
         )}
       </SafeAreaView>
     </View>

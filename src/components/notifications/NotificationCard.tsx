@@ -1,5 +1,5 @@
 import { Text } from "../ui/typography";
-import { StyleSheet, View, Image } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Divider from "../ui/Divider";
 import { theme } from "@src/styles/theme";
 import { NotificationType } from "@src/interfaces/notification.types";
