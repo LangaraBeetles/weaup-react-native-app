@@ -103,7 +103,10 @@ const RootLayout = () => {
 
                     <Stack.Screen
                       name="signin"
-                      options={{ headerShown: false }}
+                      options={{
+                        headerShown: false,
+                        presentation: "fullScreenModal",
+                      }}
                     />
 
                     <Stack.Screen

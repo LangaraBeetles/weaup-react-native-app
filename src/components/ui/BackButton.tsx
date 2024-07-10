@@ -3,9 +3,9 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 import Icon from "@src/components/ui/Icon";
 import { theme } from "@src/styles/theme";
 
-const BackButton = () => {
+const BackButton = ({ onBack }: { onBack?: () => void }) => {
   return (
-    <TouchableOpacity onPress={router.back}>
+    <TouchableOpacity onPress={onBack || router.back}>
       <View style={styles.iconBackground}>
         <Icon name="arrow-left" />
       </View>

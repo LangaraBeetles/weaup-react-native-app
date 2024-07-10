@@ -16,10 +16,12 @@ import { Text } from "@src/components/ui/typography";
 import { theme } from "@src/styles/theme";
 import ListSkeleton from "@src/components/ui/ListSkeleton";
 import JoinChallenge from "./join-challenge";
+import { useUser } from "@src/state/useUser";
 
 const TogetherScreen = () => {
   const router = useRouter();
   const path = usePathname();
+  const isGuest = useUser((state) => state.isGuest);
 
   const [filterUser, setFilterUser] = useState(false);
   const [sortDesc, setSortDesc] = useState(-1);
@@ -59,6 +61,11 @@ const TogetherScreen = () => {
     const subscription = AppState.addEventListener("change", onAppStateChange);
     return () => subscription.remove();
   }, []);
+
+  if (isGuest) {
+    router.replace("signin");
+    return;
+  }
 
   return (
     <Page

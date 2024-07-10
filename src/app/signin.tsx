@@ -1,7 +1,6 @@
 import BackgroundGradient from "@src/components/setup/BackgroundGradient";
 import Button from "@src/components/ui/Button";
 import Center from "@src/components/ui/Center";
-import Icon from "@src/components/ui/Icon";
 import Image from "@src/components/ui/Image";
 import Input from "@src/components/ui/Input";
 import Stack from "@src/components/ui/Stack";
@@ -19,10 +18,11 @@ import {
   TouchableOpacity,
 } from "react-native";
 import * as Linking from "expo-linking";
+import BackButton from "@src/components/ui/BackButton";
 
 const { height, width } = Dimensions.get("screen");
 
-const SignIn = ({ onClose }: { onClose?: () => void }) => {
+const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -56,15 +56,12 @@ const SignIn = ({ onClose }: { onClose?: () => void }) => {
             zIndex: 2,
           }}
         >
-          <TouchableOpacity
-            onPress={() => {
-              onClose ? onClose() : router.back();
+          <BackButton
+            onBack={() => {
+              const canGoBack = router.canGoBack();
+              canGoBack ? router.back() : router.replace("/");
             }}
-            style={style.back}
-          >
-            <Icon name={"arrow-left"} size={20} />
-          </TouchableOpacity>
-          {/* <BackButton /> */}
+          />
         </Stack>
         <BackgroundGradient />
         <Center
