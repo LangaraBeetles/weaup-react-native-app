@@ -8,17 +8,12 @@ import Stack from "@src/components/ui/Stack";
 import Icon from "@src/components/ui/Icon";
 import { theme } from "@src/styles/theme";
 import { ChallengeResponseType } from "@src/interfaces/challenge.types";
-import Icon1 from "assets/challenges/card/icon1.svg";
-import Icon2 from "assets/challenges/card/icon2.svg";
-import Icon3 from "assets/challenges/card/icon3.svg";
 import formatNumber from "@src/utils/format-number";
 import Avatar from "@src/components/ui/Avatar";
+import isChallengeActive from "@src/utils/is-challenge-active";
+import challengeIcons from "@src/utils/challenge-icons";
 
-const icon = {
-  icon1: Icon1,
-  icon2: Icon2,
-  icon3: Icon3,
-};
+const { icon1: Icon1 } = challengeIcons;
 
 const ChallengeCard = (props: { challenge: ChallengeResponseType }) => {
   const router = useRouter();
@@ -26,11 +21,12 @@ const ChallengeCard = (props: { challenge: ChallengeResponseType }) => {
   const end = new Date(challenge.end_at);
   const endMonth = end.toLocaleDateString("default", { month: "long" });
   const endDay = end.getDate();
-  const diff = endDay - new Date().getDate();
 
-  const DisplayIcon = challenge?.icon ? icon[challenge.icon] || Icon1 : Icon1;
+  const DisplayIcon = challenge?.icon
+    ? challengeIcons[challenge.icon] || Icon1
+    : Icon1;
 
-  const isOngoing = diff >= 0;
+  const { isOngoing, diff } = isChallengeActive(challenge.end_at);
 
   const showDetails = () => {
     router.push({

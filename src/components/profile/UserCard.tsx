@@ -11,7 +11,8 @@ const UserCard = () => {
 
   return (
     <Stack flexDirection="row" gap={12}>
-      <Icon name="profile-avatar" />
+      {/* TODO: add avatar */}
+      {/* <Icon name="profile-avatar" /> */}
       <Stack
         flexDirection="row"
         justifyContent="space-between"

@@ -4,10 +4,10 @@ import { View } from "react-native";
 import Card from "./Card";
 import Stack from "../ui/Stack";
 import { theme } from "@src/styles/theme";
-import Icon from "../ui/Icon";
 import { useFormContext } from "react-hook-form";
 import { PostureData } from "@src/interfaces/posture.types";
 import dayjs from "dayjs";
+import ScoreChip from "../scoring/ScoreChip";
 
 type SessionRowData = {
   id: string;
@@ -130,20 +130,7 @@ const SessionRow: React.FC<{ data: SessionRowData }> = ({ data }) => {
         </Stack>
       </Stack>
 
-      <Stack
-        flexDirection="row"
-        justifyContent="center"
-        alignItems="center"
-        gap={8}
-        border={1}
-        borderColor={theme.colors.neutral[100]}
-        borderRadius={100}
-        px={12}
-        py={8}
-      >
-        <Icon name="star-fill" color={theme.colors.primary[500]} />
-        <Text level="callout">{data.score}</Text>
-      </Stack>
+      <ScoreChip score={data.score} />
     </Stack>
   );
 };

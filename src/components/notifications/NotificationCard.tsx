@@ -30,10 +30,10 @@ const NotificationCard = ({ item }: { item: NotificationType }) => {
     <View>
       <Stack flexDirection="row" pb={16} pt={16}>
         {/* TODO: get correct image */}
-        <Image
+        {/* <Image
           source={require("../../../assets/img/avatar.png")}
           style={styles.avatar}
-        />
+        /> */}
         <Stack flex={1}>
           <Text
             style={styles.notificationTitle}

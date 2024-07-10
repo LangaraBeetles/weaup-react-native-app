@@ -87,13 +87,13 @@ const PhoneTrainingScreen = () => {
           />
           {step === 1 && (
             <Stack style={{ position: "absolute", top: 50, left: -40 }}>
-              <Image name="tilt-arrow" w={62} h={43} />
+              <Image name="tilt-arrow" width={62} height={43} />
             </Stack>
           )}
           {step === 2 && (
             <>
               <Stack style={{ position: "absolute", top: 60, left: 5 }}>
-                <Image name="tilt-correct" w={22} h={15} />
+                <Image name="tilt-correct" width={22} height={15} />
               </Stack>
               <Stack
                 w={20}
