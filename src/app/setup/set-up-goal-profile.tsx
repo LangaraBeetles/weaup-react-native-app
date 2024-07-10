@@ -4,7 +4,6 @@ import { router } from "expo-router";
 
 import Button from "@src/components/ui/Button";
 import Stack from "@src/components/ui/Stack";
-import useAuth from "@src/components/hooks/useAuth";
 import { useUser } from "@src/state/useUser";
 import { Text } from "@src/components/ui/typography";
 import GoalPicker from "@src/components/ui/GoalPicker/GoalPicker";
@@ -15,24 +14,12 @@ import BackButton from "@src/components/ui/BackButton";
 const { height } = Dimensions.get("screen");
 
 const SetUpGoalScreen3 = () => {
-  const completeSetup = useUser((state) => state.completeSetup);
   const setDailyGoal = useUser((state) => state.setDailyGoal);
   const [goal, setGoal] = useState(80);
 
-  const isAuth = useUser((data) => data.isAuth);
-  const { createGuestUser } = useAuth();
-
-  const handleButtonPress = () => {
-    completeSetup();
-    if (!isAuth) {
-      createGuestUser();
-    }
-    router.navigate("/setup/welcome");
-  };
-
   const updateGoal = () => {
     setDailyGoal(goal);
-    handleButtonPress();
+    router.back();
   };
 
   return (
