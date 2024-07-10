@@ -15,18 +15,24 @@ import Center from "../ui/Center";
 
 const SessionBackground = () => {
   const currentPosture = useUser((state) => state.currentPosture);
+  const sessionStatus = useUser((state) => state.sessionStatus);
 
+  const showGlow =
+    sessionStatus === "ACTIVE" && currentPosture !== "not_reading";
   const goodPostureOpacity = useSharedValue<number>(1);
   const badPostureOpacity = useSharedValue<number>(0);
   const shadowRadius = useSharedValue<number>(10);
 
   useEffect(() => {
-    if (currentPosture === "good" || currentPosture === "not_reading") {
+    if (
+      (currentPosture === "good" || currentPosture === "not_reading") &&
+      sessionStatus === "ACTIVE"
+    ) {
       goodPostureOpacity.value = withTiming(1);
       badPostureOpacity.value = withTiming(0, { duration: 500 });
     }
 
-    if (currentPosture === "bad") {
+    if (currentPosture === "bad" && sessionStatus === "ACTIVE") {
       goodPostureOpacity.value = withTiming(0, { duration: 500 });
       badPostureOpacity.value = withTiming(1);
     }
@@ -54,7 +60,7 @@ const SessionBackground = () => {
             left: 0,
             right: 0,
             shadowColor: theme.colors.random.green,
-            shadowRadius: currentPosture !== "not_reading" ? shadowRadius : 0,
+            shadowRadius: showGlow ? shadowRadius : 0,
             shadowOpacity: 1,
             shadowOffset: {
               width: 0,
@@ -94,7 +100,7 @@ const SessionBackground = () => {
             left: 0,
             right: 0,
             shadowColor: theme.colors.random.red,
-            shadowRadius: currentPosture !== "not_reading" ? shadowRadius : 0,
+            shadowRadius: showGlow ? shadowRadius : 0,
             shadowOpacity: 1,
             shadowOffset: {
               width: 0,

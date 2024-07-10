@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import {
   Platform,
@@ -27,7 +27,6 @@ import ScoreComponent from "@src/components/homepage/ScoreComponent";
 import Gradient from "@src/components/ui/Gradient";
 import Image from "@src/components/ui/Image";
 import RealtimeTrackingBackground from "@src/components/posture/RealtimeTrackingBackground";
-import { useSharedValue, withTiming } from "react-native-reanimated";
 import SessionBackground from "@src/components/posture/SessionBackground";
 
 const { height } = Dimensions.get("screen");
@@ -36,23 +35,7 @@ const HomePage = () => {
   const isSetupComplete = useUser((state) => state.isSetupComplete);
   const userName = useUser((state) => state.user.name);
   const userLevel = useUser((state) => state.user.level);
-  const currentPosture = useUser((state) => state.currentPosture);
   const sessionStatus = useUser((state) => state.sessionStatus);
-
-  const goodPostureOpacity = useSharedValue<number>(1);
-  const badPostureOpacity = useSharedValue<number>(0);
-
-  useEffect(() => {
-    if (currentPosture === "good" || currentPosture === "not_reading") {
-      goodPostureOpacity.value = withTiming(1);
-      badPostureOpacity.value = withTiming(0, { duration: 500 });
-    }
-
-    if (currentPosture === "bad") {
-      goodPostureOpacity.value = withTiming(0, { duration: 500 });
-      badPostureOpacity.value = withTiming(1);
-    }
-  }, [currentPosture]);
 
   if (!isSetupComplete) {
     return <Redirect href="/setup/start" />;
