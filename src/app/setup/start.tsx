@@ -3,16 +3,25 @@ import Stack from "@src/components/ui/Stack";
 import { Text } from "@src/components/ui/typography";
 import { router } from "expo-router";
 import Checkbox from "expo-checkbox";
-import { Dimensions, SafeAreaView, StyleSheet, View } from "react-native";
+import {
+  Dimensions,
+  Pressable,
+  SafeAreaView,
+  StyleSheet,
+  View,
+} from "react-native";
 import Gradient from "@src/components/ui/Gradient";
 import { theme } from "@src/styles/theme";
 import Image from "@src/components/ui/Image";
 import Center from "@src/components/ui/Center";
 import Icon from "@src/components/ui/Icon";
+import { useState } from "react";
 
 const { width, height } = Dimensions.get("window");
 
 const SetupPages = () => {
+  const [checked, setChecked] = useState<boolean>(false);
+
   const next = () => {
     router.push("/setup/select-mode");
   };
@@ -58,7 +67,11 @@ const SetupPages = () => {
                 Welcome to WeaUp
               </Text>
 
-              <Text level="body" style={{ textAlign: "center" }}>
+              <Text
+                level="body"
+                align="center"
+                style={{ color: theme.colors.neutral[500] }}
+              >
                 Let the cute weasel help you stay upright!
               </Text>
             </Stack>
@@ -72,16 +85,23 @@ const SetupPages = () => {
 
               <Button title="Log in" onPress={login} variant="secondary" />
             </Stack>
+
             <Stack flexDirection="row" gap={12} px={6}>
               {/* TODO: Checkbox functionality */}
               <Stack pt={2}>
-                <Checkbox />
+                <Checkbox
+                  value={checked}
+                  onValueChange={() => setChecked((prev) => !prev)}
+                  color={theme.colors.secondary[500]}
+                />
               </Stack>
               <Stack w={width * 0.75}>
-                <Text level="caption_1">
-                  I have read and agree to the Terms of Service and Privacy
-                  Policy.
-                </Text>
+                <Pressable onPress={() => setChecked((prev) => !prev)}>
+                  <Text level="caption_1">
+                    I have read and agree to the Terms of Service and Privacy
+                    Policy.
+                  </Text>
+                </Pressable>
               </Stack>
             </Stack>
           </Stack>
