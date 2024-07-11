@@ -2,11 +2,12 @@ import StreakNotificationCard from "@src/components/streak/StreakNotificationCar
 import Button from "@src/components/ui/Button";
 import Spacer from "@src/components/ui/Spacer";
 import { useUser } from "@src/state/useUser";
-import { useRouter } from "expo-router";
+import { useRouter, useLocalSearchParams } from "expo-router";
 import LottieView from "lottie-react-native";
 import { StyleSheet, View } from "react-native";
 
 const StreakScreen = () => {
+  const { sessionParams } = useLocalSearchParams<{ sessionParams: string }>();
   const userStreak = useUser((state) => state.user.dailyStreakCounter);
   const router = useRouter();
 
@@ -25,7 +26,12 @@ const StreakScreen = () => {
         <View style={styles.button}>
           <Button
             title="Continue"
-            onPress={() => router.replace("session-summary")}
+            onPress={() =>
+              router.replace({
+                pathname: "session-summary",
+                params: { sessionParams },
+              })
+            }
           />
         </View>
       </View>

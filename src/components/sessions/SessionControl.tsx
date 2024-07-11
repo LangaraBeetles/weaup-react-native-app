@@ -40,12 +40,20 @@ const SessionControl = () => {
   const { mutate } = useMutation({
     mutationKey: ["save-session-data"],
     mutationFn: (payload: PostureSessionInput) => saveSessionRecords(payload),
-    onSuccess: () => {
+    onSuccess: (response) => {
+      const session = response;
+      const sessionParams = JSON.stringify(session);
       setTimeout(() => {
         if (isDailyStreak) {
-          router.push("/streak");
+          router.push({
+            pathname: "/streak",
+            params: { sessionParams },
+          });
         } else {
-          router.push("/session-summary");
+          router.push({
+            pathname: "/session-summary",
+            params: { sessionParams },
+          });
         }
       }, 500);
     },
@@ -123,15 +131,26 @@ const SessionControl = () => {
 
     updateStreak();
 
+    const endDate = new Date().toISOString();
+
+    // Added so if there are no readings it doesn't send an empty array and get axios error
+    const updatedRecords: Array<{
+      good_posture: boolean;
+      recorded_at: string;
+    }> =
+      records && records.length > 0
+        ? records.map((data) => ({
+            good_posture: data.status === "good",
+            recorded_at: data?.date?.toISOString?.(),
+          }))
+        : [{ good_posture: false, recorded_at: endDate }];
+
     const payload: PostureSessionInput = {
       started_at: startDate.current,
-      ended_at: new Date().toISOString(),
+      ended_at: endDate,
       score: userHP ?? 0,
       dailyStreakCounter: userStreak ?? 0,
-      records: records?.map((data) => ({
-        good_posture: data.status === "good",
-        recorded_at: data?.date?.toISOString?.(),
-      })),
+      records: updatedRecords,
     };
 
     mutate(payload);

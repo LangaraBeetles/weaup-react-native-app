@@ -4,7 +4,7 @@ import { View } from "react-native";
 
 const StyledBox = styled(View, {
   display: "flex",
-  width: "100%",
+  // width: "100%",
   padding: 16,
   borderRadius: 16,
   borderStyle: "solid",
