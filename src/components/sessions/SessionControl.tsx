@@ -5,7 +5,7 @@ import { useRouter } from "expo-router";
 import { PostureSessionInput } from "@src/interfaces/posture.types";
 import { saveSessionRecords } from "@src/services/sessionApi";
 import { useUser } from "@src/state/useUser";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { getAnalytics } from "@src/services/analyticsApi";
 import dayjs from "dayjs";
 
@@ -31,14 +31,6 @@ const SessionControl = () => {
     (state) => state.prepareSessionPostureData,
   );
 
-  const dayFilter = dayjs().format();
-
-  const { data: analyticsData, refetch: refetchAnalytics } = useQuery({
-    queryKey: ["analytics", dayFilter],
-    queryFn: () => getAnalytics(dayFilter),
-    enabled: !!dayFilter && dayFilter != "",
-  });
-
   const { mutate } = useMutation({
     mutationKey: ["save-session-data"],
     mutationFn: (payload: PostureSessionInput) => saveSessionRecords(payload),
@@ -46,25 +38,23 @@ const SessionControl = () => {
       const session = response;
       const sessionParams = JSON.stringify(session);
       setTimeout(() => {
-        if (isDailyStreak) {
-          router.push({
-            pathname: "/streak",
-            params: { sessionParams },
-          });
-        } else {
-          router.push({
-            pathname: "/session-summary",
-            params: { sessionParams },
-          });
-        }
+        router.push({
+          pathname: "/session-summary",
+          params: {
+            sessionParams,
+            isDailyStreak: isDailyStreak ? "true" : "false",
+          },
+        });
       }, 500);
+      setIsDailyStreak(false);
     },
     onError: (error) => {
       console.log({ error });
       setSessionActive("INACTIVE");
     },
     onSettled: () => {
-      refetchAnalytics();
+      // refetchAnalytics();
+      updateStreak();
     },
   });
 
@@ -81,9 +71,10 @@ const SessionControl = () => {
     setSessionActive("ACTIVE");
   };
 
-  const updateStreak = useCallback(() => {
-    const today = new Date().toDateString();
+  const updateStreak = useCallback(async () => {
+    const today = dayjs();
 
+    const analyticsData = await getAnalytics(today.format());
     if (
       !analyticsData ||
       !analyticsData.sessions ||
@@ -102,9 +93,7 @@ const SessionControl = () => {
     const lastSessionDate = lastSession?.ended_at;
 
     if (lastSessionDate) {
-      const lastSessionDay = new Date(lastSessionDate).toDateString();
-
-      if (today !== lastSessionDay) {
+      if (!today.isSame(dayjs(lastSessionDate))) {
         console.log("New day, increment streak");
 
         // New day, increment streak
@@ -124,14 +113,12 @@ const SessionControl = () => {
         setDailyStreakCounter(userStreak);
       }
     }
-  }, [analyticsData, userStreak, setDailyStreakCounter]);
+  }, [userStreak, setDailyStreakCounter]);
 
   const onStopSession = () => {
     setSessionActive("INACTIVE");
 
     const records = prepareSessionPostureData();
-
-    updateStreak();
 
     const endDate = new Date().toISOString();
 
@@ -164,10 +151,6 @@ const SessionControl = () => {
 
   return (
     <View>
-      {/* <Text level="subhead" align="center">
-        {isPending ? "Saving..." : null}
-      </Text> */}
-
       <Timer
         isTimerActive={sessionStatus !== "INACTIVE"}
         onStartCallback={onStartSession}

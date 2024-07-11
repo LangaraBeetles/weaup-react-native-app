@@ -5,6 +5,7 @@ import React, {
   useCallback,
   useContext,
   useEffect,
+  useRef,
   useState,
 } from "react";
 import NewLevelModal from "../modals/NewLevelModal";
@@ -19,9 +20,7 @@ const LevelSystemContext = createContext<LevelSystemContextState | null>(null);
 const LevelSystemProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [unlockedLevels, setUnlockedLevels] = useState<
-    Array<{ level: number }>
-  >([]);
+  const unlockedLevels = useRef<Array<{ level: number }>>([]);
   const userXP = useUser((state) => state.user.xp);
   const userLevel = useUser((state) => state.user.level);
   const setUserLevel = useUser((state) => state.setLevel);
@@ -40,7 +39,7 @@ const LevelSystemProvider: React.FC<{ children: React.ReactNode }> = ({
   }>();
 
   const showLevelUp = useCallback(() => {
-    const availableLevelUp = [...unlockedLevels].shift();
+    const availableLevelUp = unlockedLevels.current?.[0];
     if (!availableLevelUp) {
       return;
     }
@@ -55,7 +54,7 @@ const LevelSystemProvider: React.FC<{ children: React.ReactNode }> = ({
     setInstantLevelUp(undefined);
     setLevelUpAfterSession(undefined);
     setUserLevel(level);
-    setUnlockedLevels((prev) => prev.filter((data) => data.level !== level));
+    unlockedLevels.current.shift();
     setTimeout(showLevelUp, 500);
   };
 
@@ -77,10 +76,9 @@ const LevelSystemProvider: React.FC<{ children: React.ReactNode }> = ({
     console.log({ newLevel });
     if (newLevel > userLevel) {
       if (isSessionActive) {
-        setUnlockedLevels((prev) => [
-          ...prev.filter(({ level }) => level !== newLevel),
-          { level: newLevel },
-        ]);
+        if (!unlockedLevels.current.find(({ level }) => level === newLevel)) {
+          unlockedLevels.current.push({ level: newLevel });
+        }
       } else if (isRealtimeTrackingEnabled) {
         setInstantLevelUp({
           level: newLevel,
@@ -93,7 +91,7 @@ const LevelSystemProvider: React.FC<{ children: React.ReactNode }> = ({
   return (
     <LevelSystemContext.Provider
       value={{
-        unlockedLevels,
+        unlockedLevels: unlockedLevels.current,
         showLevelUpModal: showLevelUp,
       }}
     >

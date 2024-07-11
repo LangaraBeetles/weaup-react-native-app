@@ -41,7 +41,10 @@ interface SessionParams {
 
 const SessionSummaryScreen: React.FC = () => {
   const { unlockedLevels, showLevelUpModal } = useLevelSystem();
-  const { sessionParams } = useLocalSearchParams<{ sessionParams: string }>();
+  const { sessionParams, isDailyStreak } = useLocalSearchParams<{
+    sessionParams: string;
+    isDailyStreak: "true" | "false";
+  }>();
   const [sessionData, setSessionData] = useState<SessionData | null>(null);
 
   const formatDuration = (minutes: number): string => {
@@ -51,6 +54,19 @@ const SessionSummaryScreen: React.FC = () => {
   };
 
   const handlePress = () => {
+    if (unlockedLevels.length) {
+      // trigger this after animations
+
+      showLevelUpModal();
+      return;
+    }
+
+    if (isDailyStreak === "true") {
+      router.push("/streak");
+
+      return;
+    }
+
     router.push({
       pathname: "/",
     });
@@ -68,18 +84,8 @@ const SessionSummaryScreen: React.FC = () => {
     }
   }, [sessionParams]);
 
-  useEffect(() => {
-    if (unlockedLevels.length) {
-      // trigger this after animations
-      // for now just a 1sec delay
-
-      setTimeout(() => {
-        showLevelUpModal();
-      }, 1000);
-    }
-  }, [unlockedLevels.length]);
-
   console.log(unlockedLevels);
+  console.log({ isDailyStreak });
   return (
     <SafeAreaView
       style={{ backgroundColor: theme.colors.primary[200], flex: 1 }}
