@@ -11,7 +11,11 @@ import { theme } from "@src/styles/theme";
 
 const { width } = Dimensions.get("window");
 
-const XPCard = () => {
+interface XPCardProps {
+  xpDelta: number;
+}
+
+const XPCard: React.FC<XPCardProps> = ({ xpDelta }) => {
   const userXP = useUser((state) => state.user.xp);
   const userLevel = useUser((state) => state.user.level);
 
@@ -34,7 +38,7 @@ const XPCard = () => {
               <Text level="footnote" style={{ lineHeight: 19 }}>
                 You gained{" "}
                 <Text level="footnote" weight="bold">
-                  {userXP} XP {/*TODO: Calculate the xp per session */}
+                  {xpDelta} XP {/*TODO: Calculate the xp per session */}
                 </Text>{" "}
                 in this session
               </Text>

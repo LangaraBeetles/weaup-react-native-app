@@ -33,6 +33,10 @@ interface SessionData {
   total_records: number;
   updatedAt: string;
   user_id: string;
+  xp: {
+    initial: number;
+    final: number;
+  };
 }
 
 const SessionSummaryScreen: React.FC = () => {
@@ -89,6 +93,17 @@ const SessionSummaryScreen: React.FC = () => {
     }
   }, [sessionParams]);
 
+  const totalRecords = sessionData?.total_records || 0;
+  const goodPosturePercentage = totalRecords
+    ? Math.round(((sessionData?.total_good || 0) / totalRecords) * 100)
+    : 0;
+  const badPosturePercentage = totalRecords
+    ? Math.round(((sessionData?.total_bad || 0) / totalRecords) * 100)
+    : 0;
+  const xpDelta = sessionData
+    ? sessionData.xp.initial - sessionData.xp.final
+    : 0;
+
   console.log(unlockedLevels);
   console.log({ isDailyStreak });
   return (
@@ -100,7 +115,7 @@ const SessionSummaryScreen: React.FC = () => {
           <Center gap={4} style={{ top: height * 0.05 }}>
             <Text level="body">You did a great job! 🎉</Text>
             <Text level="title_2">
-              Your posture score is: {sessionData?.score}
+              Your posture score is: {goodPosturePercentage}
             </Text>
           </Center>
           <Center
@@ -126,7 +141,7 @@ const SessionSummaryScreen: React.FC = () => {
             alignItems: "center",
           }}
         >
-          <XPCard />
+          <XPCard xpDelta={xpDelta} />
 
           <Stack gap={14}>
             <Text level="title_3">Here’s the summary of the session</Text>
@@ -160,14 +175,14 @@ const SessionSummaryScreen: React.FC = () => {
               <Stack flex={1}>
                 <SessionCard
                   title="GOOD POSTURES"
-                  content={sessionData?.total_good || 0}
+                  content={`${goodPosturePercentage} %`}
                   icon="colorLabelIcon-face-happy"
                 />
               </Stack>
               <Stack flex={1}>
                 <SessionCard
                   title="BAD POSTURES"
-                  content={sessionData?.total_bad || 0}
+                  content={`${badPosturePercentage} %`}
                   icon="colorLabelIcon-face-sad"
                 />
               </Stack>
