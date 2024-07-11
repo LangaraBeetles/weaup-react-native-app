@@ -1,9 +1,18 @@
-import { StyleSheet, View, Modal, Pressable } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Modal,
+  Pressable,
+  Dimensions,
+  Platform,
+} from "react-native";
 import Button from "./Button";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { theme } from "@src/styles/theme";
 import TimePicker from "./TimePicker";
 import { Text } from "./typography";
+
+const { height } = Dimensions.get("screen");
 
 const MINUTE_IN_SECONDS = 60;
 const HOUR_IN_SECONDS = 60 * MINUTE_IN_SECONDS;
@@ -118,7 +127,12 @@ const Timer = ({
   return (
     <View>
       {isTimerActive ? (
-        <View style={styles.container}>
+        <View
+          style={{
+            marginTop: height < 850 && Platform.OS == "android" ? -25 : 30,
+            ...styles.container,
+          }}
+        >
           <TimerDisplay timeInSeconds={timeInSeconds} />
           <View style={{ width: 225 }}>
             <Button
@@ -203,7 +217,6 @@ const Timer = ({
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 30,
     alignItems: "center",
     justifyContent: "center",
   },

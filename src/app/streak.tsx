@@ -23,10 +23,7 @@ const StreakScreen = () => {
         <StreakNotificationCard streak={userStreak} />
         <Spacer height={115} />
         <View style={styles.button}>
-          <Button
-            title="Continue"
-            onPress={() => router.replace("session-summary")}
-          />
+          <Button title="Continue" onPress={() => router.replace("/")} />
         </View>
       </View>
     </View>

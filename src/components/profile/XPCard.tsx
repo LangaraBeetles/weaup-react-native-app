@@ -7,6 +7,7 @@ import { globalStyles } from "@src/styles/globalStyles";
 import Box from "../ui/Box";
 import ProgressBar from "../ui/ProgressBar";
 import levels from "@src/levels";
+import { theme } from "@src/styles/theme";
 
 const XPCard = () => {
   const userXP = useUser((state) => state.user.xp);
@@ -36,9 +37,10 @@ const XPCard = () => {
 
         <ProgressBar
           currentValue={userXP}
-          goal={nextLevelXP()}
+          goal={nextLevelXP() ?? userXP}
           height={16}
-          barColor={globalStyles.colors.error[400]}
+          backgroundColor={theme.colors.white}
+          barColor={theme.colors.error[400]}
           borderWidth={1}
         />
 

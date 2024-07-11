@@ -124,6 +124,7 @@ export default function DeviceMotionViewiOS() {
 
 export function DeviceMotionViewAndroid() {
   const isRealTimeTracking = useUser((state) => state.isTrackingEnabled);
+  const sessionStatus = useUser((state) => state.sessionStatus);
 
   const isTrackingEnabled = useUser(
     (state) => state.isTrackingEnabled || state.sessionStatus !== "INACTIVE",
@@ -222,6 +223,7 @@ export function DeviceMotionViewAndroid() {
       py={10}
       px={24}
       backgroundColor={theme.colors.white}
+      style={{ display: sessionStatus === "INACTIVE" ? "flex" : "none" }}
     >
       <Text level="footnote" weight="semibold">
         Active Monitoring
