@@ -55,7 +55,7 @@ const LevelSystemProvider: React.FC<{ children: React.ReactNode }> = ({
     setLevelUpAfterSession(undefined);
     setUserLevel(level);
     unlockedLevels.current.shift();
-    setTimeout(showLevelUp, 500);
+    setTimeout(showLevelUp, 800);
   };
 
   useEffect(() => {
@@ -71,9 +71,7 @@ const LevelSystemProvider: React.FC<{ children: React.ReactNode }> = ({
       return currentLevel;
     };
 
-    console.log({ userXP });
     const newLevel = determineLevel(userXP);
-    console.log({ newLevel });
     if (newLevel > userLevel) {
       if (isSessionActive) {
         if (!unlockedLevels.current.find(({ level }) => level === newLevel)) {
