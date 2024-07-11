@@ -155,14 +155,16 @@ const SessionSummaryScreen: React.FC = () => {
                 <SessionCard
                   title="DURATION"
                   content={formatDuration(sessionData?.duration || 0)}
-                  icon="colorLabelIcon-hourglass"
+                  icon="hourglass-fill"
+                  iconColor="#816DFF"
                 />
               </Stack>
               <Stack flex={1}>
                 <SessionCard
                   title="CORRECTIONS"
                   content={sessionData?.total_records || 0}
-                  icon="colorLabelIcon-warning"
+                  icon="warning"
+                  iconColor="#FFBE1B"
                 />
               </Stack>
             </Stack>
@@ -176,14 +178,16 @@ const SessionSummaryScreen: React.FC = () => {
                 <SessionCard
                   title="GOOD POSTURES"
                   content={`${goodPosturePercentage} %`}
-                  icon="colorLabelIcon-face-happy"
+                  icon="face-happy"
+                  iconColor={theme.colors.random.green}
                 />
               </Stack>
               <Stack flex={1}>
                 <SessionCard
                   title="BAD POSTURES"
                   content={`${badPosturePercentage} %`}
-                  icon="colorLabelIcon-face-sad"
+                  icon="face-sad"
+                  iconColor={theme.colors.error[400]}
                 />
               </Stack>
             </Stack>

@@ -71,10 +71,6 @@ import ColorLabelIconStreak from "assets/icons/colorLabelIcon-streak.svg";
 import ColorLabelIconStar from "assets/icons/colorLabelIcon-star.svg";
 import ColorLabelIconXp from "assets/icons/colorLabelIcon-xp.svg";
 import ColorLabelIconAward from "assets/icons/colorLabelIcon-award.svg";
-import ColorLabelHourGlas from "assets/icons/colorLabelIcon-hourglass-filled.svg";
-import ColorLaberWarning from "assets/icons/colorLabelIcon-warning.svg";
-import ColorLabelFaceHappy from "assets/icons/colorLabelIcon-face-happy.svg";
-import ColorLabelFaceSad from "assets/icons/colorLabelIcon-face-sad.svg";
 import Logout from "assets/icons/logout.svg";
 import ColorLabelIconTarget from "assets/icons/colorLabelIcon-target.svg";
 import StreakCheckmarkUnchecked from "assets/icons/streak-checkmark-unchecked.svg";
@@ -157,10 +153,6 @@ const IconConfig = {
   "colorLabelIcon-star": ColorLabelIconStar,
   "colorLabelIcon-xp": ColorLabelIconXp,
   "colorLabelIcon-award": ColorLabelIconAward,
-  "colorLabelIcon-hourglass": ColorLabelHourGlas,
-  "colorLabelIcon-warning": ColorLaberWarning,
-  "colorLabelIcon-face-happy": ColorLabelFaceHappy,
-  "colorLabelIcon-face-sad": ColorLabelFaceSad,
   logout: Logout,
   "colorLabelIcon-target": ColorLabelIconTarget,
   "streak-checkmark-unchecked": StreakCheckmarkUnchecked,
