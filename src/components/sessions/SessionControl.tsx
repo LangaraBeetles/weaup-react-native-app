@@ -18,6 +18,8 @@ const SessionControl = () => {
   const userXP = useUser((state) => state.user.xp);
   const setUserXP = useUser((state) => state.setXP);
 
+  const initialXP = useRef<number>(userXP);
+
   const setDailyStreakCounter = useUser((state) => state.setDailyStreakCounter);
   const userStreak = useUser((state) => state.user.dailyStreakCounter);
   const [isDailyStreak, setIsDailyStreak] = React.useState(false);
@@ -143,7 +145,7 @@ const SessionControl = () => {
             good_posture: data.status === "good",
             recorded_at: data?.date?.toISOString?.(),
           }))
-        : [{ good_posture: false, recorded_at: endDate }];
+        : [];
 
     const payload: PostureSessionInput = {
       started_at: startDate.current,
@@ -151,6 +153,10 @@ const SessionControl = () => {
       score: userHP ?? 0,
       dailyStreakCounter: userStreak ?? 0,
       records: updatedRecords,
+      xp: {
+        initial: initialXP.current,
+        final: userXP,
+      },
     };
 
     mutate(payload);

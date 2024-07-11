@@ -11,9 +11,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import HPSystem from "@src/components/scoring/HPSystem";
 import XPSystem from "@src/components/scoring/XPSystem";
-import LevelSystem from "@src/components/scoring/LevelSystem";
 import PostureDataProvider from "@src/components/providers/PostureDataProvider";
 import BadgeSystem from "@src/components/scoring/BadgeSystem";
+import LevelSystemProvider from "@src/components/providers/LevelSystemProvider";
 
 const queryClient = new QueryClient();
 
@@ -65,73 +65,74 @@ const RootLayout = () => {
       <PushNotificationsProvider>
         <TrackingModeProvider>
           <HeadTrackingProvider>
-            <HPSystem />
-            <XPSystem />
-            <LevelSystem />
-            <BadgeSystem />
-            <GestureHandlerRootView>
-              <BottomSheetModalProvider>
-                <PostureDataProvider>
-                  <Stack>
-                    <Stack.Screen
-                      name="(tabs)"
-                      options={{ headerShown: false }}
-                    />
-                    <Stack.Screen
-                      name="setup"
-                      options={{ headerShown: false }}
-                    />
-                    <Stack.Screen
-                      name="challenges/challenge-details"
-                      options={{ headerShown: false }}
-                    />
+            <LevelSystemProvider>
+              <HPSystem />
+              <XPSystem />
+              <BadgeSystem />
+              <GestureHandlerRootView>
+                <BottomSheetModalProvider>
+                  <PostureDataProvider>
+                    <Stack>
+                      <Stack.Screen
+                        name="(tabs)"
+                        options={{ headerShown: false }}
+                      />
+                      <Stack.Screen
+                        name="setup"
+                        options={{ headerShown: false }}
+                      />
+                      <Stack.Screen
+                        name="challenges/challenge-details"
+                        options={{ headerShown: false }}
+                      />
 
-                    <Stack.Screen
-                      name="challenges/past"
-                      options={{ headerShown: false }}
-                    />
+                      <Stack.Screen
+                        name="challenges/past"
+                        options={{ headerShown: false }}
+                      />
 
-                    <Stack.Screen
-                      name="auth"
-                      options={{ headerShown: false }}
-                    />
+                      <Stack.Screen
+                        name="auth"
+                        options={{ headerShown: false }}
+                      />
 
-                    <Stack.Screen
-                      name="session-summary"
-                      options={{ headerShown: false }}
-                    />
+                      <Stack.Screen
+                        name="session-summary"
+                        options={{ headerShown: false }}
+                      />
 
-                    <Stack.Screen
-                      name="signin"
-                      options={{
-                        headerShown: false,
-                        presentation: "fullScreenModal",
-                      }}
-                    />
+                      <Stack.Screen
+                        name="signin"
+                        options={{
+                          headerShown: false,
+                          presentation: "fullScreenModal",
+                        }}
+                      />
 
-                    <Stack.Screen
-                      name="notifications"
-                      options={{ headerShown: false }}
-                    />
+                      <Stack.Screen
+                        name="notifications"
+                        options={{ headerShown: false }}
+                      />
 
-                    <Stack.Screen
-                      name="badges"
-                      options={{ headerShown: false }}
-                    />
+                      <Stack.Screen
+                        name="badges"
+                        options={{ headerShown: false }}
+                      />
 
-                    <Stack.Screen
-                      name="streak"
-                      options={{ headerShown: false, animation: "fade" }}
-                    />
+                      <Stack.Screen
+                        name="streak"
+                        options={{ headerShown: false, animation: "fade" }}
+                      />
 
-                    <Stack.Screen
-                      name="earn-badge"
-                      options={{ headerShown: false, animation: "fade" }}
-                    />
-                  </Stack>
-                </PostureDataProvider>
-              </BottomSheetModalProvider>
-            </GestureHandlerRootView>
+                      <Stack.Screen
+                        name="earn-badge"
+                        options={{ headerShown: false, animation: "fade" }}
+                      />
+                    </Stack>
+                  </PostureDataProvider>
+                </BottomSheetModalProvider>
+              </GestureHandlerRootView>
+            </LevelSystemProvider>
           </HeadTrackingProvider>
         </TrackingModeProvider>
       </PushNotificationsProvider>

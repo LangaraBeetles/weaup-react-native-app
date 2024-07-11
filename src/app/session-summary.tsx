@@ -9,6 +9,7 @@ import SessionCard from "@src/components/sessions/SessionCard";
 import Button from "@src/components/ui/Button";
 import Center from "@src/components/ui/Center";
 import Image from "@src/components/ui/Image";
+import { useLevelSystem } from "@src/components/providers/LevelSystemProvider";
 
 const { height } = Dimensions.get("window");
 
@@ -39,6 +40,7 @@ interface SessionParams {
 }
 
 const SessionSummaryScreen: React.FC = () => {
+  const { unlockedLevels, showLevelUpModal } = useLevelSystem();
   const { sessionParams } = useLocalSearchParams<{ sessionParams: string }>();
   const [sessionData, setSessionData] = useState<SessionData | null>(null);
 
@@ -46,6 +48,12 @@ const SessionSummaryScreen: React.FC = () => {
     const hours = Math.floor(minutes / 60);
     const remainingMinutes = minutes % 60;
     return `${String(hours).padStart(2, "0")}:${String(remainingMinutes).padStart(2, "0")}`;
+  };
+
+  const handlePress = () => {
+    router.push({
+      pathname: "/",
+    });
   };
 
   useEffect(() => {
@@ -60,12 +68,18 @@ const SessionSummaryScreen: React.FC = () => {
     }
   }, [sessionParams]);
 
-  const handlePress = () => {
-    router.push({
-      pathname: "/",
-    });
-  };
+  useEffect(() => {
+    if (unlockedLevels.length) {
+      // trigger this after animations
+      // for now just a 1sec delay
 
+      setTimeout(() => {
+        showLevelUpModal();
+      }, 1000);
+    }
+  }, [unlockedLevels.length]);
+
+  console.log(unlockedLevels);
   return (
     <SafeAreaView
       style={{ backgroundColor: theme.colors.primary[200], flex: 1 }}

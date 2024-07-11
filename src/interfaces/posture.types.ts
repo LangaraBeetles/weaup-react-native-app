@@ -17,6 +17,10 @@ export type PostureSessionInput = {
   score: number;
   dailyStreakCounter: number;
   records: Array<PostureSessionRecord>;
+  xp: {
+    initial: number;
+    final: number;
+  };
 };
 
 interface SessionRecord {

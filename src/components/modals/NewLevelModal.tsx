@@ -2,23 +2,26 @@ import React from "react";
 import { View, Image, StyleSheet } from "react-native";
 import { Text } from "@src/components/ui/typography";
 import Modal from "react-native-modal";
-import { globalStyles } from "@src/styles/globalStyles";
-import { useUser } from "@src/state/useUser";
 import { theme } from "@src/styles/theme";
 
 interface NewLevelModalProps {
   isVisible: boolean;
-  onClose: () => void;
+  onClose: (level: number) => void;
+  level: number;
 }
 
 const NewLevelModal: React.FC<NewLevelModalProps> = ({
+  level,
   isVisible,
   onClose,
 }) => {
-  const level = useUser((state) => state.user.level);
-
   return (
-    <Modal isVisible={isVisible} onBackdropPress={onClose}>
+    <Modal
+      isVisible={isVisible}
+      onBackdropPress={() => {
+        onClose(level);
+      }}
+    >
       <View style={styles.modalContent}>
         <Text style={styles.title} level="title_3">
           You have reached Level {level}
@@ -63,7 +66,7 @@ const styles = StyleSheet.create({
     top: -20,
     width: "100%",
     height: 10,
-    backgroundColor: globalStyles.colors.secondary[600],
+    backgroundColor: theme.colors.secondary[600],
     borderRadius: 5,
     overflow: "hidden",
   },
