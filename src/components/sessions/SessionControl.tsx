@@ -35,8 +35,8 @@ const SessionControl = () => {
     mutationKey: ["save-session-data"],
     mutationFn: (payload: PostureSessionInput) => saveSessionRecords(payload),
     onSuccess: (response) => {
-      const session = response;
-      const sessionParams = JSON.stringify(session);
+      const sessionId = response?.data._id;
+      const sessionParams = JSON.stringify(sessionId);
       setTimeout(() => {
         router.push({
           pathname: "/session-summary",
