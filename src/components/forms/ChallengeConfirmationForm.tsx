@@ -45,7 +45,7 @@ const ChallengeConfirmationForm = () => {
           icon="arrow-left"
           onClose={() => setValue("step", "goal")}
         />
-        <Text style={styles.content} level="title_2">
+        <Text style={styles.content} level="title_2" align="center">
           All set?
         </Text>
         <Stack w={40} h={40} />

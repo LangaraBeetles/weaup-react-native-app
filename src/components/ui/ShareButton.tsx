@@ -9,7 +9,7 @@ const ShareButton = (props: any) => {
     try {
       await Share.share({
         message: url, //Android
-        url: url, //iOS
+        // url: url, //iOS
       });
     } catch (error: any) {
       console.error(error.message);
