@@ -1,3 +1,5 @@
+import { UserAvatar } from "./user.types";
+
 //converted other fields to string to avoid errors on hook form. TextInput only accepts strings
 export type ChallengeInputType = {
   name: string;
@@ -56,6 +58,7 @@ type ChallengeUserType = {
   preferred_mode: string;
   provider_id: string;
   xp: number;
+  avatar_bg: UserAvatar;
 };
 
 type ChallengeMemberType = {

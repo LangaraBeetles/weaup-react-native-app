@@ -1,5 +1,14 @@
 import { UserBadgeType } from "./badges.types";
 
+export type UserAvatar =
+  | "blue1"
+  | "blue2"
+  | "yellow1"
+  | "yellow2"
+  | "red1"
+  | "red2"
+  | "gray1";
+
 export type UserType = {
   id: string;
   deviceId: string;
@@ -14,6 +23,7 @@ export type UserType = {
   dailyStreakCounter: number;
   token: string | null;
   isSetupComplete: boolean;
+  avatar: UserAvatar;
   badges: UserBadgeType[];
 };
 

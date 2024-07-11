@@ -2,7 +2,7 @@ import { useUser } from "@src/state/useUser";
 import Icon from "../ui/Icon";
 import Stack from "../ui/Stack";
 import { Text } from "../ui/typography";
-import { Pressable, StyleSheet } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { globalStyles } from "@src/styles/globalStyles";
 import Box from "../ui/Box";
 import ProfileBadgeContainerPreview from "../container/ProfileBadgeContainerPreview";
@@ -39,7 +39,7 @@ const BadgesCard = () => {
 
         <Divider />
 
-        <Pressable onPress={viewBadges}>
+        <TouchableOpacity onPress={viewBadges}>
           <Stack
             flexDirection="row"
             justifyContent="space-between"
@@ -49,7 +49,7 @@ const BadgesCard = () => {
 
             <Icon name="chevron-right" />
           </Stack>
-        </Pressable>
+        </TouchableOpacity>
       </Stack>
     </Box>
   );
