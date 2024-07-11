@@ -1,80 +1,82 @@
-import React, { useState } from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import React, { useState, useEffect } from "react";
+import { AppStateStatus, AppState } from "react-native";
+import { useQuery, focusManager } from "@tanstack/react-query";
+import Page from "@src/components/layout/Page";
 import FilterMenu from "../components/notifications/FilterMenu";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Text } from "@src/components/ui/typography";
-import Icon from "@src/components/ui/Icon";
 import NotificationList from "@src/components/lists/NotificationList";
+import ListSkeleton from "@src/components/ui/ListSkeleton";
+import { getNotifications } from "@src/services/notificationsApi";
+import { theme } from "@src/styles/theme";
+import { Text } from "@src/components/ui/typography";
+import { useUser } from "@src/state/useUser";
+import { NotificationType } from "@src/interfaces/notification.types";
 
 const Notifications = () => {
-  const navigation = useNavigation();
+  const userId = useUser((state) => state.user.id);
   const [selectedFilter, setSelectedFilter] = useState("All");
 
+  const { data, isLoading, refetch, isError } = useQuery({
+    queryKey: ["notifications", userId],
+    queryFn: () => getNotifications(userId),
+  });
+
+  const onAppStateChange = (status: AppStateStatus) => {
+    focusManager.setFocused(status === "active");
+  };
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener("change", onAppStateChange);
+    return () => subscription.remove();
+  }, []);
+
+  const notificationsData = data?.data || [];
+
+  const filteredNotifications: NotificationType[] = notificationsData.filter(
+    (notification: NotificationType) =>
+      selectedFilter === "All" ||
+      notification.notification_type === selectedFilter,
+  );
+
+  useEffect(() => {}, [filteredNotifications]);
+
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={styles.backButton}
-        >
-          <View>
-            <Icon name="arrow-left" size={40} />
-          </View>
-        </TouchableOpacity>
-        <Text style={styles.headerTitle} level="title_3">
-          Notifications
-        </Text>
-      </View>
-      <View>
+    <Page
+      backButtonShown={true}
+      title="Notifications"
+      gradientProps={{
+        colors: [theme.colors.primary[300], theme.colors.surface],
+      }}
+      header={
         <FilterMenu
           tabs={[
             { value: "All", label: "All" },
-            { value: "Summary", label: "Summary" },
+            { value: "daily_summary", label: "Summary" },
             { value: "Challenge", label: "Challenge" },
           ]}
           onChange={setSelectedFilter}
         />
-      </View>
-      <View style={styles.notificationsContainer}>
-        <NotificationList selectedFilter={selectedFilter} />
-      </View>
-    </SafeAreaView>
+      }
+    >
+      {isLoading ? (
+        <ListSkeleton />
+      ) : isError ? (
+        <Text>Error loading notifications</Text>
+      ) : (
+        <NotificationList
+          notifications={filteredNotifications}
+          onRefresh={refetch}
+          ListEmptyComponent={() => (
+            <Text
+              align="center"
+              style={{ color: theme.colors.neutral[300], marginBottom: 8 }}
+            >
+              No notifications found
+            </Text>
+          )}
+        />
+      )}
+    </Page>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    height: "100%",
-    backgroundColor: "#FDD462",
-    paddingBottom: 40,
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    marginVertical: 20,
-  },
-  backButton: {
-    marginStart: 10,
-  },
-  headerTitle: {
-    position: "absolute",
-    flex: 1,
-    left: "50%",
-    transform: [{ translateX: -50 }],
-  },
-  notificationsContainer: {
-    marginTop: 20,
-    backgroundColor: "#F9F9F9",
-    paddingTop: 16,
-    paddingLeft: 16,
-    paddingRight: 16,
-    borderRadius: 20,
-    height: "100%",
-  },
-});
 
 export default Notifications;
