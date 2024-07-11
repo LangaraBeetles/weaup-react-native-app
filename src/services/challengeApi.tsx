@@ -47,3 +47,14 @@ export const joinChallenge = async (id: string) => {
   const { data } = await api.post(`${route}/${id}/join`);
   return data.data as ChallengeResponseType;
 };
+
+export const updateChallengeMemberPoints = async (
+  id: string,
+  userId: string,
+  points: number,
+) => {
+  const { data } = await api.patch(`${route}/${id}/members/${userId}`, {
+    points,
+  });
+  return data.data as ChallengeResponseType;
+};

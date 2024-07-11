@@ -1,3 +1,7 @@
+import {
+  getOngoingChallenges,
+  updateChallengeMemberPoints,
+} from "@src/services/challengeApi";
 import { savePostureRecords } from "@src/services/postureRecordsApi";
 import { updateUser } from "@src/services/userApi";
 import { useUser } from "@src/state/useUser";
@@ -62,6 +66,22 @@ const PostureDataProvider: React.FC<{ children: React.ReactNode }> = ({
             .catch(() => {
               console.log("[ERROR] posture data not saved");
             });
+
+          getOngoingChallenges(true, 1).then((challenges) => {
+            const newPoints = data.filter((p) => p.status === "good").length;
+
+            challenges.forEach((challenge) => {
+              const currentPoints = challenge.members.find(
+                (m) => m.user_id === _user.id,
+              )?.points;
+
+              const points = currentPoints
+                ? currentPoints + newPoints
+                : newPoints;
+
+              updateChallengeMemberPoints(challenge._id, _user.id, points);
+            });
+          });
         }
       },
       TWENTY_SEC,
