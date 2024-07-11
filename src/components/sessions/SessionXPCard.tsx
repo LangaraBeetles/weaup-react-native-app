@@ -3,11 +3,11 @@ import Icon from "../ui/Icon";
 import Stack from "../ui/Stack";
 import { Text } from "../ui/typography";
 import { Dimensions, StyleSheet } from "react-native";
-import { globalStyles } from "@src/styles/globalStyles";
 import Box from "../ui/Box";
 import ProgressBar from "../ui/ProgressBar";
 import levels from "@src/levels";
 import Image from "../ui/Image";
+import { theme } from "@src/styles/theme";
 
 const { width } = Dimensions.get("window");
 
@@ -45,8 +45,8 @@ const XPCard = () => {
             currentValue={userXP}
             goal={nextLevelXP()}
             height={16}
-            backgroundColor={globalStyles.colors.error[400]}
-            barColor={globalStyles.colors.error[400]}
+            backgroundColor={theme.colors.white}
+            barColor={theme.colors.error[400]}
             borderWidth={1}
           />
 
@@ -71,10 +71,10 @@ const XPCard = () => {
 
 const styles = StyleSheet.create({
   title: {
-    color: globalStyles.colors.neutral[800],
+    color: theme.colors.neutral[800],
   },
   caption1: {
-    color: globalStyles.colors.neutral[400],
+    color: theme.colors.neutral[400],
   },
 });
 

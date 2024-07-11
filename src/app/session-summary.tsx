@@ -10,6 +10,7 @@ import Button from "@src/components/ui/Button";
 import Center from "@src/components/ui/Center";
 import Image from "@src/components/ui/Image";
 import { useLevelSystem } from "@src/components/providers/LevelSystemProvider";
+import { getSessionById } from "@src/services/sessionApi";
 
 const { height } = Dimensions.get("window");
 
@@ -32,11 +33,6 @@ interface SessionData {
   total_records: number;
   updatedAt: string;
   user_id: string;
-}
-
-interface SessionParams {
-  data: SessionData;
-  error: null | string;
 }
 
 const SessionSummaryScreen: React.FC = () => {
@@ -75,9 +71,18 @@ const SessionSummaryScreen: React.FC = () => {
   useEffect(() => {
     if (sessionParams) {
       try {
-        const parsedParams: SessionParams = JSON.parse(sessionParams);
-        const data = parsedParams.data;
-        setSessionData(data);
+        const sessionId = sessionParams;
+
+        const fetchSessionData = async () => {
+          try {
+            const data = await getSessionById(sessionId.replace(/"/g, ""));
+            setSessionData(data.data);
+          } catch (error) {
+            console.error("Failed to fetch session data:", error);
+          }
+        };
+
+        fetchSessionData();
       } catch (error) {
         console.error("Failed to parse session params:", error);
       }

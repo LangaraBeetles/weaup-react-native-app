@@ -132,7 +132,7 @@ const SessionControl = () => {
             good_posture: data.status === "good",
             recorded_at: data?.date?.toISOString?.(),
           }))
-        : [];
+        : [{ good_posture: false, recorded_at: endDate }];
 
     const payload: PostureSessionInput = {
       started_at: startDate.current,

@@ -8,3 +8,9 @@ export const saveSessionRecords = async (session: PostureSessionInput) => {
 
   return data;
 };
+
+export const getSessionById = async (sessionId: string) => {
+  const { data } = await api.get(`${route}/${sessionId}`);
+
+  return data;
+};
