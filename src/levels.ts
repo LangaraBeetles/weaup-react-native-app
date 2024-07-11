@@ -8,12 +8,10 @@ const levels: LevelType[] = [
   // { level: 4, xp: 50 },
   // { level: 5, xp: 180 },
   // { level: 6, xp: 370 },
-  ...new Array(1000).fill({}).map((_, index) => {
+  ...new Array(100).fill({}).map((_, index) => {
     const level = index + 1;
-    return { level: level, xp: index * 101 };
+    return { level: level, xp: level * 100 };
   }),
 ];
-
-// console.log({ levels });
 
 export default levels;

@@ -50,6 +50,10 @@ const SessionSummaryScreen: React.FC = () => {
   const formatDuration = (minutes: number): string => {
     const hours = Math.floor(minutes / 60);
     const remainingMinutes = minutes % 60;
+
+    if (minutes == 0) {
+      return "< 1 min";
+    }
     return `${String(hours).padStart(2, "0")}:${String(remainingMinutes).padStart(2, "0")}`;
   };
 
@@ -100,12 +104,7 @@ const SessionSummaryScreen: React.FC = () => {
   const badPosturePercentage = totalRecords
     ? Math.round(((sessionData?.total_bad || 0) / totalRecords) * 100)
     : 0;
-  const xpDelta = sessionData
-    ? sessionData.xp.initial - sessionData.xp.final
-    : 0;
 
-  console.log(unlockedLevels);
-  console.log({ isDailyStreak });
   return (
     <SafeAreaView
       style={{ backgroundColor: theme.colors.primary[200], flex: 1 }}
@@ -141,7 +140,7 @@ const SessionSummaryScreen: React.FC = () => {
             alignItems: "center",
           }}
         >
-          <XPCard xpDelta={xpDelta} />
+          <XPCard xp={sessionData?.xp} />
 
           <Stack gap={14}>
             <Text level="title_3">Here’s the summary of the session</Text>
