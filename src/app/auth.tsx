@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { ActivityIndicator } from "react-native";
 import Button from "@src/components/ui/Button";
 import Center from "@src/components/ui/Center";
 import Stack from "@src/components/ui/Stack";
@@ -6,19 +7,11 @@ import { Text } from "@src/components/ui/typography";
 import { useGlobalSearchParams, router } from "expo-router";
 import { SafeAreaView } from "react-native";
 import useAuth from "@src/components/hooks/useAuth";
+import { googleAuth } from "@src/services/authApi";
+import { theme } from "@src/styles/theme";
 
 type AuthParams = {
-  _id: string;
   name: string;
-  email: string;
-  preferred_mode: string;
-  daily_goal: string;
-  level: string;
-  is_setup_complete: string;
-  xp: string;
-  hp: string;
-  device_id: string;
-  provider_id: string;
   token: string;
 };
 
@@ -28,14 +21,18 @@ const AuthCallback = () => {
   const { handleGoogleAuthCallback } = useAuth();
 
   useEffect(() => {
-    if (params && params._id && params.token) {
-      const completeSignIn = async () => {
-        await handleGoogleAuthCallback(params as any);
+    if (params?.token) {
+      googleAuth(params.token as string).then(async (res) => {
+        params.name = res.name;
+        const completeSignIn = async () => {
+          await handleGoogleAuthCallback(res as any);
+          setTimeout(() => {
+            router.navigate("/");
+          }, 1000);
+        };
 
-        router.navigate("/");
-      };
-
-      completeSignIn();
+        completeSignIn();
+      });
     }
   }, [params]);
 
@@ -46,16 +43,22 @@ const AuthCallback = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Center p={30} flex={1}>
-        <Stack flexDirection="column" gap={30}>
-          <Text level="title_1" align="center">
-            Welcome {params?.name}!
-          </Text>
-          <Button
-            title="Yey! Continue"
-            onPress={handleContinuePress}
-            variant="primary"
-          />
-        </Stack>
+        {params?.name ? (
+          <Stack flexDirection="column" gap={30}>
+            <Text level="title_1" align="center">
+              Welcome {params?.name}!
+            </Text>
+            <Button
+              title="Yey! Continue"
+              onPress={handleContinuePress}
+              variant="primary"
+            />
+          </Stack>
+        ) : (
+          <Stack flexDirection="column" gap={30}>
+            <ActivityIndicator size="large" color={theme.colors.primary[500]} />
+          </Stack>
+        )}
       </Center>
     </SafeAreaView>
   );
