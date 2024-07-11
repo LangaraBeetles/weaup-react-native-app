@@ -2,31 +2,42 @@ import { useUser } from "@src/state/useUser";
 import Icon from "../ui/Icon";
 import Stack from "../ui/Stack";
 import { Text } from "../ui/typography";
-import { Dimensions, StyleSheet } from "react-native";
+import { Dimensions, StyleSheet, View } from "react-native";
 import Box from "../ui/Box";
 import ProgressBar from "../ui/ProgressBar";
 import levels from "@src/levels";
 import Image from "../ui/Image";
 import { theme } from "@src/styles/theme";
+import { useEffect, useState } from "react";
+import safenumber from "@src/utils/safenumber";
 
 const { width } = Dimensions.get("window");
 
 interface XPCardProps {
-  xpDelta: number;
+  xp?: { initial: number; final: number };
 }
 
-const XPCard: React.FC<XPCardProps> = ({ xpDelta }) => {
-  const userXP = useUser((state) => state.user.xp);
+const XPCard: React.FC<XPCardProps> = ({ xp }) => {
   const userLevel = useUser((state) => state.user.level);
+  const [levelXP, setLevelXP] = useState<number>();
 
-  const nextLevelXP = () => {
-    for (const level of levels) {
-      if (userXP < level.xp) {
-        return level.xp;
-      }
+  useEffect(() => {
+    const getNextLevel = () => {
+      const nextLevelConfig = levels.find(
+        ({ level }) => level == userLevel + 1,
+      );
+
+      return nextLevelConfig;
+    };
+    const nextLevelXP = getNextLevel();
+    if (!!nextLevelXP && nextLevelXP.level !== userLevel) {
+      setLevelXP(0);
+
+      setTimeout(() => {
+        setLevelXP(nextLevelXP.xp);
+      }, 200);
     }
-    return userXP;
-  };
+  }, [userLevel]);
 
   return (
     <Box>
@@ -38,21 +49,35 @@ const XPCard: React.FC<XPCardProps> = ({ xpDelta }) => {
               <Text level="footnote" style={{ lineHeight: 19 }}>
                 You gained{" "}
                 <Text level="footnote" weight="bold">
-                  {xpDelta} XP {/*TODO: Calculate the xp per session */}
+                  {safenumber(xp?.final) - safenumber(xp?.initial)} XP{" "}
                 </Text>{" "}
                 in this session
               </Text>
             </Stack>
           </Stack>
 
-          <ProgressBar
-            currentValue={userXP}
-            goal={nextLevelXP()}
-            height={16}
-            backgroundColor={theme.colors.white}
-            barColor={theme.colors.error[400]}
-            borderWidth={1}
-          />
+          {/* INFO: workaround to make the bar animation multiple times */}
+          {!!levelXP ? (
+            <ProgressBar
+              currentValue={safenumber(xp?.final)}
+              goal={levelXP}
+              height={16}
+              backgroundColor={theme.colors.white}
+              barColor={theme.colors.error[400]}
+              borderWidth={1}
+            />
+          ) : (
+            <View
+              style={{
+                width: "100%",
+                backgroundColor: theme.colors.white,
+                borderColor: theme.colors.neutral[100],
+                height: 16,
+                borderRadius: 8,
+                borderWidth: 1,
+              }}
+            />
+          )}
 
           <Stack flexDirection="row" justifyContent="space-between">
             <Text level="caption_1" style={styles.caption1}>
@@ -66,7 +91,8 @@ const XPCard: React.FC<XPCardProps> = ({ xpDelta }) => {
         <Image
           name="level-up-image"
           width={64}
-          style={{ marginHorizontal: 13, opacity: 0.55 }}
+          height={64}
+          style={{ marginHorizontal: 13, opacity: 0.55, flexShrink: 0 }}
         />
       </Stack>
     </Box>

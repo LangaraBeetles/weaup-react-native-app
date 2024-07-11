@@ -37,15 +37,15 @@ const SessionControl = () => {
     onSuccess: (response) => {
       const sessionId = response?.data._id;
       const sessionParams = JSON.stringify(sessionId);
-      setTimeout(() => {
-        router.push({
-          pathname: "/session-summary",
-          params: {
-            sessionParams,
-            isDailyStreak: isDailyStreak ? "true" : "false",
-          },
-        });
-      }, 500);
+
+      router.push({
+        pathname: "/session-summary",
+        params: {
+          sessionParams,
+          isDailyStreak: isDailyStreak ? "true" : "false",
+        },
+      });
+
       setIsDailyStreak(false);
     },
     onError: (error) => {
@@ -53,8 +53,10 @@ const SessionControl = () => {
       setSessionActive("INACTIVE");
     },
     onSettled: () => {
-      // refetchAnalytics();
-      updateStreak();
+      void updateStreak;
+      // updateStreak();
+      // Move this logic to after the session summary
+      // This is causing the level up on the summary data to be different than the result expected from the session
     },
   });
 

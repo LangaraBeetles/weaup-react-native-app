@@ -38,7 +38,7 @@ const ProfileScreen = () => {
         <Stack gap={20}>
           <UserCard />
           <PostureScoreCard />
-          <XPCard label="XP" />
+          <XPCard />
           <BadgesCard />
           <DailyGoalCard />
           <StreakCard />
