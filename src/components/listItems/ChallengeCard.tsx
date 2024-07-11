@@ -26,12 +26,12 @@ const ChallengeCard = (props: { challenge: ChallengeResponseType }) => {
     ? challengeIcons[challenge.icon] || Icon1
     : Icon1;
 
-  const { isOngoing, diff } = isChallengeActive(challenge.end_at);
+  const { diff } = isChallengeActive(challenge.end_at);
 
   const showDetails = () => {
     router.push({
       pathname: "/challenges/challenge-details",
-      params: { id: challenge._id, isOngoing: `${isOngoing}` },
+      params: { id: challenge._id },
     });
   };
 
