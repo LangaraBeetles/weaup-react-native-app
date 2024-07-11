@@ -5,6 +5,7 @@ import { theme } from "@src/styles/theme";
 import { NotificationType } from "@src/interfaces/notification.types";
 import dayjs from "dayjs";
 import Stack from "../ui/Stack";
+import Icon from "../ui/Icon";
 
 const NotificationCard = ({ item }: { item: NotificationType }) => {
   const diff = dayjs().diff(dayjs(item.createdAt), "day");
@@ -16,7 +17,7 @@ const NotificationCard = ({ item }: { item: NotificationType }) => {
     }
 
     if (diff === 0) {
-      return (item.createdAt = dayjs(item.createdAt).format("h:mm A"));
+      return dayjs(item.createdAt).format("h:mm A");
     }
     if (diff === 1) {
       return "Yesterday";
@@ -28,12 +29,24 @@ const NotificationCard = ({ item }: { item: NotificationType }) => {
 
   return (
     <View>
-      <Stack flexDirection="row" pb={16} pt={16}>
-        {/* TODO: get correct image */}
-        {/* <Image
-          source={require("../../../assets/img/avatar.png")}
-          style={styles.avatar}
-        /> */}
+      <Stack flexDirection="row" pb={16} pt={16} gap={12}>
+        {item.notification_type === "daily_summary" && (
+          <Stack
+            w={40}
+            h={40}
+            backgroundColor={theme.colors.secondary[200]}
+            borderRadius={40}
+            justifyContent="center"
+            alignItems="center"
+            style={{ top: 4 }}
+          >
+            <Icon
+              name="copy-fill"
+              color={theme.colors.secondary[800]}
+              size={24}
+            />
+          </Stack>
+        )}
         <Stack flex={1}>
           <Text
             style={styles.notificationTitle}
@@ -57,13 +70,6 @@ const NotificationCard = ({ item }: { item: NotificationType }) => {
 };
 
 const styles = StyleSheet.create({
-  avatar: {
-    width: 44,
-    height: 44,
-    borderRadius: 20,
-    marginRight: 10,
-  },
-
   notificationTitle: {
     flexShrink: 1,
   },
