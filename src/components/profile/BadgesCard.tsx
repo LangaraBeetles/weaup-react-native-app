@@ -7,10 +7,9 @@ import { globalStyles } from "@src/styles/globalStyles";
 import Box from "../ui/Box";
 import ProfileBadgeContainerPreview from "../container/ProfileBadgeContainerPreview";
 import Divider from "../ui/Divider";
-import { useRouter } from "expo-router";
+import { router } from "expo-router";
 
 const BadgesCard = () => {
-  const router = useRouter();
   const userBadges = useUser((state) => state.user.badges);
 
   const viewBadges = () => {
@@ -35,7 +34,7 @@ const BadgesCard = () => {
 
           <Text level="headline">{userBadges?.length || 0}</Text>
         </Stack>
-        <ProfileBadgeContainerPreview />
+        {/* <ProfileBadgeContainerPreview />
 
         <Divider />
 
@@ -49,7 +48,7 @@ const BadgesCard = () => {
 
             <Icon name="chevron-right" />
           </Stack>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </Stack>
     </Box>
   );
