@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, View } from "react-native";
+import { Pressable, ScrollView, Share, StyleSheet, View } from "react-native";
 import { useLocalSearchParams, usePathname } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
 
@@ -12,11 +12,14 @@ import ChallengeDetailCard from "@src/components/listItems/ChallengeDetailCard";
 import BackButton from "@src/components/ui/BackButton";
 import isChallengeActive from "@src/utils/is-challenge-active";
 import Skeleton from "@src/components/ui/Skeleton";
+import Icon from "@src/components/ui/Icon";
+import { useUser } from "@src/state/useUser";
 
 const ChallengeDetail = () => {
   const params = useLocalSearchParams();
   const id = params.id as string;
   const path = usePathname();
+  const loggedUser = useUser((state) => state.user.id);
 
   const { data, isLoading } = useQuery({
     queryKey: ["getChallengeById", path, id],
@@ -28,6 +31,20 @@ const ChallengeDetail = () => {
   const color = data?.data.color ?? theme.colors.secondary[100];
   const { isOngoing } = isChallengeActive(data?.data?.end_at);
 
+  const handleShare = async () => {
+    if (data) {
+      const urlWithUserId = data.data.url.replace("[user_id]", loggedUser);
+      try {
+        await Share.share({
+          message: urlWithUserId, // Android
+          url: urlWithUserId, // iOS
+        });
+      } catch (error: any) {
+        console.error(error.message);
+      }
+    }
+  };
+
   return (
     <ScrollView style={styles.body}>
       <View style={[styles.container, { backgroundColor: color }]}>
@@ -37,6 +54,20 @@ const ChallengeDetail = () => {
           <Text level="title_2">
             {isOngoing ? `Challenge Progress` : `Challenge Summary`}
           </Text>
+          {isOngoing && (
+            <Stack
+              w={40}
+              h={40}
+              backgroundColor={theme.colors.white}
+              alignItems="center"
+              justifyContent="center"
+              borderRadius={40}
+            >
+              <Pressable onPress={handleShare}>
+                <Icon name="share-outline" size={24} />
+              </Pressable>
+            </Stack>
+          )}
         </Stack>
         <View style={styles.background} />
         <View style={styles.innerContainer}>
