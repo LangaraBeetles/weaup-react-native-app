@@ -17,6 +17,7 @@ import ProfileXpImage from "assets/img/profile-XP-image.svg";
 import LevelUpImage from "assets/img/level-up-image.svg";
 import Confeties from "assets/img/confeties.svg";
 import BadgeBackground from "assets/img/badge-background.svg";
+import WeaselHeadTilt from "assets/img/weasel-head-tilt.svg";
 import Tada from "assets/img/tada.svg";
 
 const ImageConfig = {
@@ -37,6 +38,7 @@ const ImageConfig = {
   "level-up-image": LevelUpImage,
   confeties: Confeties,
   "badge-background": BadgeBackground,
+  "weasel-head-tilt": WeaselHeadTilt,
   tada: Tada,
 };
 

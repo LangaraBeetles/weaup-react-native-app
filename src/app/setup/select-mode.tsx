@@ -1,12 +1,14 @@
-import Main from "@src/components/layout/Main";
 import Center from "@src/components/ui/Center";
-import Spacer from "@src/components/ui/Spacer";
 import Stack from "@src/components/ui/Stack";
 import { Text } from "@src/components/ui/typography";
 import { SetupStagesType } from "@src/interfaces/setup.types";
+import { theme } from "@src/styles/theme";
 import * as Haptics from "expo-haptics";
+import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import { useRef } from "react";
+import Image from "@src/components/ui/Image";
+
 import {
   Animated,
   Dimensions,
@@ -80,7 +82,7 @@ const SelectModeScreen: React.FC<{
     measureLayout(draggable, (draggableContainer) => {
       measureLayout(earbudsArea, (earbudsContainer) => {
         const isOverlappingEarbuds = (moving: any, steady: any) => {
-          return moving.pageY < steady.pageY;
+          return moving.pageY < steady.pageY + 200;
         };
         const overlap = isOverlappingEarbuds(
           draggableContainer,
@@ -130,7 +132,7 @@ const SelectModeScreen: React.FC<{
 
     // Center the earbuds area
     Animated.timing(earbudsAreaTranslateY, {
-      toValue: centerY - 100,
+      toValue: centerY - 10,
       duration: 700,
       easing: Easing.ease,
       useNativeDriver: false,
@@ -139,7 +141,7 @@ const SelectModeScreen: React.FC<{
         setTimeout(() => {
           transitioning.current = true;
           router.push("/setup/earbuds-mode-confirmation");
-        }, 500);
+        }, 300);
       }
     });
   };
@@ -163,7 +165,7 @@ const SelectModeScreen: React.FC<{
 
     // Center the phone area
     Animated.timing(phoneAreaTranslateY, {
-      toValue: centerY - 500,
+      toValue: centerY - screenHeight,
       duration: 700,
       easing: Easing.ease,
       useNativeDriver: false,
@@ -172,7 +174,7 @@ const SelectModeScreen: React.FC<{
         setTimeout(() => {
           transitioning.current = true;
           router.push("/setup/phone-mode-confirmation");
-        }, 500);
+        }, 300);
       }
     });
   };
@@ -183,65 +185,148 @@ const SelectModeScreen: React.FC<{
 
   return (
     <SafeAreaView>
-      <Main>
-        <Center justifyContent="center" height="100%" px={2}>
-          <Spacer height="35%" />
-
-          <Stack gap={50}>
-            <Animated.View
-              ref={earbudsArea}
+      <Center justifyContent="center" height="100%" p={0}>
+        <Stack gap={20} h="100%" justifyContent="space-between">
+          <Animated.View
+            ref={earbudsArea}
+            style={{
+              flex: 2,
+              opacity: earbudsAreaOpacity,
+              transform: [{ translateY: earbudsAreaTranslateY }],
+              justifyContent: "flex-end",
+              height: screenHeight * 2,
+              position: "relative",
+            }}
+          >
+            <LinearGradient
+              colors={[
+                theme.colors.surface,
+                theme.colors.primary[50],
+                theme.colors.primary[100],
+                theme.colors.primary[200],
+              ]}
+              locations={[0.4, 0.6, 0.8, 1]}
               style={{
-                opacity: earbudsAreaOpacity,
-                transform: [{ translateY: earbudsAreaTranslateY }],
+                position: "absolute",
+                left: 0,
+                right: 0,
+                bottom: 0,
+                height: "250%",
+                zIndex: -2,
+                borderBottomLeftRadius: 20,
+                borderBottomRightRadius: 20,
+              }}
+            />
+
+            <Center
+              style={{
+                width: 100,
+                height: 150,
+                alignItems: "center",
+                marginLeft: "auto",
+                marginRight: "auto",
               }}
             >
-              <Stack gap={16}>
-                <Text align="center" level="title_2">
-                  Earbuds Mode
-                </Text>
-                <Text align="center">
-                  WeaUp supports AirPods 3 / Pro / Max / Beats Fit Pro / Google
-                  Pixel Buds
-                </Text>
-              </Stack>
-            </Animated.View>
-
-            <Animated.View
-              ref={draggable}
-              style={{
-                transform: [{ translateY: pan.y }],
-                opacity: draggableOppacity,
-              }}
-              {...panResponder.panHandlers}
-            >
-              <TouchableOpacity
-                onPress={onDragSelection}
-                style={{ paddingVertical: 30 }}
+              <Image name="weasel-head-tilt" style={{ zIndex: -1 }} />
+            </Center>
+            <Stack flexDirection="column" gap={16} px={32} pb={48}>
+              <Text
+                align="center"
+                level="title_2"
+                style={{ color: theme.colors.text }}
               >
-                <Text align="center">Drag to enter</Text>
-              </TouchableOpacity>
-            </Animated.View>
+                Earbuds Mode
+              </Text>
+              <Text
+                align="center"
+                level="body"
+                style={{ color: theme.colors.neutral[400] }}
+              >
+                Use earbuds (AirPods 3 / Pro / Max / Beats Fit Pro / Google
+                Pixel Buds) to track posture
+              </Text>
+            </Stack>
+          </Animated.View>
 
-            <Animated.View
-              ref={phoneArea}
+          <Animated.View
+            ref={draggable}
+            style={{
+              transform: [{ translateY: pan.y }],
+              opacity: draggableOppacity,
+              zIndex: 5,
+            }}
+            {...panResponder.panHandlers}
+          >
+            <TouchableOpacity
+              onPress={onDragSelection}
+              style={{ paddingVertical: 30 }}
+            >
+              <Text
+                align="center"
+                level="body"
+                style={{ color: theme.colors.neutral[950] }}
+              >
+                Drag to enter
+              </Text>
+            </TouchableOpacity>
+          </Animated.View>
+
+          <Animated.View
+            ref={phoneArea}
+            style={{
+              flex: 2,
+              opacity: phoneAreaOpacity,
+              transform: [{ translateY: phoneAreaTranslateY }],
+              height: screenHeight * 2,
+            }}
+          >
+            <LinearGradient
+              colors={[
+                theme.colors.primary[200],
+                theme.colors.primary[100],
+                theme.colors.primary[50],
+                theme.colors.surface,
+              ]}
+              locations={[0.1, 0.3, 0.6, 1]}
               style={{
-                opacity: phoneAreaOpacity,
-                transform: [{ translateY: phoneAreaTranslateY }],
+                position: "absolute",
+                left: 0,
+                right: 0,
+                top: 0,
+                height: "250%",
+                zIndex: -1,
+                borderTopLeftRadius: 20,
+                borderTopRightRadius: 20,
+              }}
+            />
+
+            <Stack gap={16} px={32} pt={48} pb={18}>
+              <Text align="center" level="title_2">
+                Phone Mode
+              </Text>
+              <Text
+                align="center"
+                level="body"
+                style={{ color: theme.colors.neutral[400] }}
+              >
+                Use the motion sensors in your mobile phone to track posture
+              </Text>
+            </Stack>
+
+            <Center
+              style={{
+                width: 100,
+                height: 150,
+                alignItems: "center",
+                marginLeft: "auto",
+                marginRight: "auto",
               }}
             >
-              <Stack gap={16}>
-                <Text align="center" level="title_2">
-                  Phone-only Mode
-                </Text>
-                <Text align="center">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor.
-                </Text>
-              </Stack>
-            </Animated.View>
-          </Stack>
-        </Center>
-      </Main>
+              <Image name="weasel-head-tilt" style={{ zIndex: -1 }} />
+            </Center>
+          </Animated.View>
+        </Stack>
+      </Center>
     </SafeAreaView>
   );
 };
