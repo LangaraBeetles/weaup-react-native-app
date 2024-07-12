@@ -4,10 +4,10 @@ import { Text } from "@src/components/ui/typography";
 import Center from "@src/components/ui/Center";
 import Stack from "@src/components/ui/Stack";
 import Button from "@src/components/ui/Button";
-import ShareButton from "@src/components/ui/ShareButton";
 import { ChallengeInputType } from "@src/interfaces/challenge.types";
 import { useFormContext } from "react-hook-form";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { Share } from "react-native";
 
 const ChallengeInvitationForm = (props: {
   handleCloseModalPress: () => void;
@@ -38,6 +38,37 @@ const ChallengeInvitationForm = (props: {
     };
   }, [hasShared]);
 
+  const onShare = async () => {
+    try {
+      await Share.share({
+        message: url, //Android
+        // url: url, //iOS
+      });
+      setHasShared(true);
+    } catch (error: any) {
+      console.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    const handleAppStateChange = (nextAppState: AppStateStatus) => {
+      if (nextAppState === "active" && hasShared) {
+        bottomSheetModalRef.current?.close();
+        handleCloseModalPress();
+        setHasShared(false);
+      }
+    };
+
+    const subscription = AppState.addEventListener(
+      "change",
+      handleAppStateChange,
+    );
+
+    return () => {
+      subscription.remove();
+    };
+  }, [hasShared]);
+
   return (
     <View style={styles.main}>
       <Center p={16}>
@@ -48,10 +79,14 @@ const ChallengeInvitationForm = (props: {
           Invite your teammates to New Challenge by sharing the code below
         </Text>
         <Stack justifyContent="flex-end" alignItems="center" gap={16}>
-          <ShareButton url={url} setHasShared={setHasShared} />
+          <Button
+            variant="primary"
+            title="Share Invitation"
+            onPress={onShare}
+          />
           <Button
             variant="secondary"
-            title="Not Now"
+            title={hasShared ? "Close" : "Not now"}
             onPress={handleCloseModalPress}
           />
         </Stack>
