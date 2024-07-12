@@ -19,11 +19,11 @@ const SetUpGoalScreenOnboarding = () => {
 
   const updateGoal = () => {
     setDailyGoal(goal);
-    router.push("/setup/signup");
+    router.push("/setup/signUp");
   };
 
   const maybeLater = () => {
-    router.push("/setup/signup");
+    router.push("/setup/signUp");
   };
 
   return (
