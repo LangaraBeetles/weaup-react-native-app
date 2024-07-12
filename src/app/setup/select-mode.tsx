@@ -327,7 +327,6 @@ const SelectModeScreen: React.FC<{
           </Animated.View>
         </Stack>
       </Center>
-      {/* </Main> */}
     </SafeAreaView>
   );
 };
