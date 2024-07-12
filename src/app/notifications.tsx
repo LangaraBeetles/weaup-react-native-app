@@ -33,11 +33,10 @@ const Notifications = () => {
 
   const filteredNotifications: NotificationType[] = notificationsData.filter(
     (notification: NotificationType) =>
-      selectedFilter === "All" ||
-      notification.notification_type === selectedFilter,
+      selectedFilter === "all" ||
+      notification.notification_type === selectedFilter ||
+      notification.notification_type.includes(selectedFilter),
   );
-
-  useEffect(() => {}, [filteredNotifications]);
 
   return (
     <Page
@@ -49,9 +48,9 @@ const Notifications = () => {
       header={
         <FilterMenu
           tabs={[
-            { value: "All", label: "All" },
+            { value: "all", label: "All" },
             { value: "daily_summary", label: "Summary" },
-            { value: "Challenge", label: "Challenge" },
+            { value: "challenge", label: "Challenge" },
           ]}
           onChange={setSelectedFilter}
         />

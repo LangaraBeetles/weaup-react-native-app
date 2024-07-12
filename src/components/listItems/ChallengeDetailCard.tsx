@@ -45,7 +45,22 @@ const ChallengeDetailCard = (props: any) => {
     <Stack justifyContent="center" gap={12}>
       {/* image and challenge details */}
       <Stack flexDirection="row" gap={12}>
-        <DisplayIcon width={56} height={56} />
+        <Stack
+          backgroundColor={data?.color}
+          w={56}
+          h={56}
+          borderRadius={8}
+          justifyContent="center"
+          alignItems="center"
+        >
+          <DisplayIcon
+            height="100%"
+            width="100%"
+            style={{
+              aspectRatio: 0.8,
+            }}
+          />
+        </Stack>
 
         <Stack gap={4} flex={4}>
           <Text level="title_3">{name}</Text>
@@ -113,9 +128,7 @@ const ChallengeDetailCard = (props: any) => {
             ) : null}
 
             <Text level="footnote_2" style={styles.footnote} align="center">
-              {percentage === 100
-                ? "Completed"
-                : "Nice try! Don't worry, we'll get it next time"}
+              {percentage === 100 ? "Completed" : "Nice try!"}
             </Text>
           </Stack>
         )}

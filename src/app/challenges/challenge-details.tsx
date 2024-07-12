@@ -4,7 +4,6 @@ import {
   TouchableOpacity,
   View,
   ScrollView,
-  Platform,
 } from "react-native";
 import { useLocalSearchParams, usePathname } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
@@ -34,16 +33,16 @@ const ChallengeDetail = () => {
     enabled: path === "/challenges/challenge-details",
   });
 
-  const members = data?.data.members;
-  const color = data?.data.color ?? theme.colors.secondary[100];
-  const { isOngoing } = isChallengeActive(data?.data?.end_at);
+  const members = data?.members;
+  const color = data?.color ?? theme.colors.secondary[100];
+  const { isOngoing } = isChallengeActive(data?.end_at ?? "");
 
   const handleShare = async () => {
     if (data) {
-      const urlWithUserId = data.data.url.replace("[user_id]", loggedUser);
+      const urlWithUserId = data?.url.replace("[user_id]", loggedUser);
       const shareOptions = {
         message: urlWithUserId,
-        url: Platform.OS === "ios" ? urlWithUserId : undefined,
+        // url: Platform.OS === "ios" ? urlWithUserId : undefined,
       };
 
       try {
@@ -63,7 +62,7 @@ const ChallengeDetail = () => {
           <Text level="title_2">
             {isOngoing ? `Challenge Progress` : `Challenge Summary`}
           </Text>
-          {isOngoing && (
+          {isOngoing && !!data?.url && (
             <Stack
               w={40}
               h={40}
@@ -90,7 +89,7 @@ const ChallengeDetail = () => {
             <>
               <View style={styles.card}>
                 <ChallengeDetailCard
-                  data={data?.data}
+                  data={data}
                   isOngoing={isOngoing}
                   color={color}
                 />

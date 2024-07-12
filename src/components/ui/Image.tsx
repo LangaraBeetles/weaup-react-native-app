@@ -17,6 +17,7 @@ import ProfileXpImage from "assets/img/profile-XP-image.svg";
 import LevelUpImage from "assets/img/level-up-image.svg";
 import Confeties from "assets/img/confeties.svg";
 import BadgeBackground from "assets/img/badge-background.svg";
+import Tada from "assets/img/tada.svg";
 
 const ImageConfig = {
   "streak-flames": StreakFlames,
@@ -36,6 +37,7 @@ const ImageConfig = {
   "level-up-image": LevelUpImage,
   confeties: Confeties,
   "badge-background": BadgeBackground,
+  tada: Tada,
 };
 
 export type ImageName = `${keyof typeof ImageConfig}`;

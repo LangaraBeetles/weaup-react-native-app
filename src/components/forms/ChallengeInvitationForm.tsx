@@ -13,11 +13,12 @@ const ChallengeInvitationForm = (props: {
   handleCloseModalPress: () => void;
 }) => {
   const { handleCloseModalPress } = props;
-  const { watch } = useFormContext<ChallengeInputType>();
+  const { watch, getValues } = useFormContext<ChallengeInputType>();
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const [hasShared, setHasShared] = useState(false);
 
   const url = watch("url");
+  const name = getValues("name");
 
   useEffect(() => {
     const handleAppStateChange = (nextAppState: AppStateStatus) => {
@@ -76,7 +77,7 @@ const ChallengeInvitationForm = (props: {
       </Center>
       <Stack px={16} h="90%" alignItems="center" justifyContent="space-between">
         <Text align="center">
-          Invite your teammates to New Challenge by sharing the code below
+          Invite your teammates to {name} by sharing the code below
         </Text>
         <Stack justifyContent="flex-end" alignItems="center" gap={16}>
           <Button

@@ -53,7 +53,10 @@ const Button: React.FC<{
           color={iconColors[disabled ? "disabled" : variant]}
         />
       )}
-      <ButtonText category={disabled ? "disabled" : variant}>
+      <ButtonText
+        category={disabled ? "disabled" : variant}
+        style={{ height: 20 }}
+      >
         {title}
       </ButtonText>
       {trailingIcon && (

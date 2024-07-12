@@ -7,7 +7,7 @@ const Main: React.FC<{ children?: React.ReactNode; style?: ViewStyle }> = ({
   return (
     <View
       style={{
-        padding: 30,
+        padding: 16,
         display: "flex",
         height: "100%",
         ...style,

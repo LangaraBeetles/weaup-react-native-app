@@ -11,7 +11,7 @@ const ShareButton = (props: {
     try {
       await Share.share({
         message: url, //Android
-        url: url, //iOS
+        // url: url, //iOS
       });
       setHasShared(true);
     } catch (error: any) {

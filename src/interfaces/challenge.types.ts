@@ -21,14 +21,15 @@ export type ChallengeType = {
   creator_id: string;
   name: string;
   description: string;
-  start_at: Date;
-  end_at: Date;
+  start_at: string;
+  end_at: string;
   goal: number;
   duration: number;
   color: string;
-  icon: string;
+  icon: "icon1" | "icon2" | "icon3";
   status: ChallengeStatusType;
   members: MemberType[];
+  url: string;
 };
 
 export enum ChallengeStatusEnum {

@@ -20,7 +20,7 @@ const colorOptions = {
   },
   red1: {
     bg: theme.colors.error[400],
-    color: theme.colors.text,
+    color: theme.colors.white,
   },
   red2: {
     bg: theme.colors.error[500],
