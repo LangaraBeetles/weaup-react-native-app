@@ -13,26 +13,28 @@ import XPCard from "@src/components/profile/XPCard";
 import BadgesCard from "@src/components/profile/BadgesCard";
 import DailyGoalCard from "@src/components/profile/DailyGoalCard";
 import StreakCard from "@src/components/profile/StreakCard";
+import { Text } from "@src/components/ui/typography";
 
 const ProfileScreen = () => {
-  const isGuest = useUser((data) => data.isGuest);
-  const setAuth = useUser((data) => data.setAuth);
-  const router = useRouter();
-  const { logout } = useAuth();
+  // const isGuest = useUser((data) => data.isGuest);
+  // const setAuth = useUser((data) => data.setAuth);
+  // const router = useRouter();
+  // const { logout } = useAuth();
 
-  const handleLogout = async () => {
-    setAuth(false);
-    logout();
-    router.replace("/");
-  };
+  // const handleLogout = async () => {
+  //   setAuth(false);
+  //   logout();
+  //   router.replace("/");
+  // };
 
-  const login = () => {
-    router.navigate("/signin");
-  };
+  // const login = () => {
+  //   router.navigate("/signin");
+  // };
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
+      <Text>Hello</Text>
+      {/* <ScrollView>
         <View style={styles.background} />
         <View style={styles.innerContainer}>
           <Stack gap={20}>
@@ -57,7 +59,7 @@ const ProfileScreen = () => {
           )}
           <Spacer height={20} />
         </View>
-      </ScrollView>
+      </ScrollView> */}
     </SafeAreaView>
   );
 };
