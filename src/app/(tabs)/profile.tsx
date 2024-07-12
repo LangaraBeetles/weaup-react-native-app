@@ -37,8 +37,8 @@ const ProfileScreen = () => {
       {/* <View style={styles.background} /> */}
       <View style={styles.innerContainer}>
         <Stack gap={20}>
-          {/* <UserCard />
-          <PostureScoreCard />
+          <UserCard />
+          {/*  <PostureScoreCard />
           <XPCard />
           <BadgesCard />
           <DailyGoalCard />
