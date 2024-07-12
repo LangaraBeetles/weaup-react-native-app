@@ -15,12 +15,12 @@ import Avatar from "@src/components/ui/Avatar";
 
 import { getUserById } from "@src/services/userApi";
 import { ChallengeResponseType } from "@src/interfaces/challenge.types";
-import { UserType } from "@src/interfaces/user.types";
 import { View } from "react-native";
 
 import Icon1 from "assets/challenges/card/icon1.svg";
 import Icon2 from "assets/challenges/card/icon2.svg";
 import Icon3 from "assets/challenges/card/icon3.svg";
+import { AuthUserResponse } from "../hooks/useAuth";
 
 const icon = {
   icon1: Icon1,
@@ -33,7 +33,7 @@ const JoinChallengeContainer = (props: {
   userId: string;
 }) => {
   const [challengeData, setChallengeData] = useState<ChallengeResponseType>();
-  const [userData, setUserData] = useState<UserType>();
+  const [userData, setUserData] = useState<Omit<AuthUserResponse, "token">>();
   const [error, setError] = useState<string>();
 
   useEffect(() => {
@@ -180,7 +180,10 @@ const JoinChallengeContainer = (props: {
             <Stack gap={8}>
               <Text level="footnote">Invited by</Text>
               <Stack flexDirection="row" gap={8} alignItems="center">
-                <Avatar content={userData?.name ? userData?.name[0] : ""} />
+                <Avatar
+                  variant={userData?.avatar_bg}
+                  content={userData?.name ? userData?.name[0] : ""}
+                />
                 <Text level="body">{userData?.name}</Text>
               </Stack>
             </Stack>

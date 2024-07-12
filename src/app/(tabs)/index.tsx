@@ -28,12 +28,14 @@ import Gradient from "@src/components/ui/Gradient";
 import Image from "@src/components/ui/Image";
 import RealtimeTrackingBackground from "@src/components/posture/RealtimeTrackingBackground";
 import SessionBackground from "@src/components/posture/SessionBackground";
+import Avatar from "@src/components/ui/Avatar";
 
 const { height } = Dimensions.get("screen");
 
 const HomePage = () => {
   const isSetupComplete = useUser((state) => state.isSetupComplete);
   const userName = useUser((state) => state.user.name);
+  const avatarColor = useUser((state) => state.user.avatar);
   const userLevel = useUser((state) => state.user.level);
   const sessionStatus = useUser((state) => state.sessionStatus);
 
@@ -64,13 +66,17 @@ const HomePage = () => {
             gap={8}
             backgroundColor={theme.colors.white}
             borderRadius={100}
-            py={8}
-            pl={8}
-            pr={12}
+            px={12}
+            h={41}
             alignItems="center"
           >
-            <Stack flexDirection="row" gap={4}>
-              {/* <Image name="avatar" w={25} h={25} /> */}
+            <Stack flexDirection="row" gap={4} alignItems="center" h={25}>
+              <Avatar
+                variant={avatarColor}
+                content={userName?.[0] ?? "G"}
+                size={25}
+                fontSize={10}
+              />
               {userName !== "null" ? (
                 <Text
                   style={{ color: theme.colors.neutral[800] }}

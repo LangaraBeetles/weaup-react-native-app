@@ -11,11 +11,13 @@ import axios from "axios";
 import { router } from "expo-router";
 import { useState } from "react";
 import {
+  ActivityIndicator,
   Dimensions,
   Platform,
   SafeAreaView,
   StyleSheet,
   TouchableOpacity,
+  View,
 } from "react-native";
 import * as Linking from "expo-linking";
 import BackButton from "@src/components/ui/BackButton";
@@ -25,6 +27,7 @@ const { height, width } = Dimensions.get("screen");
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleLogIn = () => {
     // TODO: Implement sign in logic with email and password
@@ -38,15 +41,34 @@ const SignIn = () => {
       } = await axios.get(`${config.api_url}/auth/google`);
 
       if (data.redirect) {
+        setLoading(true);
         Linking.openURL(data.redirect);
       }
     } catch (error) {
       console.error({ error });
+      setLoading(false);
     }
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }}>
+      {!!loading && (
+        <View
+          style={{
+            width,
+            height,
+            position: "absolute",
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            flex: 1,
+            zIndex: 2,
+          }}
+        >
+          <ActivityIndicator size="large" style={{ flex: 1 }} />
+        </View>
+      )}
       <Stack h={height} style={{ alignItems: "center" }}>
         <Stack
           style={{
