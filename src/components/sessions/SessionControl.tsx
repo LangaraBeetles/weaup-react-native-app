@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import React, { useCallback, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import Timer from "@src/components/ui/Timer";
 import { useRouter } from "expo-router";
 import { PostureSessionInput } from "@src/interfaces/posture.types";
@@ -14,9 +14,7 @@ const SessionControl = () => {
   const startDate = useRef<string>("");
 
   const userHP = useUser((state) => state.user.hp);
-
   const userXP = useUser((state) => state.user.xp);
-  const setUserXP = useUser((state) => state.setXP);
 
   const initialXP = useRef<number>(userXP);
 
@@ -31,6 +29,33 @@ const SessionControl = () => {
     (state) => state.prepareSessionPostureData,
   );
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const today = dayjs();
+        console.log("Fetching analytics for:", today.format());
+        const analyticsData = await getAnalytics(today.format());
+
+        if (
+          !analyticsData ||
+          !analyticsData.sessions ||
+          analyticsData.sessions.length === 0
+        ) {
+          console.log("No previous sessions, start a new streak");
+          setIsDailyStreak(true);
+          setDailyStreakCounter(1);
+          return;
+        }
+
+        console.log("Previous sessions found");
+      } catch (error) {
+        console.error("Failed to fetch analytics data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const { mutate } = useMutation({
     mutationKey: ["save-session-data"],
     mutationFn: (payload: PostureSessionInput) => saveSessionRecords(payload),
@@ -42,7 +67,7 @@ const SessionControl = () => {
         pathname: "/session-summary",
         params: {
           sessionParams,
-          isDailyStreak: isDailyStreak ? "true" : "false",
+          isDailyStreak: isDailyStreak.toString(),
         },
       });
 
@@ -52,12 +77,7 @@ const SessionControl = () => {
       console.log({ error });
       setSessionActive("INACTIVE");
     },
-    onSettled: () => {
-      void updateStreak;
-      // updateStreak();
-      // Move this logic to after the session summary
-      // This is causing the level up on the summary data to be different than the result expected from the session
-    },
+    onSettled: () => {},
   });
 
   const onStartSession = () => {
@@ -72,50 +92,6 @@ const SessionControl = () => {
   const onResumeSession = () => {
     setSessionActive("ACTIVE");
   };
-
-  const updateStreak = useCallback(async () => {
-    const today = dayjs();
-
-    const analyticsData = await getAnalytics(today.format());
-    if (
-      !analyticsData ||
-      !analyticsData.sessions ||
-      analyticsData.sessions.length === 0
-    ) {
-      console.log("No previous sessions, start a new streak");
-      // No previous sessions, start a new streak
-      setIsDailyStreak(true);
-      setUserXP(userXP + 100);
-      setDailyStreakCounter(1);
-      return;
-    }
-
-    const lastSession =
-      analyticsData.sessions[analyticsData.sessions.length - 1];
-    const lastSessionDate = lastSession?.ended_at;
-
-    if (lastSessionDate) {
-      if (!today.isSame(dayjs(lastSessionDate))) {
-        console.log("New day, increment streak");
-
-        // New day, increment streak
-        setIsDailyStreak(true);
-        if (userStreak === 7) {
-          setUserXP(userXP + 1000);
-          setDailyStreakCounter(1);
-        } else {
-          setUserXP(userXP + 100);
-          setDailyStreakCounter(userStreak + 1);
-        }
-      } else {
-        console.log("Same day, maintain streak");
-
-        // Same day, maintain streak
-        setIsDailyStreak(false);
-        setDailyStreakCounter(userStreak);
-      }
-    }
-  }, [userStreak, setDailyStreakCounter]);
 
   const onStopSession = () => {
     setSessionActive("INACTIVE");
