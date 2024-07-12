@@ -16,20 +16,20 @@ import StreakCard from "@src/components/profile/StreakCard";
 import { Text } from "@src/components/ui/typography";
 
 const ProfileScreen = () => {
-  // const isGuest = useUser((data) => data.isGuest);
-  // const setAuth = useUser((data) => data.setAuth);
-  // const router = useRouter();
-  // const { logout } = useAuth();
+  const isGuest = useUser((data) => data.isGuest);
+  const setAuth = useUser((data) => data.setAuth);
+  const router = useRouter();
+  const { logout } = useAuth();
 
-  // const handleLogout = async () => {
-  //   setAuth(false);
-  //   logout();
-  //   router.replace("/");
-  // };
+  const handleLogout = async () => {
+    setAuth(false);
+    logout();
+    router.replace("/");
+  };
 
-  // const login = () => {
-  //   router.navigate("/signin");
-  // };
+  const login = () => {
+    router.navigate("/signin");
+  };
 
   return (
     <SafeAreaView style={styles.container}>
