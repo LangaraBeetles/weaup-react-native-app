@@ -80,7 +80,7 @@ const HeadTrackingProvider: React.FC<{ children: React.ReactNode }> = ({
           }
         }
       },
-      1000,
+      500,
       isTrackingEnabled,
       mode,
     );

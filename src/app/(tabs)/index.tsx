@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import {
   Platform,
@@ -25,12 +25,12 @@ import { Text } from "@src/components/ui/typography";
 import { theme } from "@src/styles/theme";
 import ScoreComponent from "@src/components/homepage/ScoreComponent";
 import Gradient from "@src/components/ui/Gradient";
-import Image from "@src/components/ui/Image";
 import RealtimeTrackingBackground from "@src/components/posture/RealtimeTrackingBackground";
 import SessionBackground from "@src/components/posture/SessionBackground";
 import Avatar from "@src/components/ui/Avatar";
+import LottieView from "lottie-react-native";
 
-const { height } = Dimensions.get("screen");
+const { height, width } = Dimensions.get("screen");
 
 const HomePage = () => {
   const isSetupComplete = useUser((state) => state.isSetupComplete);
@@ -38,6 +38,37 @@ const HomePage = () => {
   const avatarColor = useUser((state) => state.user.avatar);
   const userLevel = useUser((state) => state.user.level);
   const sessionStatus = useUser((state) => state.sessionStatus);
+  const currentPosture = useUser((state) => state.currentPosture);
+  const isActiveMonitoring = useUser((state) => state.isTrackingEnabled);
+
+  const animation = useRef<any>(null);
+  const [progress, setProgress] = useState<number>(0.5);
+
+  useEffect(() => {
+    if (animation && isActiveMonitoring && sessionStatus === "INACTIVE") {
+      let value = progress;
+      if (currentPosture === "good") {
+        value = value - 0.2;
+      }
+      if (currentPosture === "mid") {
+        value = value + 0.2;
+      }
+      if (currentPosture === "bad") {
+        value = value + 0.5;
+      }
+      if (currentPosture === "not_reading") {
+        value = 0.05;
+      }
+
+      if (value > 1) {
+        setProgress(1);
+      } else if (value < 0) {
+        setProgress(0);
+      } else {
+        setProgress(value);
+      }
+    }
+  }, [isActiveMonitoring, sessionStatus, animation, currentPosture, progress]);
 
   if (!isSetupComplete) {
     return <Redirect href="/setup/start" />;
@@ -60,7 +91,13 @@ const HomePage = () => {
       {sessionStatus === "INACTIVE" && <RealtimeTrackingBackground />}
 
       <ScrollView style={{ flex: 1, zIndex: 2 }}>
-        <Stack flexDirection="row" justifyContent="space-between" p={15} pb={0}>
+        <Stack
+          style={styles.onTop}
+          flexDirection="row"
+          justifyContent="space-between"
+          p={15}
+          pb={0}
+        >
           <Stack
             flexDirection="row"
             gap={8}
@@ -119,20 +156,38 @@ const HomePage = () => {
 
         <ScoreComponent />
 
-        <Center p={15}>
+        <Center style={styles.onTop} p={15}>
           {Platform.OS === "ios" && <DeviceMotionViewiOS />}
           {Platform.OS === "android" && <DeviceMotionViewAndroid />}
         </Center>
 
         <Stack h={286} my={15}>
-          <Center>
-            {sessionStatus === "INACTIVE" ? (
-              <Image name="weasel-happy" />
-            ) : (
+          {sessionStatus === "INACTIVE" ? (
+            <Stack>
+              <LottieView
+                autoPlay={false}
+                ref={animation}
+                duration={1000}
+                progress={progress}
+                style={{
+                  width: width,
+                  height: height / 1.3,
+                  position: "absolute",
+                  top: -150,
+                  bottom: 0,
+                  aspectRatio: 2,
+                  zIndex: -1,
+                }}
+                source={require("../../animations/front_view.json")}
+              />
+            </Stack>
+          ) : (
+            <Center>
               <SessionBackground />
-            )}
-          </Center>
+            </Center>
+          )}
         </Stack>
+
         <Center style={styles.sessionButton}>
           <SessionControl />
         </Center>
@@ -149,6 +204,10 @@ const styles = StyleSheet.create({
   sessionButton: {
     width: 250,
     alignSelf: "center",
+    zIndex: 2,
+  },
+  onTop: {
+    zIndex: 2,
   },
 });
 
