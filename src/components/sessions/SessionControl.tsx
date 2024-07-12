@@ -14,7 +14,6 @@ const SessionControl = () => {
   const startDate = useRef<string>("");
 
   const userHP = useUser((state) => state.user.hp);
-
   const userXP = useUser((state) => state.user.xp);
 
   const initialXP = useRef<number>(userXP);

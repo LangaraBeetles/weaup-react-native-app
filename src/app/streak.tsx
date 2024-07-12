@@ -22,8 +22,8 @@ const StreakScreen = () => {
     const setStreak = async () => {
       try {
         const today = dayjs();
-
         const analyticsData = await getAnalytics(today.format());
+
         if (dailyStreak === 1) {
           setUserXP(userXP + 100);
           return;
