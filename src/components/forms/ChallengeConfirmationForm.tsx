@@ -78,12 +78,22 @@ const ChallengeConfirmationForm = () => {
             }}
           >
             <Stack flexDirection="row" gap={12}>
-              <DisplayIcon
-                height="100%"
-                style={{
-                  aspectRatio: 0.5,
-                }}
-              />
+              <Stack
+                backgroundColor={challenge.color}
+                h={86}
+                w={86}
+                borderRadius={8}
+                justifyContent="center"
+                alignItems="center"
+              >
+                <DisplayIcon
+                  height="100%"
+                  width="100%"
+                  style={{
+                    aspectRatio: 0.8,
+                  }}
+                />
+              </Stack>
 
               <Stack justifyContent="center" w="85%" gap={8}>
                 <Text level="title_3">{challenge.name}</Text>

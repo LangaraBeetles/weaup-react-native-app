@@ -142,16 +142,23 @@ const JoinChallengeContainer = (props: {
               >
                 <Stack flexDirection="row">
                   {/* image */}
-                  <Center
-                    style={{
-                      backgroundColor: data?.color ?? theme.colors.text,
-                      flex: 1,
-                      borderRadius: 8,
-                      justifyContent: "flex-end",
-                    }}
+
+                  <Stack
+                    backgroundColor={data?.color}
+                    w={56}
+                    h={56}
+                    borderRadius={8}
+                    justifyContent="center"
+                    alignItems="center"
                   >
-                    <DisplayIcon width={46} height={46} />
-                  </Center>
+                    <DisplayIcon
+                      height="100%"
+                      width="100%"
+                      style={{
+                        aspectRatio: 0.8,
+                      }}
+                    />
+                  </Stack>
 
                   {/* details */}
                   <Stack gap={8} flex={4} px={12}>

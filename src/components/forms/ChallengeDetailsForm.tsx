@@ -110,7 +110,7 @@ const ChallengeDetailsForm = ({
             >
               <Stack alignItems="center" gap={34}>
                 <ChallengeAvatarCarousel
-                  height={80}
+                  height={100}
                   onChange={(icon) => {
                     setValue("icon", icon);
                   }}

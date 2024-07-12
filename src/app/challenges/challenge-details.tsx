@@ -62,7 +62,7 @@ const ChallengeDetail = () => {
           <Text level="title_2">
             {isOngoing ? `Challenge Progress` : `Challenge Summary`}
           </Text>
-          {isOngoing && (
+          {isOngoing && !!data?.url && (
             <Stack
               w={40}
               h={40}

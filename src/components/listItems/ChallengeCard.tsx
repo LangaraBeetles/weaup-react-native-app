@@ -49,8 +49,22 @@ const ChallengeCard = (props: { challenge: ChallengeResponseType }) => {
     <View style={styles.container}>
       <TouchableOpacity onPress={showDetails}>
         <Stack flexDirection="row" gap={12}>
-          <DisplayIcon width={56} height={56} />
-
+          <Stack
+            backgroundColor={challenge.color}
+            w={56}
+            h={56}
+            borderRadius={8}
+            justifyContent="center"
+            alignItems="center"
+          >
+            <DisplayIcon
+              height="100%"
+              width="100%"
+              style={{
+                aspectRatio: 0.8,
+              }}
+            />
+          </Stack>
           <Stack justifyContent="center">
             <Text level="title_3">{challenge.name}</Text>
             <Stack flexDirection="row" gap={4} alignItems="center">
