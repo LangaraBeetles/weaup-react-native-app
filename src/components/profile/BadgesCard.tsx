@@ -34,11 +34,11 @@ const BadgesCard = () => {
 
           <Text level="headline">{userBadges?.length || 0}</Text>
         </Stack>
-        {/* <ProfileBadgeContainerPreview />
+        <ProfileBadgeContainerPreview />
 
         <Divider />
 
-        <TouchableOpacity onPress={viewBadges}>
+        {/* <TouchableOpacity onPress={viewBadges}>
           <Stack
             flexDirection="row"
             justifyContent="space-between"
