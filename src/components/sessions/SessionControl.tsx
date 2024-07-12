@@ -1,13 +1,11 @@
 import { View } from "react-native";
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import Timer from "@src/components/ui/Timer";
 import { useRouter } from "expo-router";
 import { PostureSessionInput } from "@src/interfaces/posture.types";
 import { saveSessionRecords } from "@src/services/sessionApi";
 import { useUser } from "@src/state/useUser";
 import { useMutation } from "@tanstack/react-query";
-import { getAnalytics } from "@src/services/analyticsApi";
-import dayjs from "dayjs";
 
 const SessionControl = () => {
   const router = useRouter();
@@ -17,10 +15,7 @@ const SessionControl = () => {
   const userXP = useUser((state) => state.user.xp);
 
   const initialXP = useRef<number>(userXP);
-
-  const setDailyStreakCounter = useUser((state) => state.setDailyStreakCounter);
   const userStreak = useUser((state) => state.user.dailyStreakCounter);
-  const [isDailyStreak, setIsDailyStreak] = React.useState(false);
 
   const setSessionActive = useUser((state) => state.setSessionStatus);
   const sessionStatus = useUser((state) => state.sessionStatus);
@@ -29,49 +24,15 @@ const SessionControl = () => {
     (state) => state.prepareSessionPostureData,
   );
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const today = dayjs();
-        console.log("Fetching analytics for:", today.format());
-        const analyticsData = await getAnalytics(today.format());
-
-        if (
-          !analyticsData ||
-          !analyticsData.sessions ||
-          analyticsData.sessions.length === 0
-        ) {
-          console.log("No previous sessions, start a new streak");
-          setIsDailyStreak(true);
-          setDailyStreakCounter(1);
-          return;
-        }
-
-        console.log("Previous sessions found");
-      } catch (error) {
-        console.error("Failed to fetch analytics data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
   const { mutate } = useMutation({
     mutationKey: ["save-session-data"],
     mutationFn: (payload: PostureSessionInput) => saveSessionRecords(payload),
     onSuccess: (response) => {
       const sessionId = response?.data._id;
-      const sessionParams = JSON.stringify(sessionId);
 
       router.push({
-        pathname: "/session-summary",
-        params: {
-          sessionParams,
-          isDailyStreak: isDailyStreak.toString(),
-        },
+        pathname: `/session-summary/${sessionId}`,
       });
-
-      setIsDailyStreak(false);
     },
     onError: (error) => {
       console.log({ error });

@@ -25,6 +25,13 @@ console.error = (...args: any) => {
   error(...args);
 };
 
+const warn = console.warn;
+console.warn = () => {
+  return;
+
+  warn();
+};
+
 const RootLayout = () => {
   const [fontsLoaded, fontError] = useFonts({
     NunitoBlack: require("../../assets/fonts/NunitoBlack.ttf"),
@@ -101,6 +108,11 @@ const RootLayout = () => {
 
                       <Stack.Screen
                         name="session-summary"
+                        options={{ headerShown: false }}
+                      />
+
+                      <Stack.Screen
+                        name="session-summary/[sessionid]"
                         options={{ headerShown: false }}
                       />
 

@@ -32,7 +32,7 @@ interface SessionRecord {
   updatedAt: string;
 }
 
-interface Session {
+export interface Session {
   _id: string;
   user_id: string;
   started_at: string;
@@ -44,6 +44,10 @@ interface Session {
   duration: string;
   createdAt: string;
   updatedAt: string;
+  xp: {
+    initial: number;
+    final: number;
+  };
 }
 
 interface HourlyRecord {

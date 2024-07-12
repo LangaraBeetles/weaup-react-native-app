@@ -11,10 +11,8 @@ import axios from "axios";
 import { router } from "expo-router";
 import { useState } from "react";
 import {
-  ActivityIndicator,
   Dimensions,
   Platform,
-  Pressable,
   SafeAreaView,
   StyleSheet,
   TouchableOpacity,
@@ -27,7 +25,7 @@ const { height, width } = Dimensions.get("screen");
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState<boolean>(false);
+  // const [loading, setLoading] = useState<boolean>(false);
 
   const handleLogIn = () => {
     // TODO: Implement sign in logic with email and password
@@ -41,18 +39,18 @@ const SignIn = () => {
       } = await axios.get(`${config.api_url}/auth/google`);
 
       if (data.redirect) {
-        setLoading(true);
+        // setLoading(true);
         Linking.openURL(data.redirect);
       }
     } catch (error) {
       console.error({ error });
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      {!!loading && (
+      {/* {!!loading && (
         <Pressable
           onPress={() => setLoading(false)}
           style={{
@@ -68,7 +66,7 @@ const SignIn = () => {
         >
           <ActivityIndicator size="large" style={{ flex: 1 }} />
         </Pressable>
-      )}
+      )} */}
       <Stack h={height} style={{ alignItems: "center" }}>
         <Stack
           style={{
@@ -82,7 +80,11 @@ const SignIn = () => {
             onBack={() => {
               const canGoBack = router.canGoBack();
 
-              canGoBack ? router.back() : router.navigate("/");
+              if (canGoBack) {
+                router.back();
+              } else {
+                router.replace("/");
+              }
             }}
           />
         </Stack>

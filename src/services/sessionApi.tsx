@@ -9,8 +9,35 @@ export const saveSessionRecords = async (session: PostureSessionInput) => {
   return data;
 };
 
-export const getSessionById = async (sessionId: string) => {
-  const { data } = await api.get(`${route}/${sessionId}`);
+interface PostureRecord {
+  good_posture: boolean;
+  recorded_at: string;
+}
 
-  return data;
+interface SessionData {
+  __v: number;
+  _id: string;
+  createdAt: string;
+  duration: number;
+  ended_at: string;
+  records: PostureRecord[];
+  score: number;
+  started_at: string;
+  total_bad: number;
+  total_good: number;
+  total_records: number;
+  updatedAt: string;
+  user_id: string;
+  xp: {
+    initial: number;
+    final: number;
+  };
+}
+
+export const getSessionById = async (sessionId: string) => {
+  const { data } = await api.get<{ data: SessionData }>(
+    `${route}/${sessionId}`,
+  );
+
+  return data.data;
 };

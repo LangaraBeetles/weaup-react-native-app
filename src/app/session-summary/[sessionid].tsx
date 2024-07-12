@@ -2,7 +2,7 @@ import Stack from "@src/components/ui/Stack";
 import { Text } from "@src/components/ui/typography";
 import { theme } from "@src/styles/theme";
 import { router, useLocalSearchParams } from "expo-router";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { SafeAreaView, Dimensions } from "react-native";
 import XPCard from "@src/components/sessions/SessionXPCard";
 import SessionCard from "@src/components/sessions/SessionCard";
@@ -11,41 +11,26 @@ import Center from "@src/components/ui/Center";
 import Image from "@src/components/ui/Image";
 import { useLevelSystem } from "@src/components/providers/LevelSystemProvider";
 import { getSessionById } from "@src/services/sessionApi";
+import { useUser } from "@src/state/useUser";
+import { useQuery } from "@tanstack/react-query";
+import safenumber from "@src/utils/safenumber";
 
 const { height } = Dimensions.get("window");
 
-interface PostureRecord {
-  good_posture: boolean;
-  recorded_at: string;
-}
-
-interface SessionData {
-  __v: number;
-  _id: string;
-  createdAt: string;
-  duration: number;
-  ended_at: string;
-  records: PostureRecord[];
-  score: number;
-  started_at: string;
-  total_bad: number;
-  total_good: number;
-  total_records: number;
-  updatedAt: string;
-  user_id: string;
-  xp: {
-    initial: number;
-    final: number;
-  };
-}
-
 const SessionSummaryScreen: React.FC = () => {
   const { unlockedLevels, showLevelUpModal } = useLevelSystem();
-  const { sessionParams, isDailyStreak } = useLocalSearchParams<{
-    sessionParams: string;
-    isDailyStreak: "true" | "false";
+  const { sessionid } = useLocalSearchParams<{
+    sessionid: string;
   }>();
-  const [sessionData, setSessionData] = useState<SessionData | null>(null);
+
+  const { data: sessionData } = useQuery({
+    queryKey: ["session-summary", sessionid],
+    queryFn: () => getSessionById(sessionid ?? ""),
+    enabled: !!sessionid,
+  });
+
+  const setDailyStreakCounter = useUser((state) => state.setDailyStreakCounter);
+  const dailyStreakCounter = useUser((state) => state.user.dailyStreakCounter);
 
   const formatDuration = (minutes: number): string => {
     const hours = Math.floor(minutes / 60);
@@ -65,7 +50,8 @@ const SessionSummaryScreen: React.FC = () => {
       return;
     }
 
-    if (isDailyStreak === "true") {
+    if (dailyStreakCounter === 0) {
+      setDailyStreakCounter(1);
       router.push("/streak");
 
       return;
@@ -75,27 +61,6 @@ const SessionSummaryScreen: React.FC = () => {
       pathname: "/",
     });
   };
-
-  useEffect(() => {
-    if (sessionParams) {
-      try {
-        const sessionId = sessionParams;
-
-        const fetchSessionData = async () => {
-          try {
-            const data = await getSessionById(sessionId.replace(/"/g, ""));
-            setSessionData(data.data);
-          } catch (error) {
-            console.error("Failed to fetch session data:", error);
-          }
-        };
-
-        fetchSessionData();
-      } catch (error) {
-        console.error("Failed to parse session params:", error);
-      }
-    }
-  }, [sessionParams]);
 
   const totalRecords = sessionData?.total_records || 0;
   const goodPosturePercentage = totalRecords
@@ -153,7 +118,7 @@ const SessionSummaryScreen: React.FC = () => {
               <Stack flex={1}>
                 <SessionCard
                   title="DURATION"
-                  content={formatDuration(sessionData?.duration || 0)}
+                  content={formatDuration(safenumber(sessionData?.duration))}
                   icon="hourglass-fill"
                   iconColor="#816DFF"
                 />

@@ -4,7 +4,7 @@ import { useRouter } from "expo-router";
 import Button from "@src/components/ui/Button";
 import useAuth from "@src/components/hooks/useAuth";
 import Stack from "@src/components/ui/Stack";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import { globalStyles } from "@src/styles/globalStyles";
 import Spacer from "@src/components/ui/Spacer";
 import UserCard from "@src/components/profile/UserCard";
@@ -31,33 +31,34 @@ const ProfileScreen = () => {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.background} />
-      <View style={styles.innerContainer}>
-        <Spacer height={64} />
-        <Stack gap={20}>
-          <UserCard />
-          <PostureScoreCard />
-          <XPCard />
-          <BadgesCard />
-          <DailyGoalCard />
-          <StreakCard />
-        </Stack>
-        <Spacer height={40} />
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
+        <View style={styles.background} />
+        <View style={styles.innerContainer}>
+          <Stack gap={20}>
+            <UserCard />
+            <PostureScoreCard />
+            <XPCard />
+            <BadgesCard />
+            <DailyGoalCard />
+            <StreakCard />
+          </Stack>
+          <Spacer height={40} />
 
-        {!isGuest ? (
-          <Button
-            title="Log out"
-            variant="secondary_coral"
-            onPress={handleLogout}
-            leadingIcon="logout"
-          />
-        ) : (
-          <Button title="Log in" onPress={login} variant="secondary" />
-        )}
-        <Spacer height={20} />
-      </View>
-    </ScrollView>
+          {!isGuest ? (
+            <Button
+              title="Log out"
+              variant="secondary_coral"
+              onPress={handleLogout}
+              leadingIcon="logout"
+            />
+          ) : (
+            <Button title="Log in" onPress={login} variant="secondary" />
+          )}
+          <Spacer height={20} />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
