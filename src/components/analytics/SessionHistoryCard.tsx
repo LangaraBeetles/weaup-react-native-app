@@ -8,6 +8,7 @@ import { useFormContext } from "react-hook-form";
 import { PostureData } from "@src/interfaces/posture.types";
 import dayjs from "dayjs";
 import ScoreChip from "../scoring/ScoreChip";
+import Icon from "../ui/Icon";
 
 type SessionRowData = {
   id: string;
@@ -119,8 +120,20 @@ const SessionRow: React.FC<{ data: SessionRowData }> = ({ data }) => {
               data.timeOfDay === "morning"
                 ? theme.colors.primary[50]
                 : theme.colors.secondary[100],
+            justifyContent: "center",
+            alignItems: "center",
           }}
-        />
+        >
+          <Icon
+            name={data.timeOfDay === "morning" ? "day" : "night"}
+            size={24}
+            color={
+              data.timeOfDay === "morning"
+                ? theme.colors.primary[500]
+                : theme.colors.secondary[700]
+            }
+          />
+        </View>
 
         <Stack>
           <Text level="headline">{`${data.startTime} - ${data.endTime}`}</Text>
