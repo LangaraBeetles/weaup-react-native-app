@@ -41,14 +41,16 @@ const Badge: React.FC<BadgeProps> = ({
   return (
     <StyledView category={size}>
       <BadgeTitle>
-        <StrokeText
-          text={title}
-          fontSize={size === "small" ? 24 : 52}
-          color={unlocked ? "#ffffff" : "#7f7f7f"}
-          strokeColor={unlocked ? "#FDB022" : "#72767e"}
-          strokeWidth={size === "small" ? 5 : 10}
-          fontFamily="FredokaOneRegular"
-        />
+        {unlocked && (
+          <StrokeText
+            text={title}
+            fontSize={size === "small" ? 24 : 52}
+            color={"#ffffff"}
+            strokeColor={"#FDB022"}
+            strokeWidth={size === "small" ? 5 : 10}
+            fontFamily="FredokaOneRegular"
+          />
+        )}
       </BadgeTitle>
       <CustomBadge width="100%" height="100%" />
       <BadgeSubtitle>

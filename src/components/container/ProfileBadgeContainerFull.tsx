@@ -1,8 +1,11 @@
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 import Stack from "../ui/Stack";
 import BadgeContainer from "./BadgeContainer";
 import badges from "@src/badges";
 import { useUser } from "@src/state/useUser";
+
+const windowWidth = Dimensions.get("window").width;
+const gap = (windowWidth - 332) / 2;
 
 const ProfileBadgeContainerFull = () => {
   const userBadges = useUser((state) => state.user.badges);
@@ -32,8 +35,8 @@ const ProfileBadgeContainerFull = () => {
   return (
     <Stack
       flexDirection="row"
-      justifyContent="space-between"
-      gap={16}
+      justifyContent="start"
+      gap={gap}
       style={styles.container}
     >
       {renderBadges()}
