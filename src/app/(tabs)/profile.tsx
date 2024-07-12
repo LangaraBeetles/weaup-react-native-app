@@ -33,32 +33,32 @@ const ProfileScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
-        {/* <View style={styles.background} /> */}
-        <View style={styles.innerContainer}>
-          <Stack gap={20}>
-            <UserCard />
-            <PostureScoreCard />
-            <XPCard />
-            <BadgesCard />
-            <DailyGoalCard />
-            <StreakCard />
-          </Stack>
-          <Spacer height={40} />
+      {/* <ScrollView> */}
+      {/* <View style={styles.background} /> */}
+      <View style={styles.innerContainer}>
+        <Stack gap={20}>
+          {/* <UserCard />
+          <PostureScoreCard />
+          <XPCard />
+          <BadgesCard />
+          <DailyGoalCard />
+          <StreakCard /> */}
+        </Stack>
+        <Spacer height={40} />
 
-          {!isGuest ? (
-            <Button
-              title="Log out"
-              variant="secondary_coral"
-              onPress={handleLogout}
-              leadingIcon="logout"
-            />
-          ) : (
-            <Button title="Log in" onPress={login} variant="secondary" />
-          )}
-          <Spacer height={20} />
-        </View>
-      </ScrollView>
+        {!isGuest ? (
+          <Button
+            title="Log out"
+            variant="secondary_coral"
+            onPress={handleLogout}
+            leadingIcon="logout"
+          />
+        ) : (
+          <Button title="Log in" onPress={login} variant="secondary" />
+        )}
+        <Spacer height={20} />
+      </View>
+      {/* </ScrollView> */}
     </SafeAreaView>
   );
 };
