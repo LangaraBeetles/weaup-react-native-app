@@ -1,4 +1,11 @@
-import { Pressable, ScrollView, Share, StyleSheet, View } from "react-native";
+import {
+  Share,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  ScrollView,
+  Platform,
+} from "react-native";
 import { useLocalSearchParams, usePathname } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
 
@@ -34,13 +41,15 @@ const ChallengeDetail = () => {
   const handleShare = async () => {
     if (data) {
       const urlWithUserId = data.data.url.replace("[user_id]", loggedUser);
+      const shareOptions = {
+        message: urlWithUserId,
+        url: Platform.OS === "ios" ? urlWithUserId : undefined,
+      };
+
       try {
-        await Share.share({
-          message: urlWithUserId, // Android
-          url: urlWithUserId, // iOS
-        });
-      } catch (error: any) {
-        console.error(error.message);
+        await Share.share(shareOptions);
+      } catch (error) {
+        console.error(error);
       }
     }
   };
@@ -63,9 +72,9 @@ const ChallengeDetail = () => {
               justifyContent="center"
               borderRadius={40}
             >
-              <Pressable onPress={handleShare}>
+              <TouchableOpacity onPress={handleShare}>
                 <Icon name="share-outline" size={24} />
-              </Pressable>
+              </TouchableOpacity>
             </Stack>
           )}
         </Stack>
