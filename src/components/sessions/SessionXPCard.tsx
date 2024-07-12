@@ -69,6 +69,7 @@ const XPCard: React.FC<XPCardProps> = ({ xp }) => {
           ) : (
             <View
               style={{
+                marginVertical: 10,
                 width: "100%",
                 backgroundColor: theme.colors.white,
                 borderColor: theme.colors.neutral[100],
