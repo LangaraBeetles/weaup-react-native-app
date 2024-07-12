@@ -3,13 +3,14 @@ import {
   ChallengeInputType,
   ChallengeResponseType,
   ChallengeStatusEnum,
+  ChallengeType,
 } from "@src/interfaces/challenge.types";
 
 const route = "challenges";
 
 export const getChallengeById = async (id: string) => {
-  const response = await api.get(`${route}/${id}`);
-  return response.data;
+  const { data } = await api.get<{ data: ChallengeType }>(`${route}/${id}`);
+  return data.data;
 };
 
 export const createChallenge = async (challenge: ChallengeInputType) => {

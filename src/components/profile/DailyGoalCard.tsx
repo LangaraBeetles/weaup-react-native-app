@@ -2,7 +2,7 @@ import { useUser } from "@src/state/useUser";
 import Icon from "../ui/Icon";
 import Stack from "../ui/Stack";
 import { Text } from "../ui/typography";
-import { Pressable, StyleSheet } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { globalStyles } from "@src/styles/globalStyles";
 import Box from "../ui/Box";
 import Divider from "../ui/Divider";
@@ -36,7 +36,7 @@ const DailyGoalCard = () => {
         </Stack>
 
         <Divider />
-        <Pressable onPress={changeGoal}>
+        <TouchableOpacity onPress={changeGoal}>
           <Stack
             flexDirection="row"
             justifyContent="space-between"
@@ -45,7 +45,7 @@ const DailyGoalCard = () => {
             <Text level="footnote">Change daily goal</Text>
             <Icon name="chevron-right" />
           </Stack>
-        </Pressable>
+        </TouchableOpacity>
       </Stack>
     </Box>
   );

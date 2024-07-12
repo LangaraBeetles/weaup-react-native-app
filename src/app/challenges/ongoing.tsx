@@ -15,7 +15,6 @@ import Icon from "@src/components/ui/Icon";
 import { Text } from "@src/components/ui/typography";
 import { theme } from "@src/styles/theme";
 import ListSkeleton from "@src/components/ui/ListSkeleton";
-import JoinChallenge from "./join-challenge";
 import { useUser } from "@src/state/useUser";
 
 const TogetherScreen = () => {
@@ -146,7 +145,6 @@ const TogetherScreen = () => {
           />
         }
       />
-      <JoinChallenge />
     </Page>
   );
 };

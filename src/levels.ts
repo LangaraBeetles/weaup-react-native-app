@@ -14,6 +14,4 @@ const levels: LevelType[] = [
   }),
 ];
 
-// console.log({ levels });
-
 export default levels;

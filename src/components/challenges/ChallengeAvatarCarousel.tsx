@@ -21,7 +21,7 @@ const ChallengeAvatarCarousel = ({
   height: number;
   onChange: (value: ChallengeIconType) => void;
 }) => {
-  const itemSize = 50;
+  const itemSize = 65;
   const centerOffset = width / 2 - itemSize / 2;
 
   const animationStyle = useCallback(
@@ -35,7 +35,7 @@ const ChallengeAvatarCarousel = ({
       );
 
       const translateX =
-        interpolate(value, [-1, 0, 1], [-itemSize, 0, itemSize]) +
+        interpolate(value, [-0.9, 0, 0.9], [-itemSize, 0, itemSize]) +
         centerOffset -
         itemGap;
 
@@ -48,7 +48,7 @@ const ChallengeAvatarCarousel = ({
       const scale = interpolate(
         value,
         [-1, -0.5, 0, 0.5, 1],
-        [0.8, 0.85, 1.1, 0.85, 0.8],
+        [0.7, 0.85, 1.3, 0.85, 0.7],
       );
 
       return {

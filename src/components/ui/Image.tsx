@@ -18,6 +18,7 @@ import LevelUpImage from "assets/img/level-up-image.svg";
 import Confeties from "assets/img/confeties.svg";
 import BadgeBackground from "assets/img/badge-background.svg";
 import WeaselHeadTilt from "assets/img/weasel-head-tilt.svg";
+import Tada from "assets/img/tada.svg";
 
 const ImageConfig = {
   "streak-flames": StreakFlames,
@@ -38,6 +39,7 @@ const ImageConfig = {
   confeties: Confeties,
   "badge-background": BadgeBackground,
   "weasel-head-tilt": WeaselHeadTilt,
+  tada: Tada,
 };
 
 export type ImageName = `${keyof typeof ImageConfig}`;
