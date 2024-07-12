@@ -14,10 +14,10 @@ import {
   ActivityIndicator,
   Dimensions,
   Platform,
+  Pressable,
   SafeAreaView,
   StyleSheet,
   TouchableOpacity,
-  View,
 } from "react-native";
 import * as Linking from "expo-linking";
 import BackButton from "@src/components/ui/BackButton";
@@ -53,10 +53,10 @@ const SignIn = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       {!!loading && (
-        <View
+        <Pressable
+          onPress={() => setLoading(false)}
           style={{
             width,
-            height,
             position: "absolute",
             top: 0,
             bottom: 0,
@@ -67,7 +67,7 @@ const SignIn = () => {
           }}
         >
           <ActivityIndicator size="large" style={{ flex: 1 }} />
-        </View>
+        </Pressable>
       )}
       <Stack h={height} style={{ alignItems: "center" }}>
         <Stack
@@ -81,7 +81,8 @@ const SignIn = () => {
           <BackButton
             onBack={() => {
               const canGoBack = router.canGoBack();
-              canGoBack ? router.back() : router.replace("/");
+
+              canGoBack ? router.back() : router.navigate("/");
             }}
           />
         </Stack>
