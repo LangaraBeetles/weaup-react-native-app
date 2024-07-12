@@ -1,18 +1,27 @@
 import { useUser } from "@src/state/useUser";
 import Icon from "../ui/Icon";
 import Stack from "../ui/Stack";
+import Avatar from "../ui/Avatar";
 import { Text } from "../ui/typography";
 import { StyleSheet } from "react-native";
 import { globalStyles } from "@src/styles/globalStyles";
+import { theme } from "@src/styles/theme";
 
 const UserCard = () => {
   const userName = useUser((state) => state.user.name);
+  const avatarColor = useUser((state) => state.user.avatar);
   const userEmail = useUser((state) => state.user.email);
 
   return (
     <Stack flexDirection="row" gap={12}>
-      {/* TODO: add avatar */}
-      {/* <Icon name="profile-avatar" /> */}
+      <Avatar
+        variant={avatarColor}
+        content={userName?.[0] ?? "G"}
+        size={50}
+        fontSize={22}
+        borderColor={theme.colors.white}
+      />
+
       <Stack
         flexDirection="row"
         justifyContent="space-between"
@@ -21,11 +30,13 @@ const UserCard = () => {
       >
         <Stack>
           <Text level="title_3" style={styles.title}>
-            {userName}
+            {userName ?? "Guest User"}
           </Text>
-          <Text level="subhead" style={styles.subhead1}>
-            {userEmail}
-          </Text>
+          {!!userEmail && (
+            <Text level="subhead" style={styles.subhead1}>
+              {userEmail}
+            </Text>
+          )}
         </Stack>
         <Icon name="chevron-right" />
       </Stack>

@@ -1,9 +1,11 @@
 import { Share } from "react-native";
-
 import Button from "@src/components/ui/Button";
 
-const ShareButton = (props: any) => {
-  const { url } = props;
+const ShareButton = (props: {
+  url: string;
+  setHasShared: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
+  const { url, setHasShared } = props;
 
   const onShare = async () => {
     try {
@@ -11,6 +13,7 @@ const ShareButton = (props: any) => {
         message: url, //Android
         // url: url, //iOS
       });
+      setHasShared(true);
     } catch (error: any) {
       console.error(error.message);
     }

@@ -1,11 +1,11 @@
 import api from "../../services/api";
 import { useUser } from "@src/state/useUser";
-import { TrackingModeType, UserType } from "@interfaces/user.types";
+import { TrackingModeType, UserAvatar, UserType } from "@interfaces/user.types";
 import { useNavigation, CommonActions } from "@react-navigation/native";
 import { UserBadgeType } from "@src/interfaces/badges.types";
 import { getUserById } from "@src/services/userApi";
 
-type AuthUserResponse = {
+export type AuthUserResponse = {
   _id: string;
   name: string;
   email: string | null;
@@ -20,6 +20,7 @@ type AuthUserResponse = {
   token: string;
   daily_streak_counter: number;
   badges: UserBadgeType[];
+  avatar_bg: UserAvatar;
 };
 
 const useAuth = () => {
@@ -46,7 +47,7 @@ const useAuth = () => {
       email: params.email ?? "",
       isSetupComplete: true, //params.is_setup_complete, // TODO: Review why this values is undefined
       preferredMode: params.preferred_mode,
-
+      avatar: params.avatar_bg,
       token: params.token,
 
       dailyStreakCounter: params.daily_streak_counter || 0,
@@ -97,6 +98,7 @@ const useAuth = () => {
         preferredMode: createdUser.preferred_mode,
         isSetupComplete: createdUser.is_setup_complete,
         dailyStreakCounter: 0,
+        avatar: createdUser.avatar_bg,
         badges: [],
       };
 
