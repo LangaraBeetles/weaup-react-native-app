@@ -24,9 +24,9 @@ const ChallengeDetail = () => {
     enabled: path === "/challenges/challenge-details",
   });
 
-  const members = data?.data.members;
-  const color = data?.data.color ?? theme.colors.secondary[100];
-  const { isOngoing } = isChallengeActive(data?.data?.end_at);
+  const members = data?.members;
+  const color = data?.color ?? theme.colors.secondary[100];
+  const { isOngoing } = isChallengeActive(data?.end_at ?? "");
 
   return (
     <ScrollView style={styles.body}>
@@ -50,7 +50,7 @@ const ChallengeDetail = () => {
             <>
               <View style={styles.card}>
                 <ChallengeDetailCard
-                  data={data?.data}
+                  data={data}
                   isOngoing={isOngoing}
                   color={color}
                 />
