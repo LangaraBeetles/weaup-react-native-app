@@ -16,7 +16,13 @@ const ScoreComponent = () => {
 
   if (!isSessionActive) {
     return (
-      <Center p={15} pb={0}>
+      <Center
+        p={15}
+        pb={0}
+        style={{
+          zIndex: 2,
+        }}
+      >
         <Stack
           flexDirection="row"
           border={1}
