@@ -42,7 +42,7 @@ const ProfileScreen = () => {
           <XPCard />
           {/* <BadgesCard /> */}
           <DailyGoalCard />
-          {/*     <StreakCard /> */}
+          <StreakCard />
         </Stack>
         <Spacer height={40} />
 
