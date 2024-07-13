@@ -40,7 +40,7 @@ const ProfileScreen = () => {
             <UserCard />
             <PostureScoreCard />
             <XPCard />
-            {/* <BadgesCard /> */}
+            <BadgesCard />
             <DailyGoalCard />
             <StreakCard />
           </Stack>

@@ -2,12 +2,13 @@ import { useUser } from "@src/state/useUser";
 import Icon from "../ui/Icon";
 import Stack from "../ui/Stack";
 import { Text } from "../ui/typography";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { globalStyles } from "@src/styles/globalStyles";
-import Box from "../ui/Box";
+// import Box from "../ui/Box";
 import ProfileBadgeContainerPreview from "../container/ProfileBadgeContainerPreview";
 import Divider from "../ui/Divider";
 import { router } from "expo-router";
+import { theme } from "@src/styles/theme";
 
 const BadgesCard = () => {
   const userBadges = useUser((state) => state.user.badges);
@@ -17,7 +18,7 @@ const BadgesCard = () => {
   };
 
   return (
-    <Box>
+    <View>
       {/* <Stack gap={18}>
         <Stack
           flexDirection="row"
@@ -50,13 +51,13 @@ const BadgesCard = () => {
           </Stack>
         </TouchableOpacity> 
       </Stack> */}
-    </Box>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   title: {
-    color: globalStyles.colors.neutral[800],
+    color: theme.colors.neutral[800],
   },
 });
 
