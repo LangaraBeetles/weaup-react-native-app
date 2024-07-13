@@ -7,6 +7,8 @@ import Challenge from "assets/badges/challenge.svg";
 import Streak from "assets/badges/streak.svg";
 import XP from "assets/badges/xp.svg";
 import { StrokeText } from "@charmy.tech/react-native-stroke-text";
+import Svg, { Text } from "react-native-svg";
+import { theme } from "@src/styles/theme";
 
 const BadgeConfig = {
   "dummy-badge": DummyBadge,
@@ -41,20 +43,36 @@ const Badge: React.FC<BadgeProps> = ({
   return (
     <StyledView category={size}>
       <BadgeTitle>
-        {unlocked && (
-          <StrokeText
-            text={title}
-            fontSize={size === "small" ? 24 : 52}
-            color={"#ffffff"}
-            strokeColor={"#FDB022"}
-            strokeWidth={size === "small" ? 5 : 10}
+        {/* {unlocked && ( */}
+        {/* // <StrokeText
+          //   text={title}
+          //   fontSize={size === "small" ? 24 : 52}
+          //   color={"#ffffff"}
+          //   strokeColor={"#FDB022"}
+          //   strokeWidth={size === "small" ? 5 : 10}
+          //   fontFamily="FredokaOneRegular"
+          // /> */}
+        <Svg height={size === "small" ? "24" : "52"} width="100">
+          <Text
+            fill={theme.colors.white}
+            stroke="#FDB022"
+            fontSize={size === "small" ? "22" : "50"}
+            fontWeight="bold"
+            strokeWidth={size === "small" ? 2 : 3}
+            letterSpacing="1"
+            x="50"
+            y="20"
+            textAnchor="middle"
             fontFamily="FredokaOneRegular"
-          />
-        )}
+          >
+            {title}
+          </Text>
+        </Svg>
+        {/* )} */}
       </BadgeTitle>
       <CustomBadge width="100%" height="100%" />
       <BadgeSubtitle>
-        <StrokeText
+        {/* <StrokeText
           text={subtitle}
           fontSize={size === "small" ? 24 : 32}
           color={"#ffffff"}
@@ -63,7 +81,37 @@ const Badge: React.FC<BadgeProps> = ({
           numberOfLines={2}
           width={200}
           fontFamily="FredokaOneRegular"
-        />
+        /> */}
+        <Svg height={size === "small" ? "22" : "26"} width="200">
+          <Text
+            fill={theme.colors.white}
+            stroke={color}
+            fontSize={size === "small" ? "20" : "24"}
+            fontWeight="bold"
+            letterSpacing="1"
+            x="100"
+            y="20"
+            textAnchor="middle"
+            fontFamily="FredokaOneRegular"
+          >
+            STROKED
+          </Text>
+        </Svg>
+        <Svg height={size === "small" ? "22" : "26"} width="200">
+          <Text
+            fill={theme.colors.white}
+            stroke={color}
+            fontSize={size === "small" ? "20" : "24"}
+            fontWeight="bold"
+            x="100"
+            y="20"
+            letterSpacing="1"
+            textAnchor="middle"
+            fontFamily="FredokaOneRegular"
+          >
+            TEXT
+          </Text>
+        </Svg>
       </BadgeSubtitle>
     </StyledView>
   );

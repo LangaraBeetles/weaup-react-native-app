@@ -39,7 +39,7 @@ const BadgesCard = () => {
 
         <Divider />
 
-        {/* <TouchableOpacity onPress={viewBadges}>
+        <TouchableOpacity onPress={viewBadges}>
           <Stack
             flexDirection="row"
             justifyContent="space-between"
@@ -49,7 +49,7 @@ const BadgesCard = () => {
 
             <Icon name="chevron-right" />
           </Stack>
-        </TouchableOpacity>  */}
+        </TouchableOpacity>
       </Stack>
     </Box>
   );
