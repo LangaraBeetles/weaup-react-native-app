@@ -19,7 +19,7 @@ const BadgesCard = () => {
 
   return (
     <Box>
-      {/* <Stack gap={18}>
+      <Stack gap={18}>
         <Stack
           flexDirection="row"
           justifyContent="space-between"
@@ -39,7 +39,7 @@ const BadgesCard = () => {
 
         <Divider />
 
-     <TouchableOpacity onPress={viewBadges}>
+        {/* <TouchableOpacity onPress={viewBadges}>
           <Stack
             flexDirection="row"
             justifyContent="space-between"
@@ -49,8 +49,8 @@ const BadgesCard = () => {
 
             <Icon name="chevron-right" />
           </Stack>
-        </TouchableOpacity> 
-      </Stack> */}
+        </TouchableOpacity>  */}
+      </Stack>
     </Box>
   );
 };
