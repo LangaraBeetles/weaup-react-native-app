@@ -92,18 +92,18 @@ const ProfileBadgeContainerPreview = () => {
               // <View />
             );
           })
-        : badges.slice(0, 3).map((badge, index) => (
-            // <BadgeContainer
-            //   key={index}
-            //   id={badge.id}
-            //   title={badge.title}
-            //   subtitle={badge.subtitle}
-            //   description={badge.description}
-            //   badge={badge.badge}
-            //   color={badge.color}
-            //   unlocked={false}
-            // />
-            <View />
+        : badges?.slice(0, 3)?.map((badge, index) => (
+            <BadgeContainer
+              key={index}
+              id={badge.id}
+              title={badge.title}
+              subtitle={badge.subtitle}
+              description={badge.description}
+              badge={badge.badge}
+              color={badge.color}
+              unlocked={false}
+            />
+            // <View />
           ))}
     </Stack>
   );
