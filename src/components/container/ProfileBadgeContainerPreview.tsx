@@ -3,6 +3,7 @@ import Stack from "../ui/Stack";
 import BadgeContainer from "./BadgeContainer";
 import badges from "@src/badges";
 import { BadgeType, UserBadgeType } from "@src/interfaces/badges.types";
+import { View } from "react-native";
 
 const getLatestBadges = (userBadges: Array<UserBadgeType>) => {
   try {
@@ -78,32 +79,32 @@ const ProfileBadgeContainerPreview = () => {
       {latestBadges.length
         ? latestBadges?.map((badge, index) => {
             return (
-              <BadgeContainer
-                key={index}
-                id={badge.id}
-                title={badge.title}
-                subtitle={badge.subtitle}
-                description={badge.description}
-                badge={badge.badge}
-                color={badge.color}
-                unlocked={true}
-              />
+              // <BadgeContainer
+              //   key={index}
+              //   id={badge.id}
+              //   title={badge.title}
+              //   subtitle={badge.subtitle}
+              //   description={badge.description}
+              //   badge={badge.badge}
+              //   color={badge.color}
+              //   unlocked={true}
+              // />
+              <View />
             );
           })
-        : badges
-            .slice(0, 3)
-            .map((badge, index) => (
-              <BadgeContainer
-                key={index}
-                id={badge.id}
-                title={badge.title}
-                subtitle={badge.subtitle}
-                description={badge.description}
-                badge={badge.badge}
-                color={badge.color}
-                unlocked={false}
-              />
-            ))}
+        : badges.slice(0, 3).map((badge, index) => (
+            // <BadgeContainer
+            //   key={index}
+            //   id={badge.id}
+            //   title={badge.title}
+            //   subtitle={badge.subtitle}
+            //   description={badge.description}
+            //   badge={badge.badge}
+            //   color={badge.color}
+            //   unlocked={false}
+            // />
+            <View />
+          ))}
     </Stack>
   );
 };
