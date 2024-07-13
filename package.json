@@ -18,6 +18,7 @@
     "@fast-styles/react": "^0.2.9",
     "@gorhom/bottom-sheet": "^4",
     "@react-native-async-storage/async-storage": "^1.23.1",
+    "@react-native-google-signin/google-signin": "^12.2.1",
     "@tanstack/react-query": "^5.48.0",
     "aws-sdk": "^2.1630.0",
     "axios": "^1.7.2",
