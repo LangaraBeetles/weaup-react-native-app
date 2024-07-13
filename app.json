@@ -60,16 +60,6 @@
             "./assets/fonts/NunitoSemiBold.ttf",
             "./assets/fonts/NunitoMedium.ttf",
             "./assets/fonts/NunitoRegular.ttf",
-            "./assets/fonts/NunitoLight.ttf",
-            "./assets/fonts/NunitoExtraLight.ttf",
-            "./assets/fonts/NunitoBlackItalic.ttf",
-            "./assets/fonts/NunitoExtraBoldItalic.ttf",
-            "./assets/fonts/NunitoBoldItalic.ttf",
-            "./assets/fonts/NunitoSemiBoldItalic.ttf",
-            "./assets/fonts/NunitoMediumItalic.ttf",
-            "./assets/fonts/NunitoItalic.ttf",
-            "./assets/fonts/NunitoLightItalic.ttf",
-            "./assets/fonts/NunitoExtraLightItalic.ttf",
             "./assets/fonts/FredokaOneRegular.ttf"
           ]
         }
