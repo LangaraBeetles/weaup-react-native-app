@@ -53,8 +53,8 @@ const Badge: React.FC<BadgeProps> = ({
         )}
       </BadgeTitle>
       <CustomBadge width="100%" height="100%" />
-      {/* <BadgeSubtitle>
-        <StrokeText
+      <BadgeSubtitle>
+        {/* <StrokeText
           text={subtitle}
           fontSize={size === "small" ? 24 : 32}
           color={"#ffffff"}
@@ -63,8 +63,8 @@ const Badge: React.FC<BadgeProps> = ({
           numberOfLines={2}
           width={200}
           fontFamily="FredokaOneRegular"
-        />
-      </BadgeSubtitle> */}
+        /> */}
+      </BadgeSubtitle>
     </StyledView>
   );
 };
