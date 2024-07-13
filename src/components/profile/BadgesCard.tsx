@@ -4,7 +4,7 @@ import Stack from "../ui/Stack";
 import { Text } from "../ui/typography";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { globalStyles } from "@src/styles/globalStyles";
-// import Box from "../ui/Box";
+import Box from "../ui/Box";
 import ProfileBadgeContainerPreview from "../container/ProfileBadgeContainerPreview";
 import Divider from "../ui/Divider";
 import { router } from "expo-router";
@@ -18,7 +18,7 @@ const BadgesCard = () => {
   };
 
   return (
-    <View>
+    <Box>
       {/* <Stack gap={18}>
         <Stack
           flexDirection="row"
@@ -51,7 +51,7 @@ const BadgesCard = () => {
           </Stack>
         </TouchableOpacity> 
       </Stack> */}
-    </View>
+    </Box>
   );
 };
 
