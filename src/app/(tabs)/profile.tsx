@@ -32,8 +32,8 @@ const ProfileScreen = () => {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <SafeAreaView>
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
         <View style={styles.background} />
         <View style={styles.innerContainer}>
           <Stack gap={20}>
@@ -58,8 +58,8 @@ const ProfileScreen = () => {
           )}
           <Spacer height={20} />
         </View>
-      </SafeAreaView>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
