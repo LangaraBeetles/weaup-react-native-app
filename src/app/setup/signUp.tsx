@@ -113,7 +113,7 @@ const SignUp = () => {
               title="Continue with Google"
               leadingIcon="google-icon"
             />
-            <GoogleSigninButton
+            {/* <GoogleSigninButton
               size={GoogleSigninButton.Size.Wide}
               onPress={async () => {
                 try {
@@ -143,7 +143,7 @@ const SignUp = () => {
                 }
               }}
               disabled={false}
-            />
+            /> */}
 
             <TouchableOpacity onPress={handleContinueAsGuest}>
               <Text
