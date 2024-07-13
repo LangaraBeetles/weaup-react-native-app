@@ -15,7 +15,7 @@ const BadgeContainer: React.FC<{
 }> = ({ title, subtitle, description, badge, unlocked = true }) => {
   return (
     <BadgeRoot>
-      <Badge
+      {/* <Badge
         // TODO: use this when locked bages available
         // name={unlocked ? badge : `${badge}-locked`}
         name={unlocked ? badge : `locked`}
@@ -43,7 +43,7 @@ const BadgeContainer: React.FC<{
         }}
       >
         {description}
-      </Text>
+      </Text> */}
     </BadgeRoot>
   );
 };
