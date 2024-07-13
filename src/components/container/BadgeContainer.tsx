@@ -15,14 +15,12 @@ const BadgeContainer: React.FC<{
 }> = ({ title, subtitle, description, badge, unlocked = true }) => {
   return (
     <BadgeRoot>
-      {/* <Badge
-        // TODO: use this when locked bages available
-        // name={unlocked ? badge : `${badge}-locked`}
+      <Badge
         name={unlocked ? badge : `locked`}
         title={title}
         unlocked={unlocked}
       />
-      <Text
+      {/*    <Text
         level="caption_1"
         weight="bold"
         numberOfLines={1}

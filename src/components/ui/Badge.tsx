@@ -41,7 +41,7 @@ const Badge: React.FC<BadgeProps> = ({
   return (
     <StyledView category={size}>
       <BadgeTitle>
-        {unlocked && (
+        {/* {unlocked && (
           <StrokeText
             text={title}
             fontSize={size === "small" ? 24 : 52}
@@ -50,7 +50,7 @@ const Badge: React.FC<BadgeProps> = ({
             strokeWidth={size === "small" ? 5 : 10}
             fontFamily="FredokaOneRegular"
           />
-        )}
+        )} */}
       </BadgeTitle>
       <CustomBadge width="100%" height="100%" />
       <BadgeSubtitle>
