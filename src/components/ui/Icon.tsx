@@ -38,7 +38,7 @@ import NavbarAnalyticsNotSelected from "assets/icons/navbar-analytics-notselecte
 import NavbarAnalyticsSelected from "assets/icons/navbar-analytics-selected.svg";
 import NavbarHomeNotSelected from "assets/icons/navbar-home-notselected.svg";
 import NavbarHomeSelected from "assets/icons/navbar-home-selected.svg";
-import NavbarNotSelected from "assets/icons/navbar-notselected.svg";
+import NavbarProfileNotSelected from "assets/icons/navbar-profile-notselected.svg";
 import NavbarProfileSelected from "assets/icons/navbar-profile-selected.svg";
 import NavbarTogetherNotSelected from "assets/icons/navbar-together-notselected.svg";
 import NavbarTogetherSelected from "assets/icons/navbar-together-selected.svg";
@@ -120,7 +120,7 @@ const IconConfig = {
   "navbar-analytics-selected": NavbarAnalyticsSelected,
   "navbar-home-notselected": NavbarHomeNotSelected,
   "navbar-home-selected": NavbarHomeSelected,
-  "navbar-profile-notselected": NavbarNotSelected,
+  "navbar-profile-notselected": NavbarProfileNotSelected,
   "navbar-profile-selected": NavbarProfileSelected,
   "navbar-together-notselected": NavbarTogetherNotSelected,
   "navbar-together-selected": NavbarTogetherSelected,
