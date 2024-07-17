@@ -39,7 +39,7 @@ yarn-error.*
 *.tsbuildinfo
 
 #config
-config.ts
+# config.ts
 
 #build
 # ios/
