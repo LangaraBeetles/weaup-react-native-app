@@ -47,12 +47,7 @@ const ChallengeGoalForm = () => {
               required: true,
             }}
             render={({ field }) => (
-              <Stack
-                justifyContent="center"
-                // flexGrow={1}
-                h={550}
-                alignItems="center"
-              >
+              <Stack justifyContent="center" h={550} alignItems="center">
                 <GoalPicker
                   flex={4}
                   setGoal={field.onChange}

@@ -29,10 +29,7 @@ const ChallengeDetailCard = (props: any) => {
 
   const DisplayIcon = icon ? challengeIcons[icon] || Icon1 : Icon1;
 
-  const goalPoints =
-    safenumber(data?.goal) *
-    safenumber(data?.duration) *
-    safenumber(data?.members.length, 1);
+  const goalPoints = safenumber(data?.goal) * safenumber(data?.duration) * 10;
 
   const progress = data?.members.reduce(
     (accu: any, curr: any) => accu + curr.points,

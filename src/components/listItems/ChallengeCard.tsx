@@ -36,9 +36,7 @@ const ChallengeCard = (props: { challenge: ChallengeResponseType }) => {
   };
 
   const goalPoints =
-    safenumber(challenge.goal, 0) *
-    safenumber(challenge.duration, 0) *
-    safenumber(challenge.members.length, 1);
+    safenumber(challenge.goal, 0) * safenumber(challenge.duration, 0) * 10;
 
   const progress = challenge.members.reduce(
     (accu: any, curr: any) => accu + safenumber(curr.points),
