@@ -7,6 +7,10 @@ import { theme } from "@src/styles/theme";
 import { useFormContext } from "react-hook-form";
 import { PostureData } from "@src/interfaces/posture.types";
 import dayjs from "dayjs";
+import isBetween from "dayjs/plugin/isBetween";
+
+dayjs.extend(isBetween);
+
 import ScoreChip from "../scoring/ScoreChip";
 import Icon from "../ui/Icon";
 
@@ -81,10 +85,7 @@ const SessionHistoryCard = () => {
                   startTime: dayjs(values.started_at).format("HH:mm"),
                   endTime: dayjs(values.ended_at).format("HH:mm"),
                   score: values?.score ?? 0,
-                  timeOfDay:
-                    dayjs(values.started_at).format("a") == "am"
-                      ? "morning"
-                      : "night",
+                  timeOfDay: isMorning(values.started_at) ? "morning" : "night",
                 }}
               />
               <View
@@ -146,6 +147,16 @@ const SessionRow: React.FC<{ data: SessionRowData }> = ({ data }) => {
       <ScoreChip score={data.score} />
     </Stack>
   );
+};
+
+const isMorning = (date: string) => {
+  const dateToValidate = dayjs(date);
+
+  const startTime = dayjs().set("hour", 7).set("minute", 0).set("second", 0);
+  const endTime = dayjs().set("hour", 19).set("minute", 0).set("second", 0);
+
+  const isValid = dateToValidate.isBetween(startTime, endTime, null, "[)"); // '[)' means inclusive of the start time and exclusive of the end time
+  return isValid;
 };
 
 export default SessionHistoryCard;
