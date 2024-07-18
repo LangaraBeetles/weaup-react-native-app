@@ -13,7 +13,6 @@
     "update": "eas update --branch dev"
   },
   "dependencies": {
-    "@charmy.tech/react-native-stroke-text": "^1.2.2",
     "@fast-styles/babel-plugin": "^0.2.3",
     "@fast-styles/react": "^0.2.9",
     "@gorhom/bottom-sheet": "^4",

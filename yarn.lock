@@ -1109,11 +1109,6 @@
     "@babel/helper-validator-identifier" "^7.24.7"
     to-fast-properties "^2.0.0"
 
-"@charmy.tech/react-native-stroke-text@^1.2.2":
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/@charmy.tech/react-native-stroke-text/-/react-native-stroke-text-1.2.2.tgz#7d7016e01e1a195f4a039614d5a8dbf932950994"
-  integrity sha512-d3JfbtsMw1ivvFq8ZpK9cMPb6bvNBW5mOhSfwd9CqZncXxV+axMqjxgTL8SgVGr0FxFT85rhRe6Zc0hfLOQF5w==
-
 "@egjs/hammerjs@^2.0.17":
   version "2.0.17"
   resolved "https://registry.yarnpkg.com/@egjs/hammerjs/-/hammerjs-2.0.17.tgz#5dc02af75a6a06e4c2db0202cae38c9263895124"
