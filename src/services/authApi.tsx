@@ -17,6 +17,6 @@ export const impersonate = async (email: string) => {
       email,
     },
   });
-  console.log(data.data);
+
   return data?.data;
 };

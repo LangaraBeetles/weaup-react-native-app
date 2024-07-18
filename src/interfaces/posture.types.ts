@@ -46,21 +46,22 @@ interface Session {
   updatedAt: string;
 }
 
-interface HourlyRecord {
-  hour: string;
+export interface Record {
+  key: string;
   records: Array<SessionRecord>;
   count: number;
   score: number | null;
 }
 
 export interface PostureData {
+  term: "day" | "week" | "month";
   start_date: string;
   end_date: string;
   overview: {
     good_posture_count: number;
     bad_posture_count: number;
   };
-  records_by_hour: Array<HourlyRecord>;
+  records_by_term: Array<Record>;
   total_corrections: number;
   sessions: Array<Session>;
 }
