@@ -5,7 +5,8 @@ const config = {
     secretAccessKey: "",
     region: "",
   },
-  api_url: "https://dev.api.weaup.io/api/v1/",
+  api_url: "http://localhost:3000/api/v1/",
+  // api_url: "https://dev.api.weaup.io/api/v1/",
 };
 
 export default config;

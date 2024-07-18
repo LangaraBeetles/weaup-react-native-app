@@ -7,6 +7,7 @@ import { DeviceMotion } from "expo-sensors";
 import { Switch } from "react-native";
 import { Text } from "@src/components/ui/typography";
 import { theme } from "@src/styles/theme";
+import { saveActiveMonitoring } from "@src/services/activeMonitoringApi";
 
 export default function DeviceMotionViewiOS() {
   const isRealTimeTracking = useUser((state) => state.isTrackingEnabled);
@@ -17,18 +18,25 @@ export default function DeviceMotionViewiOS() {
   );
 
   const setTrackingEnabled = useUser((state) => state.setTrackingEnabled);
+  const setTimeStart = useUser((state) => state.setTimeStart);
+  const setTimeEnd = useUser((state) => state.setTimeEnd);
+  const timeStart = useUser((state) => state.timeStart);
+  const timeEnd = useUser((state) => state.timeEnd);
 
   const currentPosture = useUser((state) => state.currentPosture);
   const setCurrentPosture = useUser((state) => state.setCurrentPosture);
   const mode = useUser((state) => state.mode);
+  const userId = useUser((state) => state.user.id);
 
   const toggleTracking = () => {
     const value = !isRealTimeTracking;
 
     if (!value) {
       setCurrentPosture("not_reading");
+      setTimeEnd(new Date());
     } else {
       DeviceMotion.requestPermissionsAsync();
+      setTimeStart(new Date());
     }
     setTrackingEnabled(value);
   };
@@ -96,6 +104,26 @@ export default function DeviceMotionViewiOS() {
     };
   }, [isTrackingEnabled, mode, currentPosture]);
 
+  useEffect(() => {
+    if (timeStart && timeEnd) {
+      const activeMonitoring = {
+        user_id: userId,
+        startTime: timeStart,
+        endTime: timeEnd,
+      };
+
+      saveActiveMonitoring(activeMonitoring)
+        .then((response) => {
+          console.log(response);
+          setTimeStart(null);
+          setTimeEnd(null);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }, [timeStart, timeEnd]);
+
   return (
     <Stack
       flexDirection="row"
@@ -130,6 +158,12 @@ export function DeviceMotionViewAndroid() {
     (state) => state.isTrackingEnabled || state.sessionStatus !== "INACTIVE",
   );
   const setTrackingEnabled = useUser((state) => state.setTrackingEnabled);
+  const setTimeStart = useUser((state) => state.setTimeStart);
+  const setTimeEnd = useUser((state) => state.setTimeEnd);
+  const timeStart = useUser((state) => state.timeStart);
+  const timeEnd = useUser((state) => state.timeEnd);
+
+  const userId = useUser((state) => state.user.id);
 
   const setCurrentPosture = useUser((state) => state.setCurrentPosture);
 
@@ -144,8 +178,10 @@ export function DeviceMotionViewAndroid() {
 
     if (!value) {
       setCurrentPosture("not_reading");
+      setTimeEnd(new Date());
     } else {
       DeviceMotion.requestPermissionsAsync();
+      setTimeStart(new Date());
     }
     setTrackingEnabled(value);
   };
@@ -212,6 +248,26 @@ export function DeviceMotionViewAndroid() {
   const inBadPostureRange = (data: number) => {
     return data > 1.4 || data < 1;
   };
+
+  useEffect(() => {
+    if (timeStart && timeEnd) {
+      const activeMonitoring = {
+        user_id: userId,
+        startTime: timeStart,
+        endTime: timeEnd,
+      };
+
+      saveActiveMonitoring(activeMonitoring)
+        .then((response) => {
+          console.log(response);
+          setTimeStart(null);
+          setTimeEnd(null);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }, [timeStart, timeEnd]);
 
   return (
     <Stack
