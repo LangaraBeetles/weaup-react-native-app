@@ -48,6 +48,12 @@ type UserState = {
   setSessionStatus: (status: `${SessionStatesEnum}`) => void;
 
   setBadge: (badge: { id: number; date: string }) => void;
+
+  // Active monitoring times
+  timeStart: Date | null;
+  setTimeStart: (date: Date | null) => void;
+  timeEnd: Date | null;
+  setTimeEnd: (date: Date | null) => void;
 };
 
 const userInitialState: UserType = {
@@ -224,6 +230,11 @@ export const useUser = create<UserState>()(
               badges: [...(state.user.badges || []), badge],
             },
           })),
+
+        timeStart: null,
+        setTimeStart: (date: Date | null) => set({ timeStart: date }),
+        timeEnd: null,
+        setTimeEnd: (date: Date | null) => set({ timeEnd: date }),
       }),
       {
         storage: createJSONStorage(() => AsyncStorage),

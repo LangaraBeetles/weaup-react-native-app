@@ -1,4 +1,5 @@
 import CorrectionsCard from "@src/components/analytics/CorrectionsCard";
+import TotalDurationCard from "@src/components/analytics/TotalDurationCard";
 import OverviewCard from "@src/components/analytics/OverviewCard";
 import PostureScoresCard from "@src/components/analytics/PostureScoresCard";
 import SessionHistoryCard from "@src/components/analytics/SessionHistoryCard";
@@ -115,6 +116,7 @@ const AnalyticsScreen = () => {
             }
           >
             <Stack gap={20} pb={20}>
+              <TotalDurationCard />
               <OverviewCard
                 goodCount={data?.overview.good_posture_count ?? 0}
                 badCount={data?.overview.bad_posture_count ?? 0}
