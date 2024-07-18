@@ -21,16 +21,58 @@ import {
 } from "react-native";
 import * as Linking from "expo-linking";
 import BackButton from "@src/components/ui/BackButton";
+import { Controller, useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
+import { impersonate } from "@src/services/authApi";
+import { useUser } from "@src/state/useUser";
+import { UserType } from "@src/interfaces/user.types";
 
 const { height, width } = Dimensions.get("screen");
 
 const SignIn = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { setAuth, setGuest } = useUser();
+
+  const form = useForm<{ email: string; password: string }>();
   const [loading, setLoading] = useState<boolean>(false);
 
+  const { mutate: mockLogin, isPending } = useMutation({
+    mutationKey: ["impersonate"],
+    mutationFn: impersonate,
+    onSuccess: (userResponse) => {
+      const user: UserType = {
+        id: userResponse.id,
+        deviceId: userResponse.device_id,
+        name: userResponse.name,
+        dailyGoal: userResponse.daily_goal,
+        providerId: userResponse.provider_id,
+        level: userResponse.level,
+        xp: userResponse.xp,
+        hp: userResponse.hp,
+        token: userResponse.token,
+        email: userResponse.email ?? "",
+        preferredMode: userResponse.preferred_mode,
+        isSetupComplete: true,
+        dailyStreakCounter: 0,
+        avatar: userResponse.avatar_bg,
+        badges: userResponse?.badges || [],
+      };
+
+      setGuest(false);
+      setAuth(true, user);
+
+      // router.dismissAll();
+      router.replace("/");
+    },
+    onError: (error) => {
+      console.log({ error });
+      console.error("Bad credentials");
+    },
+  });
+
   const handleLogIn = () => {
-    // TODO: Implement sign in logic with email and password
+    form.handleSubmit((data) => {
+      mockLogin(data.email);
+    })();
   };
 
   const handleContinueWithGoogle = async () => {
@@ -102,15 +144,34 @@ const SignIn = () => {
             Welcome back!
           </Text>
           <Stack w={"100%"} gap={16}>
-            <Input
-              placeholder="Email Address"
-              value={email}
-              onChangeText={setEmail}
+            <Controller
+              control={form.control}
+              name="email"
+              render={({ field }) => {
+                return (
+                  <Input
+                    autoCapitalize="none"
+                    placeholder="Email Address"
+                    value={field.value}
+                    onChangeText={field.onChange}
+                  />
+                );
+              }}
             />
-            <Input
-              placeholder="Password"
-              value={password}
-              onChangeText={setPassword}
+
+            <Controller
+              control={form.control}
+              name="password"
+              render={({ field }) => {
+                return (
+                  <Input
+                    placeholder="Password"
+                    value={field.value}
+                    onChangeText={field.onChange}
+                    textContentType="password"
+                  />
+                );
+              }}
             />
           </Stack>
           <TouchableOpacity>
@@ -122,12 +183,16 @@ const SignIn = () => {
               Forgot password?
             </Text>
           </TouchableOpacity>
-          <Stack w={"100%"} gap={20}>
-            <Button title="Log in" variant="primary" onPress={handleLogIn} />
-            <Center w={"100%"} flexDirection="row" gap={13}>
+          <Stack w="100%" gap={20}>
+            <Button
+              title={isPending ? "Loading..." : "Log in"}
+              variant="primary"
+              onPress={handleLogIn}
+            />
+            <Center w="100%" flexDirection="row" gap={13}>
               <Stack
-                h={"50%"}
-                w={"40%"}
+                h="50%"
+                w="40%"
                 style={{
                   borderStyle: "solid",
                   borderBottomWidth: 1,

@@ -1,5 +1,6 @@
 import config from "@src/config";
 import axios from "axios";
+import api from "./api";
 
 export const googleAuth = async (code: string) => {
   const {
@@ -8,4 +9,14 @@ export const googleAuth = async (code: string) => {
     `${config.api_url}/auth/google/callback/?code=${encodeURIComponent(code)}`,
   );
   return data;
+};
+
+export const impersonate = async (email: string) => {
+  const { data } = await api.get(`/mock/impersonate`, {
+    params: {
+      email,
+    },
+  });
+  console.log(data.data);
+  return data?.data;
 };
