@@ -43,8 +43,8 @@ const TabsLayout = () => {
           tabBarLabel: ({ focused }) => (
             <Text
               level="footnote"
+              weight={focused ? "bold" : "semibold"}
               style={{
-                fontWeight: focused ? "700" : "400",
                 marginBottom: 6,
               }}
             >
@@ -72,8 +72,8 @@ const TabsLayout = () => {
           tabBarLabel: ({ focused }) => (
             <Text
               level="footnote"
+              weight={focused ? "bold" : "semibold"}
               style={{
-                fontWeight: focused ? "700" : "400",
                 marginBottom: 6,
               }}
             >
@@ -101,8 +101,8 @@ const TabsLayout = () => {
           tabBarLabel: ({ focused }) => (
             <Text
               level="footnote"
+              weight={focused ? "bold" : "semibold"}
               style={{
-                fontWeight: focused ? "700" : "400",
                 marginBottom: 6,
               }}
             >
@@ -129,8 +129,8 @@ const TabsLayout = () => {
           tabBarLabel: ({ focused }) => (
             <Text
               level="footnote"
+              weight={focused ? "bold" : "semibold"}
               style={{
-                fontWeight: focused ? "700" : "400",
                 marginBottom: 6,
               }}
             >
