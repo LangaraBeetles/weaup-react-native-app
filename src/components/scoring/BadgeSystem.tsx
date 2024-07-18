@@ -1,10 +1,10 @@
 import { updateUser } from "@src/services/userApi";
 import { useUser } from "@src/state/useUser";
-import { useRouter } from "expo-router";
+// import { useRouter } from "expo-router";
 import { useEffect } from "react";
 
 const BadgeSystem = () => {
-  const router = useRouter();
+  // const router = useRouter();
   const user = useUser((state) => state.user);
   const setBadge = useUser((state) => state.setBadge);
 
@@ -14,7 +14,7 @@ const BadgeSystem = () => {
       const newBadge = { id: 1, date: new Date().toISOString() };
       setBadge(newBadge);
 
-      router.push({ pathname: "/earn-badge", params: { badgeId: 1 } });
+      // router.push({ pathname: "/earn-badge", params: { badgeId: 1 } });
 
       updateUser(user.id, {
         badges: [...(user?.badges || []), newBadge],
