@@ -10,13 +10,19 @@ import config from "@src/config";
 import { googleAuth } from "@src/services/authApi";
 import useAuth from "@src/components/hooks/useAuth";
 
+import { useNavigation } from "expo-router";
+
 WebBrowser.maybeCompleteAuthSession();
 const platform = Platform.OS;
 
 const GoogleButton = (props: { title: string }) => {
   const { title } = props;
+
   const { handleGoogleAuthCallback } = useAuth();
-  const [request, response, promptAsync] = GoogleSignIn.useAuthRequest({
+
+  const navigation = useNavigation();
+
+  const [, response, promptAsync] = GoogleSignIn.useAuthRequest({
     iosClientId: config.google_auth_ios,
     androidClientId: config.google_auth_android,
     redirectUri: makeRedirectUri({
@@ -30,16 +36,38 @@ const GoogleButton = (props: { title: string }) => {
 
   const login = async (googleSignInResponse: any) => {
     const { access_token } = googleSignInResponse.params;
-    googleAuth(access_token as string).then(async (res) => {
-      await handleGoogleAuthCallback(res as any);
-    });
+
+    try {
+      const result = await googleAuth(access_token as string);
+      await handleGoogleAuthCallback(
+        result,
+        () => {
+          //  We need to figure out a way to know when to redirect to the home screen and when to just go back to the prev screen aka together/profile
+          navigation.reset({
+            index: 0,
+            routes: [
+              {
+                name: "(tabs)" as never,
+              },
+            ],
+          });
+        },
+        () => {
+          console.error(
+            "Login unsuccessful. Please verify your credentials and attempt to log in again.",
+          );
+        },
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
     if (response?.type === "success") {
       login(response);
     }
-  }, [response, request]);
+  }, [response?.type]);
 
   return (
     <Button

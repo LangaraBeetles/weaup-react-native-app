@@ -100,14 +100,14 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: height * 0.15,
     width: 865,
-    height: 865,
+    height: 865, // let's use the width and height from Dimensions
     backgroundColor: theme.colors.primary[200],
     borderRadius: 865 / 2,
     flexShrink: 0,
     alignSelf: "center",
   },
   main: {
-    height: "100%",
+    // height: "100%",
   },
   content: {
     flexGrow: 2,
