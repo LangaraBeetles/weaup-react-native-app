@@ -240,7 +240,7 @@ const JoinChallengeContainer = (props: {
                   <Text level="footnote">Invited by</Text>
                   <Stack flexDirection="row" gap={8} alignItems="center">
                     <Avatar
-                      content={user?.data?.name ? user?.data?.name[0] : "G"}
+                      content={user?.data?.name ? user?.data?.name?.[0] : "G"}
                       variant={user?.data?.avatar_bg}
                     />
                     <Text level="body">{user?.data?.name}</Text>
