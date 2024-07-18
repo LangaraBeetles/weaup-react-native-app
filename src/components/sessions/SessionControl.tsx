@@ -1,13 +1,13 @@
 import { View } from "react-native";
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import Timer from "@src/components/ui/Timer";
 import { useRouter } from "expo-router";
 import { PostureSessionInput } from "@src/interfaces/posture.types";
 import { saveSessionRecords } from "@src/services/sessionApi";
 import { useUser } from "@src/state/useUser";
 import { useMutation } from "@tanstack/react-query";
-import { getAnalytics } from "@src/services/analyticsApi";
-import dayjs from "dayjs";
+// import { getAnalytics } from "@src/services/analyticsApi";
+// import dayjs from "dayjs";
 
 const SessionControl = () => {
   const router = useRouter();
@@ -20,7 +20,7 @@ const SessionControl = () => {
 
   const setDailyStreakCounter = useUser((state) => state.setDailyStreakCounter);
   const userStreak = useUser((state) => state.user.dailyStreakCounter);
-  const [isDailyStreak, setIsDailyStreak] = React.useState(false);
+  const [isDailyStreak, setIsDailyStreak] = React.useState(true);
 
   const setSessionActive = useUser((state) => state.setSessionStatus);
   const sessionStatus = useUser((state) => state.sessionStatus);
@@ -29,32 +29,33 @@ const SessionControl = () => {
     (state) => state.prepareSessionPostureData,
   );
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const today = dayjs();
-        console.log("Fetching analytics for:", today.format());
-        const analyticsData = await getAnalytics(today.format());
+  // TODO: update daily streak counter logic
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const today = dayjs();
+  //       console.log("Fetching analytics for:", today.format());
+  //       const analyticsData = await getAnalytics(today.format());
 
-        if (
-          !analyticsData ||
-          !analyticsData.sessions ||
-          analyticsData.sessions.length === 0
-        ) {
-          console.log("No previous sessions, start a new streak");
-          setIsDailyStreak(true);
-          setDailyStreakCounter(1);
-          return;
-        }
+  //       if (
+  //         !analyticsData ||
+  //         !analyticsData.sessions ||
+  //         analyticsData.sessions.length === 0
+  //       ) {
+  //         console.log("No previous sessions, start a new streak");
+  //         setIsDailyStreak(true);
+  //         setDailyStreakCounter(1);
+  //         return;
+  //       }
 
-        console.log("Previous sessions found");
-      } catch (error) {
-        console.error("Failed to fetch analytics data:", error);
-      }
-    };
+  //       console.log("Previous sessions found");
+  //     } catch (error) {
+  //       console.error("Failed to fetch analytics data:", error);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   const { mutate } = useMutation({
     mutationKey: ["save-session-data"],
@@ -62,6 +63,16 @@ const SessionControl = () => {
     onSuccess: (response) => {
       const sessionId = response?.data._id;
       const sessionParams = JSON.stringify(sessionId);
+
+      if (userStreak === 0) {
+        setDailyStreakCounter(1);
+      } else if (userStreak < 7) {
+        setDailyStreakCounter(userStreak + 1);
+      } else if (userStreak === 7) {
+        setDailyStreakCounter(1);
+      }
+
+      setIsDailyStreak(true);
 
       router.push({
         pathname: "/session-summary",
@@ -71,7 +82,7 @@ const SessionControl = () => {
         },
       });
 
-      setIsDailyStreak(false);
+      // setIsDailyStreak(false);
     },
     onError: (error) => {
       console.log({ error });
