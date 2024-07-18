@@ -12,9 +12,6 @@ import { useFormContext } from "react-hook-form";
 import safenumber from "@src/utils/safenumber";
 
 const getXAxis = (term: string, data: Array<Record>) => {
-  if (term === "day") {
-    return ["00:00", "06:00", "12:00", "18:00", "23:00"];
-  }
   if (term === "month") {
     const days = data.map((value) => value.key.split("-").pop());
 
@@ -29,6 +26,8 @@ const getXAxis = (term: string, data: Array<Record>) => {
 
     return days;
   }
+
+  return ["00:00", "06:00", "12:00", "18:00", "23:00"];
 };
 
 const PostureScoresCard = () => {
@@ -36,13 +35,7 @@ const PostureScoresCard = () => {
 
   const term = watch("term");
   const data = watch("records_by_term") ?? []; //[0, 60, 50, 80, 20, 70, 85, 68, 55];
-  const xdata = getXAxis(term, data) ?? [
-    "00:00",
-    "06:00",
-    "12:00",
-    "18:00",
-    "23:00",
-  ];
+  const xdata = getXAxis(term, data); // ["00:00", "06:00", "12:00", "18:00", "23:00"];
   const ydata = ["25", "50", "75", "100"];
 
   const records = data.filter((record) => !!record.records.length);
