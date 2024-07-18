@@ -4,37 +4,19 @@ import Button from "@src/components/ui/Button";
 import Center from "@src/components/ui/Center";
 import Stack from "@src/components/ui/Stack";
 import { Text } from "@src/components/ui/typography";
-import { useGlobalSearchParams, router } from "expo-router";
+import { router } from "expo-router";
 import { SafeAreaView } from "react-native";
-import useAuth from "@src/components/hooks/useAuth";
-import { googleAuth } from "@src/services/authApi";
 import { theme } from "@src/styles/theme";
-
-type AuthParams = {
-  name: string;
-  token: string;
-};
+import { useUser } from "@src/state/useUser";
 
 const AuthCallback = () => {
-  const params = useGlobalSearchParams<AuthParams>();
-  // const router = useRouter();
-  const { handleGoogleAuthCallback } = useAuth();
+  const { user } = useUser();
 
   useEffect(() => {
-    if (params?.token) {
-      googleAuth(params.token as string).then(async (res) => {
-        params.name = res.name;
-        const completeSignIn = async () => {
-          await handleGoogleAuthCallback(res as any);
-          setTimeout(() => {
-            router.navigate("/");
-          }, 1000);
-        };
-
-        completeSignIn();
-      });
-    }
-  }, [params]);
+    setTimeout(() => {
+      router.navigate("/");
+    }, 1500);
+  }, [user]);
 
   const handleContinuePress = () => {
     router.navigate("/");
@@ -43,10 +25,10 @@ const AuthCallback = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Center p={30} flex={1}>
-        {params?.name ? (
+        {user?.email ? (
           <Stack flexDirection="column" gap={30}>
             <Text level="title_1" align="center">
-              Welcome {params?.name}!
+              Welcome {user?.name}!
             </Text>
             <Button
               title="Yey! Continue"

@@ -19,6 +19,8 @@ import Confeties from "assets/img/confeties.svg";
 import BadgeBackground from "assets/img/badge-background.svg";
 import WeaselHeadTilt from "assets/img/weasel-head-tilt.svg";
 import Tada from "assets/img/tada.svg";
+import WeaselFloating from "assets/img/weasel-floating.svg";
+import ElipseShadow from "assets/img/ellipse-shadow.svg";
 
 const ImageConfig = {
   "streak-flames": StreakFlames,
@@ -40,6 +42,8 @@ const ImageConfig = {
   "badge-background": BadgeBackground,
   "weasel-head-tilt": WeaselHeadTilt,
   tada: Tada,
+  "weasel-floating": WeaselFloating,
+  "elipse-shadow": ElipseShadow,
 };
 
 export type ImageName = `${keyof typeof ImageConfig}`;
