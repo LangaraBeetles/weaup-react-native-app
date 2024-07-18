@@ -113,8 +113,7 @@ export default function DeviceMotionViewiOS() {
       };
 
       saveActiveMonitoring(activeMonitoring)
-        .then((response) => {
-          console.log(response);
+        .then(() => {
           setTimeStart(null);
           setTimeEnd(null);
         })
@@ -258,8 +257,7 @@ export function DeviceMotionViewAndroid() {
       };
 
       saveActiveMonitoring(activeMonitoring)
-        .then((response) => {
-          console.log(response);
+        .then(() => {
           setTimeStart(null);
           setTimeEnd(null);
         })
