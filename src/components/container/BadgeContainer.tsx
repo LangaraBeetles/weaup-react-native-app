@@ -6,22 +6,15 @@ import { globalStyles } from "@src/styles/globalStyles";
 
 const BadgeContainer: React.FC<{
   id: number;
-  title: string;
   subtitle: string;
   description: string;
   color?: string;
   unlocked?: boolean;
   badge: BadgeName;
-}> = ({ title, subtitle, description, badge, unlocked = true }) => {
+}> = ({ subtitle, description, badge, unlocked = true }) => {
   return (
     <BadgeRoot>
-      <Badge
-        // TODO: use this when locked bages available
-        // name={unlocked ? badge : `${badge}-locked`}
-        name={unlocked ? badge : `locked`}
-        title={title}
-        unlocked={unlocked}
-      />
+      <Badge name={unlocked ? badge : `locked`} unlocked={unlocked} />
       <Text
         level="caption_1"
         weight="bold"
