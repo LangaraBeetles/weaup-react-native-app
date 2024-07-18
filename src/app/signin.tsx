@@ -40,7 +40,7 @@ const SignIn = () => {
     mutationFn: impersonate,
     onSuccess: (userResponse) => {
       const user: UserType = {
-        id: userResponse.id,
+        id: userResponse._id,
         deviceId: userResponse.device_id,
         name: userResponse.name,
         dailyGoal: userResponse.daily_goal,

@@ -3,56 +3,68 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0863EC51BD9747D887491F30 /* NunitoMediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E20B97E5719B47EAA988F791 /* NunitoMediumItalic.ttf */; };
+		0A6922C0BAC946B5953326FF /* NunitoRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CA8F805C030443E2809929B0 /* NunitoRegular.ttf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		16C8FB322C47053800EB0795 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16C8FB312C47053800EB0795 /* GoogleService-Info.plist */; };
-		16C8FB352C47066200EB0795 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 16C8FB342C47066200EB0795 /* FirebaseAnalytics */; };
-		16C8FB372C47066200EB0795 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 16C8FB362C47066200EB0795 /* FirebaseAnalyticsOnDeviceConversion */; };
-		16C8FB392C47066200EB0795 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 16C8FB382C47066200EB0795 /* FirebaseAnalyticsSwift */; };
-		16C8FB3B2C47066200EB0795 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 16C8FB3A2C47066200EB0795 /* FirebaseAnalyticsWithoutAdIdSupport */; };
-		16C8FB3D2C47066200EB0795 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 16C8FB3C2C47066200EB0795 /* FirebaseAppCheck */; };
-		1F6AC7F0F65C4AD9B84E9110 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		293DB5F62A884807BEF81280 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		2CF2BE4C54C44E1E988A98C7 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		3561C8AC30C941779005FB6D /* NunitoBlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0CDCD558665A4FDEA5E4043E /* NunitoBlackItalic.ttf */; };
+		148FA0A3D92B4F0597FAA60B /* NunitoLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3B4822EA1532469088E042A7 /* NunitoLight.ttf */; };
+		15FECD20C4B94B37B6737AC2 /* FredokaOneRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0EEE4C3CB05A4E01A111257A /* FredokaOneRegular.ttf */; };
+		218F58651682463B9DCE8F11 /* NunitoExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 868A98EFE4DC40B0B8ECCF72 /* NunitoExtraBoldItalic.ttf */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
-		49D0B3B23EE0433797A9C8DD /* (null) in Resources */ = {isa = PBXBuildFile; };
-		5478F687BCC540C1B59A2F99 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		5C0629403FF84CC4BCD8515B /* (null) in Resources */ = {isa = PBXBuildFile; };
-		5C979624F1904DD6A8F7E544 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		6003986E606A4DB689A6312C /* (null) in Resources */ = {isa = PBXBuildFile; };
-		72C2BEBD449748F19775D915 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		81097CDB72FA4ECA9C486D22 /* NunitoRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 108FED6166D34C9095723E26 /* NunitoRegular.ttf */; };
-		83B86BD26048487C9747FB1F /* (null) in Resources */ = {isa = PBXBuildFile; };
+		456B54DB8D9346A19A85B49A /* NunitoSemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1C3681E1ED79420497B0DA56 /* NunitoSemiBoldItalic.ttf */; };
+		4DD7F91A5E004AB68C36D49D /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E0CAB9989F48929DFE6A18 /* noop-file.swift */; };
+		4E3C34F611C84279B26889CC /* NunitoExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C47BDCEF933E40819A5218C8 /* NunitoExtraBold.ttf */; };
+		68C499156AD44824BD7641E8 /* NunitoBlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B7B42B815CF244819BA282CA /* NunitoBlackItalic.ttf */; };
+		7651513DFE0940668069004C /* NunitoLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 756DB1A0D21840519D05B974 /* NunitoLightItalic.ttf */; };
+		7A8112129069478F80AC6D9D /* NunitoBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 503DF77E8D70441A8DCA5E68 /* NunitoBold.ttf */; };
+		8B9D94173C96407BB6AAB35C /* NunitoExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DCC02730C2EF490BB070612D /* NunitoExtraLight.ttf */; };
 		96905EF65AED1B983A6B3ABC /* libPods-weaup.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58EEBF8E8E6FB1BC6CAF49B5 /* libPods-weaup.a */; };
+		9E0F9DF71667490794A94510 /* NunitoItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D66171193EF34C2F9AD2BB17 /* NunitoItalic.ttf */; };
 		B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */; };
+		B4895475449F4809936D21FC /* NunitoMedium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 385B574FD39C4E2389B43288 /* NunitoMedium.ttf */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
-		C505F33DD28E49BC839BEBC5 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		C892FF3B4AF7451ABE796644 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		D7357B376FFF486C9CCEBD23 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		E0CA07846AFF47F2ABB7C54A /* (null) in Resources */ = {isa = PBXBuildFile; };
+		CFE991191E014287BCD57B64 /* NunitoBlack.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 373825D3B3C5464EB90D5676 /* NunitoBlack.ttf */; };
+		F83488F2B880410384CF70C8 /* NunitoSemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 359B0CCCA2B54EAEA6B27D78 /* NunitoSemiBold.ttf */; };
+		F93AF50483D7452C8704D277 /* NunitoExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3BF6602F816945F3A9ED8AA2 /* NunitoExtraLightItalic.ttf */; };
+		FEC87D9422C043AB93264E26 /* NunitoBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5613B1784AC042B18BC04DC6 /* NunitoBoldItalic.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0CDCD558665A4FDEA5E4043E /* NunitoBlackItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = NunitoBlackItalic.ttf; path = ../assets/fonts/NunitoBlackItalic.ttf; sourceTree = "<group>"; };
-		108FED6166D34C9095723E26 /* NunitoRegular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = NunitoRegular.ttf; path = ../assets/fonts/NunitoRegular.ttf; sourceTree = "<group>"; };
+		0EEE4C3CB05A4E01A111257A /* FredokaOneRegular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = FredokaOneRegular.ttf; path = ../assets/fonts/FredokaOneRegular.ttf; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* weaup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = weaup.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = weaup/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = weaup/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = weaup/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = weaup/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = weaup/main.m; sourceTree = "<group>"; };
-		16C8FB312C47053800EB0795 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		19E3A82505234081B44C206F /* weaup-Bridging-Header.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = "weaup-Bridging-Header.h"; path = "weaup/weaup-Bridging-Header.h"; sourceTree = "<group>"; };
+		1C3681E1ED79420497B0DA56 /* NunitoSemiBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = NunitoSemiBoldItalic.ttf; path = ../assets/fonts/NunitoSemiBoldItalic.ttf; sourceTree = "<group>"; };
+		359B0CCCA2B54EAEA6B27D78 /* NunitoSemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = NunitoSemiBold.ttf; path = ../assets/fonts/NunitoSemiBold.ttf; sourceTree = "<group>"; };
+		373825D3B3C5464EB90D5676 /* NunitoBlack.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = NunitoBlack.ttf; path = ../assets/fonts/NunitoBlack.ttf; sourceTree = "<group>"; };
+		385B574FD39C4E2389B43288 /* NunitoMedium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = NunitoMedium.ttf; path = ../assets/fonts/NunitoMedium.ttf; sourceTree = "<group>"; };
+		3B4822EA1532469088E042A7 /* NunitoLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = NunitoLight.ttf; path = ../assets/fonts/NunitoLight.ttf; sourceTree = "<group>"; };
+		3BF6602F816945F3A9ED8AA2 /* NunitoExtraLightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = NunitoExtraLightItalic.ttf; path = ../assets/fonts/NunitoExtraLightItalic.ttf; sourceTree = "<group>"; };
+		503DF77E8D70441A8DCA5E68 /* NunitoBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = NunitoBold.ttf; path = ../assets/fonts/NunitoBold.ttf; sourceTree = "<group>"; };
+		5613B1784AC042B18BC04DC6 /* NunitoBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = NunitoBoldItalic.ttf; path = ../assets/fonts/NunitoBoldItalic.ttf; sourceTree = "<group>"; };
 		58EEBF8E8E6FB1BC6CAF49B5 /* libPods-weaup.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-weaup.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C2E3173556A471DD304B334 /* Pods-weaup.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-weaup.debug.xcconfig"; path = "Target Support Files/Pods-weaup/Pods-weaup.debug.xcconfig"; sourceTree = "<group>"; };
+		756DB1A0D21840519D05B974 /* NunitoLightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = NunitoLightItalic.ttf; path = ../assets/fonts/NunitoLightItalic.ttf; sourceTree = "<group>"; };
 		7A4D352CD337FB3A3BF06240 /* Pods-weaup.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-weaup.release.xcconfig"; path = "Target Support Files/Pods-weaup/Pods-weaup.release.xcconfig"; sourceTree = "<group>"; };
+		868A98EFE4DC40B0B8ECCF72 /* NunitoExtraBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = NunitoExtraBoldItalic.ttf; path = ../assets/fonts/NunitoExtraBoldItalic.ttf; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = weaup/SplashScreen.storyboard; sourceTree = "<group>"; };
+		B6E0CAB9989F48929DFE6A18 /* noop-file.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "noop-file.swift"; path = "weaup/noop-file.swift"; sourceTree = "<group>"; };
+		B7B42B815CF244819BA282CA /* NunitoBlackItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = NunitoBlackItalic.ttf; path = ../assets/fonts/NunitoBlackItalic.ttf; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
+		C47BDCEF933E40819A5218C8 /* NunitoExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = NunitoExtraBold.ttf; path = ../assets/fonts/NunitoExtraBold.ttf; sourceTree = "<group>"; };
+		CA8F805C030443E2809929B0 /* NunitoRegular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = NunitoRegular.ttf; path = ../assets/fonts/NunitoRegular.ttf; sourceTree = "<group>"; };
+		D66171193EF34C2F9AD2BB17 /* NunitoItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = NunitoItalic.ttf; path = ../assets/fonts/NunitoItalic.ttf; sourceTree = "<group>"; };
+		DCC02730C2EF490BB070612D /* NunitoExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = NunitoExtraLight.ttf; path = ../assets/fonts/NunitoExtraLight.ttf; sourceTree = "<group>"; };
+		E20B97E5719B47EAA988F791 /* NunitoMediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = NunitoMediumItalic.ttf; path = ../assets/fonts/NunitoMediumItalic.ttf; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-weaup/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -62,11 +74,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				16C8FB392C47066200EB0795 /* FirebaseAnalyticsSwift in Frameworks */,
-				16C8FB3B2C47066200EB0795 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
-				16C8FB352C47066200EB0795 /* FirebaseAnalytics in Frameworks */,
-				16C8FB372C47066200EB0795 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
-				16C8FB3D2C47066200EB0795 /* FirebaseAppCheck in Frameworks */,
 				96905EF65AED1B983A6B3ABC /* libPods-weaup.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -77,7 +84,6 @@
 		13B07FAE1A68108700A75B9A /* weaup */ = {
 			isa = PBXGroup;
 			children = (
-				16C8FB312C47053800EB0795 /* GoogleService-Info.plist */,
 				BB2F792B24A3F905000567C9 /* Supporting */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
@@ -85,6 +91,8 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
+				B6E0CAB9989F48929DFE6A18 /* noop-file.swift */,
+				19E3A82505234081B44C206F /* weaup-Bridging-Header.h */,
 			);
 			name = weaup;
 			sourceTree = "<group>";
@@ -98,13 +106,29 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		382E9A5EA60A4090BFA980D1 /* Resources */ = {
+		3ED87FE32B1F48E49F5BDD31 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				108FED6166D34C9095723E26 /* NunitoRegular.ttf */,
-				0CDCD558665A4FDEA5E4043E /* NunitoBlackItalic.ttf */,
+				373825D3B3C5464EB90D5676 /* NunitoBlack.ttf */,
+				C47BDCEF933E40819A5218C8 /* NunitoExtraBold.ttf */,
+				503DF77E8D70441A8DCA5E68 /* NunitoBold.ttf */,
+				359B0CCCA2B54EAEA6B27D78 /* NunitoSemiBold.ttf */,
+				385B574FD39C4E2389B43288 /* NunitoMedium.ttf */,
+				CA8F805C030443E2809929B0 /* NunitoRegular.ttf */,
+				3B4822EA1532469088E042A7 /* NunitoLight.ttf */,
+				DCC02730C2EF490BB070612D /* NunitoExtraLight.ttf */,
+				B7B42B815CF244819BA282CA /* NunitoBlackItalic.ttf */,
+				868A98EFE4DC40B0B8ECCF72 /* NunitoExtraBoldItalic.ttf */,
+				5613B1784AC042B18BC04DC6 /* NunitoBoldItalic.ttf */,
+				1C3681E1ED79420497B0DA56 /* NunitoSemiBoldItalic.ttf */,
+				E20B97E5719B47EAA988F791 /* NunitoMediumItalic.ttf */,
+				D66171193EF34C2F9AD2BB17 /* NunitoItalic.ttf */,
+				756DB1A0D21840519D05B974 /* NunitoLightItalic.ttf */,
+				3BF6602F816945F3A9ED8AA2 /* NunitoExtraLightItalic.ttf */,
+				0EEE4C3CB05A4E01A111257A /* FredokaOneRegular.ttf */,
 			);
 			name = Resources;
+			path = "";
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -123,7 +147,7 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				D65327D7A22EEC0BE12398D9 /* Pods */,
 				D7E4C46ADA2E9064B798F356 /* ExpoModulesProviders */,
-				382E9A5EA60A4090BFA980D1 /* Resources */,
+				3ED87FE32B1F48E49F5BDD31 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -180,26 +204,19 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "weaup" */;
 			buildPhases = (
 				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
-				DAFECDA0F879C9AD444923AC /* [Expo] Configure project */,
+				26FAEA6B8ABBE9BFE15301BF /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
-				3C6593E65A0AD054A7AAE41C /* [CP] Embed Pods Frameworks */,
+				70A39E31DF821F1C1B9299BB /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = weaup;
-			packageProductDependencies = (
-				16C8FB342C47066200EB0795 /* FirebaseAnalytics */,
-				16C8FB362C47066200EB0795 /* FirebaseAnalyticsOnDeviceConversion */,
-				16C8FB382C47066200EB0795 /* FirebaseAnalyticsSwift */,
-				16C8FB3A2C47066200EB0795 /* FirebaseAnalyticsWithoutAdIdSupport */,
-				16C8FB3C2C47066200EB0795 /* FirebaseAppCheck */,
-			);
 			productName = weaup;
 			productReference = 13B07F961A680F5B00A75B9A /* weaup.app */;
 			productType = "com.apple.product-type.application";
@@ -213,9 +230,7 @@
 				LastUpgradeCheck = 1130;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = K92WM366V2;
 						LastSwiftMigration = 1250;
-						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -228,9 +243,6 @@
 				Base,
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
-			packageReferences = (
-				16C8FB332C47066200EB0795 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-			);
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -248,23 +260,23 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				5C0629403FF84CC4BCD8515B /* (null) in Resources */,
-				72C2BEBD449748F19775D915 /* (null) in Resources */,
-				E0CA07846AFF47F2ABB7C54A /* (null) in Resources */,
-				C892FF3B4AF7451ABE796644 /* (null) in Resources */,
-				83B86BD26048487C9747FB1F /* (null) in Resources */,
-				81097CDB72FA4ECA9C486D22 /* NunitoRegular.ttf in Resources */,
-				293DB5F62A884807BEF81280 /* (null) in Resources */,
-				C505F33DD28E49BC839BEBC5 /* (null) in Resources */,
-				3561C8AC30C941779005FB6D /* NunitoBlackItalic.ttf in Resources */,
-				6003986E606A4DB689A6312C /* (null) in Resources */,
-				5C979624F1904DD6A8F7E544 /* (null) in Resources */,
-				5478F687BCC540C1B59A2F99 /* (null) in Resources */,
-				1F6AC7F0F65C4AD9B84E9110 /* (null) in Resources */,
-				2CF2BE4C54C44E1E988A98C7 /* (null) in Resources */,
-				16C8FB322C47053800EB0795 /* GoogleService-Info.plist in Resources */,
-				49D0B3B23EE0433797A9C8DD /* (null) in Resources */,
-				D7357B376FFF486C9CCEBD23 /* (null) in Resources */,
+				CFE991191E014287BCD57B64 /* NunitoBlack.ttf in Resources */,
+				4E3C34F611C84279B26889CC /* NunitoExtraBold.ttf in Resources */,
+				7A8112129069478F80AC6D9D /* NunitoBold.ttf in Resources */,
+				F83488F2B880410384CF70C8 /* NunitoSemiBold.ttf in Resources */,
+				B4895475449F4809936D21FC /* NunitoMedium.ttf in Resources */,
+				0A6922C0BAC946B5953326FF /* NunitoRegular.ttf in Resources */,
+				148FA0A3D92B4F0597FAA60B /* NunitoLight.ttf in Resources */,
+				8B9D94173C96407BB6AAB35C /* NunitoExtraLight.ttf in Resources */,
+				68C499156AD44824BD7641E8 /* NunitoBlackItalic.ttf in Resources */,
+				218F58651682463B9DCE8F11 /* NunitoExtraBoldItalic.ttf in Resources */,
+				FEC87D9422C043AB93264E26 /* NunitoBoldItalic.ttf in Resources */,
+				456B54DB8D9346A19A85B49A /* NunitoSemiBoldItalic.ttf in Resources */,
+				0863EC51BD9747D887491F30 /* NunitoMediumItalic.ttf in Resources */,
+				9E0F9DF71667490794A94510 /* NunitoItalic.ttf in Resources */,
+				7651513DFE0940668069004C /* NunitoLightItalic.ttf in Resources */,
+				F93AF50483D7452C8704D277 /* NunitoExtraLightItalic.ttf in Resources */,
+				15FECD20C4B94B37B6737AC2 /* FredokaOneRegular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,7 +320,26 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		3C6593E65A0AD054A7AAE41C /* [CP] Embed Pods Frameworks */ = {
+		26FAEA6B8ABBE9BFE15301BF /* [Expo] Configure project */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[Expo] Configure project";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-weaup/expo-configure-project.sh\"\n";
+		};
+		70A39E31DF821F1C1B9299BB /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -333,7 +364,6 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-weaup/Pods-weaup-resources.sh",
-				"${PODS_CONFIGURATION_BUILD_DIR}/AppAuth/AppAuthCore_Privacy.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/EXApplication/ExpoApplication_privacy.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/EXConstants/EXConstants.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/EXConstants/ExpoConstants_privacy.bundle",
@@ -341,9 +371,6 @@
 				"${PODS_CONFIGURATION_BUILD_DIR}/EXUpdates/EXUpdates.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/ExpoDevice/ExpoDevice_privacy.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/ExpoFileSystem/ExpoFileSystem_privacy.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/GTMAppAuth/GTMAppAuth_Privacy.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/GTMSessionFetcher/GTMSessionFetcher_Core_Privacy.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/GoogleSignIn/GoogleSignIn.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/RNCAsyncStorage/RNCAsyncStorage_resources.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/ReachabilitySwift/ReachabilitySwift.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/RCTI18nStrings.bundle",
@@ -354,7 +381,6 @@
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AppAuthCore_Privacy.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoApplication_privacy.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EXConstants.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoConstants_privacy.bundle",
@@ -362,9 +388,6 @@
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EXUpdates.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoDevice_privacy.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoFileSystem_privacy.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GTMAppAuth_Privacy.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GTMSessionFetcher_Core_Privacy.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RNCAsyncStorage_resources.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ReachabilitySwift.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RCTI18nStrings.bundle",
@@ -378,25 +401,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-weaup/Pods-weaup-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		DAFECDA0F879C9AD444923AC /* [Expo] Configure project */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "[Expo] Configure project";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-weaup/expo-configure-project.sh\"\n";
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -407,6 +411,7 @@
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */,
+				4DD7F91A5E004AB68C36D49D /* noop-file.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,10 +425,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = weaup/weaup.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = K92WM366V2;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -431,10 +433,7 @@
 				);
 				INFOPLIST_FILE = weaup/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -442,7 +441,7 @@
 					"-lc++",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = com.alignmend;
+				PRODUCT_BUNDLE_IDENTIFIER = com.weaup;
 				PRODUCT_NAME = weaup;
 				SWIFT_OBJC_BRIDGING_HEADER = "weaup/weaup-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -459,16 +458,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = weaup/weaup.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = K92WM366V2;
 				INFOPLIST_FILE = weaup/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -476,7 +469,7 @@
 					"-lc++",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
-				PRODUCT_BUNDLE_IDENTIFIER = com.alignmend;
+				PRODUCT_BUNDLE_IDENTIFIER = com.weaup;
 				PRODUCT_NAME = weaup;
 				SWIFT_OBJC_BRIDGING_HEADER = "weaup/weaup-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -534,17 +527,17 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD = "";
 				LDPLUSPLUS = "";
-				LD_RUNPATH_SEARCH_PATHS = (
-					/usr/lib/swift,
-					"$(inherited)",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
 				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift\"$(inherited)\"";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
@@ -593,16 +586,16 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD = "";
 				LDPLUSPLUS = "";
-				LD_RUNPATH_SEARCH_PATHS = (
-					/usr/lib/swift,
-					"$(inherited)",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
 				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift\"$(inherited)\"";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
@@ -632,45 +625,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		16C8FB332C47066200EB0795 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 10.29.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		16C8FB342C47066200EB0795 /* FirebaseAnalytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 16C8FB332C47066200EB0795 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalytics;
-		};
-		16C8FB362C47066200EB0795 /* FirebaseAnalyticsOnDeviceConversion */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 16C8FB332C47066200EB0795 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalyticsOnDeviceConversion;
-		};
-		16C8FB382C47066200EB0795 /* FirebaseAnalyticsSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 16C8FB332C47066200EB0795 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalyticsSwift;
-		};
-		16C8FB3A2C47066200EB0795 /* FirebaseAnalyticsWithoutAdIdSupport */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 16C8FB332C47066200EB0795 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalyticsWithoutAdIdSupport;
-		};
-		16C8FB3C2C47066200EB0795 /* FirebaseAppCheck */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 16C8FB332C47066200EB0795 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAppCheck;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 83CBB9F71A601CBA00E9B192 /* Project object */;
 }
