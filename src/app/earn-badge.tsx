@@ -6,11 +6,28 @@ import { Text } from "@src/components/ui/typography";
 import Spacer from "@src/components/ui/Spacer";
 import Button from "@src/components/ui/Button";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import Badge from "@src/components/ui/Badge";
+import Badge, { BadgeName } from "@src/components/ui/Badge";
 import Image from "@src/components/ui/Image";
 import type { EasingFunction } from "react-native";
 import { theme } from "@src/styles/theme";
 import badges from "@src/badges";
+
+const getUnlockedBadgeName = (name: string | undefined): BadgeName => {
+  switch (name) {
+    case "xp":
+      return "xp-unlock";
+    case "dummy-badge":
+      return "dummy-badge";
+    case "locked":
+      return "locked";
+    case "challenge":
+      return "challenge-unlock";
+    case "streak":
+      return "streak-unlock";
+    default:
+      return "xp";
+  }
+};
 
 const EarnBadgeScreen = () => {
   const router = useRouter();
@@ -95,10 +112,8 @@ const EarnBadgeScreen = () => {
       <View style={styles.badge}>
         <Animated.View style={backgroundAnimatedStyles}>
           <Badge
-            name={badge?.badge || "xp"}
-            title={badge?.title}
+            name={getUnlockedBadgeName(badge?.badge)}
             unlocked={true}
-            subtitle={badge?.subtitle}
             size="large"
             color={badge?.color}
           />

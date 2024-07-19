@@ -1,5 +1,5 @@
 import api from "./api";
-import { PostureSessionInput } from "@src/interfaces/posture.types";
+import { PostureSessionInput, Session } from "@src/interfaces/posture.types";
 
 const route = "/posture/sessions";
 
@@ -13,4 +13,9 @@ export const getSessionById = async (sessionId: string) => {
   const { data } = await api.get(`${route}/${sessionId}`);
 
   return data;
+};
+
+export const getAllSessions = async (): Promise<Session[]> => {
+  const response = await api.get(route);
+  return response.data.data;
 };

@@ -29,10 +29,7 @@ const ChallengeDetailCard = (props: any) => {
 
   const DisplayIcon = icon ? challengeIcons[icon] || Icon1 : Icon1;
 
-  const goalPoints =
-    safenumber(data?.goal) *
-    safenumber(data?.duration) *
-    safenumber(data?.members.length, 1);
+  const goalPoints = safenumber(data?.goal) * safenumber(data?.duration) * 10;
 
   const progress = data?.members.reduce(
     (accu: any, curr: any) => accu + curr.points,
@@ -86,14 +83,14 @@ const ChallengeDetailCard = (props: any) => {
       {/* scores */}
       <Stack flexDirection="row" gap={10} justifyContent="space-around">
         <Stack flexDirection="column" alignItems="left">
-          <Text level="title_3">{progress}</Text>
+          <Text level="title_3">{progress.toLocaleString()}</Text>
           <Text level="caption_1" style={styles.captionScores}>
             Current points
           </Text>
         </Stack>
         <Divider variant="vertical" />
         <Stack flexDirection="column" alignItems="left">
-          <Text level="title_3">{goalPoints}</Text>
+          <Text level="title_3">{goalPoints.toLocaleString()}</Text>
           <Text level="caption_1" style={styles.captionScores}>
             Points to go
           </Text>

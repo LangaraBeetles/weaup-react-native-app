@@ -11,6 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { RefreshControl, ScrollView } from "react-native";
+import TotalDurationCard from "./TotalDurationCard";
 
 const AnalyticsContent = ({ term }: { term: "day" | "week" | "month" }) => {
   const form = useForm<PostureData>();
@@ -55,6 +56,8 @@ const AnalyticsContent = ({ term }: { term: "day" | "week" | "month" }) => {
           }
         >
           <Stack gap={20} pb={20}>
+            <TotalDurationCard />
+
             <OverviewCard
               goodCount={data?.overview.good_posture_count ?? 0}
               badCount={data?.overview.bad_posture_count ?? 0}

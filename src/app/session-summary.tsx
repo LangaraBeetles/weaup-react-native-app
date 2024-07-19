@@ -161,7 +161,7 @@ const SessionSummaryScreen: React.FC = () => {
               <Stack flex={1}>
                 <SessionCard
                   title="CORRECTIONS"
-                  content={sessionData?.total_records || 0}
+                  content={sessionData?.total_bad || 0}
                   icon="warning"
                   iconColor="#FFBE1B"
                 />

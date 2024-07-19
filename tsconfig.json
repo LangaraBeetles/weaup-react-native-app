@@ -4,6 +4,7 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
+      "@root/*": [".../../*"],
       "@src/*": ["./src/*"],
       "@state/*": ["./src/state/*"],
       "@interfaces/*": ["./src/interfaces/*"]

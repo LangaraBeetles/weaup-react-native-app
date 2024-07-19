@@ -38,7 +38,7 @@ import NavbarAnalyticsNotSelected from "assets/icons/navbar-analytics-notselecte
 import NavbarAnalyticsSelected from "assets/icons/navbar-analytics-selected.svg";
 import NavbarHomeNotSelected from "assets/icons/navbar-home-notselected.svg";
 import NavbarHomeSelected from "assets/icons/navbar-home-selected.svg";
-import NavbarNotSelected from "assets/icons/navbar-notselected.svg";
+import NavbarProfileNotSelected from "assets/icons/navbar-profile-notselected.svg";
 import NavbarProfileSelected from "assets/icons/navbar-profile-selected.svg";
 import NavbarTogetherNotSelected from "assets/icons/navbar-together-notselected.svg";
 import NavbarTogetherSelected from "assets/icons/navbar-together-selected.svg";
@@ -79,6 +79,7 @@ import ChallengeAvatar from "assets/icons/challenge-avatar.svg";
 import SortAscFilled from "assets/icons/sort-asc-filled.svg";
 import SortDescFilled from "assets/icons/sort-desc-filled.svg";
 import GoogleIcon from "assets/icons/google-icon.svg";
+import RefreshTutorial from "assets/icons/refresh-tutorial.svg";
 
 import { theme } from "@src/styles/theme";
 
@@ -120,7 +121,7 @@ const IconConfig = {
   "navbar-analytics-selected": NavbarAnalyticsSelected,
   "navbar-home-notselected": NavbarHomeNotSelected,
   "navbar-home-selected": NavbarHomeSelected,
-  "navbar-profile-notselected": NavbarNotSelected,
+  "navbar-profile-notselected": NavbarProfileNotSelected,
   "navbar-profile-selected": NavbarProfileSelected,
   "navbar-together-notselected": NavbarTogetherNotSelected,
   "navbar-together-selected": NavbarTogetherSelected,
@@ -161,6 +162,7 @@ const IconConfig = {
   "sort-asc-filled": SortAscFilled,
   "sort-desc-filled": SortDescFilled,
   "google-icon": GoogleIcon,
+  "refresh-tutorial": RefreshTutorial,
 };
 
 export type IconName = keyof typeof IconConfig;

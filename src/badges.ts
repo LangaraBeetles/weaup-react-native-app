@@ -16,7 +16,7 @@ const badges: BadgeType[] = [
     subtitle: "Community Builder",
     description: "20 Friends",
     badge: "challenge",
-    message: "You've aced your way to 1000 XP! Keep up the excellent work!",
+    message: "Great job on inviting 20 friends! Keep it up!",
     color: "#4DB87A",
   },
   {

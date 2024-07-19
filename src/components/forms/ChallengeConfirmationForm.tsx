@@ -13,6 +13,7 @@ import Icon from "../ui/Icon";
 import { theme } from "@src/styles/theme";
 import dayjs from "dayjs";
 import isChallengeActive from "@src/utils/is-challenge-active";
+import PointsCard from "../ui/GoalPicker/PointsCard";
 
 const { icon1: Icon1 } = challengeIcons;
 
@@ -126,6 +127,13 @@ const ChallengeConfirmationForm = () => {
                   </Text>
                 </Stack>
               </Stack>
+            </Stack>
+            <Stack pt={16}>
+              <PointsCard
+                points={
+                  Number(challenge?.goal) * Number(challenge?.duration) * 10
+                }
+              />
             </Stack>
           </Card>
         </Stack>
