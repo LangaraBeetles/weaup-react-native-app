@@ -27,35 +27,45 @@ const useAuth = () => {
   const { setAuth, setGuest, user } = useUser();
   const navigation = useNavigation();
 
-  const handleGoogleAuthCallback = async (params: AuthUserResponse) => {
-    if (!params || !params._id || !params.token) {
-      return;
+  const handleGoogleAuthCallback = async (
+    params: AuthUserResponse,
+    onSuccess: () => void,
+    onError: () => void,
+  ) => {
+    try {
+      if (!params || !params._id || !params.token) {
+        return;
+      }
+
+      const response = await getUserById(params._id);
+      const badges = response.data.badges;
+
+      const user: UserType = {
+        id: params._id,
+        deviceId: params.device_id,
+        name: params.name || "",
+        dailyGoal: Number(params.daily_goal) || 80,
+        providerId: params.provider_id || "",
+        level: params.level,
+        xp: Number(params.xp) || 0,
+        hp: Number(params.hp) || 100,
+        email: params.email ?? "",
+        isSetupComplete: true, //params.is_setup_complete, // TODO: Review why this values is undefined
+        preferredMode: params.preferred_mode,
+        avatar: params.avatar_bg,
+        token: params.token,
+
+        dailyStreakCounter: params.daily_streak_counter || 0,
+        badges: badges || [],
+      };
+
+      setGuest(false);
+      setAuth(true, user);
+      onSuccess();
+    } catch (error) {
+      console.log("handleGoogleAuthCallback", { error });
+      onError();
     }
-
-    const response = await getUserById(params._id);
-    const badges = response.data.badges;
-
-    const user: UserType = {
-      id: params._id,
-      deviceId: params.device_id,
-      name: params.name || "",
-      dailyGoal: Number(params.daily_goal) || 80,
-      providerId: params.provider_id || "",
-      level: params.level,
-      xp: Number(params.xp) || 0,
-      hp: Number(params.hp) || 100,
-      email: params.email ?? "",
-      isSetupComplete: true, //params.is_setup_complete, // TODO: Review why this values is undefined
-      preferredMode: params.preferred_mode,
-      avatar: params.avatar_bg,
-      token: params.token,
-
-      dailyStreakCounter: params.daily_streak_counter || 0,
-      badges: badges || [],
-    };
-
-    setGuest(false);
-    setAuth(true, user);
   };
 
   const logout = async () => {

@@ -95,6 +95,13 @@ const RootLayout = () => {
                       />
 
                       <Stack.Screen
+                        name="challenges/together-signup"
+                        options={{
+                          headerShown: false,
+                        }}
+                      />
+
+                      <Stack.Screen
                         name="auth"
                         options={{ headerShown: false }}
                       />
@@ -109,6 +116,7 @@ const RootLayout = () => {
                         options={{
                           headerShown: false,
                           presentation: "fullScreenModal",
+                          animation: "ios",
                         }}
                       />
 
