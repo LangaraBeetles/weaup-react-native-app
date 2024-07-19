@@ -7,10 +7,19 @@ import Button from "@src/components/ui/Button";
 import { ChallengeInputType } from "@src/interfaces/challenge.types";
 import CloseButton from "../ui/CloseButton";
 import GoalPicker from "../ui/GoalPicker/GoalPicker";
+import { useEffect, useState } from "react";
+import PointsCard from "../ui/GoalPicker/PointsCard";
 
 const ChallengeGoalForm = () => {
-  const { control, handleSubmit, setValue } =
+  const { control, handleSubmit, setValue, getValues } =
     useFormContext<ChallengeInputType>();
+  const challenge = getValues();
+
+  const [points, setPoints] = useState(0);
+
+  useEffect(() => {
+    setPoints(Number(challenge?.goal) * Number(challenge?.duration) * 10);
+  }, [challenge]);
 
   return (
     <View style={styles.main}>
@@ -56,6 +65,7 @@ const ChallengeGoalForm = () => {
               </Stack>
             )}
           />
+          <PointsCard points={points} />
         </Stack>
         <Stack flexGrow={0} justifyContent="flex-end">
           <Button
