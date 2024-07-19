@@ -13,6 +13,7 @@ import { Pusher, PusherEvent } from "@pusher/pusher-websocket-react-native";
 import ToastMessage from "@src/components/ui/ToastMessage";
 import { router } from "expo-router";
 import { useUser } from "@src/state/useUser";
+import config from "@root/src/config.example";
 
 type PushNotificationsContextState = {
   sendPushNotification: (
@@ -116,8 +117,8 @@ const PushNotificationsProvider: React.FC<{ children: React.ReactNode }> = ({
       pusherRef.current = Pusher.getInstance();
 
       await pusherRef.current.init({
-        apiKey: "6958c6ed1ec13b24edfc",
-        cluster: "us3",
+        apiKey: config.pusher.apiKey,
+        cluster: config.pusher.cluster,
       });
 
       await pusherRef.current.connect();

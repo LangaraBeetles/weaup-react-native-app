@@ -9,15 +9,17 @@ const ProfileBadgeContainerPreview = () => {
   const latestBadges = userBadges
     ? userBadges
         .map((userBadge) => {
-          const badge = badges.find((b) => b.id === userBadge.id);
+          const badge = badges.find((b) => b.id == userBadge.id);
           if (badge) {
             return { ...badge, date: userBadge.date };
           }
           return null;
         })
         .filter((badge) => badge?.date !== null)
-        .sort(
-          (a, b) => new Date(b!.date!).getTime() - new Date(a!.date!).getTime(),
+        .sort((a, b) =>
+          b?.date && a?.date
+            ? new Date(b?.date).getTime() - new Date(a?.date).getTime()
+            : 1,
         )
         .slice(0, 3)
     : [];
@@ -28,7 +30,6 @@ const ProfileBadgeContainerPreview = () => {
         <BadgeContainer
           key={index}
           id={badge.id}
-          title={badge.title}
           subtitle={badge.subtitle}
           description={badge.description}
           badge={badge.badge}
@@ -46,7 +47,6 @@ const ProfileBadgeContainerPreview = () => {
         <BadgeContainer
           key={index}
           id={badge.id}
-          title={badge.title}
           subtitle={badge.subtitle}
           description={badge.description}
           badge={badge.badge}

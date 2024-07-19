@@ -3,6 +3,7 @@ import Stack from "../ui/Stack";
 import BadgeContainer from "./BadgeContainer";
 import badges from "@src/badges";
 import { useUser } from "@src/state/useUser";
+import safenumber from "@root/src/utils/safenumber";
 
 const windowWidth = Dimensions.get("window").width;
 const gap = (windowWidth - 332) / 2;
@@ -10,7 +11,9 @@ const gap = (windowWidth - 332) / 2;
 const ProfileBadgeContainerFull = () => {
   const userBadges = useUser((state) => state.user.badges);
 
-  const userBadgeIds = new Set(userBadges?.map((userBadge) => userBadge.id));
+  const userBadgeIds = new Set(
+    userBadges?.map((userBadge) => safenumber(userBadge.id, userBadge.id)),
+  );
 
   const allBadges = badges.map((badge) => ({
     ...badge,

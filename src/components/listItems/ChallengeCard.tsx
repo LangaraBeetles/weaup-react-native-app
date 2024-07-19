@@ -111,13 +111,13 @@ const ChallengeCard = (props: { challenge: ChallengeResponseType }) => {
             })}
             {challenge.members.length > 3 ? (
               <Avatar
-                content={challenge.members.length - 3}
+                content={`+${challenge.members.length - 3}`}
                 borderWidth={3}
                 borderColor={theme.colors.white}
                 variant="gray1"
                 fontSize={10}
                 style={{
-                  right: challenge.members.length * 10,
+                  right: challenge.members.length + 22,
                   height: 28,
                   width: 28,
                 }}
