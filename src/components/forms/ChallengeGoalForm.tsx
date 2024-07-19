@@ -11,15 +11,17 @@ import { useEffect, useState } from "react";
 import PointsCard from "../ui/GoalPicker/PointsCard";
 
 const ChallengeGoalForm = () => {
-  const { control, handleSubmit, setValue, getValues } =
+  const { control, handleSubmit, setValue, watch } =
     useFormContext<ChallengeInputType>();
-  const challenge = getValues();
+
+  const goal = watch("goal");
+  const duration = watch("duration");
 
   const [points, setPoints] = useState(0);
 
   useEffect(() => {
-    setPoints(Number(challenge?.goal) * Number(challenge?.duration) * 10);
-  }, [challenge?.goal]);
+    setPoints(Number(goal) * Number(duration) * 10);
+  }, [goal, duration]);
 
   return (
     <View style={styles.main}>
@@ -38,13 +40,13 @@ const ChallengeGoalForm = () => {
         flexDirection="column"
         px={16}
         flexGrow={1}
-        gap={40}
+        gap={0}
         alignItems="center"
       >
         <Stack
           w="100%"
           flexGrow={1}
-          gap={12}
+          gap={0}
           justifyContent="center"
           alignItems="center"
         >
@@ -56,7 +58,7 @@ const ChallengeGoalForm = () => {
               required: true,
             }}
             render={({ field }) => (
-              <Stack justifyContent="center" h={550} alignItems="center">
+              <Stack justifyContent="center" h={500} alignItems="center">
                 <GoalPicker
                   flex={4}
                   setGoal={field.onChange}

@@ -71,7 +71,7 @@ const GoalPickerItem = (props: {
       <View
         style={{
           width: listItemWidth - 24, //deducttion of 24 padding
-          height: "80%",
+          height: "85%",
           backgroundColor: theme.colors.primary[500],
           borderRadius: 50,
           alignItems: "center",
