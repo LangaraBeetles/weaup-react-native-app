@@ -13,8 +13,9 @@ import Image from "@src/components/ui/Image";
 import Center from "@src/components/ui/Center";
 import Icon from "@src/components/ui/Icon";
 import GoogleButton from "@root/src/components/ui/GoogleButton";
+import { LinearGradient } from "expo-linear-gradient";
 
-const { height } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 
 const TogetherSignUp = () => {
   return (
@@ -31,7 +32,19 @@ const TogetherSignUp = () => {
             </Text>
           </Center>
 
-          <View style={styles.mainContainer} />
+          <View style={styles.mainContainer}>
+            <LinearGradient
+              colors={[theme.colors.primary[200], theme.colors.white]}
+              locations={[0.2, 0.4]}
+              style={{
+                position: "absolute",
+                zIndex: -1,
+                width: width * 2,
+                height: height * 2,
+                borderRadius: width,
+              }}
+            />
+          </View>
           <Stack
             flexGrow={0}
             alignItems="center"
@@ -39,28 +52,28 @@ const TogetherSignUp = () => {
             justifyContent="space-between"
             gap={40}
             h={height * 0.72}
-            pb={20}
+            pb={55}
           >
             <Stack w={"50%"} h={"20%"} gap={15} alignItems="center">
               <Image name="weasel-floating" />
               <Image name="elipse-shadow" height={"10%"} width={"70%"} />
             </Stack>
-            <Text level="title_2" align="center">
+            <Text level="title_3" align="center">
               Improve your posture with your friends using WeaUp!
             </Text>
 
             <Stack
-              p={16}
+              py={28}
+              px={16}
               gap={20}
               backgroundColor={theme.colors.white}
-              w={"65%"}
               borderRadius={16}
             >
               <Stack flexDirection="row" gap={16}>
                 <View style={styles.starList}>
                   <Icon name="star-outline" color={theme.colors.white} />
                 </View>
-                <Text level="subhead">
+                <Text level="callout">
                   Get Support and Stay Motivated Together
                 </Text>
               </Stack>
@@ -68,27 +81,19 @@ const TogetherSignUp = () => {
                 <View style={styles.starList}>
                   <Icon name="star-outline" color={theme.colors.white} />
                 </View>
-                <Text level="subhead">Join Exclusive Group Challenges</Text>
+                <Text level="callout">Join Exclusive Group Challenges</Text>
               </Stack>
               <Stack flexDirection="row" gap={16}>
                 <View style={styles.starList}>
                   <Icon name="star-outline" color={theme.colors.white} />
                 </View>
-                <Text level="subhead">Earn Group Rewards</Text>
+                <Text level="callout">Earn Group Rewards</Text>
               </Stack>
             </Stack>
 
             <Text level="headline">Unlimited free access!</Text>
-
-            <Text level="caption_2">Terms of Service and Privacy Policy </Text>
           </Stack>
-          <View
-            style={{
-              paddingHorizontal: 40,
-            }}
-          >
-            <GoogleButton title="Sign up with Google" />
-          </View>
+          <GoogleButton signUp={true} />
         </Stack>
       </Stack>
     </SafeAreaView>
@@ -99,10 +104,10 @@ const styles = StyleSheet.create({
   mainContainer: {
     position: "absolute",
     top: height * 0.15,
-    width: 865,
-    height: 865, // let's use the width and height from Dimensions
+    width: width * 2,
+    height: height * 2,
     backgroundColor: theme.colors.primary[200],
-    borderRadius: 865 / 2,
+    borderRadius: width,
     flexShrink: 0,
     alignSelf: "center",
   },

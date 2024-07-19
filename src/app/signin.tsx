@@ -105,7 +105,7 @@ const SignIn = () => {
               Forgot password?
             </Text>
           </TouchableOpacity>
-          <Stack w={"100%"} gap={20}>
+          <Stack w={"75%"} gap={20}>
             <Button title="Log in" variant="primary" onPress={handleLogIn} />
             <Center w={"100%"} flexDirection="row" gap={13}>
               <Stack
@@ -135,7 +135,7 @@ const SignIn = () => {
                 }}
               />
             </Center>
-            <GoogleButton title="Continue with Google" />
+            <GoogleButton />
           </Stack>
         </Stack>
       </Stack>

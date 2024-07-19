@@ -21,6 +21,10 @@ import WeaselHeadTilt from "assets/img/weasel-head-tilt.svg";
 import Tada from "assets/img/tada.svg";
 import WeaselFloating from "assets/img/weasel-floating.svg";
 import ElipseShadow from "assets/img/ellipse-shadow.svg";
+import GoogleAndroidButtonContinue from "assets/img/android_light_rd_ctn.svg";
+import GoogleAndroidButtonSignUp from "assets/img/android_light_rd_SU.svg";
+import GoogleiOSButtonContinue from "assets/img/ios_light_rd_ctn.svg";
+import GoogleiOSButtonSignUp from "assets/img/ios_light_rd_SU.svg";
 
 const ImageConfig = {
   "streak-flames": StreakFlames,
@@ -44,6 +48,10 @@ const ImageConfig = {
   tada: Tada,
   "weasel-floating": WeaselFloating,
   "elipse-shadow": ElipseShadow,
+  "google-android-btn-ctn": GoogleAndroidButtonContinue,
+  "google-android-btn-su": GoogleAndroidButtonSignUp,
+  "google-ios-btn-ctn": GoogleiOSButtonContinue,
+  "google-ios-btn-su": GoogleiOSButtonSignUp,
 };
 
 export type ImageName = `${keyof typeof ImageConfig}`;

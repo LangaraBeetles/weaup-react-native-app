@@ -66,7 +66,7 @@ const SignUp = () => {
               onPress={handleContinue}
               title="Continue"
             />
-            <GoogleButton title="Continue with Google" />
+            <GoogleButton />
             <TouchableOpacity onPress={handleContinueAsGuest}>
               <Text
                 level="title_3"
