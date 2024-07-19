@@ -83,14 +83,14 @@ const ChallengeDetailCard = (props: any) => {
       {/* scores */}
       <Stack flexDirection="row" gap={10} justifyContent="space-around">
         <Stack flexDirection="column" alignItems="left">
-          <Text level="title_3">{progress}</Text>
+          <Text level="title_3">{progress.toLocaleString()}</Text>
           <Text level="caption_1" style={styles.captionScores}>
             Current points
           </Text>
         </Stack>
         <Divider variant="vertical" />
         <Stack flexDirection="column" alignItems="left">
-          <Text level="title_3">{goalPoints}</Text>
+          <Text level="title_3">{goalPoints.toLocaleString()}</Text>
           <Text level="caption_1" style={styles.captionScores}>
             Points to go
           </Text>
