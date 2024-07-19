@@ -79,6 +79,7 @@ import ChallengeAvatar from "assets/icons/challenge-avatar.svg";
 import SortAscFilled from "assets/icons/sort-asc-filled.svg";
 import SortDescFilled from "assets/icons/sort-desc-filled.svg";
 import GoogleIcon from "assets/icons/google-icon.svg";
+import RefreshTutorial from "assets/icons/refresh-tutorial.svg";
 
 import { theme } from "@src/styles/theme";
 
@@ -161,6 +162,7 @@ const IconConfig = {
   "sort-asc-filled": SortAscFilled,
   "sort-desc-filled": SortDescFilled,
   "google-icon": GoogleIcon,
+  "refresh-tutorial": RefreshTutorial,
 };
 
 export type IconName = keyof typeof IconConfig;

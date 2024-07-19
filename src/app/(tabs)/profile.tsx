@@ -13,6 +13,7 @@ import XPCard from "@src/components/profile/XPCard";
 import BadgesCard from "@src/components/profile/BadgesCard";
 import DailyGoalCard from "@src/components/profile/DailyGoalCard";
 import StreakCard from "@src/components/profile/StreakCard";
+import AppTutorialCard from "@root/src/components/profile/AppTutorialCard";
 
 const ProfileScreen = () => {
   const isGuest = useUser((data) => data.isGuest);
@@ -42,6 +43,7 @@ const ProfileScreen = () => {
           <BadgesCard />
           <DailyGoalCard />
           <StreakCard />
+          <AppTutorialCard />
         </Stack>
         <Spacer height={40} />
 
