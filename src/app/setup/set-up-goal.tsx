@@ -16,8 +16,8 @@ const PhoneTrainingScreen = () => {
 
   const steps = [
     {
-      title: "Gain Your Daily Progress with Weabo",
-      text: "Gain daily progress by improving your posture score and finishing sessions with your posture pal Weabo.",
+      title: "Gain Your Daily Progress with Wally",
+      text: "Gain daily progress by improving your posture score and finishing sessions with your posture pal Wally.",
     },
     {
       title: "Achieve you Daily Goal and Level Up",
