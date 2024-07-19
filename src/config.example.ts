@@ -10,6 +10,10 @@ const config = {
   google_auth_android: "",
   google_auth_ios: "",
   google_auth_path: "",
+  pusher: {
+    apiKey: "",
+    cluster: "",
+  },
 };
 
 export default config;

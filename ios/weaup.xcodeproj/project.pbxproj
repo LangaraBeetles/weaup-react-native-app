@@ -10,28 +10,11 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		1B0C2E86D59F4573A94C1C6F /* NunitoBlack.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B81A40DA15EB45AEA373BA26 /* NunitoBlack.ttf */; };
-		3111AE4B0FA746D9B7A88C75 /* NunitoItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E47443E9A33D488AAE404241 /* NunitoItalic.ttf */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
-		44166BF9A7E4491AA3D4B731 /* NunitoSemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 346FA0E1309A41498EFBB25E /* NunitoSemiBold.ttf */; };
-		4DCAD12C84844E7F9B5BE393 /* NunitoExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 011503BB424F4E15A4CA17DD /* NunitoExtraBold.ttf */; };
-		5373AD601973406EB272291D /* NunitoExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D4D30FB364164016A859D68F /* NunitoExtraLightItalic.ttf */; };
-		5E35B6DA440E4DF7914A4097 /* NunitoMedium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DF64A8C48FB14E7D8EB57DE7 /* NunitoMedium.ttf */; };
-		73B34032C6C147AFA15FEB77 /* NunitoExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0022E7DFDB914F9D8E96388B /* NunitoExtraBoldItalic.ttf */; };
-		74124C8D5B0D4AB3B8B3F750 /* NunitoLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A66458C837234A739EC083B9 /* NunitoLightItalic.ttf */; };
-		7603703C11E6494F88F880D9 /* NunitoBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D874D492D39B4500ABB34474 /* NunitoBoldItalic.ttf */; };
-		906D1672712B4679ADD8A9E0 /* NunitoBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B2180BEB5BA24327815E5316 /* NunitoBold.ttf */; };
-		917C3C5C053D428B90B2AB14 /* NunitoLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7C54CBB0E6614A938E8AA29E /* NunitoLight.ttf */; };
 		96905EF65AED1B983A6B3ABC /* libPods-weaup.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58EEBF8E8E6FB1BC6CAF49B5 /* libPods-weaup.a */; };
 		A716CE9208CA472FB3AFBE93 /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0F4B9DAE384615B1BF7320 /* noop-file.swift */; };
 		B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
-		BC48103782954A718104C4FD /* NunitoExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B16AFF8538A04D178847D377 /* NunitoExtraLight.ttf */; };
-		D02EB01A61F745D69C8B7CE8 /* NunitoSemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE6D96673A6F41C18BB50EBE /* NunitoSemiBoldItalic.ttf */; };
-		D50B874C2462445494CBF1D1 /* NunitoMediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CD4C7B11A9AC44699ED34302 /* NunitoMediumItalic.ttf */; };
-		DF9A80D330BE49909E024446 /* NunitoRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 764AB6B4CA9B40C0B70E566C /* NunitoRegular.ttf */; };
-		ED5495AB9C9B42C2BC41D272 /* NunitoBlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F767B704397C4142A2D5BD9B /* NunitoBlackItalic.ttf */; };
-		FB5AB12B1CCA4F1894A04DDF /* FredokaOneRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 613D4ADAB34C4462A1382A9E /* FredokaOneRegular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -230,7 +213,9 @@
 				LastUpgradeCheck = 1130;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = K92WM366V2;
 						LastSwiftMigration = 1250;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -260,23 +245,6 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				1B0C2E86D59F4573A94C1C6F /* NunitoBlack.ttf in Resources */,
-				4DCAD12C84844E7F9B5BE393 /* NunitoExtraBold.ttf in Resources */,
-				906D1672712B4679ADD8A9E0 /* NunitoBold.ttf in Resources */,
-				44166BF9A7E4491AA3D4B731 /* NunitoSemiBold.ttf in Resources */,
-				5E35B6DA440E4DF7914A4097 /* NunitoMedium.ttf in Resources */,
-				DF9A80D330BE49909E024446 /* NunitoRegular.ttf in Resources */,
-				917C3C5C053D428B90B2AB14 /* NunitoLight.ttf in Resources */,
-				BC48103782954A718104C4FD /* NunitoExtraLight.ttf in Resources */,
-				ED5495AB9C9B42C2BC41D272 /* NunitoBlackItalic.ttf in Resources */,
-				73B34032C6C147AFA15FEB77 /* NunitoExtraBoldItalic.ttf in Resources */,
-				7603703C11E6494F88F880D9 /* NunitoBoldItalic.ttf in Resources */,
-				D02EB01A61F745D69C8B7CE8 /* NunitoSemiBoldItalic.ttf in Resources */,
-				D50B874C2462445494CBF1D1 /* NunitoMediumItalic.ttf in Resources */,
-				3111AE4B0FA746D9B7A88C75 /* NunitoItalic.ttf in Resources */,
-				74124C8D5B0D4AB3B8B3F750 /* NunitoLightItalic.ttf in Resources */,
-				5373AD601973406EB272291D /* NunitoExtraLightItalic.ttf in Resources */,
-				FB5AB12B1CCA4F1894A04DDF /* FredokaOneRegular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -425,7 +393,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = weaup/weaup.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K92WM366V2;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -458,7 +429,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = weaup/weaup.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K92WM366V2;
 				INFOPLIST_FILE = weaup/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

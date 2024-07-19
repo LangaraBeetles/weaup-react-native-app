@@ -54,7 +54,7 @@ const ChallengeConfirmationForm = () => {
 
       <Stack
         flexDirection="column"
-        px={16}
+        px={30}
         flexGrow={1}
         gap={40}
         alignItems="center"

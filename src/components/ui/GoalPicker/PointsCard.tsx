@@ -17,7 +17,7 @@ const PointsCard = ({ points }: { points: number }) => {
           alignItems="center"
         >
           <Text>Points to achieve</Text>
-          <Text level="title_3">{points.toLocaleString()}</Text>
+          <Text level="title_3">{points?.toLocaleString()}</Text>
         </Stack>
       </Box>
     </View>

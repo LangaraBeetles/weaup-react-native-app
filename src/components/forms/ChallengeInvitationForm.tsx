@@ -8,6 +8,7 @@ import { ChallengeInputType } from "@src/interfaces/challenge.types";
 import { useFormContext } from "react-hook-form";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { Share } from "react-native";
+import { router } from "expo-router";
 
 const ChallengeInvitationForm = (props: {
   handleCloseModalPress: () => void;
@@ -46,6 +47,8 @@ const ChallengeInvitationForm = (props: {
         // url: url, //iOS
       });
       setHasShared(true);
+      //INFO: pretend earn badge
+      router.push({ pathname: "/earn-badge", params: { badgeId: 2 } });
     } catch (error: any) {
       console.error(error.message);
     }

@@ -353,6 +353,13 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - NWWebSocket (0.5.4)
+  - pusher-websocket-react-native (1.3.1):
+    - PusherSwift (~> 10.1.5)
+    - React
+  - PusherSwift (10.1.5):
+    - NWWebSocket (~> 0.5.4)
+    - TweetNacl (~> 1.0.0)
   - RCT-Folly (2024.01.01.00):
     - boost
     - DoubleConversion
@@ -1614,6 +1621,7 @@ PODS:
   - "sqlite3 (3.45.3+1)":
     - "sqlite3/common (= 3.45.3+1)"
   - "sqlite3/common (3.45.3+1)"
+  - TweetNacl (1.0.2)
   - Yoga (0.0.0)
 
 DEPENDENCIES:
@@ -1653,6 +1661,7 @@ DEPENDENCIES:
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - hermes-engine (from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
   - lottie-react-native (from `../node_modules/lottie-react-native`)
+  - "pusher-websocket-react-native (from `../node_modules/@pusher/pusher-websocket-react-native`)"
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCT-Folly/Fabric (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTDeprecation (from `../node_modules/react-native/ReactApple/Libraries/RCTFoundation/RCTDeprecation`)
@@ -1718,9 +1727,12 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - lottie-ios
+    - NWWebSocket
+    - PusherSwift
     - ReachabilitySwift
     - SocketRocket
     - sqlite3
+    - TweetNacl
 
 EXTERNAL SOURCES:
   boost:
@@ -1796,6 +1808,8 @@ EXTERNAL SOURCES:
     :tag: hermes-2024-06-03-RNv0.74.2-bb1e74fe1e95c2b5a2f4f9311152da052badc2bc
   lottie-react-native:
     :path: "../node_modules/lottie-react-native"
+  pusher-websocket-react-native:
+    :path: "../node_modules/@pusher/pusher-websocket-react-native"
   RCT-Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTDeprecation:
@@ -1953,6 +1967,9 @@ SPEC CHECKSUMS:
   hermes-engine: 01d3e052018c2a13937aca1860fbedbccd4a41b7
   lottie-ios: fcb5e73e17ba4c983140b7d21095c834b3087418
   lottie-react-native: f851c0e235f171d99083c803f728f644be1dcf65
+  NWWebSocket: 040d22f23438cc09aaeabf537beff67699c3c76d
+  pusher-websocket-react-native: e40c49a1e4ec96d4157375aebcf44943f0f8f62f
+  PusherSwift: cad631bad86cfff4b8458dce1310a7774e469b1f
   RCT-Folly: 02617c592a293bd6d418e0a88ff4ee1f88329b47
   RCTDeprecation: b03c35057846b685b3ccadc9bfe43e349989cdb2
   RCTRequired: 194626909cfa8d39ca6663138c417bc6c431648c
@@ -2014,6 +2031,7 @@ SPEC CHECKSUMS:
   RNSVG: a48668fd382115bc89761ce291a81c4ca5f2fd2e
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
   sqlite3: 02d1f07eaaa01f80a1c16b4b31dfcbb3345ee01a
+  TweetNacl: 3abf4d1d2082b0114e7a67410e300892448951e6
   Yoga: ae3c32c514802d30f687a04a6a35b348506d411f
 
 PODFILE CHECKSUM: e4a0c3be494f3162af11a771599c318560c6ae9a
