@@ -19,7 +19,7 @@ const ChallengeGoalForm = () => {
 
   useEffect(() => {
     setPoints(Number(challenge?.goal) * Number(challenge?.duration) * 10);
-  }, [challenge]);
+  }, [challenge?.goal]);
 
   return (
     <View style={styles.main}>
