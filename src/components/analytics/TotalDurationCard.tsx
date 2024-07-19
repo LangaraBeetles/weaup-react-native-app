@@ -53,7 +53,10 @@ const TotalDurationCard = () => {
   }, []);
 
   const formatDuration = (totalSeconds: number): string => {
-    if (totalSeconds < 60) {
+    if (totalSeconds === 0) {
+      return "0";
+    }
+    if (totalSeconds > 0 && totalSeconds < 60) {
       return "< 1 minute";
     }
 
