@@ -22,11 +22,12 @@ const TogetherSignUp = () => {
     <SafeAreaView style={styles.main}>
       <Stack
         py={16}
+        px={10}
         pt={Platform.OS === "android" ? height * 0.08 : 16}
         flex={1}
       >
-        <Stack flexGrow={1}>
-          <Center pb={37}>
+        <Stack flexGrow={1} gap={20}>
+          <Center>
             <Text style={styles.content} level="title_2">
               How Together Works
             </Text>
@@ -45,19 +46,21 @@ const TogetherSignUp = () => {
               }}
             />
           </View>
+
           <Stack
             flexGrow={0}
             alignItems="center"
             style={styles.paddedContent}
             justifyContent="space-between"
-            gap={40}
-            h={height * 0.72}
-            pb={55}
+            gap={20}
+            h={height * 0.7}
+            pb={0}
           >
-            <Stack w={"50%"} h={"20%"} gap={15} alignItems="center">
+            <Stack w="50%" h={150} gap={15} alignItems="center">
               <Image name="weasel-floating" />
               <Image name="elipse-shadow" height={"10%"} width={"70%"} />
             </Stack>
+
             <Text level="title_3" align="center">
               Improve your posture with your friends using WeaUp!
             </Text>
@@ -93,6 +96,7 @@ const TogetherSignUp = () => {
 
             <Text level="headline">Unlimited free access!</Text>
           </Stack>
+
           <GoogleButton signUp={true} />
         </Stack>
       </Stack>
@@ -112,7 +116,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   main: {
-    // height: "100%",
+    // height: "50%",
   },
   content: {
     flexGrow: 2,
