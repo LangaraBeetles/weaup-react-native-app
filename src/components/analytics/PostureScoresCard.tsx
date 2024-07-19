@@ -7,15 +7,35 @@ import { AreaChart, Grid, XAxis, YAxis } from "react-native-svg-charts";
 import * as shape from "d3-shape";
 import Spacer from "@src/components/ui/Spacer";
 import Stack from "@src/components/ui/Stack";
-import { PostureData } from "@src/interfaces/posture.types";
+import { PostureData, Record } from "@src/interfaces/posture.types";
 import { useFormContext } from "react-hook-form";
 import safenumber from "@src/utils/safenumber";
+
+const getXAxis = (term: string, data: Array<Record>) => {
+  if (term === "month") {
+    const days = data.map((value) => value.key.split("-").pop());
+
+    return [days[0], days[7], days[14], days[21], days.pop()];
+  }
+
+  if (term === "week") {
+    const days = data.map((value) => {
+      const values = value.key.split("-");
+      return `${values[1]}/${values[2]}`; // MM/DD
+    });
+
+    return days;
+  }
+
+  return ["00:00", "06:00", "12:00", "18:00", "23:00"];
+};
 
 const PostureScoresCard = () => {
   const { watch } = useFormContext<PostureData>();
 
-  const data = watch("records_by_hour") ?? []; //[0, 60, 50, 80, 20, 70, 85, 68, 55];
-  const xdata = ["00:00", "06:00", "12:00", "18:00", "23:00"];
+  const term = watch("term");
+  const data = watch("records_by_term") ?? []; //[0, 60, 50, 80, 20, 70, 85, 68, 55];
+  const xdata = getXAxis(term, data); // ["00:00", "06:00", "12:00", "18:00", "23:00"];
   const ydata = ["25", "50", "75", "100"];
 
   const records = data.filter((record) => !!record.records.length);
@@ -74,7 +94,7 @@ const PostureScoresCard = () => {
           <XAxis
             style={{ paddingHorizontal: 0 }}
             data={xdata}
-            formatLabel={(_, index) => xdata[index]}
+            formatLabel={(_, index) => xdata[index]!}
             contentInset={{ left: 16, right: 16 }}
             svg={{ fontSize: 10, fill: theme.colors.neutral[400] }}
           />

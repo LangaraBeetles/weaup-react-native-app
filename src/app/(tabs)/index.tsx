@@ -120,7 +120,7 @@ const HomePage = () => {
                   level="footnote"
                   weight="bold"
                 >
-                  {userName !== null && userName.split(" ")[0]}
+                  {userName !== null && userName?.split(" ")[0]}
                 </Text>
               ) : null}
             </Stack>

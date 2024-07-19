@@ -6,8 +6,6 @@ import { PostureSessionInput } from "@src/interfaces/posture.types";
 import { saveSessionRecords } from "@src/services/sessionApi";
 import { useUser } from "@src/state/useUser";
 import { useMutation } from "@tanstack/react-query";
-// import { getAnalytics } from "@src/services/analyticsApi";
-// import dayjs from "dayjs";
 
 const SessionControl = () => {
   const router = useRouter();
@@ -19,6 +17,7 @@ const SessionControl = () => {
   const initialXP = useRef<number>(userXP);
 
   const setDailyStreakCounter = useUser((state) => state.setDailyStreakCounter);
+
   const userStreak = useUser((state) => state.user.dailyStreakCounter);
   const [isDailyStreak, setIsDailyStreak] = React.useState(true);
 
