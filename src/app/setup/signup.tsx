@@ -10,9 +10,7 @@ import Input from "@src/components/ui/Input";
 import React, { useState } from "react";
 import Button from "@src/components/ui/Button";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import axios from "axios";
-import * as Linking from "expo-linking";
-import config from "@src/config";
+import GoogleButton from "@root/src/components/ui/GoogleButton";
 
 const { height, width } = Dimensions.get("screen");
 
@@ -27,21 +25,6 @@ const SignUp = () => {
 
   const handleContinue = () => {
     // TODO: Implement sign up logic with email and password
-  };
-
-  const handleContinueWithGoogle = async () => {
-    try {
-      //get google auth link [public]
-      const {
-        data: { data },
-      } = await axios.get(`${config.api_url}/auth/google`);
-
-      if (data.redirect) {
-        Linking.openURL(data.redirect);
-      }
-    } catch (error) {
-      console.error({ error });
-    }
   };
 
   const handleContinueAsGuest = () => {
@@ -83,12 +66,7 @@ const SignUp = () => {
               onPress={handleContinue}
               title="Continue"
             />
-            <Button
-              variant="secondary"
-              onPress={handleContinueWithGoogle}
-              title="Continue with Google"
-              leadingIcon="google-icon"
-            />
+            <GoogleButton />
             <TouchableOpacity onPress={handleContinueAsGuest}>
               <Text
                 level="title_3"

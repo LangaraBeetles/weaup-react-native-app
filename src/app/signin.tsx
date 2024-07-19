@@ -5,9 +5,7 @@ import Image from "@src/components/ui/Image";
 import Input from "@src/components/ui/Input";
 import Stack from "@src/components/ui/Stack";
 import { Text } from "@src/components/ui/typography";
-import config from "@src/config";
 import { theme } from "@src/styles/theme";
-import axios from "axios";
 import { router } from "expo-router";
 import { useState } from "react";
 import {
@@ -19,15 +17,17 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
-import * as Linking from "expo-linking";
+
 import BackButton from "@src/components/ui/BackButton";
 import { Controller, useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { impersonate } from "@src/services/authApi";
 import { useUser } from "@src/state/useUser";
 import { UserType } from "@src/interfaces/user.types";
+import GoogleButton from "@src/components/ui/GoogleButton";
 
 const { height, width } = Dimensions.get("screen");
+const platform = Platform.OS;
 
 const SignIn = () => {
   const { setAuth, setGuest } = useUser();
@@ -75,23 +75,6 @@ const SignIn = () => {
     })();
   };
 
-  const handleContinueWithGoogle = async () => {
-    try {
-      //get google auth link [public]
-      const {
-        data: { data },
-      } = await axios.get(`${config.api_url}/auth/google`);
-
-      if (data.redirect) {
-        setLoading(true);
-        Linking.openURL(data.redirect);
-      }
-    } catch (error) {
-      console.error({ error });
-      setLoading(false);
-    }
-  };
-
   return (
     <SafeAreaView style={{ flex: 1 }}>
       {!!loading && (
@@ -115,7 +98,7 @@ const SignIn = () => {
         <Stack
           style={{
             position: "absolute",
-            top: Platform.OS === "android" ? height * 0.08 : height * 0.04,
+            top: platform === "android" ? height * 0.08 : height * 0.04,
             left: width * 0.07,
             zIndex: 2,
           }}
@@ -183,13 +166,13 @@ const SignIn = () => {
               Forgot password?
             </Text>
           </TouchableOpacity>
-          <Stack w="100%" gap={20}>
+          <Stack w={"75%"} gap={20}>
             <Button
               title={isPending ? "Loading..." : "Log in"}
               variant="primary"
               onPress={handleLogIn}
             />
-            <Center w="100%" flexDirection="row" gap={13}>
+            <Center w={"100%"} flexDirection="row" gap={13}>
               <Stack
                 h="50%"
                 w="40%"
@@ -217,12 +200,7 @@ const SignIn = () => {
                 }}
               />
             </Center>
-            <Button
-              variant="secondary"
-              onPress={handleContinueWithGoogle}
-              title="Continue with Google"
-              leadingIcon="google-icon"
-            />
+            <GoogleButton />
           </Stack>
         </Stack>
       </Stack>
@@ -244,8 +222,7 @@ const style = StyleSheet.create({
     borderRadius: 20,
     zIndex: 4,
     position: "absolute",
-    bottom:
-      height < 850 && Platform.OS == "android" ? width * 0.15 : width * 0.25,
+    bottom: height < 850 && platform == "android" ? width * 0.15 : width * 0.25,
     alignItems: "center",
     paddingHorizontal: 20,
     paddingVertical: 40,

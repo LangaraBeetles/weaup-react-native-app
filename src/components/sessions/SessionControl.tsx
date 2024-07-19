@@ -16,8 +16,10 @@ const SessionControl = () => {
 
   const initialXP = useRef<number>(userXP);
 
+  const setDailyStreakCounter = useUser((state) => state.setDailyStreakCounter);
+
   const userStreak = useUser((state) => state.user.dailyStreakCounter);
-  const [isDailyStreak, setIsDailyStreak] = React.useState(false);
+  const [isDailyStreak, setIsDailyStreak] = React.useState(true);
 
   const setSessionActive = useUser((state) => state.setSessionStatus);
   const sessionStatus = useUser((state) => state.sessionStatus);
@@ -26,6 +28,7 @@ const SessionControl = () => {
     (state) => state.prepareSessionPostureData,
   );
 
+  // TODO: update daily streak counter logic
   // useEffect(() => {
   //   const fetchData = async () => {
   //     try {
@@ -60,6 +63,16 @@ const SessionControl = () => {
       const sessionId = response?.data._id;
       const sessionParams = JSON.stringify(sessionId);
 
+      if (userStreak === 0) {
+        setDailyStreakCounter(1);
+      } else if (userStreak < 7) {
+        setDailyStreakCounter(userStreak + 1);
+      } else if (userStreak === 7) {
+        setDailyStreakCounter(1);
+      }
+
+      setIsDailyStreak(true);
+
       router.push({
         pathname: "/session-summary",
         params: {
@@ -68,7 +81,7 @@ const SessionControl = () => {
         },
       });
 
-      setIsDailyStreak(false);
+      // setIsDailyStreak(false);
     },
     onError: (error) => {
       console.log({ error });

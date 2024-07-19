@@ -22,7 +22,6 @@ const ProfileBadgeContainerFull = () => {
       <BadgeContainer
         key={index}
         id={badge.id}
-        title={badge.title}
         subtitle={badge.subtitle}
         description={badge.description}
         badge={badge.badge}
