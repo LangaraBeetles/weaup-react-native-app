@@ -1,11 +1,11 @@
 import { useEffect } from "react";
-import { Platform } from "react-native";
+import { Platform, TouchableOpacity } from "react-native";
 import * as WebBrowser from "expo-web-browser";
 import * as GoogleSignIn from "expo-auth-session/providers/google";
 import { makeRedirectUri } from "expo-auth-session";
 
 import app from "@root/app.json";
-import Button from "@src/components/ui/Button";
+import Image from "@src/components/ui/Image";
 import config from "@src/config";
 import { googleAuth } from "@src/services/authApi";
 import useAuth from "@src/components/hooks/useAuth";
@@ -15,8 +15,8 @@ import { useNavigation } from "expo-router";
 WebBrowser.maybeCompleteAuthSession();
 const platform = Platform.OS;
 
-const GoogleButton = (props: { title: string }) => {
-  const { title } = props;
+const GoogleButton = (props: { signUp?: boolean }) => {
+  const { signUp } = props;
 
   const { handleGoogleAuthCallback } = useAuth();
 
@@ -70,12 +70,19 @@ const GoogleButton = (props: { title: string }) => {
   }, [response?.type]);
 
   return (
-    <Button
-      variant="secondary"
-      onPress={() => promptAsync()}
-      title={title}
-      leadingIcon="google-icon"
-    />
+    <TouchableOpacity onPress={() => promptAsync()}>
+      {platform == "android" ? (
+        signUp ? (
+          <Image name="google-android-btn-su" height={52}></Image>
+        ) : (
+          <Image name="google-android-btn-ctn" height={52}></Image>
+        )
+      ) : signUp ? (
+        <Image name="google-ios-btn-su" height={52}></Image>
+      ) : (
+        <Image name="google-ios-btn-ctn" height={52}></Image>
+      )}
+    </TouchableOpacity>
   );
 };
 
