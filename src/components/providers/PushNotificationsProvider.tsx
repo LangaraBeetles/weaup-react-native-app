@@ -13,7 +13,7 @@ import { Pusher, PusherEvent } from "@pusher/pusher-websocket-react-native";
 import ToastMessage from "@src/components/ui/ToastMessage";
 import { router } from "expo-router";
 import { useUser } from "@src/state/useUser";
-import config from "@root/src/config.example";
+import config from "@root/src/config";
 
 type PushNotificationsContextState = {
   sendPushNotification: (
