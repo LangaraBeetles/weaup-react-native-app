@@ -178,3 +178,14 @@ I created a new command to achieve the same
 ```
 yarn ios:pods
 ```
+
+## iOS build and submit
+
+```
+ npx expo prebuild
+ eas build --platform ios
+```
+
+```
+eas submit -p ios
+```
