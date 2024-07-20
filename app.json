@@ -19,7 +19,8 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.weaup",
       "minSdkVersion": "15.0",
-      "runtimeVersion": "1.0.0"
+      "runtimeVersion": "1.0.0",
+      "buildNumber": "1.1.0"
     },
     "android": {
       "adaptiveIcon": {
