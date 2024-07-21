@@ -72,10 +72,7 @@ const JoinChallengeContainer = (props: {
         : "Started on " + startAt.format("MMM DD")
   }`;
   const remainingTime = `Ends in ${endAt.diff(dayjs(), "days")} days`;
-  const goalPoints =
-    safenumber(data?.goal) *
-    safenumber(data?.duration) *
-    safenumber(data?.members?.length, 1);
+  const goalPoints = safenumber(data?.goal) * safenumber(data?.duration) * 10;
   const progress = data?.members.reduce(
     (accu: any, curr: any) => accu + curr.points,
     0,
