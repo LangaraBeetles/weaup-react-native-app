@@ -11,6 +11,8 @@ import { googleAuth } from "@src/services/authApi";
 import useAuth from "@src/components/hooks/useAuth";
 
 import { useNavigation } from "expo-router";
+import { useUser } from "@root/src/state/useUser";
+import { UserType } from "@src/interfaces/user.types";
 
 WebBrowser.maybeCompleteAuthSession();
 const platform = Platform.OS;
@@ -21,6 +23,7 @@ const GoogleButton = (props: { signUp?: boolean }) => {
   const { handleGoogleAuthCallback } = useAuth();
 
   const navigation = useNavigation();
+  const user = useUser.getState().user;
 
   const [, response, promptAsync] = GoogleSignIn.useAuthRequest({
     iosClientId: config.google_auth_ios,
@@ -36,9 +39,8 @@ const GoogleButton = (props: { signUp?: boolean }) => {
 
   const login = async (googleSignInResponse: any) => {
     const { access_token } = googleSignInResponse.params;
-
     try {
-      const result = await googleAuth(access_token as string);
+      const result = await googleAuth(access_token as string, user as UserType);
       await handleGoogleAuthCallback(
         result,
         () => {

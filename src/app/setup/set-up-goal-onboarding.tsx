@@ -15,10 +15,12 @@ const { height } = Dimensions.get("screen");
 
 const SetUpGoalScreenOnboarding = () => {
   const setDailyGoal = useUser((state) => state.setDailyGoal);
+  const completeSetup = useUser((state) => state.completeSetup);
   const [goal, setGoal] = useState(80);
 
   const updateGoal = () => {
     setDailyGoal(goal);
+    completeSetup();
     router.push("/setup/signup");
   };
 
