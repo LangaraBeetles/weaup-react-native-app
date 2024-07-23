@@ -8,6 +8,8 @@ body:
     attributes:
       label: "Current Behaviour"
       description: Please describe what is currently happening.
+      value: |
+      When I press the power button (the one in the right top corner), the screen lights up and then it turns back off
     validations:
       required: true
   - type: textarea
@@ -15,6 +17,9 @@ body:
     attributes:
       label: "Expected Behaviour"
       description: Please describe what you expect to happen.
+      value: |
+      - When I press the power button (the one in the right top corner), the screen should light up and display the login screen.
+      - The computer shouldnt turn off unless I click on the turn off button.
     validations:
       required: true
   - type: textarea
@@ -23,10 +28,9 @@ body:
       label: "Reproduction steps"
       description: Please enter an explicit description of your issue.
       value: |
-        1. Go to '...'
-        2. Click on '....'
-        3. Scroll down to '....'
-        4. See error
+        1. Open the laptop
+        2. Press the power button (the one in the right top corner)
+        3. Screen turns on and then turns off
       render: bash
     validations:
       required: true
