@@ -9,7 +9,7 @@ body:
       label: "Current Behaviour"
       description: Please describe what is currently happening.
       value: |
-      When I press the power button (the one in the right top corner), the screen lights up and then it turns back off
+        When I press the power button (the one in the right top corner), the screen lights up and then it turns back off.
     validations:
       required: true
   - type: textarea
@@ -18,8 +18,8 @@ body:
       label: "Expected Behaviour"
       description: Please describe what you expect to happen.
       value: |
-      - When I press the power button (the one in the right top corner), the screen should light up and display the login screen.
-      - The computer shouldnt turn off unless I click on the turn off button.
+        - When I press the power button (the one in the right top corner), the screen should light up and display the login screen.
+        - The computer shouldn't turn off unless I click on the turn off button.
     validations:
       required: true
   - type: textarea
