@@ -1,36 +1,38 @@
 import { theme } from "@src/styles/theme";
-import React, { useEffect, useRef } from "react";
-import { View, StyleSheet, Animated } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { View, StyleSheet, Animated, LayoutChangeEvent } from "react-native";
+import Icon from "./Icon";
 
 const ProgressBar = (props: {
   currentValue: number;
   goal: number;
   backgroundColor: string;
   barColor: string;
-  children?: React.ReactNode;
   height?: number;
   borderWidth?: number;
   borderColor?: string;
   onAnimationEnd?: () => void;
+  icon?: any; // Add a prop for the icon
 }) => {
   const {
     currentValue,
     goal,
-    children,
     backgroundColor,
     barColor,
     height,
     borderWidth,
     borderColor,
     onAnimationEnd,
+    icon,
   } = props;
+  const [barWidth, setBarWidth] = useState(0);
   const progress = goal > 0 ? (currentValue / goal) * 100 : 0;
   const animation = new Animated.Value(progress);
   const counter = useRef(new Animated.Value(0)).current;
 
   const width = counter.interpolate({
     inputRange: [0, 100],
-    outputRange: ["0%", "100%"],
+    outputRange: [0, barWidth],
     extrapolate: "clamp",
   });
 
@@ -46,8 +48,13 @@ const ProgressBar = (props: {
     });
   }, [currentValue]);
 
+  const handleLayout = (event: LayoutChangeEvent) => {
+    const { width } = event.nativeEvent.layout;
+    setBarWidth(width);
+  };
+
   return (
-    <View>
+    <View onLayout={handleLayout}>
       <View
         style={[
           styles.container,
@@ -60,7 +67,6 @@ const ProgressBar = (props: {
           },
         ]}
       />
-
       <Animated.View
         style={[
           styles.bar,
@@ -72,7 +78,18 @@ const ProgressBar = (props: {
           },
         ]}
       />
-      {children}
+      {icon && (
+        <Animated.View
+          style={[
+            styles.icon,
+            {
+              transform: [{ translateX: width }],
+            },
+          ]}
+        >
+          <Icon name="star-circle" style={styles.iconImage} />
+        </Animated.View>
+      )}
     </View>
   );
 };
@@ -85,6 +102,17 @@ const styles = StyleSheet.create({
   bar: {
     marginVertical: 10,
     position: "absolute",
+  },
+  icon: {
+    position: "absolute",
+    top: 8,
+    left: -19,
+    height: 32,
+    width: 32,
+  },
+  iconImage: {
+    height: "100%",
+    width: "100%",
   },
 });
 

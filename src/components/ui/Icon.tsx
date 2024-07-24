@@ -81,6 +81,7 @@ import SortDescFilled from "assets/icons/sort-desc-filled.svg";
 import GoogleIcon from "assets/icons/google-icon.svg";
 import RefreshTutorial from "assets/icons/refresh-tutorial.svg";
 import Check from "assets/icons/check.svg";
+import StarCircle from "assets/icons/star-circle.svg";
 
 import { theme } from "@src/styles/theme";
 
@@ -165,6 +166,7 @@ const IconConfig = {
   "google-icon": GoogleIcon,
   "refresh-tutorial": RefreshTutorial,
   check: Check,
+  "star-circle": StarCircle,
 };
 
 export type IconName = keyof typeof IconConfig;
