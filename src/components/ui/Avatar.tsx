@@ -1,6 +1,32 @@
 import { theme } from "@src/styles/theme";
 import { Text, View, ViewStyle } from "react-native";
 
+import Default from "assets/avatar/default.svg";
+import Image01 from "assets/avatar/01.svg";
+import Image02 from "assets/avatar/02.svg";
+import Image03 from "assets/avatar/03.svg";
+import Image04 from "assets/avatar/04.svg";
+import Image05 from "assets/avatar/05.svg";
+import Image06 from "assets/avatar/06.svg";
+import Image07 from "assets/avatar/07.svg";
+import Image08 from "assets/avatar/08.svg";
+import Image09 from "assets/avatar/09.svg";
+import Image10 from "assets/avatar/10.svg";
+
+const source = {
+  Default,
+  Image01,
+  Image02,
+  Image03,
+  Image04,
+  Image05,
+  Image06,
+  Image07,
+  Image08,
+  Image09,
+  Image10,
+};
+
 const colorOptions = {
   blue1: {
     bg: theme.colors.secondary[300],
@@ -42,21 +68,37 @@ const Avatar = (props: {
   borderColor?: string;
   fontSize?: number;
   style?: ViewStyle;
+  src?: keyof typeof source;
+  showDefault: boolean;
 }) => {
   const {
     content,
     backgroundColor,
     textColor,
-    variant = "blue1",
     size,
     borderWidth,
     borderColor,
     fontSize,
     style,
+    showDefault,
+    variant = "blue1",
+    src = "Default",
   } = props;
 
   const bg = backgroundColor ?? colorOptions[variant].bg;
   const color = textColor ?? colorOptions[variant].color;
+
+  if (!!src && !!showDefault) {
+    return (
+      <Default
+        style={{
+          borderRadius: size ?? 40,
+        }}
+        width={size ?? 40}
+        height={size ?? 40}
+      />
+    );
+  }
 
   return (
     <View

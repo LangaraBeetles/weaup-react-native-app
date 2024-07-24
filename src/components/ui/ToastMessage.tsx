@@ -81,7 +81,7 @@ const ToastMessage = (props: {
             alignItems="center"
             w="90%"
           >
-            <Avatar content="M" variant="blue2" />
+            <Avatar content="M" variant="blue2" showDefault={false} />
             <Text>{props.message}</Text>
           </Stack>
         </TouchableOpacity>

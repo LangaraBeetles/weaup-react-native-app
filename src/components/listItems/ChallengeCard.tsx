@@ -106,6 +106,7 @@ const ChallengeCard = (props: { challenge: ChallengeResponseType }) => {
                     height: 28,
                     width: 28,
                   }}
+                  showDefault={false}
                 />
               );
             })}
@@ -121,6 +122,7 @@ const ChallengeCard = (props: { challenge: ChallengeResponseType }) => {
                   height: 28,
                   width: 28,
                 }}
+                showDefault={false}
               />
             ) : null}
           </Stack>

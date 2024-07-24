@@ -15,6 +15,7 @@ const MemberCard = (props: any) => {
           <Avatar
             content={item?.user?.name?.[0]}
             variant={item?.user?.avatar_bg ?? "gray1"}
+            showDefault={false}
           />
           <View>
             <Text level="headline">{item?.user?.name}</Text>

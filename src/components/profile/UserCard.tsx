@@ -8,6 +8,8 @@ import { globalStyles } from "@src/styles/globalStyles";
 import { theme } from "@src/styles/theme";
 
 const UserCard = () => {
+  const isGuest = useUser((state) => state.isGuest);
+
   const userName = useUser((state) => state.user.name);
   const avatarColor = useUser((state) => state.user.avatar);
   const userEmail = useUser((state) => state.user.email);
@@ -20,6 +22,7 @@ const UserCard = () => {
         size={50}
         fontSize={22}
         borderColor={theme.colors.white}
+        showDefault={isGuest}
       />
 
       <Stack

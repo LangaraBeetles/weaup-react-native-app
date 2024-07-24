@@ -41,6 +41,8 @@ const HomePage = () => {
   const currentPosture = useUser((state) => state.currentPosture);
   const isActiveMonitoring = useUser((state) => state.isTrackingEnabled);
 
+  const isGuest = useUser((state) => state.isGuest);
+
   const animation = useRef<any>(null);
   const [progress, setProgress] = useState<number>(0.5);
 
@@ -113,6 +115,7 @@ const HomePage = () => {
                 content={userName?.[0] ?? "G"}
                 size={25}
                 fontSize={10}
+                showDefault={isGuest}
               />
               {userName !== "null" ? (
                 <Text
