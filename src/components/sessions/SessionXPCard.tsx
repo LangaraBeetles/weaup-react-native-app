@@ -6,10 +6,12 @@ import { Dimensions, StyleSheet, View } from "react-native";
 import Box from "../ui/Box";
 import ProgressBar from "../ui/ProgressBar";
 import levels from "@src/levels";
-import Image from "../ui/Image";
+import Image, { ImageName, ImageConfig } from "../ui/Image";
 import { theme } from "@src/styles/theme";
 import { useEffect, useState } from "react";
 import safenumber from "@src/utils/safenumber";
+import Center from "../ui/Center";
+import { useLevelSystem } from "@src/components/providers/LevelSystemProvider";
 
 const { width } = Dimensions.get("window");
 
@@ -20,6 +22,16 @@ interface XPCardProps {
 const XPCard: React.FC<XPCardProps> = ({ xp }) => {
   const userLevel = useUser((state) => state.user.level);
   const [levelXP, setLevelXP] = useState<number>();
+  const [imageOpacity, setImageOpacity] = useState(0.55);
+  const { unlockedLevels, showLevelUpModal } = useLevelSystem();
+
+  const getImageNameForLevel = (level: number): ImageName => {
+    const imageName = `level-${level}` as ImageName;
+    if (imageName in ImageConfig) {
+      return imageName;
+    }
+    return "level-1"; // Fallback
+  };
 
   useEffect(() => {
     const getNextLevel = () => {
@@ -38,6 +50,16 @@ const XPCard: React.FC<XPCardProps> = ({ xp }) => {
       }, 200);
     }
   }, [userLevel]);
+
+  const handleAnimationEnd = () => {
+    if (unlockedLevels.length) {
+      setImageOpacity(1);
+      setTimeout(() => {
+        showLevelUpModal();
+      }, 400);
+      setImageOpacity(0.55);
+    }
+  };
 
   return (
     <Box>
@@ -65,6 +87,7 @@ const XPCard: React.FC<XPCardProps> = ({ xp }) => {
               backgroundColor={theme.colors.white}
               barColor={theme.colors.error[400]}
               borderWidth={1}
+              onAnimationEnd={handleAnimationEnd}
             />
           ) : (
             <View
@@ -89,12 +112,18 @@ const XPCard: React.FC<XPCardProps> = ({ xp }) => {
             </Text>
           </Stack>
         </Stack>
-        <Image
-          name="level-up-image"
-          width={64}
-          height={64}
-          style={{ marginHorizontal: 13, opacity: 0.55, flexShrink: 0 }}
-        />
+        <Center>
+          <Image
+            name={getImageNameForLevel(Number(userLevel) + 1)}
+            width={64}
+            height={64}
+            style={{
+              marginHorizontal: 13,
+              opacity: imageOpacity,
+              flexShrink: 0,
+            }}
+          />
+        </Center>
       </Stack>
     </Box>
   );

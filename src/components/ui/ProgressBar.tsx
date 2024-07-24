@@ -11,6 +11,7 @@ const ProgressBar = (props: {
   height?: number;
   borderWidth?: number;
   borderColor?: string;
+  onAnimationEnd?: () => void;
 }) => {
   const {
     currentValue,
@@ -21,6 +22,7 @@ const ProgressBar = (props: {
     height,
     borderWidth,
     borderColor,
+    onAnimationEnd,
   } = props;
   const progress = goal > 0 ? (currentValue / goal) * 100 : 0;
   const animation = new Animated.Value(progress);
@@ -37,7 +39,11 @@ const ProgressBar = (props: {
       toValue: animation,
       duration: 1000,
       useNativeDriver: false,
-    }).start();
+    }).start(() => {
+      if (onAnimationEnd) {
+        onAnimationEnd();
+      }
+    });
   }, [currentValue]);
 
   return (

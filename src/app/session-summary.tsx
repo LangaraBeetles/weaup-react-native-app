@@ -9,7 +9,7 @@ import SessionCard from "@src/components/sessions/SessionCard";
 import Button from "@src/components/ui/Button";
 import Center from "@src/components/ui/Center";
 import Image from "@src/components/ui/Image";
-import { useLevelSystem } from "@src/components/providers/LevelSystemProvider";
+// import { useLevelSystem } from "@src/components/providers/LevelSystemProvider";
 import { getSessionById } from "@src/services/sessionApi";
 
 const { height } = Dimensions.get("window");
@@ -40,7 +40,7 @@ interface SessionData {
 }
 
 const SessionSummaryScreen: React.FC = () => {
-  const { unlockedLevels, showLevelUpModal } = useLevelSystem();
+  // const { unlockedLevels, showLevelUpModal } = useLevelSystem();
   const { sessionParams, isDailyStreak } = useLocalSearchParams<{
     sessionParams: string;
     isDailyStreak: "true" | "false";
@@ -58,12 +58,12 @@ const SessionSummaryScreen: React.FC = () => {
   };
 
   const handlePress = () => {
-    if (unlockedLevels.length) {
-      // trigger this after animations
+    // if (unlockedLevels.length) {
+    //   // trigger this after animations
 
-      showLevelUpModal();
-      return;
-    }
+    //   showLevelUpModal();
+    //   return;
+    // }
 
     if (isDailyStreak === "true") {
       router.push("/streak");
