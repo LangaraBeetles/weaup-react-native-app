@@ -19,6 +19,8 @@ import {
   SafeAreaView,
   TouchableOpacity,
 } from "react-native";
+import { useUser } from "@root/src/state/useUser";
+import { TrackingModeEnum } from "@root/src/interfaces/user.types";
 
 const { height: screenHeight } = Dimensions.get("window");
 const centerY = screenHeight / 2;
@@ -28,6 +30,7 @@ const centerY = screenHeight / 2;
 const SelectModeScreen: React.FC<{
   setStage: (stage: SetupStagesType) => void;
 }> = () => {
+  const setPreferredMode = useUser((state) => state.setPreferredMode);
   const mode = useRef<"phone" | "earbuds" | null>(null);
   const pan = useRef(new Animated.ValueXY()).current;
 
@@ -91,6 +94,7 @@ const SelectModeScreen: React.FC<{
 
         if (overlap) {
           mode.current = "earbuds";
+          setPreferredMode(TrackingModeEnum.earbuds);
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
           animateHeadphoneSelected(Easing.exp);
         }
@@ -106,6 +110,7 @@ const SelectModeScreen: React.FC<{
 
         if (overlap) {
           mode.current = "phone";
+          setPreferredMode(TrackingModeEnum.phone);
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
           animatePhoneSelected(Easing.exp);
         }
