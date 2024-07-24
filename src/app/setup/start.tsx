@@ -2,7 +2,6 @@ import Button from "@src/components/ui/Button";
 import Stack from "@src/components/ui/Stack";
 import { Text } from "@src/components/ui/typography";
 import { router } from "expo-router";
-import Checkbox from "expo-checkbox";
 import {
   Dimensions,
   Pressable,
@@ -94,13 +93,29 @@ const SetupPages = () => {
             </Stack>
 
             <Stack flexDirection="row" gap={12} px={6}>
-              {/* TODO: Checkbox functionality */}
               <Stack pt={2}>
-                <Checkbox
-                  value={checked}
-                  onValueChange={() => setChecked((prev) => !prev)}
-                  color={theme.colors.secondary[500]}
-                />
+                <Pressable
+                  onPress={() => setChecked((prev) => !prev)}
+                  style={{
+                    borderWidth: 1,
+                    borderRadius: 4,
+                    height: 20,
+                    width: 20,
+                    backgroundColor: theme.colors.secondary[50],
+                    borderColor: theme.colors.secondary[500],
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  {checked && (
+                    <Icon
+                      name="check"
+                      color={theme.colors.secondary[500]}
+                      size={12}
+                    />
+                  )}
+                </Pressable>
               </Stack>
               <Stack w={width * 0.75}>
                 <Pressable onPress={() => setChecked((prev) => !prev)}>
