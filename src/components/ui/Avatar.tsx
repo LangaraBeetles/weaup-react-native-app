@@ -1,7 +1,6 @@
 import { theme } from "@src/styles/theme";
-import { Text, View, ViewStyle } from "react-native";
+import { Image, Text, View, ViewStyle } from "react-native";
 
-import Default from "assets/avatar/default.svg";
 import Image01 from "assets/avatar/01.svg";
 import Image02 from "assets/avatar/02.svg";
 import Image03 from "assets/avatar/03.svg";
@@ -13,8 +12,7 @@ import Image08 from "assets/avatar/08.svg";
 import Image09 from "assets/avatar/09.svg";
 import Image10 from "assets/avatar/10.svg";
 
-const source = {
-  Default,
+export const source = {
   Image01,
   Image02,
   Image03,
@@ -72,47 +70,66 @@ const Avatar = (props: {
   showDefault: boolean;
 }) => {
   const {
+    src,
     content,
     backgroundColor,
     textColor,
-    size,
-    borderWidth,
     borderColor,
     fontSize,
     style,
     showDefault,
+    size = 40,
     variant = "blue1",
-    src = "Default",
+    borderWidth = 0,
   } = props;
 
   const bg = backgroundColor ?? colorOptions[variant].bg;
   const color = textColor ?? colorOptions[variant].color;
 
-  if (!!src && !!showDefault) {
+  if (!!showDefault) {
     return (
-      <Default
-        style={{
-          borderRadius: size ?? 40,
-        }}
-        width={size ?? 40}
-        height={size ?? 40}
-      />
+      <Container
+        style={style}
+        borderColor={borderColor}
+        borderWidth={borderWidth}
+        size={size}
+      >
+        <Image
+          source={require("../../../assets/avatar/guest.png")}
+          style={{
+            width: size - borderWidth ?? 40,
+            height: size - borderWidth ?? 40,
+          }}
+        />
+      </Container>
+    );
+  }
+
+  if (!!src) {
+    const CustomImage = source[src];
+
+    return (
+      <Container
+        style={style}
+        borderColor={borderColor}
+        borderWidth={borderWidth}
+        size={size}
+      >
+        <CustomImage
+          width={size - borderWidth ?? 40}
+          height={size - borderWidth ?? 40}
+        />
+      </Container>
     );
   }
 
   return (
-    <View
-      style={{
-        width: size ?? 40,
-        height: size ?? 40,
-        borderRadius: 50,
-        backgroundColor: bg,
-        borderWidth: borderWidth ?? 0,
-        borderColor: borderColor ?? "none",
-        alignItems: "center",
-        justifyContent: "center",
-        ...style,
-      }}
+    <Container
+      style={style}
+      bg={bg}
+      borderColor={borderColor}
+      borderWidth={borderWidth}
+      size={size}
     >
       <Text
         style={{
@@ -122,6 +139,41 @@ const Avatar = (props: {
       >
         {content}
       </Text>
+    </Container>
+  );
+};
+
+const Container = ({
+  children,
+  bg,
+  borderColor,
+  size = 40,
+  borderWidth = 0,
+  style = {},
+}: {
+  children: React.ReactNode;
+  style?: ViewStyle;
+  size?: number;
+  borderWidth?: number;
+  borderColor?: string;
+
+  bg?: string;
+}) => {
+  return (
+    <View
+      style={{
+        width: size + borderWidth ?? 40,
+        height: size + borderWidth ?? 40,
+        borderRadius: size + borderWidth ?? 40,
+        backgroundColor: bg,
+        borderWidth: borderWidth ?? 0,
+        borderColor: borderColor ?? "none",
+        alignItems: "center",
+        justifyContent: "center",
+        ...style,
+      }}
+    >
+      {children}
     </View>
   );
 };

@@ -2,10 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 
 import {
   Platform,
-  Pressable,
   ScrollView,
   StyleSheet,
   Dimensions,
+  TouchableOpacity,
 } from "react-native";
 import { Link, Redirect } from "expo-router";
 import DeviceMotionViewiOS, {
@@ -35,7 +35,8 @@ const { height, width } = Dimensions.get("screen");
 const HomePage = () => {
   const isSetupComplete = useUser((state) => state.isSetupComplete);
   const userName = useUser((state) => state.user.name);
-  const avatarColor = useUser((state) => state.user.avatar);
+  const avatarImg = useUser((state) => state.user.avatar_img);
+  const avatarColor = useUser((state) => state.user.avatar_bg);
   const userLevel = useUser((state) => state.user.level);
   const sessionStatus = useUser((state) => state.sessionStatus);
   const currentPosture = useUser((state) => state.currentPosture);
@@ -105,7 +106,7 @@ const HomePage = () => {
             gap={8}
             backgroundColor={theme.colors.white}
             borderRadius={100}
-            px={12}
+            px={10}
             h={41}
             alignItems="center"
           >
@@ -113,9 +114,10 @@ const HomePage = () => {
               <Avatar
                 variant={avatarColor}
                 content={userName?.[0] ?? "G"}
-                size={25}
+                size={30}
                 fontSize={10}
                 showDefault={isGuest}
+                src={avatarImg}
               />
               {userName !== "null" ? (
                 <Text
@@ -139,20 +141,20 @@ const HomePage = () => {
             <TrackingModeIcon />
 
             <Center>
-              <Stack
-                backgroundColor={theme.colors.white}
-                h={40}
-                w={40}
-                alignItems="center"
-                justifyContent="center"
-                borderRadius={20}
-              >
-                <Link href="/notifications" asChild>
-                  <Pressable>
+              <Link href="/notifications" asChild>
+                <TouchableOpacity>
+                  <Stack
+                    backgroundColor={theme.colors.white}
+                    h={40}
+                    w={40}
+                    alignItems="center"
+                    justifyContent="center"
+                    borderRadius={20}
+                  >
                     <Icon name="notification-outline" />
-                  </Pressable>
-                </Link>
-              </Stack>
+                  </Stack>
+                </TouchableOpacity>
+              </Link>
             </Center>
           </Stack>
         </Stack>

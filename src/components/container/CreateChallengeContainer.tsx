@@ -7,6 +7,7 @@ import ChallengeGoalForm from "@src/components/forms/ChallengeGoalForm";
 import ChallengeConfirmationForm from "@src/components/forms/ChallengeConfirmationForm";
 import ChallengeInvitationForm from "@src/components/forms/ChallengeInvitationForm";
 import { FormProvider, useForm } from "react-hook-form";
+import { theme } from "@root/src/styles/theme";
 
 const CreateChallengeContainer = (props: {
   handleCloseModalPress: () => void;
@@ -16,6 +17,7 @@ const CreateChallengeContainer = (props: {
   const form = useForm<ChallengeInputType>({
     defaultValues: {
       step: "detail",
+      color: theme.colors.error[100],
     },
   });
 
