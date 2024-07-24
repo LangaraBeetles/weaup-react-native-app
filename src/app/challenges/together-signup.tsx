@@ -1,4 +1,10 @@
-import { Dimensions, SafeAreaView, StyleSheet, View } from "react-native";
+import {
+  Dimensions,
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Platform,
+} from "react-native";
 
 import Stack from "@src/components/ui/Stack";
 import { Text } from "@src/components/ui/typography";
@@ -8,6 +14,7 @@ import Center from "@src/components/ui/Center";
 import Icon, { IconName } from "@src/components/ui/Icon";
 import GoogleButton from "@root/src/components/ui/GoogleButton";
 import { LinearGradient } from "expo-linear-gradient";
+import Spacer from "@root/src/components/ui/Spacer";
 
 const { width, height } = Dimensions.get("window");
 
@@ -41,6 +48,7 @@ const ListComponent = ({
 const TogetherSignUp = () => {
   return (
     <SafeAreaView>
+      {Platform.OS === "android" && <Spacer height={30} />}
       <Stack gap={20} h={"100%"}>
         <Center pt={20}>
           <Text level="title_2">How Together Works</Text>
@@ -68,7 +76,10 @@ const TogetherSignUp = () => {
           h={409}
           px={20}
           w={"100%"}
-          style={{ position: "absolute", bottom: 20 }}
+          style={{
+            position: "absolute",
+            bottom: Platform.OS === "ios" ? 20 : height * 0.1,
+          }}
         >
           <Stack>
             <Text level="title_3" align="center">
@@ -111,7 +122,7 @@ const TogetherSignUp = () => {
 const styles = StyleSheet.create({
   mainContainer: {
     position: "absolute",
-    top: height * 0.25,
+    top: Platform.OS === "ios" ? height * 0.25 : height * 0.28,
     width: width * 2,
     height: height * 2,
     backgroundColor: theme.colors.primary[200],
