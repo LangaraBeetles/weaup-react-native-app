@@ -15,15 +15,25 @@ import Gradient from "@src/components/ui/Gradient";
 import { theme } from "@src/styles/theme";
 import Image from "@src/components/ui/Image";
 import Icon from "@src/components/ui/Icon";
+import { useUser } from "@root/src/state/useUser";
+import { useEffect } from "react";
 
 const { height, width } = Dimensions.get("screen");
 
 const EarbudsTrainingScreen = () => {
+  const mode = useUser((state) => state.mode);
+
   const navigation = useNavigation();
 
   const next = () => {
     router.push("/setup/earbuds-connected");
   };
+
+  useEffect(() => {
+    if (mode === "earbuds") {
+      router.push("/setup/earbuds-connected");
+    }
+  }, [mode]);
 
   return (
     <SafeAreaView>
@@ -91,7 +101,7 @@ const EarbudsTrainingScreen = () => {
                   level="title_1"
                   style={{ color: theme.colors.primary[900] }}
                 >
-                  Track posture with Earbuds
+                  Track posture with earbuds
                 </Text>
                 <Text align="center">
                   In order for WeaUp to successfully connect with you earbuds,
