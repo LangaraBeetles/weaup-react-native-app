@@ -49,7 +49,7 @@ const SessionControl = () => {
 
   //       console.log("Previous sessions found");
   //     } catch (error) {
-  //       console.error("Failed to fetch analytics data:", error);
+  //       console.log("Failed to fetch analytics data:", error);
   //     }
   //   };
 

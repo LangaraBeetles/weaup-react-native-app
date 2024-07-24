@@ -18,7 +18,7 @@ const GoogleSignUp = () => {
         Linking.openURL(data.redirect);
       }
     } catch (error) {
-      console.error({ error });
+      console.log({ error });
     }
   };
 

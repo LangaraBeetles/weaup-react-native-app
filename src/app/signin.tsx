@@ -65,7 +65,7 @@ const SignIn = () => {
     },
     onError: (error) => {
       console.log({ error });
-      console.error("Bad credentials");
+      console.log("Bad credentials");
     },
   });
 

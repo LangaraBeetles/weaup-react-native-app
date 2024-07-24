@@ -83,7 +83,6 @@ const PushNotificationsProvider: React.FC<{ children: React.ReactNode }> = ({
 
       if (initialStatus !== "granted") {
         const { status } = await Notifications.requestPermissionsAsync();
-        console.log({ status });
 
         if (status !== "granted") {
           Alert.alert(
