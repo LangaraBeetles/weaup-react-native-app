@@ -8,7 +8,7 @@ import ProgressBar from "../ui/ProgressBar";
 import levels from "@src/levels";
 import Image, { ImageName, ImageConfig } from "../ui/Image";
 import { theme } from "@src/styles/theme";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import safenumber from "@src/utils/safenumber";
 import Center from "../ui/Center";
 import { useLevelSystem } from "@src/components/providers/LevelSystemProvider";
@@ -24,6 +24,7 @@ const XPCard: React.FC<XPCardProps> = ({ xp }) => {
   const [levelXP, setLevelXP] = useState<number>();
   const [imageOpacity, setImageOpacity] = useState(0.55);
   const { unlockedLevels, showLevelUpModal } = useLevelSystem();
+  const unlockedLevelsRef = useRef(unlockedLevels);
 
   const getImageNameForLevel = (level: number): ImageName => {
     const imageName = `level-${level}` as ImageName;
@@ -51,13 +52,17 @@ const XPCard: React.FC<XPCardProps> = ({ xp }) => {
     }
   }, [userLevel]);
 
+  useEffect(() => {
+    unlockedLevelsRef.current = unlockedLevels;
+  }, [unlockedLevels]);
+
   const handleAnimationEnd = () => {
-    if (unlockedLevels.length) {
+    if (unlockedLevelsRef.current.length) {
       setImageOpacity(1);
       setTimeout(() => {
         showLevelUpModal();
-      }, 400);
-      setImageOpacity(0.55);
+        setImageOpacity(0.55);
+      }, 600);
     }
   };
 
@@ -78,7 +83,6 @@ const XPCard: React.FC<XPCardProps> = ({ xp }) => {
             </Stack>
           </Stack>
 
-          {/* INFO: workaround to make the bar animation multiple times */}
           {!!levelXP ? (
             <ProgressBar
               currentValue={safenumber(xp?.final)}
