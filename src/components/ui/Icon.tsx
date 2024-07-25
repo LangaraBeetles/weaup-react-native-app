@@ -80,6 +80,7 @@ import SortAscFilled from "assets/icons/sort-asc-filled.svg";
 import SortDescFilled from "assets/icons/sort-desc-filled.svg";
 import GoogleIcon from "assets/icons/google-icon.svg";
 import RefreshTutorial from "assets/icons/refresh-tutorial.svg";
+import Check from "assets/icons/check.svg";
 
 import { theme } from "@src/styles/theme";
 
@@ -163,6 +164,7 @@ const IconConfig = {
   "sort-desc-filled": SortDescFilled,
   "google-icon": GoogleIcon,
   "refresh-tutorial": RefreshTutorial,
+  check: Check,
 };
 
 export type IconName = keyof typeof IconConfig;

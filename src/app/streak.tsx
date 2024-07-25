@@ -55,7 +55,7 @@ const StreakScreen = () => {
   //         }
   //       }
   //     } catch (error) {
-  //       console.error("Failed to fetch analytics data:", error);
+  //       console.log("Failed to fetch analytics data:", error);
   //     }
   //   };
 

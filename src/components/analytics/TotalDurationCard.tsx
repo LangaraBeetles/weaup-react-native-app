@@ -45,7 +45,7 @@ const TotalDurationCard = () => {
 
         setTotalDuration(activeTotal + postureTotal);
       } catch (error) {
-        console.error(error);
+        console.log(error);
       }
     };
 

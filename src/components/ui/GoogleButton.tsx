@@ -55,7 +55,7 @@ const GoogleButton = (props: { signUp?: boolean }) => {
           });
         },
         () => {
-          console.error(
+          console.log(
             "Login unsuccessful. Please verify your credentials and attempt to log in again.",
           );
         },

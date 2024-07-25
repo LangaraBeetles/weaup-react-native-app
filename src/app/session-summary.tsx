@@ -86,13 +86,13 @@ const SessionSummaryScreen: React.FC = () => {
             const data = await getSessionById(sessionId.replace(/"/g, ""));
             setSessionData(data.data);
           } catch (error) {
-            console.error("Failed to fetch session data:", error);
+            console.log("Failed to fetch session data:", error);
           }
         };
 
         fetchSessionData();
       } catch (error) {
-        console.error("Failed to parse session params:", error);
+        console.log("Failed to parse session params:", error);
       }
     }
   }, [sessionParams]);

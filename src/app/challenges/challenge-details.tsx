@@ -50,7 +50,7 @@ const ChallengeDetail = () => {
         //INFO: pretend earn badge
         router.push({ pathname: "/earn-badge", params: { badgeId: 2 } });
       } catch (error) {
-        console.error(error);
+        console.log(error);
       }
     }
   };

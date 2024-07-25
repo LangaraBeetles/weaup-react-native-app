@@ -50,7 +50,7 @@ const ChallengeInvitationForm = (props: {
       //INFO: pretend earn badge
       router.push({ pathname: "/earn-badge", params: { badgeId: 2 } });
     } catch (error: any) {
-      console.error(error.message);
+      console.log(error.message);
     }
   };
 

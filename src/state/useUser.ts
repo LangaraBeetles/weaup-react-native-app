@@ -173,7 +173,7 @@ export const useUser = create<UserState>()(
           // TODO: replace this with the axios interceptor api
           // axios
           //   .patch(`http://10.0.0.201:3000/api/v1/user/${user_id}`, body)
-          //   .catch(console.error);
+          //   .catch(console.log);
         },
 
         setPreferredMode: (newPreferredMode: TrackingModeType) =>

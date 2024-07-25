@@ -1,3 +1,4 @@
+import { usePushNotifications } from "@root/src/components/providers/PushNotificationsProvider";
 import BackgroundGradient from "@src/components/setup/BackgroundGradient";
 import ContentCard from "@src/components/setup/ContentCard";
 import Button from "@src/components/ui/Button";
@@ -10,8 +11,12 @@ import { Dimensions, Platform, SafeAreaView, StyleSheet } from "react-native";
 const { height, width } = Dimensions.get("screen");
 
 const EnableNotificationsScreen = () => {
+  const { registerForPushNotifications } = usePushNotifications();
+
   const next = () => {
-    router.push("/setup/set-up-goal");
+    registerForPushNotifications(() => {
+      router.push("/setup/set-up-goal");
+    });
   };
 
   return (
