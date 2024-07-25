@@ -61,7 +61,7 @@ const ChallengeDetail = () => {
         <Stack flexDirection="row" p={16} alignItems="center" gap={40}>
           <BackButton />
 
-          <Text level="title_2">
+          <Text level="title_2" style={{ flex: 2 }}>
             {isOngoing ? `Challenge Progress` : `Challenge Summary`}
           </Text>
           {isOngoing && !!data?.url && (
