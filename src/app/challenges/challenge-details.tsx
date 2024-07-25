@@ -20,6 +20,7 @@ import isChallengeActive from "@src/utils/is-challenge-active";
 import Skeleton from "@src/components/ui/Skeleton";
 import Icon from "@src/components/ui/Icon";
 import { useUser } from "@src/state/useUser";
+import getShareChallengeLink from "@root/src/utils/share-challenge-link";
 
 const ChallengeDetail = () => {
   const params = useLocalSearchParams();
@@ -39,10 +40,8 @@ const ChallengeDetail = () => {
 
   const handleShare = async () => {
     if (data) {
-      const urlWithUserId = data?.url.replace("[user_id]", loggedUser);
       const shareOptions = {
-        message: urlWithUserId,
-        // url: Platform.OS === "ios" ? urlWithUserId : undefined,
+        message: getShareChallengeLink(data._id, loggedUser),
       };
 
       try {
@@ -64,7 +63,7 @@ const ChallengeDetail = () => {
           <Text level="title_2" style={{ flex: 2 }}>
             {isOngoing ? `Challenge Progress` : `Challenge Summary`}
           </Text>
-          {isOngoing && !!data?.url && (
+          {isOngoing && !!data?._id && (
             <Stack
               w={40}
               h={40}

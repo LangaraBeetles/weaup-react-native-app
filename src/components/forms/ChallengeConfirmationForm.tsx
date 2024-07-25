@@ -31,7 +31,8 @@ const ChallengeConfirmationForm = () => {
   const validate = (data: ChallengeInputType) => {
     createChallenge(data)
       .then((res) => {
-        setValue("url", res.data.url);
+        // setValue("url", res.data.url);
+        setValue("id", res.data._id);
         setValue("step", "result");
       })
       .catch((err) => {

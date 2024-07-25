@@ -9,16 +9,18 @@ import { useFormContext } from "react-hook-form";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { Share } from "react-native";
 import { router } from "expo-router";
+import { useUser } from "@root/src/state/useUser";
+import getShareChallengeLink from "@root/src/utils/share-challenge-link";
 
 const ChallengeInvitationForm = (props: {
   handleCloseModalPress: () => void;
 }) => {
   const { handleCloseModalPress } = props;
-  const { watch, getValues } = useFormContext<ChallengeInputType>();
+  const { getValues } = useFormContext<ChallengeInputType>();
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const [hasShared, setHasShared] = useState(false);
+  const userId = useUser((state) => state.user.id);
 
-  const url = watch("url");
   const name = getValues("name");
 
   useEffect(() => {
@@ -42,9 +44,13 @@ const ChallengeInvitationForm = (props: {
 
   const onShare = async () => {
     try {
+      const data = getValues();
+      if (!data?.id) {
+        console.log("[SHARE CHALLENGE] - No challenge id found");
+        return;
+      }
       await Share.share({
-        message: url, //Android
-        // url: url, //iOS
+        message: getShareChallengeLink(data?.id, userId),
       });
       setHasShared(true);
       //INFO: pretend earn badge
