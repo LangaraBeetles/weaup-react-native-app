@@ -103,19 +103,19 @@ const HomePage = () => {
         >
           <Stack
             flexDirection="row"
-            gap={8}
+            gap={6}
             backgroundColor={theme.colors.white}
             borderRadius={100}
             px={10}
             h={41}
             alignItems="center"
           >
-            <Stack flexDirection="row" gap={4} alignItems="center" h={25}>
+            <Stack flexDirection="row" gap={6} alignItems="center" h={25}>
               <Avatar
                 variant={avatarColor}
                 content={userName?.[0] ?? "G"}
                 size={30}
-                fontSize={10}
+                fontSize={14}
                 showDefault={isGuest}
                 src={avatarImg}
               />

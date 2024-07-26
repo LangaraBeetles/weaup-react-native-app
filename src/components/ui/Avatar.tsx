@@ -28,7 +28,7 @@ export const source = {
 const colorOptions = {
   blue1: {
     bg: theme.colors.secondary[300],
-    color: theme.colors.text,
+    color: theme.colors.white,
   },
   blue2: {
     bg: theme.colors.secondary[700],
@@ -36,7 +36,7 @@ const colorOptions = {
   },
   yellow1: {
     bg: theme.colors.primary[500],
-    color: theme.colors.text,
+    color: theme.colors.white,
   },
   yellow2: {
     bg: theme.colors.primary[500],
