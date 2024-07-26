@@ -62,7 +62,7 @@ const XPCard: React.FC<XPCardProps> = ({ xp }) => {
       setTimeout(() => {
         showLevelUpModal();
         setImageOpacity(0.55);
-      }, 600);
+      }, 1000);
     }
   };
 

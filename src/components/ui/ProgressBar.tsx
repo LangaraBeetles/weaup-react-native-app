@@ -12,7 +12,7 @@ const ProgressBar = (props: {
   borderWidth?: number;
   borderColor?: string;
   onAnimationEnd?: () => void;
-  icon?: any; // Add a prop for the icon
+  icon?: boolean;
 }) => {
   const {
     currentValue,
@@ -25,20 +25,20 @@ const ProgressBar = (props: {
     onAnimationEnd,
     icon,
   } = props;
+
   const [barWidth, setBarWidth] = useState(0);
   const progress = goal > 0 ? (currentValue / goal) * 100 : 0;
-  const animation = new Animated.Value(progress);
-  const counter = useRef(new Animated.Value(0)).current;
+  const animatedWidth = useRef(new Animated.Value(0)).current;
 
-  const width = counter.interpolate({
+  const width = animatedWidth.interpolate({
     inputRange: [0, 100],
     outputRange: [0, barWidth],
     extrapolate: "clamp",
   });
 
   useEffect(() => {
-    Animated.timing(counter, {
-      toValue: animation,
+    Animated.timing(animatedWidth, {
+      toValue: progress,
       duration: 1000,
       useNativeDriver: false,
     }).start(() => {
@@ -46,7 +46,7 @@ const ProgressBar = (props: {
         onAnimationEnd();
       }
     });
-  }, [currentValue]);
+  }, [progress]);
 
   const handleLayout = (event: LayoutChangeEvent) => {
     const { width } = event.nativeEvent.layout;
