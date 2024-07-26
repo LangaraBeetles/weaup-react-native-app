@@ -1,5 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { AppState, AppStateStatus, View, StyleSheet } from "react-native";
+import {
+  AppState,
+  AppStateStatus,
+  View,
+  StyleSheet,
+  Platform,
+} from "react-native";
 import { Text } from "@src/components/ui/typography";
 import Center from "@src/components/ui/Center";
 import Stack from "@src/components/ui/Stack";
@@ -49,8 +55,15 @@ const ChallengeInvitationForm = (props: {
         console.log("[SHARE CHALLENGE] - No challenge id found");
         return;
       }
+      const urlWithUserId = data?.url.replace("[user_id]", userId);
+
+      const message =
+        Platform.OS === "ios"
+          ? getShareChallengeLink(data?.id, userId)
+          : urlWithUserId;
+
       await Share.share({
-        message: getShareChallengeLink(data?.id, userId),
+        message,
       });
       setHasShared(true);
       //INFO: pretend earn badge

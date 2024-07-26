@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   View,
   ScrollView,
+  Platform,
 } from "react-native";
 import { router, useLocalSearchParams, usePathname } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
@@ -39,18 +40,22 @@ const ChallengeDetail = () => {
   const { isOngoing } = isChallengeActive(data?.end_at ?? "");
 
   const handleShare = async () => {
-    if (data) {
-      const shareOptions = {
-        message: getShareChallengeLink(data._id, loggedUser),
-      };
+    if (!data) {
+      return;
+    }
+    try {
+      const urlWithUserId = data?.url?.replace?.("[user_id]", loggedUser);
 
-      try {
-        await Share.share(shareOptions);
-        //INFO: pretend earn badge
-        router.push({ pathname: "/earn-badge", params: { badgeId: 2 } });
-      } catch (error) {
-        console.log(error);
-      }
+      const message =
+        Platform.OS === "ios"
+          ? getShareChallengeLink(data._id, loggedUser)
+          : urlWithUserId;
+
+      await Share.share({ message });
+      //INFO: pretend to earn badge
+      router.push({ pathname: "/earn-badge", params: { badgeId: 2 } });
+    } catch (error) {
+      console.log(error);
     }
   };
 

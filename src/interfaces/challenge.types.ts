@@ -15,7 +15,7 @@ export type ChallengeInputType = {
   status: ChallengeStatusType;
 
   step: CreateChallengeStep;
-  // url: string;
+  url: string;
 };
 
 export type ChallengeType = {
@@ -31,7 +31,7 @@ export type ChallengeType = {
   icon: "icon1" | "icon2" | "icon3";
   status: ChallengeStatusType;
   members: MemberType[];
-  // url: string; // TODO: remove this field from the backend
+  url: string;
 };
 
 export enum ChallengeStatusEnum {
