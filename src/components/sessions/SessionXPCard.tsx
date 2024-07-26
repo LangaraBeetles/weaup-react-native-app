@@ -8,7 +8,7 @@ import ProgressBar from "../ui/ProgressBar";
 import levels from "@src/levels";
 import Image, { ImageName, ImageConfig } from "../ui/Image";
 import { theme } from "@src/styles/theme";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import safenumber from "@src/utils/safenumber";
 import Center from "../ui/Center";
 import { useLevelSystem } from "@src/components/providers/LevelSystemProvider";
@@ -46,9 +46,11 @@ const XPCard: React.FC<XPCardProps> = ({ xp }) => {
     if (!!nextLevelXP && nextLevelXP.level !== userLevel) {
       setLevelXP(0);
 
-      setTimeout(() => {
+      const timeout = setTimeout(() => {
         setLevelXP(nextLevelXP.xp);
       }, 200);
+
+      return () => clearTimeout(timeout);
     }
   }, [userLevel]);
 
@@ -56,15 +58,17 @@ const XPCard: React.FC<XPCardProps> = ({ xp }) => {
     unlockedLevelsRef.current = unlockedLevels;
   }, [unlockedLevels]);
 
-  const handleAnimationEnd = () => {
+  const handleAnimationEnd = useCallback(() => {
     if (unlockedLevelsRef.current.length) {
       setImageOpacity(1);
-      setTimeout(() => {
+      const timeout = setTimeout(() => {
         showLevelUpModal();
         setImageOpacity(0.55);
       }, 1000);
+
+      return () => clearTimeout(timeout);
     }
-  };
+  }, [showLevelUpModal]);
 
   return (
     <Box>
