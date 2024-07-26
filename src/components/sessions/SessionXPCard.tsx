@@ -98,17 +98,7 @@ const XPCard: React.FC<XPCardProps> = ({ xp }) => {
               onAnimationEnd={handleAnimationEnd}
             />
           ) : (
-            <View
-              style={{
-                marginVertical: 10,
-                width: "100%",
-                backgroundColor: theme.colors.white,
-                borderColor: theme.colors.neutral[100],
-                height: 16,
-                borderRadius: 8,
-                borderWidth: 1,
-              }}
-            />
+            <View style={styles.view} />
           )}
 
           <Stack flexDirection="row" justifyContent="space-between">
@@ -125,11 +115,7 @@ const XPCard: React.FC<XPCardProps> = ({ xp }) => {
             name={getImageNameForLevel(Number(userLevel) + 1)}
             width={64}
             height={64}
-            style={{
-              marginHorizontal: 13,
-              opacity: imageOpacity,
-              flexShrink: 0,
-            }}
+            style={[styles.image, { opacity: imageOpacity }]}
           />
         </Center>
       </Stack>
@@ -143,6 +129,19 @@ const styles = StyleSheet.create({
   },
   caption1: {
     color: theme.colors.neutral[400],
+  },
+  view: {
+    marginVertical: 10,
+    width: "100%",
+    backgroundColor: theme.colors.white,
+    borderColor: theme.colors.neutral[100],
+    height: 16,
+    borderRadius: 8,
+    borderWidth: 1,
+  },
+  image: {
+    marginHorizontal: 13,
+    flexShrink: 0,
   },
 });
 
