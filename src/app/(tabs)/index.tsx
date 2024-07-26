@@ -97,6 +97,7 @@ const HomePage = () => {
           justifyContent="space-between"
           p={15}
           pb={0}
+          alignItems="center"
         >
           <Stack
             flexDirection="row"
