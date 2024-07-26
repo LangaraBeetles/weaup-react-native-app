@@ -1,9 +1,15 @@
+import { UserType } from "@src/interfaces/user.types";
 import api from "./api";
 
-export const googleAuth = async (code: string) => {
+export const googleAuth = async (code: string, user: UserType) => {
   const {
     data: { data },
-  } = await api.get(`/auth/google/callback/?code=${encodeURIComponent(code)}`);
+  } = await api.get(`/auth/google/callback/`, {
+    params: {
+      code: encodeURIComponent(code),
+      user: user,
+    },
+  });
   return data;
 };
 
