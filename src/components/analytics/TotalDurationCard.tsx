@@ -34,11 +34,7 @@ const TotalDurationCard = () => {
 
         const postureTotal = postureSessions.reduce(
           (acc: number, session: Session) => {
-            const durationInMinutes = Number(session.duration);
-            const durationInSeconds = !isNaN(durationInMinutes)
-              ? durationInMinutes * 60
-              : 0;
-            return acc + durationInSeconds;
+            return acc + Number(session.duration);
           },
           0,
         );
