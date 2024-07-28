@@ -117,7 +117,7 @@ const useAuth = () => {
 
       return user;
     } catch (error) {
-      console.error("Error creating guest user", error);
+      console.log("Error creating guest user", error);
     }
   };
 

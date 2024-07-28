@@ -32,7 +32,7 @@ type UserState = {
   setAuth: (isAuth: boolean, user?: UserType) => void;
   setGuest: (isGuest: boolean) => void;
   setDailyGoal: (newDailyGoal: number) => void;
-
+  setPreferredMode: (newPreferredMode: TrackingModeType) => void;
   setLevel: (newLevel: number) => void;
   setXP: (newXP: number | ((prevXP: number) => number)) => void;
   setHP: (newHP: number | ((prevHP: number) => number)) => void;
@@ -173,8 +173,18 @@ export const useUser = create<UserState>()(
           // TODO: replace this with the axios interceptor api
           // axios
           //   .patch(`http://10.0.0.201:3000/api/v1/user/${user_id}`, body)
-          //   .catch(console.error);
+          //   .catch(console.log);
         },
+
+        setPreferredMode: (newPreferredMode: TrackingModeType) =>
+          set((state: { isAuth: boolean; user: UserType }) => ({
+            ...state,
+            user: {
+              ...state.user,
+              preferredMode: newPreferredMode,
+            },
+          })),
+
         setXP: (newXP: number | ((prevXP: number) => number)) =>
           set((state: { isAuth: boolean; user: UserType }) => ({
             ...state,
