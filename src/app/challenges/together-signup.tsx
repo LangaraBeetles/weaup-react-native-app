@@ -26,7 +26,7 @@ const ListComponent = ({
   iconName: IconName;
 }) => {
   return (
-    <Stack flexDirection="row" gap={16}>
+    <Stack flexDirection="row" gap={16} alignItems="center">
       <Stack
         backgroundColor={theme.colors.secondary[500]}
         p={6}
@@ -36,10 +36,12 @@ const ListComponent = ({
         justifyContent="center"
         alignItems="center"
       >
-        <Icon name={iconName} />
+        <Icon name={iconName} size={24} />
       </Stack>
       <Stack flex={1} justifyContent="center">
-        <Text level="callout">{text}</Text>
+        <Text level="callout" style={{ color: theme.colors.neutral[800] }}>
+          {text}
+        </Text>
       </Stack>
     </Stack>
   );
@@ -50,8 +52,10 @@ const TogetherSignUp = () => {
     <SafeAreaView>
       {Platform.OS === "android" && <Spacer height={30} />}
       <Stack gap={20} h={"100%"}>
-        <Center pt={20}>
-          <Text level="title_2">How Together Works</Text>
+        <Center pt={height * 0.03}>
+          <Text level="title_2" style={{ color: theme.colors.neutral[800] }}>
+            How Together Works
+          </Text>
         </Center>
 
         <View style={styles.mainContainer}>
@@ -66,54 +70,65 @@ const TogetherSignUp = () => {
               borderRadius: width,
             }}
           />
-        </View>
-        <Center h={348} style={{ zIndex: -2, top: 10 }}>
-          <Image name="weasel-happy" />
-        </Center>
-
-        <Stack
-          gap={20}
-          h={409}
-          px={20}
-          w={"100%"}
-          style={{
-            position: "absolute",
-            bottom: Platform.OS === "ios" ? 20 : height * 0.1,
-          }}
-        >
-          <Stack>
-            <Text level="title_3" align="center">
-              Improve your posture with your friends using WeaUp!
-            </Text>
-          </Stack>
 
           <Stack
-            py={28}
-            px={16}
-            gap={24}
-            backgroundColor={theme.colors.white}
-            borderRadius={16}
+            gap={height * 0.03}
+            px={20}
+            style={{
+              width,
+              height,
+              paddingTop: 50,
+              display: "flex",
+            }}
           >
-            <ListComponent
-              text="Get Support and Stay Motivated Together"
-              iconName="together-icon-1"
-            />
-            <ListComponent
-              text="Join Exclusive Group Challenges"
-              iconName="together-icon-2"
-            />
-            <ListComponent
-              text="Earn Group Rewards"
-              iconName="together-icon-3"
-            />
+            <Stack px="10%">
+              <Text
+                level="title_3"
+                align="center"
+                style={{ color: theme.colors.neutral[800] }}
+              >
+                Improve your posture with your friends using WeaUp!
+              </Text>
+            </Stack>
+
+            <Stack
+              py={28}
+              px={width * 0.05}
+              gap={24}
+              backgroundColor={theme.colors.white}
+              borderRadius={16}
+            >
+              <ListComponent
+                text="Get Support and Stay Motivated Together"
+                iconName="together-icon-1"
+              />
+              <ListComponent
+                text="Join Exclusive Group Challenges"
+                iconName="together-icon-2"
+              />
+              <ListComponent
+                text="Earn Group Rewards"
+                iconName="together-icon-3"
+              />
+            </Stack>
+
+            <Stack alignItems="center">
+              <Text
+                level="headline"
+                style={{ color: theme.colors.neutral[700] }}
+              >
+                Unlimited free access!
+              </Text>
+            </Stack>
+
+            <Stack>
+              <GoogleButton signUp={true} />
+            </Stack>
           </Stack>
-          <Stack alignItems="center">
-            <Text level="headline">Unlimited free access!</Text>
-          </Stack>
-          <Stack>
-            <GoogleButton signUp={true} />
-          </Stack>
-        </Stack>
+        </View>
+        <Center h="50%" style={{ zIndex: -2, top: "3%" }}>
+          <Image name="weasel-happy" />
+        </Center>
       </Stack>
     </SafeAreaView>
   );
@@ -129,6 +144,8 @@ const styles = StyleSheet.create({
     borderRadius: width,
     flexShrink: 0,
     alignSelf: "center",
+    justifyContent: "flex-start",
+    alignItems: "center",
   },
 });
 
