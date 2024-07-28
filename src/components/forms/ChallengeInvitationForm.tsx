@@ -1,5 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { AppState, AppStateStatus, View, StyleSheet } from "react-native";
+import {
+  AppState,
+  AppStateStatus,
+  View,
+  StyleSheet,
+  Platform,
+} from "react-native";
 import { Text } from "@src/components/ui/typography";
 import Center from "@src/components/ui/Center";
 import Stack from "@src/components/ui/Stack";
@@ -9,16 +15,18 @@ import { useFormContext } from "react-hook-form";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { Share } from "react-native";
 import { router } from "expo-router";
+import { useUser } from "@root/src/state/useUser";
+import getShareChallengeLink from "@root/src/utils/share-challenge-link";
 
 const ChallengeInvitationForm = (props: {
   handleCloseModalPress: () => void;
 }) => {
   const { handleCloseModalPress } = props;
-  const { watch, getValues } = useFormContext<ChallengeInputType>();
+  const { getValues } = useFormContext<ChallengeInputType>();
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const [hasShared, setHasShared] = useState(false);
+  const userId = useUser((state) => state.user.id);
 
-  const url = watch("url");
   const name = getValues("name");
 
   useEffect(() => {
@@ -42,9 +50,20 @@ const ChallengeInvitationForm = (props: {
 
   const onShare = async () => {
     try {
+      const data = getValues();
+      if (!data?.id) {
+        console.log("[SHARE CHALLENGE] - No challenge id found");
+        return;
+      }
+      const urlWithUserId = data?.url.replace("[user_id]", userId);
+
+      const message =
+        Platform.OS === "ios"
+          ? getShareChallengeLink(data?.id, userId)
+          : urlWithUserId;
+
       await Share.share({
-        message: url, //Android
-        // url: url, //iOS
+        message,
       });
       setHasShared(true);
       //INFO: pretend earn badge

@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   View,
   ScrollView,
+  Platform,
 } from "react-native";
 import { router, useLocalSearchParams, usePathname } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
@@ -20,6 +21,7 @@ import isChallengeActive from "@src/utils/is-challenge-active";
 import Skeleton from "@src/components/ui/Skeleton";
 import Icon from "@src/components/ui/Icon";
 import { useUser } from "@src/state/useUser";
+import getShareChallengeLink from "@root/src/utils/share-challenge-link";
 
 const ChallengeDetail = () => {
   const params = useLocalSearchParams();
@@ -38,20 +40,22 @@ const ChallengeDetail = () => {
   const { isOngoing } = isChallengeActive(data?.end_at ?? "");
 
   const handleShare = async () => {
-    if (data) {
-      const urlWithUserId = data?.url.replace("[user_id]", loggedUser);
-      const shareOptions = {
-        message: urlWithUserId,
-        // url: Platform.OS === "ios" ? urlWithUserId : undefined,
-      };
+    if (!data) {
+      return;
+    }
+    try {
+      const urlWithUserId = data?.url?.replace?.("[user_id]", loggedUser);
 
-      try {
-        await Share.share(shareOptions);
-        //INFO: pretend earn badge
-        router.push({ pathname: "/earn-badge", params: { badgeId: 2 } });
-      } catch (error) {
-        console.log(error);
-      }
+      const message =
+        Platform.OS === "ios"
+          ? getShareChallengeLink(data._id, loggedUser)
+          : urlWithUserId;
+
+      await Share.share({ message });
+      //INFO: pretend to earn badge
+      router.push({ pathname: "/earn-badge", params: { badgeId: 2 } });
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -61,10 +65,10 @@ const ChallengeDetail = () => {
         <Stack flexDirection="row" p={16} alignItems="center" gap={40}>
           <BackButton />
 
-          <Text level="title_2">
+          <Text level="title_3" style={{ flex: 2 }}>
             {isOngoing ? `Challenge Progress` : `Challenge Summary`}
           </Text>
-          {isOngoing && !!data?.url && (
+          {isOngoing && !!data?._id && (
             <Stack
               w={40}
               h={40}
