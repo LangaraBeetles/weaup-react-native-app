@@ -19,6 +19,10 @@ const EnableNotificationsScreen = () => {
     });
   };
 
+  const maybeLater = () => {
+    router.push("/setup/set-up-goal");
+  };
+
   return (
     <SafeAreaView>
       <Stack h={height} style={{ alignItems: "center" }}>
@@ -51,14 +55,17 @@ const EnableNotificationsScreen = () => {
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor."
           }
         />
-        {/* TODO: Allow notifications functionality */}
         <Stack w={width * 0.9} gap={12} style={styles.buttonStack}>
           <Button
             title="Allow Notifications"
             onPress={next}
             variant="primary"
           />
-          <Button title="Maybe Later" onPress={next} variant="secondary" />
+          <Button
+            title="Maybe Later"
+            onPress={maybeLater}
+            variant="secondary"
+          />
         </Stack>
       </Stack>
     </SafeAreaView>
