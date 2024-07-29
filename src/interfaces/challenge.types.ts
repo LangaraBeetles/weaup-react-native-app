@@ -3,6 +3,8 @@ import { UserAvatar } from "./user.types";
 
 //converted other fields to string to avoid errors on hook form. TextInput only accepts strings
 export type ChallengeInputType = {
+  id?: string;
+
   name: string;
   description: string;
   start_at: string;
@@ -18,7 +20,7 @@ export type ChallengeInputType = {
 };
 
 export type ChallengeType = {
-  id: string;
+  _id: string;
   creator_id: string;
   name: string;
   description: string;

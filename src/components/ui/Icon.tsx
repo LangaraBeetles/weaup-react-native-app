@@ -80,6 +80,9 @@ import SortAscFilled from "assets/icons/sort-asc-filled.svg";
 import SortDescFilled from "assets/icons/sort-desc-filled.svg";
 import GoogleIcon from "assets/icons/google-icon.svg";
 import RefreshTutorial from "assets/icons/refresh-tutorial.svg";
+import TogetherIconOne from "assets/icons/together-icon-1.svg";
+import TogetherIconTwo from "assets/icons/together-icon-2.svg";
+import TogetherIconThree from "assets/icons/together-icon-3.svg";
 import Check from "assets/icons/check.svg";
 
 import { theme } from "@src/styles/theme";
@@ -164,6 +167,9 @@ const IconConfig = {
   "sort-desc-filled": SortDescFilled,
   "google-icon": GoogleIcon,
   "refresh-tutorial": RefreshTutorial,
+  "together-icon-1": TogetherIconOne,
+  "together-icon-2": TogetherIconTwo,
+  "together-icon-3": TogetherIconThree,
   check: Check,
 };
 
