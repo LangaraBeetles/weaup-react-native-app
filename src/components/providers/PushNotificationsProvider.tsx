@@ -171,6 +171,8 @@ const PushNotificationsProvider: React.FC<{ children: React.ReactNode }> = ({
                   return ch;
                 });
               });
+              //INFO: pretend to earn badge
+              router.push({ pathname: "/earn-badge", params: { badgeId: 2 } });
             }
           } catch (error) {
             console.log(error);

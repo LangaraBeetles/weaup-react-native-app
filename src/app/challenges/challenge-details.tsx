@@ -6,7 +6,7 @@ import {
   ScrollView,
   Platform,
 } from "react-native";
-import { router, useLocalSearchParams, usePathname } from "expo-router";
+import { useLocalSearchParams, usePathname } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
 
 import { Text } from "@src/components/ui/typography";
@@ -52,8 +52,6 @@ const ChallengeDetail = () => {
           : urlWithUserId;
 
       await Share.share({ message });
-      //INFO: pretend to earn badge
-      router.push({ pathname: "/earn-badge", params: { badgeId: 2 } });
     } catch (error) {
       console.log(error);
     }
