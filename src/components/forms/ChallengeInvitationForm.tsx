@@ -14,7 +14,6 @@ import { ChallengeInputType } from "@src/interfaces/challenge.types";
 import { useFormContext } from "react-hook-form";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { Share } from "react-native";
-import { router } from "expo-router";
 import { useUser } from "@root/src/state/useUser";
 import getShareChallengeLink from "@root/src/utils/share-challenge-link";
 
@@ -66,8 +65,6 @@ const ChallengeInvitationForm = (props: {
         message,
       });
       setHasShared(true);
-      //INFO: pretend earn badge
-      router.push({ pathname: "/earn-badge", params: { badgeId: 2 } });
     } catch (error: any) {
       console.log(error.message);
     }
