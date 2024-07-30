@@ -53,7 +53,8 @@ const SignIn = () => {
         preferredMode: userResponse.preferred_mode,
         isSetupComplete: true,
         dailyStreakCounter: 0,
-        avatar: userResponse.avatar_bg,
+        avatar_bg: userResponse.avatar_bg,
+        avatar_img: userResponse.avatar_img,
         badges: userResponse?.badges || [],
       };
 

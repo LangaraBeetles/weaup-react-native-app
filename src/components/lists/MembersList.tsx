@@ -8,7 +8,7 @@ const MembersList = (props: any) => {
   const { members } = props;
 
   return (
-    <View>
+    <View style={{ paddingBottom: 20 }}>
       <Text level="headline">Individual rankings</Text>
       <FlatList
         style={styles.cardList}

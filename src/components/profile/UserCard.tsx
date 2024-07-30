@@ -8,18 +8,24 @@ import { globalStyles } from "@src/styles/globalStyles";
 import { theme } from "@src/styles/theme";
 
 const UserCard = () => {
+  const isGuest = useUser((state) => state.isGuest);
+
   const userName = useUser((state) => state.user.name);
-  const avatarColor = useUser((state) => state.user.avatar);
   const userEmail = useUser((state) => state.user.email);
+  const avatarColor = useUser((state) => state.user.avatar_bg);
+  const avatarImg = useUser((state) => state.user.avatar_img);
 
   return (
     <Stack flexDirection="row" gap={12}>
       <Avatar
         variant={avatarColor}
         content={userName?.[0] ?? "G"}
-        size={50}
+        size={48}
         fontSize={22}
+        borderWidth={2}
         borderColor={theme.colors.white}
+        showDefault={isGuest}
+        src={avatarImg}
       />
 
       <Stack

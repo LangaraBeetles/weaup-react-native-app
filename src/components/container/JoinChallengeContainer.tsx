@@ -239,6 +239,7 @@ const JoinChallengeContainer = (props: {
                     <Avatar
                       content={user?.data?.name ? user?.data?.name?.[0] : "G"}
                       variant={user?.data?.avatar_bg}
+                      showDefault={false}
                     />
                     <Text level="body">{user?.data?.name}</Text>
                   </Stack>

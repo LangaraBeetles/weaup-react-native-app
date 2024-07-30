@@ -71,7 +71,8 @@ const userInitialState: UserType = {
   preferredMode: "phone",
   isSetupComplete: false,
   badges: [],
-  avatar: "gray1",
+  avatar_bg: "gray1",
+  avatar_img: "Image01",
 };
 
 // Clear AsyncStorage:

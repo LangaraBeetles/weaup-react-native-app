@@ -1,3 +1,4 @@
+import { source } from "../components/ui/Avatar";
 import { UserBadgeType } from "./badges.types";
 
 export type UserAvatar =
@@ -23,7 +24,8 @@ export type UserType = {
   dailyStreakCounter: number;
   token: string | null;
   isSetupComplete: boolean;
-  avatar: UserAvatar;
+  avatar_bg: UserAvatar;
+  avatar_img: keyof typeof source;
   badges: UserBadgeType[];
 };
 

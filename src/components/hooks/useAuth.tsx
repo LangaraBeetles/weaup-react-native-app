@@ -4,6 +4,7 @@ import { TrackingModeType, UserAvatar, UserType } from "@interfaces/user.types";
 import { useNavigation, CommonActions } from "@react-navigation/native";
 import { UserBadgeType } from "@src/interfaces/badges.types";
 import { getUserById } from "@src/services/userApi";
+import { source } from "../ui/Avatar";
 
 export type AuthUserResponse = {
   _id: string;
@@ -21,6 +22,7 @@ export type AuthUserResponse = {
   daily_streak_counter: number;
   badges: UserBadgeType[];
   avatar_bg: UserAvatar;
+  avatar_img: keyof typeof source;
 };
 
 const useAuth = () => {
@@ -52,7 +54,8 @@ const useAuth = () => {
         email: params.email ?? "",
         isSetupComplete: true, //params.is_setup_complete, // TODO: Review why this values is undefined
         preferredMode: params.preferred_mode,
-        avatar: params.avatar_bg,
+        avatar_bg: params.avatar_bg,
+        avatar_img: params.avatar_img,
         token: params.token,
 
         dailyStreakCounter: params.daily_streak_counter || 0,
@@ -108,7 +111,8 @@ const useAuth = () => {
         preferredMode: createdUser.preferred_mode,
         isSetupComplete: createdUser.is_setup_complete,
         dailyStreakCounter: 0,
-        avatar: createdUser.avatar_bg,
+        avatar_bg: createdUser.avatar_bg,
+        avatar_img: createdUser.avatar_img,
         badges: [],
       };
 
