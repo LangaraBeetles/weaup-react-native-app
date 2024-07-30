@@ -59,6 +59,7 @@ const ProfileBadgeContainerPreview = () => {
   return (
     <Stack
       flexDirection="row"
+      mx={"auto"}
       gap={16}
       justifyContent={latestBadges.length < 3 ? "start" : "space-between"}
     >
