@@ -2,10 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 
 import {
   Platform,
-  Pressable,
   ScrollView,
   StyleSheet,
   Dimensions,
+  TouchableOpacity,
 } from "react-native";
 import { Link, Redirect } from "expo-router";
 import DeviceMotionViewiOS, {
@@ -35,11 +35,14 @@ const { height, width } = Dimensions.get("screen");
 const HomePage = () => {
   const isSetupComplete = useUser((state) => state.isSetupComplete);
   const userName = useUser((state) => state.user.name);
-  const avatarColor = useUser((state) => state.user.avatar);
+  const avatarImg = useUser((state) => state.user.avatar_img);
+  const avatarColor = useUser((state) => state.user.avatar_bg);
   const userLevel = useUser((state) => state.user.level);
   const sessionStatus = useUser((state) => state.sessionStatus);
   const currentPosture = useUser((state) => state.currentPosture);
   const isActiveMonitoring = useUser((state) => state.isTrackingEnabled);
+
+  const isGuest = useUser((state) => state.isGuest);
 
   const animation = useRef<any>(null);
   const [progress, setProgress] = useState<number>(0.5);
@@ -97,22 +100,25 @@ const HomePage = () => {
           justifyContent="space-between"
           p={15}
           pb={0}
+          alignItems="center"
         >
           <Stack
             flexDirection="row"
-            gap={8}
+            gap={6}
             backgroundColor={theme.colors.white}
             borderRadius={100}
-            px={12}
+            px={10}
             h={41}
             alignItems="center"
           >
-            <Stack flexDirection="row" gap={4} alignItems="center" h={25}>
+            <Stack flexDirection="row" gap={6} alignItems="center" h={25}>
               <Avatar
                 variant={avatarColor}
                 content={userName?.[0] ?? "G"}
-                size={25}
-                fontSize={10}
+                size={30}
+                fontSize={14}
+                showDefault={isGuest}
+                src={avatarImg}
               />
               {userName !== "null" ? (
                 <Text
@@ -136,20 +142,20 @@ const HomePage = () => {
             <TrackingModeIcon />
 
             <Center>
-              <Stack
-                backgroundColor={theme.colors.white}
-                h={40}
-                w={40}
-                alignItems="center"
-                justifyContent="center"
-                borderRadius={20}
-              >
-                <Link href="/notifications" asChild>
-                  <Pressable>
+              <Link href="/notifications" asChild>
+                <TouchableOpacity>
+                  <Stack
+                    backgroundColor={theme.colors.white}
+                    h={40}
+                    w={40}
+                    alignItems="center"
+                    justifyContent="center"
+                    borderRadius={20}
+                  >
                     <Icon name="notification-outline" />
-                  </Pressable>
-                </Link>
-              </Stack>
+                  </Stack>
+                </TouchableOpacity>
+              </Link>
             </Center>
           </Stack>
         </Stack>

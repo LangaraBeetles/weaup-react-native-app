@@ -129,7 +129,7 @@ const ButtonRoot = styled(Pressable, {
 const ButtonText = styled(Text, {
   fontSize: 20,
   fontFamily: "NunitoBold",
-  lineHeight: 24,
+  lineHeight: 23,
   variants: {
     category: {
       primary: {
