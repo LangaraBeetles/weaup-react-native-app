@@ -61,7 +61,6 @@ const SessionControl = () => {
     mutationFn: (payload: PostureSessionInput) => saveSessionRecords(payload),
     onSuccess: (response) => {
       const sessionId = response?.data._id;
-      const sessionParams = JSON.stringify(sessionId);
 
       if (userStreak === 0) {
         setDailyStreakCounter(1);
@@ -76,7 +75,7 @@ const SessionControl = () => {
       router.push({
         pathname: "/session-summary",
         params: {
-          sessionParams,
+          sessionId,
           isDailyStreak: isDailyStreak.toString(),
         },
       });
