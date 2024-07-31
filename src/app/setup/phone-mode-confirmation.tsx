@@ -95,8 +95,7 @@ const PhoneTrainingScreen = () => {
                   Track posture with phone
                 </Text>
                 <Text align="center">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor.
+                  Use the motion sensors in your mobile phone to track posture
                 </Text>
               </Stack>
 

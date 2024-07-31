@@ -2,7 +2,7 @@ import Button from "@src/components/ui/Button";
 import Center from "@src/components/ui/Center";
 import { useNavigation } from "@react-navigation/native";
 import Stack from "@src/components/ui/Stack";
-import { router } from "expo-router";
+import { router, usePathname } from "expo-router";
 import {
   Dimensions,
   Platform,
@@ -22,6 +22,7 @@ const { height, width } = Dimensions.get("screen");
 
 const EarbudsTrainingScreen = () => {
   const mode = useUser((state) => state.mode);
+  const path = usePathname();
 
   const navigation = useNavigation();
 
@@ -30,10 +31,10 @@ const EarbudsTrainingScreen = () => {
   };
 
   useEffect(() => {
-    if (mode === "earbuds") {
+    if (mode === "earbuds" && path === "/setup/earbuds-mode-confirmation") {
       router.push("/setup/earbuds-connected");
     }
-  }, [mode]);
+  }, [mode, path]);
 
   return (
     <SafeAreaView>
