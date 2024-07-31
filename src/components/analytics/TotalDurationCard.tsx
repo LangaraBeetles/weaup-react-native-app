@@ -10,7 +10,7 @@ const TotalDurationCard = ({ totalDuration }: { totalDuration: number }) => {
       return "0";
     }
     if (totalSeconds > 0 && totalSeconds < 60) {
-      return `${totalSeconds}s`;
+      return `${totalSeconds.toFixed(0)}s`;
     }
 
     const totalMinutes = Math.floor(totalSeconds / 60);

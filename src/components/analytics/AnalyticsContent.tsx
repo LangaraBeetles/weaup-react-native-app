@@ -57,7 +57,7 @@ const AnalyticsContent = ({ term }: { term: "day" | "week" | "month" }) => {
     refetch: refetchSessions,
     isRefetching: isSessionsRefetching,
   } = useQuery({
-    queryKey: ["monitoring-duration", currentFilter],
+    queryKey: ["sessions", currentFilter],
     queryFn: () => getAllSessions(currentFilter[0], currentFilter[1]),
     enabled:
       !!currentFilter && currentFilter[0] != "" && currentFilter[1] != "",
@@ -82,7 +82,7 @@ const AnalyticsContent = ({ term }: { term: "day" | "week" | "month" }) => {
     }, 0);
 
     return safenumber(activeTotal + postureTotal);
-  }, [sessions?.length, records?.length]);
+  }, [sessions?.length, records?.length, currentFilter, isRefetching]);
 
   const refetch = async () => {
     await refetchAnalytics();
