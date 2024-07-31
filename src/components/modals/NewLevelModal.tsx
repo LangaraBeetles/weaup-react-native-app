@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import { Text } from "@src/components/ui/typography";
 import { Modal } from "react-native";
@@ -7,6 +7,7 @@ import Stack from "../ui/Stack";
 import Image, { ImageConfig, ImageName } from "../ui/Image";
 import Box from "../ui/Box";
 import ProgressBar from "../ui/ProgressBar";
+import Shimmer from "../ui/Shimmer";
 
 interface NewLevelModalProps {
   isVisible: boolean;
@@ -19,6 +20,8 @@ const NewLevelModal: React.FC<NewLevelModalProps> = ({
   isVisible,
   onClose,
 }) => {
+  const [showShimmer, setShowShimmer] = useState(false);
+
   const getImageNameForLevel = (level: number): ImageName => {
     const imageName = `level-${level}-up` as ImageName;
     if (imageName in ImageConfig) {
@@ -62,6 +65,7 @@ const NewLevelModal: React.FC<NewLevelModalProps> = ({
                     barColor={theme.colors.error[400]}
                     borderWidth={1}
                     icon={true}
+                    onAnimationEnd={() => setShowShimmer(true)}
                   />
 
                   <Stack flexDirection="row" justifyContent="space-between">
@@ -74,9 +78,17 @@ const NewLevelModal: React.FC<NewLevelModalProps> = ({
                   </Stack>
                 </Stack>
 
-                <View style={styles.badgeContainer}>
-                  <Image name={getImageNameForLevel(level)} />
-                </View>
+                <Shimmer
+                  show={showShimmer}
+                  width={180}
+                  height={150}
+                  duration={3500}
+                  onAnimationEnd={() => setShowShimmer(false)}
+                >
+                  <View style={styles.badgeContainer}>
+                    <Image name={getImageNameForLevel(level)} />
+                  </View>
+                </Shimmer>
               </Stack>
             </Box>
           </TouchableWithoutFeedback>

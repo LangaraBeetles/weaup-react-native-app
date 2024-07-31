@@ -11,7 +11,7 @@ const ProgressBar = (props: {
   height?: number;
   borderWidth?: number;
   borderColor?: string;
-  onAnimationEnd?: () => void;
+  onAnimationEnd?: (progress: number) => void;
   icon?: boolean;
 }) => {
   const {
@@ -27,7 +27,8 @@ const ProgressBar = (props: {
   } = props;
 
   const [barWidth, setBarWidth] = useState(0);
-  const progress = goal > 0 ? (currentValue / goal) * 100 : 0;
+  let progress = goal > 0 ? (currentValue / goal) * 100 : 0;
+  progress = progress > goal ? goal : progress;
   const animatedWidth = useRef(new Animated.Value(0)).current;
 
   const width = animatedWidth.interpolate({
@@ -43,7 +44,7 @@ const ProgressBar = (props: {
       useNativeDriver: false,
     }).start(() => {
       if (onAnimationEnd) {
-        onAnimationEnd();
+        onAnimationEnd(progress);
       }
     });
   }, [progress]);

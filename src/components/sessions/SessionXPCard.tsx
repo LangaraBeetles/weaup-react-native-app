@@ -12,6 +12,14 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import safenumber from "@src/utils/safenumber";
 import Center from "../ui/Center";
 import { useLevelSystem } from "@src/components/providers/LevelSystemProvider";
+import * as Haptics from "expo-haptics";
+import Animated, {
+  runOnJS,
+  useSharedValue,
+  withDelay,
+  withSequence,
+  withTiming,
+} from "react-native-reanimated";
 
 const { width } = Dimensions.get("window");
 
@@ -22,9 +30,10 @@ interface XPCardProps {
 const XPCard: React.FC<XPCardProps> = ({ xp }) => {
   const userLevel = useUser((state) => state.user.level);
   const [levelXP, setLevelXP] = useState<number>();
-  const [imageOpacity, setImageOpacity] = useState(0.55);
   const { unlockedLevels, showLevelUpModal } = useLevelSystem();
   const unlockedLevelsRef = useRef(unlockedLevels);
+
+  const levelImageOpacity = useSharedValue<number>(0.55);
 
   const getImageNameForLevel = (level: number): ImageName => {
     const imageName = `level-${level}` as ImageName;
@@ -58,17 +67,24 @@ const XPCard: React.FC<XPCardProps> = ({ xp }) => {
     unlockedLevelsRef.current = unlockedLevels;
   }, [unlockedLevels]);
 
-  const handleAnimationEnd = useCallback(() => {
-    if (unlockedLevelsRef.current.length) {
-      setImageOpacity(1);
-      const timeout = setTimeout(() => {
-        showLevelUpModal();
-        setImageOpacity(0.55);
-      }, 1000);
+  const handleAnimationEnd = useCallback(
+    (progress: number) => {
+      if (progress >= 100) {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
 
-      return () => clearTimeout(timeout);
-    }
-  }, [showLevelUpModal]);
+        levelImageOpacity.value = withSequence(
+          withTiming(1, {}, (finished) => {
+            "worklet";
+            if (finished) {
+              runOnJS(showLevelUpModal)();
+            }
+          }),
+          withDelay(2000, withTiming(0.55)),
+        );
+      }
+    },
+    [showLevelUpModal],
+  );
 
   return (
     <Box>
@@ -90,6 +106,7 @@ const XPCard: React.FC<XPCardProps> = ({ xp }) => {
           {!!levelXP ? (
             <ProgressBar
               currentValue={safenumber(xp?.final)}
+              // currentValue={levelXP}
               goal={levelXP}
               height={16}
               backgroundColor={theme.colors.white}
@@ -111,12 +128,18 @@ const XPCard: React.FC<XPCardProps> = ({ xp }) => {
           </Stack>
         </Stack>
         <Center>
-          <Image
-            name={getImageNameForLevel(Number(userLevel) + 1)}
-            width={64}
-            height={64}
-            style={[styles.image, { opacity: imageOpacity }]}
-          />
+          <Animated.View
+            style={{
+              opacity: levelImageOpacity,
+            }}
+          >
+            <Image
+              name={getImageNameForLevel(Number(userLevel) + 1)}
+              width={64}
+              height={64}
+              style={styles.image}
+            />
+          </Animated.View>
         </Center>
       </Stack>
     </Box>

@@ -55,7 +55,7 @@ const LevelSystemProvider: React.FC<{ children: React.ReactNode }> = ({
     setLevelUpAfterSession(undefined);
     setUserLevel(level);
     unlockedLevels.current.shift();
-    setTimeout(showLevelUp, 800);
+    setTimeout(showLevelUp, 1000);
   };
 
   useEffect(() => {
