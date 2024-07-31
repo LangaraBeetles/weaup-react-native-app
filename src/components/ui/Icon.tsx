@@ -84,6 +84,7 @@ import TogetherIconOne from "assets/icons/together-icon-1.svg";
 import TogetherIconTwo from "assets/icons/together-icon-2.svg";
 import TogetherIconThree from "assets/icons/together-icon-3.svg";
 import Check from "assets/icons/check.svg";
+import StarCircle from "assets/icons/star-circle.svg";
 
 import { theme } from "@src/styles/theme";
 
@@ -171,6 +172,7 @@ const IconConfig = {
   "together-icon-2": TogetherIconTwo,
   "together-icon-3": TogetherIconThree,
   check: Check,
+  "star-circle": StarCircle,
 };
 
 export type IconName = keyof typeof IconConfig;

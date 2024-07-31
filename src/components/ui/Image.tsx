@@ -25,8 +25,20 @@ import GoogleAndroidButtonContinue from "assets/img/android_light_rd_ctn.svg";
 import GoogleAndroidButtonSignUp from "assets/img/android_light_rd_SU.svg";
 import GoogleiOSButtonContinue from "assets/img/ios_light_rd_ctn.svg";
 import GoogleiOSButtonSignUp from "assets/img/ios_light_rd_SU.svg";
+import Level1 from "assets/levels/Level1.svg";
+import Level2 from "assets/levels/Level2.svg";
+import Level3 from "assets/levels/Level3.svg";
+import Level4 from "assets/levels/Level4.svg";
+import Level5 from "assets/levels/Level5.svg";
+import Level6 from "assets/levels/Level6.svg";
+import Level1up from "assets/levels/Level1-up.svg";
+import Level2up from "assets/levels/Level2-up.svg";
+import Level3up from "assets/levels/Level3-up.svg";
+import Level4up from "assets/levels/Level4-up.svg";
+import Level5up from "assets/levels/Level5-up.svg";
+import Level6up from "assets/levels/Level6-up.svg";
 
-const ImageConfig = {
+export const ImageConfig = {
   "streak-flames": StreakFlames,
   "weasel-happy": WeaselHappyImage,
   "background-happy": BackGroundHappyImage,
@@ -52,9 +64,21 @@ const ImageConfig = {
   "google-android-btn-su": GoogleAndroidButtonSignUp,
   "google-ios-btn-ctn": GoogleiOSButtonContinue,
   "google-ios-btn-su": GoogleiOSButtonSignUp,
+  "level-1": Level1,
+  "level-2": Level2,
+  "level-3": Level3,
+  "level-4": Level4,
+  "level-5": Level5,
+  "level-6": Level6,
+  "level-1-up": Level1up,
+  "level-2-up": Level2up,
+  "level-3-up": Level3up,
+  "level-4-up": Level4up,
+  "level-5-up": Level5up,
+  "level-6-up": Level6up,
 };
 
-export type ImageName = `${keyof typeof ImageConfig}`;
+export type ImageName = keyof typeof ImageConfig;
 
 type ImageProps = {
   name: ImageName;
