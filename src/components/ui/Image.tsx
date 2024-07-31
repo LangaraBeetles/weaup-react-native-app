@@ -37,6 +37,8 @@ import Level3up from "assets/levels/Level3-up.svg";
 import Level4up from "assets/levels/Level4-up.svg";
 import Level5up from "assets/levels/Level5-up.svg";
 import Level6up from "assets/levels/Level6-up.svg";
+import WeaselEarbuds from "assets/img/weasel-earbuds.svg";
+import WeaselPhone from "assets/img/weasel-phone.svg";
 
 export const ImageConfig = {
   "streak-flames": StreakFlames,
@@ -76,6 +78,8 @@ export const ImageConfig = {
   "level-4-up": Level4up,
   "level-5-up": Level5up,
   "level-6-up": Level6up,
+  "weasel-earbuds": WeaselEarbuds,
+  "weasel-phone": WeaselPhone,
 };
 
 export type ImageName = keyof typeof ImageConfig;

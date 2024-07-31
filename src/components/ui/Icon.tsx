@@ -85,6 +85,8 @@ import TogetherIconTwo from "assets/icons/together-icon-2.svg";
 import TogetherIconThree from "assets/icons/together-icon-3.svg";
 import Check from "assets/icons/check.svg";
 import StarCircle from "assets/icons/star-circle.svg";
+import DoubleChevronUp from "assets/icons/double-chevron-up.svg";
+import DoubleChevronDown from "assets/icons/double-chevron-down.svg";
 
 import { theme } from "@src/styles/theme";
 
@@ -171,6 +173,8 @@ const IconConfig = {
   "together-icon-1": TogetherIconOne,
   "together-icon-2": TogetherIconTwo,
   "together-icon-3": TogetherIconThree,
+  "double-chevron-up": DoubleChevronUp,
+  "double-chevron-down": DoubleChevronDown,
   check: Check,
   "star-circle": StarCircle,
 };

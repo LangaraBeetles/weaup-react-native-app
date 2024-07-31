@@ -1,11 +1,8 @@
 import Center from "@src/components/ui/Center";
 import Stack from "@src/components/ui/Stack";
 import { Text } from "@src/components/ui/typography";
-import { SetupStagesType } from "@src/interfaces/setup.types";
 import { theme } from "@src/styles/theme";
 import * as Haptics from "expo-haptics";
-import { LinearGradient } from "expo-linear-gradient";
-import { router } from "expo-router";
 import { useRef } from "react";
 import Image from "@src/components/ui/Image";
 
@@ -21,43 +18,66 @@ import {
 } from "react-native";
 import { useUser } from "@root/src/state/useUser";
 import { TrackingModeEnum } from "@root/src/interfaces/user.types";
+import Icon from "@root/src/components/ui/Icon";
 
 const { height: screenHeight } = Dimensions.get("window");
 const centerY = screenHeight / 2;
 
 //TODO: handle back button to reset the animmations
 
-const SelectModeScreen: React.FC<{
-  setStage: (stage: SetupStagesType) => void;
-}> = () => {
+const SelectModeScreen = () => {
   const setPreferredMode = useUser((state) => state.setPreferredMode);
   const mode = useRef<"phone" | "earbuds" | null>(null);
-  const pan = useRef(new Animated.ValueXY()).current;
+  const panEarbuds = useRef(new Animated.ValueXY()).current;
+  const panPhone = useRef(new Animated.ValueXY()).current;
 
   const earbudsArea = useRef<RNView>(null);
   const phoneArea = useRef<RNView>(null);
-  const draggable = useRef<RNView>(null);
-  const transitioning = useRef<boolean>(false);
+  const steady = useRef<RNView>(null);
 
   const earbudsAreaOpacity = new Animated.Value(1);
   const phoneAreaOpacity = new Animated.Value(1);
-  const draggableOppacity = new Animated.Value(1);
+  const steadyOpacity = new Animated.Value(1);
 
-  const earbudsAreaTranslateY = useRef(new Animated.Value(0)).current;
-  const phoneAreaTranslateY = useRef(new Animated.Value(0)).current;
-
-  const panResponder = useRef(
+  const panEarbudsResponder = useRef(
     PanResponder.create({
       onMoveShouldSetPanResponder: () => true,
+      onPanResponderGrant: () => {
+        reset();
+      },
       onPanResponderMove: (...args) => {
-        checkOverlap();
-        Animated.event([null, { dy: pan.y }], {
+        Animated.event([null, { dy: panEarbuds.y }], {
           useNativeDriver: false,
         })(...args);
       },
 
       onPanResponderRelease: () => {
-        Animated.spring(pan, {
+        checkOverlap();
+        Animated.spring(panEarbuds, {
+          toValue: 0,
+          useNativeDriver: false,
+          friction: 5, // Controls the "bounciness"/damping of the spring animation
+          tension: 40, // Controls the speed of the spring animation
+        }).start();
+      },
+    }),
+  ).current;
+
+  const panPhoneResponder = useRef(
+    PanResponder.create({
+      onMoveShouldSetPanResponder: () => true,
+      onPanResponderGrant: () => {
+        reset();
+      },
+      onPanResponderMove: (...args) => {
+        Animated.event([null, { dy: panPhone.y }], {
+          useNativeDriver: false,
+        })(...args);
+      },
+
+      onPanResponderRelease: () => {
+        checkOverlap();
+        Animated.spring(panPhone, {
           toValue: 0,
           useNativeDriver: false,
           friction: 5, // Controls the "bounciness"/damping of the spring animation
@@ -82,39 +102,26 @@ const SelectModeScreen: React.FC<{
     if (!!mode.current) {
       return;
     }
-    measureLayout(draggable, (draggableContainer) => {
-      measureLayout(earbudsArea, (earbudsContainer) => {
-        const isOverlappingEarbuds = (moving: any, steady: any) => {
-          return moving.pageY < steady.pageY + 200;
-        };
-        const overlap = isOverlappingEarbuds(
-          draggableContainer,
-          earbudsContainer,
-        );
+    measureLayout(earbudsArea, (earbudsContainer) => {
+      const overlap = earbudsContainer.pageY > centerY / 8;
 
-        if (overlap) {
-          mode.current = "earbuds";
-          setPreferredMode(TrackingModeEnum.earbuds);
-          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-          animateHeadphoneSelected(Easing.exp);
-        }
-      });
+      if (overlap) {
+        mode.current = "earbuds";
+        setPreferredMode(TrackingModeEnum.earbuds);
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+        animateHeadphoneSelected(Easing.exp);
+      }
     });
 
-    measureLayout(draggable, (draggableContainer) => {
-      measureLayout(phoneArea, (phoneContainer) => {
-        const isOverlappingPhone = (moving: any, steady: any) => {
-          return moving.pageY > steady.pageY;
-        };
-        const overlap = isOverlappingPhone(draggableContainer, phoneContainer);
+    measureLayout(phoneArea, (phoneContainer) => {
+      const overlap = phoneContainer.pageY < centerY;
 
-        if (overlap) {
-          mode.current = "phone";
-          setPreferredMode(TrackingModeEnum.phone);
-          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-          animatePhoneSelected(Easing.exp);
-        }
-      });
+      if (overlap) {
+        mode.current = "phone";
+        setPreferredMode(TrackingModeEnum.phone);
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+        animatePhoneSelected(Easing.exp);
+      }
     });
   };
 
@@ -122,32 +129,27 @@ const SelectModeScreen: React.FC<{
     // Hide the phone area
     Animated.timing(phoneAreaOpacity, {
       toValue: 0,
-      duration: 500,
+      duration: 300,
       easing,
       useNativeDriver: false,
     }).start();
 
-    // Hide the draggable component
-    Animated.timing(draggableOppacity, {
+    // // Hide the steady component
+    Animated.timing(steadyOpacity, {
       toValue: 0,
-      duration: 200,
+      duration: 300,
       easing,
       useNativeDriver: false,
     }).start();
 
     // Center the earbuds area
-    Animated.timing(earbudsAreaTranslateY, {
-      toValue: centerY - 10,
+    Animated.timing(panEarbuds.y, {
+      toValue: centerY,
       duration: 700,
       easing: Easing.ease,
       useNativeDriver: false,
     }).start(() => {
-      if (!transitioning.current) {
-        setTimeout(() => {
-          transitioning.current = true;
-          router.push("/setup/earbuds-mode-confirmation");
-        }, 300);
-      }
+      //TODO: Go to Earbuds mode onboarding
     });
   };
 
@@ -155,32 +157,27 @@ const SelectModeScreen: React.FC<{
     // Hide the earbuds area
     Animated.timing(earbudsAreaOpacity, {
       toValue: 0,
-      duration: 500,
+      duration: 300,
       easing,
       useNativeDriver: false,
     }).start();
 
-    // Hide the draggable component
-    Animated.timing(draggableOppacity, {
+    // Hide the steady component
+    Animated.timing(steadyOpacity, {
       toValue: 0,
-      duration: 200,
+      duration: 300,
       easing,
       useNativeDriver: false,
     }).start();
 
     // Center the phone area
-    Animated.timing(phoneAreaTranslateY, {
+    Animated.timing(panPhone.y, {
       toValue: centerY - screenHeight,
       duration: 700,
       easing: Easing.ease,
       useNativeDriver: false,
     }).start(() => {
-      if (!transitioning.current) {
-        setTimeout(() => {
-          transitioning.current = true;
-          router.push("/setup/phone-mode-confirmation");
-        }, 300);
-      }
+      //TODO: Go to Phone mode onboarding
     });
   };
 
@@ -188,92 +185,97 @@ const SelectModeScreen: React.FC<{
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
   };
 
+  const reset = () => {
+    if (!!mode.current) {
+      mode.current = null;
+      earbudsAreaOpacity.setValue(1);
+      phoneAreaOpacity.setValue(1);
+      steadyOpacity.setValue(1);
+    }
+  };
+
   return (
     <SafeAreaView>
       <Center justifyContent="center" height="100%" p={0}>
-        <Stack gap={20} h="100%" justifyContent="space-between">
+        <Stack
+          gap={22}
+          h="100%"
+          w="100%"
+          justifyContent="space-between"
+          backgroundColor={theme.colors.primary[300]}
+        >
           <Animated.View
             ref={earbudsArea}
             style={{
               flex: 2,
               opacity: earbudsAreaOpacity,
-              transform: [{ translateY: earbudsAreaTranslateY }],
+              transform: [{ translateY: panEarbuds.y }],
               justifyContent: "flex-end",
-              height: screenHeight * 2,
-              position: "relative",
+              zIndex: 1,
             }}
-          >
-            <LinearGradient
-              colors={[
-                theme.colors.surface,
-                theme.colors.primary[50],
-                theme.colors.primary[100],
-                theme.colors.primary[200],
-              ]}
-              locations={[0.4, 0.6, 0.8, 1]}
-              style={{
-                position: "absolute",
-                left: 0,
-                right: 0,
-                bottom: 0,
-                height: "250%",
-                zIndex: -2,
-                borderBottomLeftRadius: 20,
-                borderBottomRightRadius: 20,
-              }}
-            />
-
-            <Center
-              style={{
-                width: 100,
-                height: 150,
-                alignItems: "center",
-                marginLeft: "auto",
-                marginRight: "auto",
-              }}
-            >
-              <Image name="weasel-head-tilt" style={{ zIndex: -1 }} />
-            </Center>
-            <Stack flexDirection="column" gap={16} px={32} pb={48}>
-              <Text
-                align="center"
-                level="title_2"
-                style={{ color: theme.colors.text }}
-              >
-                Earbuds Mode
-              </Text>
-              <Text
-                align="center"
-                level="body"
-                style={{ color: theme.colors.neutral[400] }}
-              >
-                Use earbuds (AirPods 3 / Pro / Max / Beats Fit Pro / Google
-                Pixel Buds) to track posture
-              </Text>
-            </Stack>
-          </Animated.View>
-
-          <Animated.View
-            ref={draggable}
-            style={{
-              transform: [{ translateY: pan.y }],
-              opacity: draggableOppacity,
-              zIndex: 5,
-            }}
-            {...panResponder.panHandlers}
+            {...panEarbudsResponder.panHandlers}
           >
             <TouchableOpacity
               onPress={onDragSelection}
-              style={{ paddingVertical: 30 }}
+              style={{
+                height: screenHeight * 2,
+                backgroundColor: theme.colors.primary[50],
+                alignItems: "center",
+                borderRadius: 20,
+              }}
             >
-              <Text
-                align="center"
-                level="body"
-                style={{ color: theme.colors.neutral[950] }}
+              <Center
+                style={{
+                  width: "70%",
+                  height: "18%",
+                  position: "absolute",
+                  bottom: "3%",
+                }}
               >
-                Drag to enter
-              </Text>
+                <Image name="weasel-earbuds" width={"100%"} height={"85%"} />
+                <Text
+                  level="title_3"
+                  style={{
+                    color: theme.colors.neutral[900],
+                    paddingVertical: 4,
+                    paddingHorizontal: 16,
+                    backgroundColor: theme.colors.white,
+                    borderRadius: 8,
+                    top: "-10%",
+                  }}
+                >
+                  Earbuds Mode
+                </Text>
+                <Text
+                  align="center"
+                  level="footnote"
+                  style={{
+                    color: theme.colors.neutral[600],
+                    width: "70%",
+                    top: "-8%",
+                  }}
+                >
+                  Use earbuds (AirPods 3 / Pro / Max) to track posture
+                </Text>
+                <Icon name="double-chevron-down" />
+              </Center>
             </TouchableOpacity>
+          </Animated.View>
+
+          <Animated.View
+            ref={steady}
+            style={{
+              opacity: steadyOpacity,
+              zIndex: -5,
+            }}
+          >
+            <Text
+              align="center"
+              level="body"
+              style={{ color: theme.colors.neutral[950] }}
+            >
+              Drag card to enter
+            </Text>
           </Animated.View>
 
           <Animated.View
@@ -281,54 +283,55 @@ const SelectModeScreen: React.FC<{
             style={{
               flex: 2,
               opacity: phoneAreaOpacity,
-              transform: [{ translateY: phoneAreaTranslateY }],
-              height: screenHeight * 2,
+              transform: [{ translateY: panPhone.y }],
             }}
+            {...panPhoneResponder.panHandlers}
           >
-            <LinearGradient
-              colors={[
-                theme.colors.primary[200],
-                theme.colors.primary[100],
-                theme.colors.primary[50],
-                theme.colors.surface,
-              ]}
-              locations={[0.1, 0.3, 0.6, 1]}
+            <TouchableOpacity
+              onPress={onDragSelection}
               style={{
-                position: "absolute",
-                left: 0,
-                right: 0,
-                top: 0,
-                height: "250%",
-                zIndex: -1,
-                borderTopLeftRadius: 20,
-                borderTopRightRadius: 20,
-              }}
-            />
-
-            <Stack gap={16} px={32} pt={48} pb={18}>
-              <Text align="center" level="title_2">
-                Phone Mode
-              </Text>
-              <Text
-                align="center"
-                level="body"
-                style={{ color: theme.colors.neutral[400] }}
-              >
-                Use the motion sensors in your mobile phone to track posture
-              </Text>
-            </Stack>
-
-            <Center
-              style={{
-                width: 100,
-                height: 150,
+                height: screenHeight * 2,
+                backgroundColor: theme.colors.primary[50],
                 alignItems: "center",
-                marginLeft: "auto",
-                marginRight: "auto",
+                borderRadius: 20,
               }}
             >
-              <Image name="weasel-head-tilt" style={{ zIndex: -1 }} />
-            </Center>
+              <Center
+                style={{
+                  width: "70%",
+                  height: "18%",
+                  position: "absolute",
+                  top: "3%",
+                }}
+              >
+                <Icon name="double-chevron-up" />
+                <Image name="weasel-phone" width={"100%"} height={"95%"} />
+                <Text
+                  level="title_3"
+                  style={{
+                    color: theme.colors.neutral[900],
+                    paddingVertical: 4,
+                    paddingHorizontal: 16,
+                    backgroundColor: theme.colors.white,
+                    borderRadius: 8,
+                    top: "-16%",
+                  }}
+                >
+                  Phone Mode
+                </Text>
+                <Text
+                  align="center"
+                  level="footnote"
+                  style={{
+                    color: theme.colors.neutral[600],
+                    width: "70%",
+                    top: "-8%",
+                  }}
+                >
+                  Use the motion sensors in your mobile phone to track posture
+                </Text>
+              </Center>
+            </TouchableOpacity>
           </Animated.View>
         </Stack>
       </Center>
