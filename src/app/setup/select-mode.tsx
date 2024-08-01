@@ -1,8 +1,10 @@
 import Center from "@src/components/ui/Center";
 import Stack from "@src/components/ui/Stack";
 import { Text } from "@src/components/ui/typography";
+import { SetupStagesType } from "@src/interfaces/setup.types";
 import { theme } from "@src/styles/theme";
 import * as Haptics from "expo-haptics";
+import { router } from "expo-router";
 import { useRef } from "react";
 import Image from "@src/components/ui/Image";
 
@@ -25,7 +27,9 @@ const centerY = screenHeight / 2;
 
 //TODO: handle back button to reset the animmations
 
-const SelectModeScreen = () => {
+const SelectModeScreen: React.FC<{
+  setStage: (stage: SetupStagesType) => void;
+}> = () => {
   const setPreferredMode = useUser((state) => state.setPreferredMode);
   const mode = useRef<"phone" | "earbuds" | null>(null);
   const panEarbuds = useRef(new Animated.ValueXY()).current;
@@ -34,6 +38,7 @@ const SelectModeScreen = () => {
   const earbudsArea = useRef<RNView>(null);
   const phoneArea = useRef<RNView>(null);
   const steady = useRef<RNView>(null);
+  const transitioning = useRef<boolean>(false);
 
   const earbudsAreaOpacity = new Animated.Value(1);
   const phoneAreaOpacity = new Animated.Value(1);
@@ -150,6 +155,12 @@ const SelectModeScreen = () => {
       useNativeDriver: false,
     }).start(() => {
       //TODO: Go to Earbuds mode onboarding
+      if (!transitioning.current) {
+        setTimeout(() => {
+          transitioning.current = true;
+          router.push("/setup/earbuds-mode-confirmation");
+        }, 300);
+      }
     });
   };
 
@@ -178,6 +189,12 @@ const SelectModeScreen = () => {
       useNativeDriver: false,
     }).start(() => {
       //TODO: Go to Phone mode onboarding
+      if (!transitioning.current) {
+        setTimeout(() => {
+          transitioning.current = true;
+          router.push("/setup/phone-mode-confirmation");
+        }, 300);
+      }
     });
   };
 
@@ -188,6 +205,7 @@ const SelectModeScreen = () => {
   const reset = () => {
     if (!!mode.current) {
       mode.current = null;
+      transitioning.current = false;
       earbudsAreaOpacity.setValue(1);
       phoneAreaOpacity.setValue(1);
       steadyOpacity.setValue(1);
