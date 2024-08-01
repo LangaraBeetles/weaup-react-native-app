@@ -6,6 +6,7 @@ import { PostureSessionInput } from "@src/interfaces/posture.types";
 import { saveSessionRecords } from "@src/services/sessionApi";
 import { useUser } from "@src/state/useUser";
 import { useMutation } from "@tanstack/react-query";
+import { updateUser } from "@src/services/userApi";
 
 const SessionControl = () => {
   const router = useRouter();
@@ -13,6 +14,7 @@ const SessionControl = () => {
 
   const userHP = useUser((state) => state.user.hp);
   const userXP = useUser((state) => state.user.xp);
+  const userId = useUser((state) => state.user.id);
 
   const initialXP = useRef<number>(userXP);
 
@@ -29,32 +31,16 @@ const SessionControl = () => {
   );
 
   // TODO: update daily streak counter logic
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const today = dayjs();
-  //       console.log("Fetching analytics for:", today.format());
-  //       const analyticsData = await getAnalytics(today.format());
 
-  //       if (
-  //         !analyticsData ||
-  //         !analyticsData.sessions ||
-  //         analyticsData.sessions.length === 0
-  //       ) {
-  //         console.log("No previous sessions, start a new streak");
-  //         setIsDailyStreak(true);
-  //         setDailyStreakCounter(1);
-  //         return;
-  //       }
-
-  //       console.log("Previous sessions found");
-  //     } catch (error) {
-  //       console.log("Failed to fetch analytics data:", error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
+  const updateUserStreak = (streak: number) => {
+    updateUser(userId, { daily_streak_counter: streak })
+      .then(() => {
+        console.log("Streak updated to: " + streak);
+      })
+      .catch((error) => {
+        console.log("[ERROR] Streak not updated", error);
+      });
+  };
 
   const { mutate } = useMutation({
     mutationKey: ["save-session-data"],
@@ -62,13 +48,18 @@ const SessionControl = () => {
     onSuccess: (response) => {
       const sessionId = response?.data._id;
 
+      let newStreak = 0;
       if (userStreak === 0) {
-        setDailyStreakCounter(1);
+        newStreak = 1;
       } else if (userStreak < 7) {
-        setDailyStreakCounter(userStreak + 1);
+        newStreak = userStreak + 1;
       } else if (userStreak === 7) {
-        setDailyStreakCounter(1);
+        newStreak = 1;
       }
+
+      setDailyStreakCounter(newStreak);
+      console.log("Setting new streak to:", newStreak);
+      updateUserStreak(newStreak);
 
       setIsDailyStreak(true);
 
