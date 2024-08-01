@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Animated, {
   useAnimatedProps,
   useDerivedValue,
@@ -14,6 +14,7 @@ import Card from "./Card";
 import { ReText } from "react-native-redash";
 import Stack from "@src/components/ui/Stack";
 import safenumber from "@src/utils/safenumber";
+import Image, { ImageConfig } from "@src/components/ui/Image";
 
 const outterCircle = {
   backgroundColor: theme.colors.white,
@@ -49,10 +50,15 @@ const OverviewCard = ({
 
   const progress = useSharedValue(0);
   const progressText = useSharedValue(0);
+  const [weaselImage, setWeaselImage] =
+    useState<keyof typeof ImageConfig>("analytics-happy");
 
   useEffect(() => {
     progress.value = withTiming(goodPercentage / 100, { duration: 2000 });
     progressText.value = withTiming(1, { duration: 2000 });
+    const imageName =
+      goodPercentage >= 50 ? "analytics-happy" : "analytics-sad";
+    setWeaselImage(imageName);
   }, [goodPercentage]);
 
   const animatedProps = useAnimatedProps(() => ({
@@ -107,6 +113,13 @@ const OverviewCard = ({
               strokeLinecap="round"
               animatedProps={animatedProps}
             />
+            <Stack
+              justifyContent="center"
+              backgroundColor="transparent"
+              alignItems="center"
+            >
+              <Image name={weaselImage} width={"45%"} />
+            </Stack>
           </Svg>
         </View>
 
