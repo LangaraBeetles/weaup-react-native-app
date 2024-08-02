@@ -24,7 +24,7 @@ type StartProps = {
 };
 
 const Start: React.FC<StartProps> = ({ changePage, setBackGround }) => {
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(true);
 
   const fadeOut = useSharedValue(1);
   const fadeInSunshine = useSharedValue(0);

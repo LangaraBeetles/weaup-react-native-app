@@ -52,6 +52,7 @@ const EarbudsTraining: React.FC<EarbudsTrainingProps> = ({ changePage }) => {
   const scaleBackground = useSharedValue(0);
   const slideUpAnimation = useSharedValue(height);
   const lottieOpacity = useSharedValue(0);
+  const fadeOut = useSharedValue(1);
 
   const startLottieAnimation = () => {
     if (animation.current) {
@@ -84,6 +85,10 @@ const EarbudsTraining: React.FC<EarbudsTrainingProps> = ({ changePage }) => {
     opacity: fadeInMain.value,
   }));
 
+  const mainStyleOut = useAnimatedStyle(() => ({
+    opacity: fadeOut.value,
+  }));
+
   const scaleBackgroundStyle = useAnimatedStyle(() => ({
     transform: [{ scale: scaleBackground.value }],
   }));
@@ -97,12 +102,14 @@ const EarbudsTraining: React.FC<EarbudsTrainingProps> = ({ changePage }) => {
     if (step < steps.length - 1) {
       setStep(step + 1);
     } else {
-      changePage("nextPage");
+      fadeOut.value = withTiming(0, { duration: 500 }, () => {
+        runOnJS(changePage)("notifications");
+      });
     }
   };
 
   const onSkip = () => {
-    changePage("nextPage");
+    changePage("notifications");
   };
 
   const onBack = () => {
@@ -114,77 +121,83 @@ const EarbudsTraining: React.FC<EarbudsTrainingProps> = ({ changePage }) => {
   };
 
   return (
-    <Stack h={height} px={width * 0.1} alignItems={"center"}>
-      <Stack
-        flexDirection="row"
-        pt={height * 0.1}
-        w={"100%"}
-        justifyContent="space-between"
-        style={{ zIndex: 5 }}
-      >
-        <BackButton onBack={onBack} />
-        <Stack h={40} justifyContent="center">
-          <TouchableOpacity onPress={onSkip}>
-            <Text
-              level="footnote"
-              weight="semibold"
-              style={{ color: theme.colors.other[400] }}
-            >
-              Skip
-            </Text>
-          </TouchableOpacity>
+    <Animated.View style={[{ flex: 1 }, mainStyleOut]}>
+      <Stack h={height} px={width * 0.1} alignItems={"center"}>
+        <Stack
+          flexDirection="row"
+          pt={height * 0.1}
+          w={"100%"}
+          justifyContent="space-between"
+          style={{ zIndex: 5 }}
+        >
+          <BackButton onBack={onBack} />
+          <Stack h={40} justifyContent="center">
+            <TouchableOpacity onPress={onSkip}>
+              <Text
+                level="footnote"
+                weight="semibold"
+                style={{ color: theme.colors.other[400] }}
+              >
+                Skip
+              </Text>
+            </TouchableOpacity>
+          </Stack>
+        </Stack>
+
+        <Stack
+          flexDirection="column"
+          gap={50}
+          alignItems="center"
+          style={{ position: "absolute", bottom: height * 0.1 }}
+        >
+          <Animated.View style={[scaleBackgroundStyle]}>
+            <Stack w={340} h={340} style={{ top: 84, zIndex: -1 }}>
+              <Image name="setup-image-background" />
+            </Stack>
+          </Animated.View>
+          <Animated.View style={[mainStyle, { zIndex: 4 }]}>
+            <ContentCard
+              title={steps[step].title}
+              text={steps[step].text}
+              section={"training"}
+            />
+          </Animated.View>
+          <Animated.View style={[mainStyle]}>
+            <Stack w={"100%"}>
+              <Button onPress={next} variant="primary" title={"Next"} />
+            </Stack>
+          </Animated.View>
+          <Animated.View style={[mainStyle]}>
+            <Stack flexDirection={"row"} gap={8}>
+              {steps.map((_, index) => (
+                <Stack
+                  key={index}
+                  w={index === step ? 40 : 16}
+                  h={8}
+                  style={index === step ? styles.activeNav : styles.inactiveNav}
+                />
+              ))}
+            </Stack>
+          </Animated.View>
+          <Animated.View
+            style={[slideUpStyle, { position: "absolute", top: 130 }]}
+          >
+            <LottieView
+              autoPlay={false}
+              loop={false}
+              ref={animation}
+              duration={1500}
+              style={{
+                width: 340,
+                height: 340,
+                zIndex: 2,
+              }}
+              source={animations[step]}
+            />
+          </Animated.View>
         </Stack>
       </Stack>
-
-      <Stack
-        flexDirection="column"
-        gap={50}
-        alignItems="center"
-        style={{ position: "absolute", bottom: height * 0.1 }}
-      >
-        <Animated.View style={[scaleBackgroundStyle]}>
-          <Stack w={340} h={340} style={{ top: 84, zIndex: -1 }}>
-            <Image name="setup-image-background" />
-          </Stack>
-        </Animated.View>
-        <Animated.View style={[mainStyle, { zIndex: 4 }]}>
-          <ContentCard title={steps[step].title} text={steps[step].text} />
-        </Animated.View>
-        <Animated.View style={[mainStyle]}>
-          <Stack w={"100%"}>
-            <Button onPress={next} variant="primary" title={"Next"} />
-          </Stack>
-        </Animated.View>
-        <Animated.View style={[mainStyle]}>
-          <Stack flexDirection={"row"} gap={8}>
-            {steps.map((_, index) => (
-              <Stack
-                key={index}
-                w={index === step ? 40 : 16}
-                h={8}
-                style={index === step ? styles.activeNav : styles.inactiveNav}
-              />
-            ))}
-          </Stack>
-        </Animated.View>
-        <Animated.View
-          style={[slideUpStyle, { position: "absolute", top: 130 }]}
-        >
-          <LottieView
-            autoPlay={false}
-            loop={false}
-            ref={animation}
-            duration={1500}
-            style={{
-              width: 340,
-              height: 340,
-              zIndex: 2,
-            }}
-            source={animations[step]}
-          />
-        </Animated.View>
-      </Stack>
-    </Stack>
+    </Animated.View>
   );
 };
 

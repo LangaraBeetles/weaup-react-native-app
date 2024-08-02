@@ -2,6 +2,7 @@ import Stack from "@root/src/components/ui/Stack";
 import { theme } from "@root/src/styles/theme";
 import Start from "@src/components/setup/Start";
 import EarbudsTraining from "@src/components/setup/EarbudsTraining";
+import EnableNotifications from "@src/components/setup/EnableNotifications";
 import { useState } from "react";
 
 const setupPages = () => {
@@ -15,6 +16,9 @@ const setupPages = () => {
       )}
       {showPage === "earbudsTraining" && (
         <EarbudsTraining changePage={setShowPage} />
+      )}
+      {showPage === "notifications" && (
+        <EnableNotifications changePage={setShowPage} />
       )}
     </Stack>
   );

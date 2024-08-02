@@ -42,6 +42,8 @@ import HelloWally from "assets/img/hello_wally.svg";
 import StartSetupImages from "assets/img/start_setup_images.svg";
 import SetupBadge from "assets/img/setup_badge.svg";
 import SetupImageBackground from "assets/img/setup-image-background.svg";
+import WallyOnThePhone from "assets/img/wally_on_the_phone.svg";
+import NotificationExclamation from "assets/img/notification_exclamation.svg";
 
 export const ImageConfig = {
   "streak-flames": StreakFlames,
@@ -86,6 +88,8 @@ export const ImageConfig = {
   "start-setup": StartSetupImages,
   "setup-badge": SetupBadge,
   "setup-image-background": SetupImageBackground,
+  "wally-on-the-phone": WallyOnThePhone,
+  "notification-exclamation": NotificationExclamation,
 };
 
 export type ImageName = keyof typeof ImageConfig;
