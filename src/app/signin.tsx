@@ -52,7 +52,7 @@ const SignIn = () => {
         email: userResponse.email ?? "",
         preferredMode: userResponse.preferred_mode,
         isSetupComplete: true,
-        dailyStreakCounter: 0,
+        dailyStreakCounter: userResponse.daily_streak_counter,
         avatar_bg: userResponse.avatar_bg,
         avatar_img: userResponse.avatar_img,
         badges: userResponse?.badges || [],
