@@ -57,7 +57,9 @@ const OverviewCard = ({
     progress.value = withTiming(goodPercentage / 100, { duration: 2000 });
     progressText.value = withTiming(1, { duration: 2000 });
     const imageName =
-      goodPercentage >= 50 ? "analytics-happy" : "analytics-sad";
+      goodPercentage > 50 || goodPercentage == badPercentage
+        ? "analytics-happy"
+        : "analytics-sad";
     setWeaselImage(imageName);
   }, [goodPercentage]);
 
@@ -74,7 +76,10 @@ const OverviewCard = ({
   });
 
   return (
-    <Card gap={12}>
+    <Card
+      gap={12}
+      style={{ borderWidth: 1, borderColor: theme.colors.neutral[100] }}
+    >
       <Text level="headline" weight="bold">
         Overview
       </Text>

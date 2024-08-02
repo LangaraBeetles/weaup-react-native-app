@@ -68,7 +68,7 @@ const TotalDurationCard = () => {
   };
 
   return (
-    <Card>
+    <Card style={{ borderWidth: 1, borderColor: theme.colors.neutral[100] }}>
       <Stack flexDirection="row" justifyContent="space-between">
         <Stack flexDirection="row" gap={8}>
           <Icon name="hourglass-fill" size={24} color="#816DFF" />
