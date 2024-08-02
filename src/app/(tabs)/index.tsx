@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
+  Pressable,
 } from "react-native";
 import { Link, Redirect } from "expo-router";
 import DeviceMotionViewiOS, {
@@ -24,13 +25,28 @@ import { Text } from "@src/components/ui/typography";
 
 import { theme } from "@src/styles/theme";
 import ScoreComponent from "@src/components/homepage/ScoreComponent";
-import Gradient from "@src/components/ui/Gradient";
+// import Gradient from "@src/components/ui/Gradient";
 import RealtimeTrackingBackground from "@src/components/posture/RealtimeTrackingBackground";
 import SessionBackground from "@src/components/posture/SessionBackground";
 import Avatar from "@src/components/ui/Avatar";
-import LottieView from "lottie-react-native";
+import LottieView, { LottieViewProps } from "lottie-react-native";
+import Animated, {
+  Easing,
+  runOnJS,
+  useAnimatedProps,
+  useSharedValue,
+  withRepeat,
+  withSequence,
+  withTiming,
+} from "react-native-reanimated";
+import { PostureStatus } from "@root/src/interfaces/posture.types";
+import { LinearGradient as Gradient } from "expo-linear-gradient";
 
 const { height, width } = Dimensions.get("screen");
+
+const layers = {
+  stats: 1,
+};
 
 const HomePage = () => {
   const isSetupComplete = useUser((state) => state.isSetupComplete);
@@ -39,39 +55,22 @@ const HomePage = () => {
   const avatarColor = useUser((state) => state.user.avatar_bg);
   const userLevel = useUser((state) => state.user.level);
   const sessionStatus = useUser((state) => state.sessionStatus);
-  const currentPosture = useUser((state) => state.currentPosture);
-  const isActiveMonitoring = useUser((state) => state.isTrackingEnabled);
 
   const isGuest = useUser((state) => state.isGuest);
 
-  const animation = useRef<any>(null);
-  const [progress, setProgress] = useState<number>(0.5);
+  const progress = useSharedValue(0);
 
-  useEffect(() => {
-    if (animation && isActiveMonitoring && sessionStatus === "INACTIVE") {
-      let value = progress;
-      if (currentPosture === "good") {
-        value = value - 0.2;
-      }
-      if (currentPosture === "mid") {
-        value = value + 0.2;
-      }
-      if (currentPosture === "bad") {
-        value = value + 0.5;
-      }
-      if (currentPosture === "not_reading") {
-        value = 0.05;
-      }
+  const animatedProps = useAnimatedProps(() => {
+    const value = progress.value + 1;
 
-      if (value > 1) {
-        setProgress(1);
-      } else if (value < 0) {
-        setProgress(0);
-      } else {
-        setProgress(value);
-      }
+    if (value > 80) {
+      return {
+        progress: 0,
+      };
     }
-  }, [isActiveMonitoring, sessionStatus, animation, currentPosture, progress]);
+
+    return { progress: value };
+  });
 
   if (!isSetupComplete) {
     return <Redirect href="/setup/start" />;
@@ -80,141 +79,132 @@ const HomePage = () => {
   return (
     <SafeAreaView
       style={{
+        backgroundColor: theme.colors.primary[400],
+        height,
         position: "relative",
-        height: height,
-        backgroundColor: theme.colors.white,
       }}
     >
+      {/* <ScrollView style={{ height, flex: 1 }}> */}
+      {/* Yellow Gradient */}
       <Gradient
-        color1={theme.colors.primary[300]}
-        color2={theme.colors.white}
-        locations={[0, 0.8]}
+        colors={[theme.colors.primary[400], theme.colors.primary[50]]}
+        locations={[0, 0.5]}
+        style={{
+          position: "absolute",
+          left: 0,
+          right: 0,
+          top: 0,
+          height,
+          zIndex: 0,
+        }}
       />
 
-      {sessionStatus === "INACTIVE" && <RealtimeTrackingBackground />}
-
-      <ScrollView style={{ flex: 1, zIndex: 2 }}>
-        <Stack
-          style={styles.onTop}
-          flexDirection="row"
-          justifyContent="space-between"
-          p={15}
-          pb={0}
-          alignItems="center"
-        >
+      <Stack
+        style={{
+          position: "absolute",
+          width,
+          height: height - 140,
+          zIndex: layers.stats,
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <Stack>
           <Stack
             flexDirection="row"
-            gap={6}
-            backgroundColor={theme.colors.white}
-            borderRadius={100}
-            px={10}
-            h={41}
+            justifyContent="space-between"
+            p={15}
+            pb={0}
             alignItems="center"
           >
-            <Stack flexDirection="row" gap={6} alignItems="center" h={25}>
-              <Avatar
-                variant={avatarColor}
-                content={userName?.[0] ?? "G"}
-                size={30}
-                fontSize={14}
-                showDefault={isGuest}
-                src={avatarImg}
-              />
-              {userName !== "null" ? (
-                <Text
-                  style={{ color: theme.colors.neutral[800] }}
-                  level="footnote"
-                  weight="bold"
-                >
-                  {userName !== null && userName?.split(" ")[0]}
-                </Text>
-              ) : null}
-            </Stack>
-            <Text
-              style={{ color: theme.colors.neutral[400] }}
-              level="caption_1"
-              weight="bold"
+            <Stack
+              flexDirection="row"
+              gap={6}
+              backgroundColor={theme.colors.white}
+              borderRadius={100}
+              px={10}
+              h={41}
+              alignItems="center"
             >
-              Lv.{userLevel}
-            </Text>
-          </Stack>
-          <Stack flexDirection="row" gap={18} border={0} p={5}>
-            <TrackingModeIcon />
-
-            <Center>
-              <Link href="/notifications" asChild>
-                <TouchableOpacity>
-                  <Stack
-                    backgroundColor={theme.colors.white}
-                    h={40}
-                    w={40}
-                    alignItems="center"
-                    justifyContent="center"
-                    borderRadius={20}
+              <Stack flexDirection="row" gap={6} alignItems="center" h={25}>
+                <Avatar
+                  variant={avatarColor}
+                  content={userName?.[0] ?? "G"}
+                  size={30}
+                  fontSize={14}
+                  showDefault={isGuest}
+                  src={avatarImg}
+                />
+                {userName !== "null" ? (
+                  <Text
+                    style={{ color: theme.colors.neutral[800] }}
+                    level="footnote"
+                    weight="bold"
                   >
-                    <Icon name="notification-outline" />
-                  </Stack>
-                </TouchableOpacity>
-              </Link>
-            </Center>
-          </Stack>
-        </Stack>
-
-        <ScoreComponent />
-
-        <Center style={styles.onTop} p={15}>
-          {Platform.OS === "ios" && <DeviceMotionViewiOS />}
-          {Platform.OS === "android" && <DeviceMotionViewAndroid />}
-        </Center>
-
-        <Stack h={286} my={15}>
-          {sessionStatus === "INACTIVE" ? (
-            <Stack>
-              <LottieView
-                autoPlay={false}
-                ref={animation}
-                duration={1000}
-                progress={progress}
-                style={{
-                  width: width,
-                  height: height / 1.3,
-                  position: "absolute",
-                  top: -150,
-                  bottom: 0,
-                  aspectRatio: 2,
-                  zIndex: -1,
-                }}
-                source={require("../../animations/front_view.json")}
-              />
+                    {userName !== null && userName?.split(" ")[0]}
+                  </Text>
+                ) : null}
+              </Stack>
+              <Text
+                style={{ color: theme.colors.neutral[400] }}
+                level="caption_1"
+                weight="bold"
+              >
+                Lv.{userLevel}
+              </Text>
             </Stack>
-          ) : (
-            <Center>
-              <SessionBackground />
-            </Center>
-          )}
-        </Stack>
+            <Stack flexDirection="row" gap={18} border={0} p={5}>
+              <TrackingModeIcon />
 
-        <Center style={styles.sessionButton}>
+              <Center>
+                <Link href="/notifications" asChild>
+                  <TouchableOpacity>
+                    <Stack
+                      backgroundColor={theme.colors.white}
+                      h={40}
+                      w={40}
+                      alignItems="center"
+                      justifyContent="center"
+                      borderRadius={20}
+                    >
+                      <Icon name="notification-outline" />
+                    </Stack>
+                  </TouchableOpacity>
+                </Link>
+              </Center>
+            </Stack>
+          </Stack>
+          <ScoreComponent />
+          <Center p={15}>
+            {Platform.OS === "ios" && <DeviceMotionViewiOS />}
+            {Platform.OS === "android" && <DeviceMotionViewAndroid />}
+          </Center>
+        </Stack>
+        <Stack
+          style={{
+            width: 250,
+            alignSelf: "center",
+            height: "auto",
+            justifyContent: "flex-end",
+            bottom: 50,
+          }}
+        >
           <SessionControl />
-        </Center>
-      </ScrollView>
+        </Stack>
+      </Stack>
+
+      <Stack>
+        {sessionStatus === "INACTIVE" ? (
+          <RealtimeTrackingBackground />
+        ) : (
+          <Center>
+            <SessionBackground />
+          </Center>
+        )}
+      </Stack>
+      {/* </ScrollView> */}
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  backgroundImageFill: {
-    flex: 1,
-    transform: [{ scale: 2 }, { translateY: 10 }],
-  },
-  sessionButton: {
-    width: 250,
-    alignSelf: "center",
-    zIndex: 2,
-  },
-  onTop: {
-    zIndex: 2,
-  },
-});
 
 export default HomePage;
