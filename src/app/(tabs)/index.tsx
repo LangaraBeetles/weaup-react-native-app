@@ -74,7 +74,7 @@ const HomePage = () => {
   }, [isActiveMonitoring, sessionStatus, animation, currentPosture, progress]);
 
   if (!isSetupComplete) {
-    return <Redirect href="/setup/start" />;
+    return <Redirect href="/setup/initial-page" />;
   }
 
   return (

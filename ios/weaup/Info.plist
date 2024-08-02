@@ -31,13 +31,6 @@
           <string>com.alignmend</string>
         </array>
       </dict>
-       <dict>
-        <key>CFBundleURLSchemes</key>
-        <array>
-          <string>weaup</string>
-          <string>com.weaup</string>
-        </array>
-      </dict>
       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
@@ -66,11 +59,6 @@
     <string>Allow $(PRODUCT_NAME) to access your photos</string>
     <key>NSUserActivityTypes</key>
     <array>
-      <string>$(PRODUCT_BUNDLE_IDENTIFIER).expo.index_route</string>
-      <string>$(PRODUCT_BUNDLE_IDENTIFIER).expo.index_route</string>
-      <string>$(PRODUCT_BUNDLE_IDENTIFIER).expo.index_route</string>
-      <string>$(PRODUCT_BUNDLE_IDENTIFIER).expo.index_route</string>
-      <string>$(PRODUCT_BUNDLE_IDENTIFIER).expo.index_route</string>
       <string>$(PRODUCT_BUNDLE_IDENTIFIER).expo.index_route</string>
     </array>
     <key>UIAppFonts</key>

@@ -65,6 +65,8 @@ export const globalStyles = {
     other: {
       50: "#D3E7FF",
       100: "#545F71",
+      200: "#FDD64B",
+      300: "#FDDC85",
     },
   },
 };

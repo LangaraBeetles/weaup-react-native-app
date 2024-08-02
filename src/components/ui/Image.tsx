@@ -37,6 +37,10 @@ import Level3up from "assets/levels/Level3-up.svg";
 import Level4up from "assets/levels/Level4-up.svg";
 import Level5up from "assets/levels/Level5-up.svg";
 import Level6up from "assets/levels/Level6-up.svg";
+import SunShine from "assets/img/sunshine.svg";
+import HelloWally from "assets/img/hello_wally.svg";
+import StartSetupImages from "assets/img/start_setup_images.svg";
+import SetupBadge from "assets/img/setup_badge.svg";
 
 export const ImageConfig = {
   "streak-flames": StreakFlames,
@@ -76,6 +80,10 @@ export const ImageConfig = {
   "level-4-up": Level4up,
   "level-5-up": Level5up,
   "level-6-up": Level6up,
+  sunshine: SunShine,
+  "hello-wally": HelloWally,
+  "start-setup": StartSetupImages,
+  "setup-badge": SetupBadge,
 };
 
 export type ImageName = keyof typeof ImageConfig;
