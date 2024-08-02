@@ -26,6 +26,7 @@ const ContentCard = ({ title, text, section }) => {
               </Text>
             ) : section === "setup" ? (
               <Text
+                align="center"
                 level="title_1"
                 style={{ color: theme.colors.primary[900] }}
               >

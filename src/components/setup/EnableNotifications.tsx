@@ -55,12 +55,12 @@ const EnableNotifications: React.FC<StartProps> = ({ changePage }) => {
 
   const handleRegister = () => {
     registerForPushNotifications(() => {
-      changePage("next");
+      changePage("setupGoal");
     });
   };
 
   const handleSkip = () => {
-    changePage("next");
+    changePage("setupGoal");
   };
 
   return (

@@ -44,6 +44,10 @@ import SetupBadge from "assets/img/setup_badge.svg";
 import SetupImageBackground from "assets/img/setup-image-background.svg";
 import WallyOnThePhone from "assets/img/wally_on_the_phone.svg";
 import NotificationExclamation from "assets/img/notification_exclamation.svg";
+import XpBarSetup from "assets/img/xp_bar_setup.svg";
+import StreakCardSetup from "assets/img/streak-card-setup.svg";
+import LevelUpSetup from "assets/img/level_up_setup.svg";
+import BadgeSetup from "assets/img/badge_setup.svg";
 
 export const ImageConfig = {
   "streak-flames": StreakFlames,
@@ -90,6 +94,10 @@ export const ImageConfig = {
   "setup-image-background": SetupImageBackground,
   "wally-on-the-phone": WallyOnThePhone,
   "notification-exclamation": NotificationExclamation,
+  "xp-bar-setup": XpBarSetup,
+  "streak-card-setup": StreakCardSetup,
+  "level-up-setup": LevelUpSetup,
+  "badge-setup": BadgeSetup,
 };
 
 export type ImageName = keyof typeof ImageConfig;
