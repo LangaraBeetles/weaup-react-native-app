@@ -1,13 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 
-import {
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Dimensions,
-  TouchableOpacity,
-  Pressable,
-} from "react-native";
+import { Platform, Dimensions, TouchableOpacity } from "react-native";
 import { Link, Redirect } from "expo-router";
 import DeviceMotionViewiOS, {
   DeviceMotionViewAndroid,
@@ -25,27 +18,16 @@ import { Text } from "@src/components/ui/typography";
 
 import { theme } from "@src/styles/theme";
 import ScoreComponent from "@src/components/homepage/ScoreComponent";
-// import Gradient from "@src/components/ui/Gradient";
 import RealtimeTrackingBackground from "@src/components/posture/RealtimeTrackingBackground";
 import SessionBackground from "@src/components/posture/SessionBackground";
 import Avatar from "@src/components/ui/Avatar";
-import LottieView, { LottieViewProps } from "lottie-react-native";
-import Animated, {
-  Easing,
-  runOnJS,
-  useAnimatedProps,
-  useSharedValue,
-  withRepeat,
-  withSequence,
-  withTiming,
-} from "react-native-reanimated";
-import { PostureStatus } from "@root/src/interfaces/posture.types";
 import { LinearGradient as Gradient } from "expo-linear-gradient";
 
 const { height, width } = Dimensions.get("screen");
 
 const layers = {
   stats: 1,
+  gradient: -5,
 };
 
 const HomePage = () => {
@@ -58,20 +40,6 @@ const HomePage = () => {
 
   const isGuest = useUser((state) => state.isGuest);
 
-  const progress = useSharedValue(0);
-
-  const animatedProps = useAnimatedProps(() => {
-    const value = progress.value + 1;
-
-    if (value > 80) {
-      return {
-        progress: 0,
-      };
-    }
-
-    return { progress: value };
-  });
-
   if (!isSetupComplete) {
     return <Redirect href="/setup/start" />;
   }
@@ -80,36 +48,30 @@ const HomePage = () => {
     <SafeAreaView
       style={{
         backgroundColor: theme.colors.primary[400],
-        height,
-        position: "relative",
       }}
     >
-      {/* <ScrollView style={{ height, flex: 1 }}> */}
-      {/* Yellow Gradient */}
-      <Gradient
-        colors={[theme.colors.primary[400], theme.colors.primary[50]]}
-        locations={[0, 0.5]}
-        style={{
-          position: "absolute",
-          left: 0,
-          right: 0,
-          top: 0,
-          height,
-          zIndex: 0,
-        }}
-      />
+      <Stack>
+        {/* Yellow Gradient */}
+        <Gradient
+          colors={[theme.colors.primary[400], theme.colors.primary[50]]}
+          locations={[0, 0.5]}
+          style={{
+            position: "absolute",
+            left: 0,
+            right: 0,
+            top: 0,
+            height,
+            zIndex: layers.gradient,
+          }}
+        />
 
-      <Stack
-        style={{
-          position: "absolute",
-          width,
-          height: height - 140,
-          zIndex: layers.stats,
-          display: "flex",
-          justifyContent: "space-between",
-        }}
-      >
-        <Stack>
+        <Stack
+          style={{
+            position: "absolute",
+            width,
+            zIndex: layers.stats,
+          }}
+        >
           <Stack
             flexDirection="row"
             justifyContent="space-between"
@@ -180,20 +142,7 @@ const HomePage = () => {
             {Platform.OS === "android" && <DeviceMotionViewAndroid />}
           </Center>
         </Stack>
-        <Stack
-          style={{
-            width: 250,
-            alignSelf: "center",
-            height: "auto",
-            justifyContent: "flex-end",
-            bottom: 50,
-          }}
-        >
-          <SessionControl />
-        </Stack>
-      </Stack>
 
-      <Stack>
         {sessionStatus === "INACTIVE" ? (
           <RealtimeTrackingBackground />
         ) : (
@@ -201,8 +150,19 @@ const HomePage = () => {
             <SessionBackground />
           </Center>
         )}
+        <Center
+          style={{
+            width: 250,
+            alignSelf: "center",
+            zIndex: layers.stats,
+            position: "absolute",
+            bottom: Platform.OS === "ios" ? 20 : height * 0.1,
+            justifyContent: "flex-end",
+          }}
+        >
+          <SessionControl />
+        </Center>
       </Stack>
-      {/* </ScrollView> */}
     </SafeAreaView>
   );
 };
