@@ -149,7 +149,6 @@ const ActiveMonitoringAnimation = ({ posture }: { posture: PostureStatus }) => {
   };
 
   const playCheering = () => {
-    console.log("here");
     try {
       const cheer = () => {
         setSpeed(Speed.REGULAR);
