@@ -41,6 +41,7 @@ import SunShine from "assets/img/sunshine.svg";
 import HelloWally from "assets/img/hello_wally.svg";
 import StartSetupImages from "assets/img/start_setup_images.svg";
 import SetupBadge from "assets/img/setup_badge.svg";
+import SetupImageBackground from "assets/img/setup-image-background.svg";
 
 export const ImageConfig = {
   "streak-flames": StreakFlames,
@@ -84,6 +85,7 @@ export const ImageConfig = {
   "hello-wally": HelloWally,
   "start-setup": StartSetupImages,
   "setup-badge": SetupBadge,
+  "setup-image-background": SetupImageBackground,
 };
 
 export type ImageName = keyof typeof ImageConfig;

@@ -10,17 +10,18 @@ const { height, width } = Dimensions.get("screen");
 const ContentCard = ({ title, text }) => {
   return (
     <Stack style={styles.content}>
-      <Center justifyContent="center" height="100%" py={height * 0.04} px={20}>
+      <Center justifyContent="center" height="100%">
         <Stack gap={32}>
           <Stack gap={16}>
             <Text
               align="center"
-              level="title_1"
+              level="badge_title"
+              weight="semibold"
               style={{ color: theme.colors.primary[900] }}
             >
               {title}
             </Text>
-            <Text align="center">{text}</Text>
+            <Text level="caption_4"  align="center" style={{color: theme.colors.neutral[500]}}>{text}</Text>
           </Stack>
         </Stack>
       </Center>
@@ -30,11 +31,11 @@ const ContentCard = ({ title, text }) => {
 
 const styles = StyleSheet.create({
   content: {
-    position: "absolute",
-    top: height * 0.42,
+    opacity: 0.9,
     width: width * 0.9,
     backgroundColor: theme.colors.white,
-    padding: 10,
+    paddingVertical: 30,
+    paddingHorizontal: 20,
     borderRadius: 20,
     zIndex: 4,
   },

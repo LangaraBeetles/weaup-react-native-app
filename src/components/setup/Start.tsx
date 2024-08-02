@@ -20,9 +20,10 @@ const { height, width } = Dimensions.get("screen");
 
 type StartProps = {
   changePage: React.Dispatch<React.SetStateAction<string>>;
+  setBackGround: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const Start: React.FC<StartProps> = ({ changePage }) => {
+const Start: React.FC<StartProps> = ({ changePage, setBackGround }) => {
   const [checked, setChecked] = useState(false);
 
   const fadeOut = useSharedValue(1);
@@ -51,11 +52,12 @@ const Start: React.FC<StartProps> = ({ changePage }) => {
         );
       }),
     );
+    setBackGround(theme.colors.other[300]);
   }, [fadeInMain, fadeInSunshine, fadeInStartSetup, fadeInHelloWally]);
 
   const next = () => {
     fadeOut.value = withTiming(0, { duration: 500 }, () => {
-      runOnJS(changePage)("nextPage");
+      runOnJS(changePage)("earbudsTraining");
     });
   };
 

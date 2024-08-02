@@ -1,14 +1,21 @@
 import Stack from "@root/src/components/ui/Stack";
 import { theme } from "@root/src/styles/theme";
 import Start from "@src/components/setup/Start";
+import EarbudsTraining from "@src/components/setup/EarbudsTraining";
 import { useState } from "react";
 
 const setupPages = () => {
   const [showPage, setShowPage] = useState("start");
+  const [backGround, setBackGround] = useState(theme.colors.white);
 
   return (
-    <Stack h={"100%"} backgroundColor={theme.colors.other[300]}>
-      {showPage === "start" && <Start changePage={setShowPage} />}
+    <Stack h={"100%"} backgroundColor={backGround}>
+      {showPage === "start" && (
+        <Start changePage={setShowPage} setBackGround={setBackGround} />
+      )}
+      {showPage === "earbudsTraining" && (
+        <EarbudsTraining changePage={setShowPage} />
+      )}
     </Stack>
   );
 };
