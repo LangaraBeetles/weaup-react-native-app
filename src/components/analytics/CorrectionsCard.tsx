@@ -50,7 +50,7 @@ const CorrectionsCard = () => {
   }, 0);
 
   return (
-    <Card>
+    <Card style={{ borderWidth: 1, borderColor: theme.colors.neutral[100] }}>
       <Stack justifyContent="space-between" flexDirection="row" gap={16}>
         <Text level="headline" weight="bold">
           Corrections
