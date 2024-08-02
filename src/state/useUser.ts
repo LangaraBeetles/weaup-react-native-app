@@ -90,7 +90,7 @@ export const useUser = create<UserState>()(
 
         currentPosture: "not_reading",
         setCurrentPosture: (value) => {
-          const isSession = get().sessionStatus === "ACTIVE";
+          const isSession = get().sessionStatus !== "INACTIVE";
           const user = get().user;
 
           if (value === "bad" || value === "good") {
@@ -104,6 +104,7 @@ export const useUser = create<UserState>()(
                 ],
               }));
             } else {
+              console.log("realtime");
               // Real-time tracking
               set((state) => ({
                 currentPosture: value,

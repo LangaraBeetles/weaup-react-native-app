@@ -30,14 +30,11 @@ const SessionSummaryScreen: React.FC = () => {
 
   const sessionData = data?.data;
 
-  const formatDuration = (minutes: number): string => {
-    const hours = Math.floor(minutes / 60);
-    const remainingMinutes = minutes % 60;
+  const formatDuration = (seconds: number): string => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
 
-    if (minutes == 0) {
-      return "< 1 min";
-    }
-    return `${String(hours).padStart(2, "0")}:${String(remainingMinutes).padStart(2, "0")}`;
+    return `${String(minutes ?? 0).padStart(2, "0")}:${String(remainingSeconds).padStart(2, "0")}`;
   };
 
   const handlePress = () => {
