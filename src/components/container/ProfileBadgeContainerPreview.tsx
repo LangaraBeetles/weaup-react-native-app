@@ -40,9 +40,9 @@ const ProfileBadgeContainerPreview = () => {
     );
   };
 
-  const renderLockedBadges = () => {
+  const renderLockedBadges = (count: number) => {
     return badges
-      .slice(0, 3)
+      .slice(0, count)
       .map((badge, index) => (
         <BadgeContainer
           key={index}
@@ -59,11 +59,11 @@ const ProfileBadgeContainerPreview = () => {
   return (
     <Stack
       flexDirection="row"
-      mx={"auto"}
       gap={16}
       justifyContent={latestBadges.length < 3 ? "start" : "space-between"}
     >
-      {latestBadges.length > 0 ? renderBadges() : renderLockedBadges()}
+      {renderBadges()}
+      {renderLockedBadges(3 - latestBadges.length)}
     </Stack>
   );
 };
