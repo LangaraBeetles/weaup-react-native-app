@@ -1,22 +1,32 @@
-import React, { useState } from "react";
-import {
-  Dimensions,
-  Platform,
-  SafeAreaView,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
-import { Stack, Text, Input, Button } from "@src/components/ui";
+import React, { useEffect, useState } from "react";
+import { Dimensions, StyleSheet, TouchableOpacity } from "react-native";
 import { theme } from "@src/styles/theme";
 import BackgroundGradient from "@src/components/setup/BackgroundGradient";
 import GoogleButton from "@root/src/components/ui/GoogleButton";
 import { useUser } from "@src/state/useUser";
 import useAuth from "@src/components/hooks/useAuth";
-import { router } from "expo-router";
+import Stack from "../ui/Stack";
+import { Text } from "../ui/typography";
+import Input from "../ui/Input";
+import Button from "../ui/Button";
+import Image from "../ui/Image";
+import BackButton from "../ui/BackButton";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  withDelay,
+  Easing,
+} from "react-native-reanimated";
 
 const { height, width } = Dimensions.get("screen");
 
-const SignUp = () => {
+type SignUpProps = {
+  changePage: React.Dispatch<React.SetStateAction<string>>;
+  setBackGround: React.Dispatch<React.SetStateAction<string>>;
+};
+
+const SignUp: React.FC<SignUpProps> = ({ changePage }) => {
   const { completeSetup, isAuth } = useUser();
   const { createGuestUser } = useAuth();
 
@@ -33,85 +43,123 @@ const SignUp = () => {
     if (!isAuth) {
       createGuestUser();
     }
-    router.navigate("/setup/welcome");
+    changePage("welcome");
   };
 
+  const onBack = () => {
+    changePage("setupGoalSlider");
+  };
+
+  const slideUpAnimation = useSharedValue(height);
+  const scaleImage = useSharedValue(0);
+
+  useEffect(() => {
+    slideUpAnimation.value = withTiming(0, {
+      duration: 500,
+      easing: Easing.bezier(0.5, 0, 0.25, 1),
+    });
+    scaleImage.value = withDelay(200, withTiming(1, { duration: 600 }));
+  }, []);
+
+  const slideUpStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateY: slideUpAnimation.value }],
+    };
+  });
+
+  const scaleImageStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scaleImage.value }],
+    };
+  });
+
   return (
-    <SafeAreaView style={styles.main}>
+    <Stack h={height} px={width * 0.05} alignItems="center">
       <BackgroundGradient />
-      <Stack h={height} style={styles.container}>
-        <Stack w={width * 0.9} style={styles.content}>
-          <Text level="title_1" style={styles.title}>
-            Create an account
-          </Text>
-          <Stack w={"100%"} gap={16}>
-            <Input
-              placeholder="Your Name"
-              value={name}
-              onChangeText={setName}
-            />
-            <Input
-              placeholder="Email Address"
-              value={email}
-              onChangeText={setEmail}
-            />
-            <Input
-              placeholder="Password"
-              value={password}
-              onChangeText={setPassword}
-            />
-          </Stack>
-          <Stack w={"100%"} gap={32}>
-            <Button
-              variant="primary"
-              onPress={handleContinue}
-              title="Continue"
-            />
-            <GoogleButton />
-            <TouchableOpacity onPress={handleContinueAsGuest}>
-              <Text level="title_3" style={styles.guestModeText}>
-                Continue with Guest Mode
-              </Text>
-            </TouchableOpacity>
-          </Stack>
-          <Text level="footnote" style={styles.noteText}>
-            Note: Guest mode limits challenge with friends. Sign in to unlock
-            full functionality.
-          </Text>
-        </Stack>
+      <Stack pt={height * 0.1} w={"100%"} style={{ zIndex: 5 }}>
+        <BackButton onBack={onBack} />
       </Stack>
-    </SafeAreaView>
+
+      <Stack h={"100%"} alignItems="center">
+        <Animated.View style={[scaleImageStyle, { zIndex: 5, bottom: 50 }]}>
+          <Stack h={width * 0.3} w={width * 0.3}>
+            <Image name="image-on-signup" />
+          </Stack>
+        </Animated.View>
+        <Animated.View style={[slideUpStyle, styles.content]}>
+          <Stack w={width * 0.8} gap={32}>
+            <Stack w={"100%"} alignItems="center">
+              <Text
+                level="title_1"
+                style={{ color: theme.colors.primary[900], paddingBottom: 24 }}
+              >
+                Create an account
+              </Text>
+              <Stack w={"100%"} gap={20}>
+                <Input
+                  placeholder="Your Name"
+                  value={name}
+                  onChangeText={setName}
+                />
+                <Input
+                  placeholder="Email Address"
+                  value={email}
+                  onChangeText={setEmail}
+                />
+                <Input
+                  placeholder="Password"
+                  value={password}
+                  onChangeText={setPassword}
+                />
+              </Stack>
+            </Stack>
+            <Stack w={"100%"} gap={20}>
+              <Button
+                variant="primary"
+                onPress={handleContinue}
+                title="Continue"
+              />
+              <GoogleButton />
+              <TouchableOpacity onPress={handleContinueAsGuest}>
+                <Stack
+                  alignItems="center"
+                  h={56}
+                  border={1}
+                  borderColor={theme.colors.primary[700]}
+                  borderRadius={100}
+                  justifyContent="center"
+                >
+                  <Text
+                    level="title_3"
+                    style={{ color: theme.colors.primary[700] }}
+                  >
+                    Continue with Guest Mode
+                  </Text>
+                </Stack>
+              </TouchableOpacity>
+            </Stack>
+            <Text level="footnote" style={{ color: theme.colors.neutral[500] }}>
+              Note: Guest mode limits challenge with friends. Sign in to unlock
+              full functionality.
+            </Text>
+          </Stack>
+        </Animated.View>
+      </Stack>
+    </Stack>
   );
 };
 
 const styles = StyleSheet.create({
-  main: {
-    flex: 1,
-    justifyContent: "center",
-  },
-  container: {
-    alignItems: "center",
-  },
   content: {
     backgroundColor: theme.colors.white,
     borderRadius: 20,
     zIndex: 4,
-    position: "absolute",
-    bottom:
-      height < 850 && Platform.OS == "android" ? width * 0.15 : width * 0.25,
     alignItems: "center",
     paddingHorizontal: 20,
     paddingVertical: 40,
-  },
-  title: {
-    color: theme.colors.primary[900],
-  },
-  guestModeText: {
-    color: theme.colors.primary[700],
-    textAlign: "center",
-  },
-  noteText: {
-    color: theme.colors.neutral[500],
+    position: "absolute",
+    bottom: height * 0.2,
+    width: width * 0.9,
   },
 });
 

@@ -6,6 +6,7 @@ import EnableNotifications from "@src/components/setup/EnableNotifications";
 import { useState } from "react";
 import SetupGoal from "../components/setup/SetupGoal";
 import SetGoalSlider from "../components/setup/SetGoalSlider";
+import SignUp from "../components/setup/SignUp";
 
 const setupPages = () => {
   const [showPage, setShowPage] = useState("start");
@@ -27,6 +28,9 @@ const setupPages = () => {
       )}
       {showPage === "setupGoalSlider" && (
         <SetGoalSlider changePage={setShowPage} />
+      )}
+      {showPage === "signup" && (
+        <SignUp changePage={setShowPage} setBackGround={setBackGround} />
       )}
     </Stack>
   );
