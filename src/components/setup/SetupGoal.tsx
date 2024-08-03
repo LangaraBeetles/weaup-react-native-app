@@ -18,9 +18,10 @@ const { height, width } = Dimensions.get("screen");
 
 type SetupGoalProps = {
   changePage: React.Dispatch<React.SetStateAction<string>>;
+  setBackGround: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const SetupGoal: React.FC<SetupGoalProps> = ({ changePage }) => {
+const SetupGoal: React.FC<SetupGoalProps> = ({ changePage, setBackGround }) => {
   const [step, setStep] = useState(0);
 
   const steps = [
@@ -65,6 +66,7 @@ const SetupGoal: React.FC<SetupGoalProps> = ({ changePage }) => {
   }));
 
   useEffect(() => {
+    setBackGround(theme.colors.other[300]);
     cardOpacity.value = withTiming(1, { duration: 500 });
 
     xpBarOpacity.value = withDelay(500, withTiming(1, { duration: 500 }));
@@ -98,7 +100,8 @@ const SetupGoal: React.FC<SetupGoalProps> = ({ changePage }) => {
       badgeImageOpacity.value = withTiming(0, { duration: 500 });
 
       setTimeout(() => {
-        runOnJS(changePage)("next");
+        runOnJS(setBackGround)(theme.colors.primary[100]);
+        runOnJS(changePage)("setupGoalSlider");
       }, 300);
     }
   };
@@ -132,7 +135,7 @@ const SetupGoal: React.FC<SetupGoalProps> = ({ changePage }) => {
             <Animated.View
               style={[
                 streakCardStyle,
-                { position: "absolute", top: height * -0.12 },
+                { position: "absolute", top: height * -0.165 },
               ]}
             >
               <Stack w={320} h={220}>
@@ -140,7 +143,7 @@ const SetupGoal: React.FC<SetupGoalProps> = ({ changePage }) => {
               </Stack>
             </Animated.View>
             <Animated.View style={[xpBarStyle, { width: "106%" }]}>
-              <Stack h={180}>
+              <Stack h={145}>
                 <Image name="xp-bar-setup" />
               </Stack>
             </Animated.View>

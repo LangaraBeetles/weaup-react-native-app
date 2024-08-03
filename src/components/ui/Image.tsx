@@ -48,6 +48,7 @@ import XpBarSetup from "assets/img/xp_bar_setup.svg";
 import StreakCardSetup from "assets/img/streak-card-setup.svg";
 import LevelUpSetup from "assets/img/level_up_setup.svg";
 import BadgeSetup from "assets/img/badge_setup.svg";
+import WallieWithAMap from "assets/img/wallie_with_a_map.svg";
 
 export const ImageConfig = {
   "streak-flames": StreakFlames,
@@ -98,6 +99,7 @@ export const ImageConfig = {
   "streak-card-setup": StreakCardSetup,
   "level-up-setup": LevelUpSetup,
   "badge-setup": BadgeSetup,
+  "wallie-with-a-map": WallieWithAMap,
 };
 
 export type ImageName = keyof typeof ImageConfig;

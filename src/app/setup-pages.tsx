@@ -5,6 +5,7 @@ import EarbudsTraining from "@src/components/setup/EarbudsTraining";
 import EnableNotifications from "@src/components/setup/EnableNotifications";
 import { useState } from "react";
 import SetupGoal from "../components/setup/SetupGoal";
+import SetGoalSlider from "../components/setup/SetGoalSlider";
 
 const setupPages = () => {
   const [showPage, setShowPage] = useState("start");
@@ -21,7 +22,12 @@ const setupPages = () => {
       {showPage === "notifications" && (
         <EnableNotifications changePage={setShowPage} />
       )}
-      {showPage === "setupGoal" && <SetupGoal changePage={setShowPage} />}
+      {showPage === "setupGoal" && (
+        <SetupGoal changePage={setShowPage} setBackGround={setBackGround} />
+      )}
+      {showPage === "setupGoalSlider" && (
+        <SetGoalSlider changePage={setShowPage} />
+      )}
     </Stack>
   );
 };
