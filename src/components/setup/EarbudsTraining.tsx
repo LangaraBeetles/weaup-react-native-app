@@ -116,7 +116,7 @@ const EarbudsTraining: React.FC<EarbudsTrainingProps> = ({ changePage }) => {
     if (step > 0) {
       setStep(step - 1);
     } else {
-      changePage("start");
+      changePage("selectMode");
     }
   };
 

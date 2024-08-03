@@ -8,6 +8,7 @@ import SetupGoal from "../components/setup/SetupGoal";
 import SetGoalSlider from "../components/setup/SetGoalSlider";
 import SignUp from "../components/setup/SignUp";
 import Welcome from "../components/setup/Welcome";
+import SelectMode from "@src/components/setup/SelectMode";
 
 const setupPages = () => {
   const [showPage, setShowPage] = useState("start");
@@ -18,6 +19,7 @@ const setupPages = () => {
       {showPage === "start" && (
         <Start changePage={setShowPage} setBackGround={setBackGround} />
       )}
+      {showPage === "selectMode" && <SelectMode changePage={setShowPage} />}
       {showPage === "earbudsTraining" && (
         <EarbudsTraining changePage={setShowPage} />
       )}
