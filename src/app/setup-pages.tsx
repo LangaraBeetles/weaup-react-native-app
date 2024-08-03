@@ -7,6 +7,7 @@ import { useState } from "react";
 import SetupGoal from "../components/setup/SetupGoal";
 import SetGoalSlider from "../components/setup/SetGoalSlider";
 import SignUp from "../components/setup/SignUp";
+import Welcome from "../components/setup/Welcome";
 
 const setupPages = () => {
   const [showPage, setShowPage] = useState("start");
@@ -32,6 +33,7 @@ const setupPages = () => {
       {showPage === "signup" && (
         <SignUp changePage={setShowPage} setBackGround={setBackGround} />
       )}
+      {showPage === "welcome" && <Welcome />}
     </Stack>
   );
 };

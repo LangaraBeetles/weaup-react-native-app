@@ -68,6 +68,7 @@ export const globalStyles = {
       200: "#FDD64B",
       300: "#FDDC85",
       400: "#545151",
+      500: "#FFF5DA",
     },
   },
 };

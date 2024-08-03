@@ -26,7 +26,7 @@ type SignUpProps = {
   setBackGround: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const SignUp: React.FC<SignUpProps> = ({ changePage }) => {
+const SignUp: React.FC<SignUpProps> = ({ changePage, setBackGround }) => {
   const { completeSetup, isAuth } = useUser();
   const { createGuestUser } = useAuth();
 
@@ -43,6 +43,7 @@ const SignUp: React.FC<SignUpProps> = ({ changePage }) => {
     if (!isAuth) {
       createGuestUser();
     }
+    setBackGround(theme.colors.other[500]);
     changePage("welcome");
   };
 
