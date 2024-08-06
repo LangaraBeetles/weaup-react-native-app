@@ -1,3 +1,4 @@
+import React from "react";
 import { SvgProps } from "react-native-svg";
 
 import StreakFlames from "assets/img/streak-flames.svg";
@@ -50,6 +51,9 @@ import LevelUpSetup from "assets/img/level_up_setup.svg";
 import BadgeSetup from "assets/img/badge_setup.svg";
 import WallieWithAMap from "assets/img/wallie_with_a_map.svg";
 import ImageOnSignup from "assets/img/image_on_signup.svg";
+import PhoneWeasel from "assets/img/phone-weasel.svg";
+import EarbudsWeasel from "assets/img/earbuds-weasel.svg";
+import YellowCircle from "assets/img/yellow-circle.svg";
 
 export const ImageConfig = {
   "streak-flames": StreakFlames,
@@ -102,6 +106,9 @@ export const ImageConfig = {
   "badge-setup": BadgeSetup,
   "wallie-with-a-map": WallieWithAMap,
   "image-on-signup": ImageOnSignup,
+  "phone-weasel": PhoneWeasel,
+  "earbuds-weasel": EarbudsWeasel,
+  "yellow-circle": YellowCircle,
 };
 
 export type ImageName = keyof typeof ImageConfig;
@@ -110,15 +117,12 @@ type ImageProps = {
   name: ImageName;
 } & Omit<SvgProps, "color">;
 
-const Image: React.FC<ImageProps> = ({
-  name,
-  width = "100%",
-  height = "100%",
-  ...props
-}) => {
-  const CustomImage = ImageConfig[name];
-
-  return <CustomImage {...props} width={width} height={height} />;
-};
+const Image: React.FC<ImageProps> = React.forwardRef(
+  ({ name, width = "100%", height = "100%", ...props }, ref) => {
+    const CustomImage = ImageConfig[name];
+    console.log(ref); //TODO
+    return <CustomImage {...props} width={width} height={height} />;
+  },
+);
 
 export default Image;

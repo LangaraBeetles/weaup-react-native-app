@@ -57,7 +57,7 @@ const Start: React.FC<StartProps> = ({ changePage, setBackGround }) => {
 
   const next = () => {
     fadeOut.value = withTiming(0, { duration: 500 }, () => {
-      runOnJS(changePage)("earbudsTraining");
+      runOnJS(changePage)("selectMode");
     });
   };
 
