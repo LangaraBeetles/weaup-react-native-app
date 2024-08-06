@@ -31,13 +31,6 @@
           <string>com.alignmend</string>
         </array>
       </dict>
-       <dict>
-        <key>CFBundleURLSchemes</key>
-        <array>
-          <string>weaup</string>
-          <string>com.weaup</string>
-        </array>
-      </dict>
       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
@@ -46,7 +39,7 @@
       </dict>
     </array>
     <key>CFBundleVersion</key>
-    <string>3</string>
+    <string>4</string>
     <key>LSRequiresIPhoneOS</key>
     <true/>
     <key>NSAppTransportSecurity</key>
