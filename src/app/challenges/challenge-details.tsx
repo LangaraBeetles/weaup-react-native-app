@@ -5,6 +5,7 @@ import {
   View,
   ScrollView,
   Platform,
+  RefreshControl,
 } from "react-native";
 import { useLocalSearchParams, usePathname } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
@@ -29,7 +30,7 @@ const ChallengeDetail = () => {
   const path = usePathname();
   const loggedUser = useUser((state) => state.user.id);
 
-  const { data, isLoading } = useQuery({
+  const { data, refetch, isLoading } = useQuery({
     queryKey: ["getChallengeById", path, id],
     queryFn: () => getChallengeById(id),
     enabled: path === "/challenges/challenge-details",
@@ -58,7 +59,10 @@ const ChallengeDetail = () => {
   };
 
   return (
-    <ScrollView style={styles.body}>
+    <ScrollView
+      style={styles.body}
+      refreshControl={<RefreshControl refreshing={false} onRefresh={refetch} />}
+    >
       <View style={[styles.container, { backgroundColor: color }]}>
         <Stack flexDirection="row" p={16} alignItems="center" gap={40}>
           <BackButton />
