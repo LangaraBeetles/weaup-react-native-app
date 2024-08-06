@@ -151,9 +151,8 @@ const ActiveMonitoringAnimation = ({ posture }: { posture: PostureStatus }) => {
   const playCheering = () => {
     try {
       const cheer = () => {
-        setSpeed(Speed.REGULAR);
-
         animation.current?.play?.(80, 128);
+        setSpeed(Speed.REGULAR);
       };
       progress.value = withSequence(
         withTiming(1, { duration: 500 }, () => {
@@ -281,7 +280,7 @@ const ActiveMonitoringAnimation = ({ posture }: { posture: PostureStatus }) => {
     if (animation.current) {
       playIdle();
     }
-  }, [animation.current]);
+  }, []);
 
   useEffect(() => {
     if (posture === "bad" && posture !== status) {
