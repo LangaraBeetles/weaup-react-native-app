@@ -1,4 +1,5 @@
 import api from "./api";
+import dayjs from "dayjs";
 import { PostureSessionInput, Session } from "@src/interfaces/posture.types";
 
 const route = "/posture/sessions";
@@ -15,7 +16,15 @@ export const getSessionById = async (sessionId: string) => {
   return data;
 };
 
-export const getAllSessions = async (): Promise<Session[]> => {
-  const response = await api.get(route);
+export const getAllSessions = async (start?: string, end?: string) => {
+  const start_date = dayjs(start ?? "").format("YYYY-MM-DD");
+  const end_date = dayjs(end ?? "").format("YYYY-MM-DD");
+
+  const response = await api.get<{ data: Session[] }>(route, {
+    params: {
+      start_date,
+      end_date,
+    },
+  });
   return response.data.data;
 };

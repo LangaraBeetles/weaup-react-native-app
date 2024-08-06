@@ -54,6 +54,8 @@ import ImageOnSignup from "assets/img/image_on_signup.svg";
 import PhoneWeasel from "assets/img/phone-weasel.svg";
 import EarbudsWeasel from "assets/img/earbuds-weasel.svg";
 import YellowCircle from "assets/img/yellow-circle.svg";
+import AnalyticsHappy from "assets/img/analytics_happy.svg";
+import AnalyticsSad from "assets/img/analytics_sad.svg";
 
 export const ImageConfig = {
   "streak-flames": StreakFlames,
@@ -109,6 +111,8 @@ export const ImageConfig = {
   "phone-weasel": PhoneWeasel,
   "earbuds-weasel": EarbudsWeasel,
   "yellow-circle": YellowCircle,
+  "analytics-happy": AnalyticsHappy,
+  "analytics-sad": AnalyticsSad,
 };
 
 export type ImageName = keyof typeof ImageConfig;
