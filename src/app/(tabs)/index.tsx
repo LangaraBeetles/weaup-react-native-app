@@ -156,7 +156,7 @@ const HomePage = () => {
             alignSelf: "center",
             zIndex: layers.stats,
             position: "absolute",
-            bottom: Platform.OS === "ios" ? 20 : height * 0.1,
+            bottom: Platform.OS === "ios" ? height * 0.03 : height * 0.1,
             justifyContent: "flex-end",
           }}
         >

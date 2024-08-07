@@ -14,9 +14,9 @@ import Image from "@src/components/ui/Image";
 import Center from "../ui/Center";
 import { LinearGradient as Gradient } from "expo-linear-gradient";
 
-const { height } = Dimensions.get("screen");
+const { height, width } = Dimensions.get("screen");
 
-const imageSize = 253;
+const imageSize = width * 0.7;
 
 const SessionBackground = () => {
   const currentPosture = useUser((state) => state.currentPosture);
@@ -61,7 +61,6 @@ const SessionBackground = () => {
         position: "relative",
         height: "100%",
         alignItems: "center",
-        backgroundColor: "red",
       }}
     >
       {/* Yellow Gradient */}
@@ -83,7 +82,7 @@ const SessionBackground = () => {
           position: "absolute",
           left: 0,
           right: 0,
-          top: (height - imageSize) * 0.4,
+          top: (height - imageSize) * 0.35,
           shadowColor: theme.colors.random.green,
           shadowRadius: showGlow ? shadowRadius : 0,
           shadowOpacity: 1,
@@ -110,7 +109,11 @@ const SessionBackground = () => {
             style={[StyleSheet.absoluteFillObject, styles.backgroundImageFill]}
           />
           <Center style={{ marginTop: 25 }}>
-            <Image name="weasel-side-peaceful" width={109} height={230} />
+            <Image
+              name="weasel-side-peaceful"
+              width={width * 0.5}
+              height={width * 0.6}
+            />
           </Center>
         </Stack>
       </Animated.View>
@@ -118,7 +121,7 @@ const SessionBackground = () => {
         style={{
           opacity: badPostureOpacity,
           position: "absolute",
-          top: (height - imageSize) * 0.4,
+          top: (height - imageSize) * 0.35,
           left: 0,
           right: 0,
           shadowColor: theme.colors.random.red,
@@ -144,7 +147,11 @@ const SessionBackground = () => {
             style={[StyleSheet.absoluteFillObject, styles.backgroundImageFill]}
           />
           <Center style={{ marginTop: 25 }}>
-            <Image name="weasel-side-sad" width={130} height={250} />
+            <Image
+              name="weasel-side-sad"
+              width={width * 0.5}
+              height={width * 0.6}
+            />
           </Center>
         </Stack>
       </Animated.View>

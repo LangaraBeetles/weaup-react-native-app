@@ -307,7 +307,7 @@ const ActiveMonitoringAnimation = ({ posture }: { posture: PostureStatus }) => {
           width: width,
           height: height,
           position: "absolute",
-          top: 0,
+          top: -10,
           aspectRatio: 2,
           zIndex: layers.weasel,
         }}
