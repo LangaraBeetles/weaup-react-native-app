@@ -123,8 +123,8 @@ type ImageProps = {
 
 const Image: React.FC<ImageProps> = React.forwardRef(
   ({ name, width = "100%", height = "100%", ...props }, ref) => {
+    void ref;
     const CustomImage = ImageConfig[name];
-    console.log(ref); //TODO
     return <CustomImage {...props} width={width} height={height} />;
   },
 );

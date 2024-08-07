@@ -104,7 +104,6 @@ export const useUser = create<UserState>()(
                 ],
               }));
             } else {
-              console.log("realtime");
               // Real-time tracking
               set((state) => ({
                 currentPosture: value,
