@@ -56,11 +56,13 @@ const EarbudsTraining: React.FC<EarbudsTrainingProps> = ({ changePage }) => {
 
   const startLottieAnimation = () => {
     if (animation.current) {
+      animation.current.reset();
       animation.current.play();
     }
   };
 
   useEffect(() => {
+    // Initial animation setup
     fadeInMain.value = withDelay(100, withTiming(1, { duration: 500 }));
     scaleBackground.value = withDelay(200, withTiming(1, { duration: 400 }));
     slideUpAnimation.value = withDelay(
@@ -78,7 +80,14 @@ const EarbudsTraining: React.FC<EarbudsTrainingProps> = ({ changePage }) => {
         },
       ),
     );
-    lottieOpacity.value = withDelay(1000, withTiming(1, { duration: 500 }));
+    lottieOpacity.value = withDelay(900, withTiming(1, { duration: 1000 })); // Updated to fade in the animation while sliding up
+  }, []);
+
+  useEffect(() => {
+    // Start a new animation immediately when the step changes
+    if (step > 0) {
+      startLottieAnimation();
+    }
   }, [step]);
 
   const mainStyle = useAnimatedStyle(() => ({
@@ -95,7 +104,7 @@ const EarbudsTraining: React.FC<EarbudsTrainingProps> = ({ changePage }) => {
 
   const slideUpStyle = useAnimatedStyle(() => ({
     transform: [{ translateY: slideUpAnimation.value }],
-    opacity: lottieOpacity.value,
+    opacity: lottieOpacity.value, // Combine opacity with slide animation
   }));
 
   const next = () => {

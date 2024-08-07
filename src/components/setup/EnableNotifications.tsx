@@ -29,7 +29,7 @@ const EnableNotifications: React.FC<StartProps> = ({ changePage }) => {
 
   useEffect(() => {
     fadeInMain.value = withDelay(100, withTiming(1, { duration: 500 }));
-    exclamationFadeIn.value = withDelay(2000, withTiming(1, { duration: 500 }));
+    exclamationFadeIn.value = withDelay(1000, withTiming(1, { duration: 500 }));
     slideUpAnimation.value = withDelay(
       400,
       withTiming(0, {
@@ -37,7 +37,7 @@ const EnableNotifications: React.FC<StartProps> = ({ changePage }) => {
         easing: Easing.out(Easing.exp),
       }),
     );
-    wallieOpacity.value = withDelay(1600, withTiming(1, { duration: 500 }));
+    wallieOpacity.value = withDelay(600, withTiming(1, { duration: 500 }));
   }, []);
 
   const mainStyle = useAnimatedStyle(() => ({
