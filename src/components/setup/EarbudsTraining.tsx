@@ -17,7 +17,7 @@ import Animated, {
   Easing,
 } from "react-native-reanimated";
 
-const { height, width } = Dimensions.get("screen");
+const { height } = Dimensions.get("screen");
 
 type EarbudsTrainingProps = {
   changePage: React.Dispatch<React.SetStateAction<string>>;
@@ -122,7 +122,7 @@ const EarbudsTraining: React.FC<EarbudsTrainingProps> = ({ changePage }) => {
 
   return (
     <Animated.View style={[{ flex: 1 }, mainStyleOut]}>
-      <Stack h={height} px={width * 0.1} alignItems={"center"}>
+      <Stack h={height} px={16} alignItems={"center"}>
         <Stack
           flexDirection="row"
           pt={height * 0.1}
@@ -146,7 +146,7 @@ const EarbudsTraining: React.FC<EarbudsTrainingProps> = ({ changePage }) => {
 
         <Stack
           flexDirection="column"
-          gap={50}
+          gap={30}
           alignItems="center"
           style={{ position: "absolute", bottom: height * 0.1 }}
         >

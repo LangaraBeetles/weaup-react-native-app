@@ -72,7 +72,12 @@ const SetUpGoalScreenOnboarding = () => {
           </Stack>
 
           <Stack flexGrow={1} justifyContent="center" alignItems="center">
-            <GoalPicker flex={4} setGoal={setGoal} goal={goal} />
+            <GoalPicker
+              flex={4}
+              setGoal={setGoal}
+              goal={goal}
+              source={"profile"}
+            />
           </Stack>
 
           <Stack flexGrow={0} alignItems="center" style={styles.paddedContent}>

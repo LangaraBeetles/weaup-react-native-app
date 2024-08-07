@@ -18,8 +18,9 @@ const GoalPicker = (props: {
   flex?: number;
   goal: number;
   setGoal: React.Dispatch<React.SetStateAction<number>>;
+  source: "setup" | "profile"; // Add a new prop to determine the source page
 }) => {
-  const { flex, goal, setGoal } = props;
+  const { flex, goal, setGoal, source } = props;
   const contentOffset = useSharedValue(0);
   const flatListRef = useRef<FlatList>(null);
 
@@ -79,7 +80,7 @@ const GoalPicker = (props: {
             data[newIndex] && setGoal(data[newIndex]);
           }}
           contentContainerStyle={{
-            height: 300,
+            height: source === "setup" ? 300 : "100%", // Use the source prop to set the height
             justifyContent: "center",
             alignItems: "center",
             paddingRight: listItemWidth * 2,

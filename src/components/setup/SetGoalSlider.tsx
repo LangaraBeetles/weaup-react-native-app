@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Dimensions, Platform, SafeAreaView, StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 import Button from "@src/components/ui/Button";
 import Stack from "@src/components/ui/Stack";
 import { useUser } from "@src/state/useUser";
@@ -61,32 +61,23 @@ const SetGoalSlider: React.FC<GoalSliderProps> = ({ changePage }) => {
   }));
 
   return (
-    <SafeAreaView style={styles.main}>
-      <Stack
-        py={16}
-        pt={Platform.OS === "android" ? height * 0.08 : 16}
-        flex={1}
-      >
-        <ContentHeader onBack={goBack} />
-        <Animated.View style={[imageStyle]}>
-          <Stack h={height * 0.2} pt={height * 0.01}>
-            <Image name="wallie-with-a-map" />
-          </Stack>
-        </Animated.View>
-        <Stack
-          gap={height * 0.01}
-          style={{ position: "absolute", bottom: height * 0.03 }}
-        >
-          <ContentBody goal={goal} setGoal={setGoal} />
-          <Animated.View style={[footerStyle]}>
-            <ContentFooter
-              onUpdateGoal={updateGoal}
-              onMaybeLater={maybeLater}
-            />
-          </Animated.View>
+    <Stack py={16} pt={height * 0.1} flex={1}>
+      <ContentHeader onBack={goBack} />
+      <Animated.View style={[imageStyle]}>
+        <Stack h={height * 0.2} pt={height * 0.01}>
+          <Image name="wallie-with-a-map" />
         </Stack>
+      </Animated.View>
+      <Stack
+        gap={height * 0.01}
+        style={{ position: "absolute", bottom: height * 0.03 }}
+      >
+        <ContentBody goal={goal} setGoal={setGoal} />
+        <Animated.View style={[footerStyle]}>
+          <ContentFooter onUpdateGoal={updateGoal} onMaybeLater={maybeLater} />
+        </Animated.View>
       </Stack>
-    </SafeAreaView>
+    </Stack>
   );
 };
 
@@ -117,7 +108,7 @@ type ContentBodyProps = {
 
 const ContentBody: React.FC<ContentBodyProps> = ({ goal, setGoal }) => (
   <Stack flexGrow={1} justifyContent="center" alignItems="center">
-    <GoalPicker flex={4} setGoal={setGoal} goal={goal} />
+    <GoalPicker flex={4} setGoal={setGoal} goal={goal} source={"setup"} />
   </Stack>
 );
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Dimensions, StyleSheet } from "react-native";
+import { Dimensions, StyleSheet, Image as RNImage } from "react-native";
 import { theme } from "@src/styles/theme";
 import Image from "@src/components/ui/Image";
 import Button from "@src/components/ui/Button";
@@ -14,7 +14,7 @@ import Animated, {
   runOnJS,
 } from "react-native-reanimated";
 
-const { height, width } = Dimensions.get("screen");
+const { height } = Dimensions.get("screen");
 
 type SetupGoalProps = {
   changePage: React.Dispatch<React.SetStateAction<string>>;
@@ -115,7 +115,7 @@ const SetupGoal: React.FC<SetupGoalProps> = ({ changePage, setBackGround }) => {
   };
 
   return (
-    <Stack h={height} px={width * 0.1} alignItems="center">
+    <Stack h={height} px={16} alignItems="center">
       <Stack
         flexDirection="row"
         pt={height * 0.1}
@@ -129,6 +129,7 @@ const SetupGoal: React.FC<SetupGoalProps> = ({ changePage, setBackGround }) => {
       <Stack
         alignItems="center"
         style={{ position: "absolute", bottom: height * 0.1 }}
+        gap={15}
       >
         {step === 0 && (
           <>
@@ -160,10 +161,13 @@ const SetupGoal: React.FC<SetupGoalProps> = ({ changePage, setBackGround }) => {
               </Stack>
             </Animated.View>
             <Animated.View
-              style={[badgeImageStyle, { width: 109, bottom: 40, left: 90 }]}
+              style={[badgeImageStyle, { width: 109, bottom: 60, left: 80 }]}
             >
               <Stack h={121}>
-                <Image name="badge-setup" />
+                <RNImage
+                  source={require("../../../assets/img/badge-goal.png")}
+                  style={{ width: 108, height: 121 }}
+                />
               </Stack>
             </Animated.View>
           </>
@@ -177,7 +181,7 @@ const SetupGoal: React.FC<SetupGoalProps> = ({ changePage, setBackGround }) => {
               section={"setup"}
             />
           </Stack>
-          <Stack alignItems="center" gap={30}>
+          <Stack alignItems="center" gap={20}>
             <Stack w={"100%"}>
               <Button onPress={next} variant="primary" title={"Next"} />
             </Stack>

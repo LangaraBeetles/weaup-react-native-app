@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Dimensions, Pressable, StyleSheet } from "react-native";
+import {
+  Dimensions,
+  Pressable,
+  StyleSheet,
+  Image as RNImage,
+} from "react-native";
 import Stack from "../ui/Stack";
 import { Text } from "../ui/typography";
 import { theme } from "@root/src/styles/theme";
@@ -119,6 +124,15 @@ const Start: React.FC<StartProps> = ({ changePage, setBackGround }) => {
           >
             <Stack h={300} w={width}>
               <Image name="start-setup" />
+              <RNImage
+                source={require("../../../assets/img/badge-start.png")}
+                style={{
+                  width: 136,
+                  height: 131,
+                  bottom: 160,
+                  left: width * 0.58,
+                }}
+              />
             </Stack>
           </Animated.View>
           <Animated.View

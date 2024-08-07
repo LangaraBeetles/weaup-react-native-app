@@ -78,7 +78,7 @@ const EnableNotifications: React.FC<StartProps> = ({ changePage }) => {
       <Stack
         gap={23}
         alignItems="center"
-        style={{ position: "absolute", bottom: height * 0.1 }}
+        style={{ position: "absolute", bottom: height * 0.058 }}
       >
         <Animated.View style={[slideUpStyle, { top: 40 }]}>
           <Stack w={141} h={251}>
