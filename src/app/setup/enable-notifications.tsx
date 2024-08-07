@@ -52,6 +52,7 @@ const EnableNotificationsScreen = () => {
         <ContentCard
           title="Get Real-time Alerts"
           text={"Wally will remind you when your posture needs correction."}
+          section={"setup"}
         />
         <Stack w={width * 0.9} gap={12} style={styles.buttonStack}>
           <Button

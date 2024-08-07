@@ -63,6 +63,7 @@ const ChallengeGoalForm = () => {
                   flex={4}
                   setGoal={field.onChange}
                   goal={Number(field.value)}
+                  source={"profile"}
                 />
               </Stack>
             )}

@@ -139,6 +139,14 @@ const RootLayout = () => {
                         name="earn-badge"
                         options={{ headerShown: false, animation: "fade" }}
                       />
+
+                      <Stack.Screen
+                        name="setup-pages"
+                        options={{
+                          headerShown: false,
+                          presentation: "fullScreenModal",
+                        }}
+                      />
                     </Stack>
                   </PostureDataProvider>
                 </BottomSheetModalProvider>

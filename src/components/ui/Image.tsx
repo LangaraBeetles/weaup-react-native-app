@@ -1,3 +1,4 @@
+import React from "react";
 import { SvgProps } from "react-native-svg";
 
 import StreakFlames from "assets/img/streak-flames.svg";
@@ -37,6 +38,22 @@ import Level3up from "assets/levels/Level3-up.svg";
 import Level4up from "assets/levels/Level4-up.svg";
 import Level5up from "assets/levels/Level5-up.svg";
 import Level6up from "assets/levels/Level6-up.svg";
+import SunShine from "assets/img/sunshine.svg";
+import HelloWally from "assets/img/hello_wally.svg";
+import StartSetupImages from "assets/img/start_setup_images.svg";
+import SetupBadge from "assets/img/setup_badge.svg";
+import SetupImageBackground from "assets/img/setup-image-background.svg";
+import WallyOnThePhone from "assets/img/wally_on_the_phone.svg";
+import NotificationExclamation from "assets/img/notification_exclamation.svg";
+import XpBarSetup from "assets/img/xp_bar_setup.svg";
+import StreakCardSetup from "assets/img/streak-card-setup.svg";
+import LevelUpSetup from "assets/img/level_up_setup.svg";
+import BadgeSetup from "assets/img/badge_setup.svg";
+import WallieWithAMap from "assets/img/wallie_with_a_map.svg";
+import ImageOnSignup from "assets/img/image_on_signup.svg";
+import PhoneWeasel from "assets/img/phone-weasel.svg";
+import EarbudsWeasel from "assets/img/earbuds-weasel.svg";
+import YellowCircle from "assets/img/yellow-circle.svg";
 import AnalyticsHappy from "assets/img/analytics_happy.svg";
 import AnalyticsSad from "assets/img/analytics_sad.svg";
 
@@ -78,6 +95,22 @@ export const ImageConfig = {
   "level-4-up": Level4up,
   "level-5-up": Level5up,
   "level-6-up": Level6up,
+  sunshine: SunShine,
+  "hello-wally": HelloWally,
+  "start-setup": StartSetupImages,
+  "setup-badge": SetupBadge,
+  "setup-image-background": SetupImageBackground,
+  "wally-on-the-phone": WallyOnThePhone,
+  "notification-exclamation": NotificationExclamation,
+  "xp-bar-setup": XpBarSetup,
+  "streak-card-setup": StreakCardSetup,
+  "level-up-setup": LevelUpSetup,
+  "badge-setup": BadgeSetup,
+  "wallie-with-a-map": WallieWithAMap,
+  "image-on-signup": ImageOnSignup,
+  "phone-weasel": PhoneWeasel,
+  "earbuds-weasel": EarbudsWeasel,
+  "yellow-circle": YellowCircle,
   "analytics-happy": AnalyticsHappy,
   "analytics-sad": AnalyticsSad,
 };
@@ -88,15 +121,12 @@ type ImageProps = {
   name: ImageName;
 } & Omit<SvgProps, "color">;
 
-const Image: React.FC<ImageProps> = ({
-  name,
-  width = "100%",
-  height = "100%",
-  ...props
-}) => {
-  const CustomImage = ImageConfig[name];
-
-  return <CustomImage {...props} width={width} height={height} />;
-};
+const Image: React.FC<ImageProps> = React.forwardRef(
+  ({ name, width = "100%", height = "100%", ...props }, ref) => {
+    void ref;
+    const CustomImage = ImageConfig[name];
+    return <CustomImage {...props} width={width} height={height} />;
+  },
+);
 
 export default Image;

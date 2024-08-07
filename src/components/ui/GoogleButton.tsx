@@ -72,7 +72,10 @@ const GoogleButton = (props: { signUp?: boolean }) => {
   }, [response?.type]);
 
   return (
-    <TouchableOpacity onPress={() => promptAsync()}>
+    <TouchableOpacity
+      onPress={() => promptAsync()}
+      style={{ flex: 1, height: 40, width: "100%" }}
+    >
       {platform == "android" ? (
         signUp ? (
           <Image name="google-android-btn-su" height={52}></Image>

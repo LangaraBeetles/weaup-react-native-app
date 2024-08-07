@@ -97,6 +97,31 @@
 			name = weaup;
 			sourceTree = "<group>";
 		};
+		282EF5803DDD42FEA89FCF07 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F74514F1D3124FE4945BC805 /* NunitoBlack.ttf */,
+				A5B8440B9CEF491D856997D0 /* NunitoExtraBold.ttf */,
+				320B7BB6800945E983227B59 /* NunitoBold.ttf */,
+				B6FB013F6CF8458DB0268025 /* NunitoSemiBold.ttf */,
+				23ED07912370424C90DFADCC /* NunitoMedium.ttf */,
+				756051265D77442A91431B33 /* NunitoRegular.ttf */,
+				8088BB4D67EC44D6AF4ACC9B /* NunitoLight.ttf */,
+				8AE7693C1ED74EBD871BB352 /* NunitoExtraLight.ttf */,
+				A5D148645FBA4B6F95984EE4 /* NunitoBlackItalic.ttf */,
+				EAA5DC029AA143B3ABE56591 /* NunitoExtraBoldItalic.ttf */,
+				C3EA0AEF48E54083A85F1AF5 /* NunitoBoldItalic.ttf */,
+				F046D3FEA4E94BB99BCF4256 /* NunitoSemiBoldItalic.ttf */,
+				35FC41AE49164E1B80DEB015 /* NunitoMediumItalic.ttf */,
+				956C990E992B43F58C19B8A2 /* NunitoItalic.ttf */,
+				1A9199DD68594916895AF3F2 /* NunitoLightItalic.ttf */,
+				73A21B248F2D404794DD2625 /* NunitoExtraLightItalic.ttf */,
+				E057DF7388A74548846F40F9 /* FredokaOneRegular.ttf */,
+			);
+			name = Resources;
+			path = "";
+			sourceTree = "<group>";
+		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -318,6 +343,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		45E12C96FD214A795E6D76FE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-weaup/Pods-weaup-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-weaup/Pods-weaup-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */ = {

@@ -136,9 +136,9 @@ const Timer = ({
           <TimerDisplay timeInSeconds={timeInSeconds} />
           <View style={{ width: 225 }}>
             <Button
-              title="End session"
+              title="End Session"
               onPress={pauseTimer}
-              variant="tertiary"
+              variant="secondary_coral"
             />
           </View>
         </View>
@@ -218,11 +218,12 @@ const Timer = ({
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-evenly",
+    height: "100%",
   },
   text: {
     fontSize: 60,
-    lineHeight: 90,
+    lineHeight: 80,
     color: theme.colors.secondary[600],
   },
   bottomSheetContainer: {
@@ -252,7 +253,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.white,
     borderRadius: 16,
     alignItems: "center",
-    gap: 8,
+    gap: 16,
     zIndex: 2,
   },
   pickerColumn: {

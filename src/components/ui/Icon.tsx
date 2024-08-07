@@ -85,6 +85,8 @@ import TogetherIconTwo from "assets/icons/together-icon-2.svg";
 import TogetherIconThree from "assets/icons/together-icon-3.svg";
 import Check from "assets/icons/check.svg";
 import StarCircle from "assets/icons/star-circle.svg";
+import DoubleChevronUp from "assets/icons/double-chevron-up.svg";
+import DoubleChevronDown from "assets/icons/double-chevron-down.svg";
 
 import { theme } from "@src/styles/theme";
 
@@ -173,6 +175,8 @@ const IconConfig = {
   "together-icon-3": TogetherIconThree,
   check: Check,
   "star-circle": StarCircle,
+  "double-chevron-up": DoubleChevronUp,
+  "double-chevron-down": DoubleChevronDown,
 };
 
 export type IconName = keyof typeof IconConfig;

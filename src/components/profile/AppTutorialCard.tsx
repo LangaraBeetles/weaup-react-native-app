@@ -9,7 +9,7 @@ import { router } from "expo-router";
 
 const AppTutorialCard = () => {
   const handlePress = () => {
-    router.navigate("/setup/start");
+    router.navigate("/setup-pages");
   };
 
   return (
