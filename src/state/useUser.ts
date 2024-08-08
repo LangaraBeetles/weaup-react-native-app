@@ -233,14 +233,19 @@ export const useUser = create<UserState>()(
           return data;
         },
 
-        setBadge: (badge) =>
-          set((state) => ({
-            ...state,
-            user: {
-              ...state.user,
-              badges: [...(state.user.badges || []), badge],
-            },
-          })),
+        setBadge: (badge) => {
+          const badges = get().user.badges;
+          const existing = badges.find((b) => badge.id == b.id);
+          if (!existing) {
+            set((state) => ({
+              ...state,
+              user: {
+                ...state.user,
+                badges: [...(state.user.badges || []), badge],
+              },
+            }));
+          }
+        },
 
         timeStart: null,
         setTimeStart: (date: Date | null) => set({ timeStart: date }),
