@@ -38,13 +38,6 @@ const SessionSummaryScreen: React.FC = () => {
   };
 
   const handlePress = () => {
-    // if (unlockedLevels.length) {
-    //   // trigger this after animations
-
-    //   showLevelUpModal();
-    //   return;
-    // }
-
     if (isDailyStreak === "true") {
       router.push("/streak");
 

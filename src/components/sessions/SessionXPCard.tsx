@@ -69,17 +69,27 @@ const XPCard: React.FC<XPCardProps> = ({ xp }) => {
 
   const handleAnimationEnd = useCallback(
     (progress: number) => {
-      if (progress >= 100) {
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
 
+      if (progress >= 100) {
         levelImageOpacity.value = withSequence(
-          withTiming(1, {}, (finished) => {
-            "worklet";
-            if (finished) {
-              runOnJS(showLevelUpModal)();
-            }
-          }),
+          withDelay(
+            2500,
+            withTiming(1, {}, (finished) => {
+              "worklet";
+              if (finished) {
+                runOnJS(showLevelUpModal)();
+              }
+            }),
+          ),
           withDelay(2000, withTiming(0.55)),
+        );
+      } else {
+        withDelay(
+          2500,
+          withTiming(0, {}, () => {
+            runOnJS(showLevelUpModal)();
+          }),
         );
       }
     },
