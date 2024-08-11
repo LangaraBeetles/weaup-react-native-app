@@ -49,9 +49,6 @@ const SelectMode: React.FC<SelectModeProps> = ({ changePage }) => {
   const duration = 1000;
 
   const AnimatedImage = Animated.createAnimatedComponent(Image);
-  useEffect(() => {
-    chevronOpacity.value = withRepeat(withTiming(1, { duration }), -1, true);
-  }, []);
 
   const clamp = (value: number, min: number, max: number) => {
     "worklet";
@@ -270,6 +267,10 @@ const SelectMode: React.FC<SelectModeProps> = ({ changePage }) => {
       opacity: chevronOpacity.value,
     };
   });
+
+  useEffect(() => {
+    chevronOpacity.value = withRepeat(withTiming(1, { duration }), -1, true);
+  }, []);
 
   return (
     <View>
