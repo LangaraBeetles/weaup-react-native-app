@@ -11,6 +11,14 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { theme } from "@src/styles/theme";
 import TimePicker from "./TimePicker";
 import { Text } from "./typography";
+import Animated, {
+  runOnJS,
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withSpring,
+  withTiming,
+} from "react-native-reanimated";
 
 const { height } = Dimensions.get("screen");
 
@@ -67,6 +75,17 @@ const Timer = ({
 
   const showTimeSetup = useCallback(() => {
     setShowStartSessionModal(true);
+    offset.value = withRepeat(withSpring(0, { stiffness: 100 }), 1, true);
+  }, []);
+
+  const hideTimeSetup = useCallback(() => {
+    {
+      offset.value = withTiming(height / 2, { duration: 250 }, (isFinished) => {
+        if (isFinished) {
+          runOnJS(setShowStartSessionModal)(false);
+        }
+      });
+    }
   }, []);
 
   const closePauseModal = () => {
@@ -86,6 +105,7 @@ const Timer = ({
   };
 
   const stopTimer = () => {
+    offset.value = height / 2;
     setShowStopSessionModal(false);
     clearInterval(timerInterval.current);
 
@@ -123,6 +143,11 @@ const Timer = ({
       clearInterval(timerInterval.current);
     };
   }, [timeInSeconds, showStopSessionModal]);
+
+  const offset = useSharedValue(height / 2);
+  const animatedModalStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: offset.value }],
+  }));
 
   return (
     <View>
@@ -178,37 +203,32 @@ const Timer = ({
         </Pressable>
       </Modal>
 
-      <Modal
-        transparent={true}
-        visible={showStartSessionModal}
-        animationType="fade"
-      >
-        <Pressable
-          style={styles.modalBackground}
-          onPress={() => setShowStartSessionModal(false)}
-        >
-          <Pressable
-            style={styles.modalContainer}
-            onTouchStart={(e) => {
-              e.stopPropagation();
-            }}
-          >
-            <View>
-              <Text level="title_3" style={{ textAlign: "center" }}>
-                How long do you want the session to be?
-              </Text>
-              <TimePicker
-                data={minutesData}
-                onValueChange={(value) => setTimeInMinutes(Number(value))}
-                title="minutes"
+      <Modal transparent={true} visible={showStartSessionModal}>
+        <Pressable style={styles.modalBackground} onPress={hideTimeSetup}>
+          <Animated.View style={[animatedModalStyle]}>
+            <Pressable
+              style={styles.modalContainer}
+              onTouchStart={(e) => {
+                e.stopPropagation();
+              }}
+            >
+              <View>
+                <Text level="title_3" style={{ textAlign: "center" }}>
+                  How long do you want the session to be?
+                </Text>
+                <TimePicker
+                  data={minutesData}
+                  onValueChange={(value) => setTimeInMinutes(Number(value))}
+                  title="minutes"
+                />
+              </View>
+              <Button
+                title="Start session"
+                onPress={startTimer}
+                variant="primary"
               />
-            </View>
-            <Button
-              title="Start session"
-              onPress={startTimer}
-              variant="primary"
-            />
-          </Pressable>
+            </Pressable>
+          </Animated.View>
         </Pressable>
       </Modal>
     </View>
