@@ -1,7 +1,21 @@
+import React from "react";
 import { theme } from "@src/styles/theme";
-import React, { useEffect, useRef, useState } from "react";
-import { View, StyleSheet, Animated, LayoutChangeEvent } from "react-native";
 import Icon from "./Icon";
+import Animated, {
+  runOnJS,
+  useSharedValue,
+  withDelay,
+  withTiming,
+} from "react-native-reanimated";
+import { StyleSheet, View } from "react-native";
+
+function calculatePercentage(currentValue: number, goal: number) {
+  if (goal === 0) {
+    return 0;
+  }
+  const percentage = (currentValue / goal) * 100;
+  return percentage > 100 ? 100 : percentage;
+}
 
 const ProgressBar = (props: {
   currentValue: number;
@@ -13,6 +27,7 @@ const ProgressBar = (props: {
   borderColor?: string;
   onAnimationEnd?: (progress: number) => void;
   icon?: boolean;
+  delay?: number;
 }) => {
   const {
     currentValue,
@@ -24,34 +39,35 @@ const ProgressBar = (props: {
     borderColor,
     onAnimationEnd,
     icon,
+    delay = 0,
   } = props;
 
-  const [barWidth, setBarWidth] = useState(0);
-  let progress = goal > 0 ? (currentValue / goal) * 100 : 0;
-  progress = progress > goal ? goal : progress;
-  const animatedWidth = useRef(new Animated.Value(0)).current;
+  const progress = calculatePercentage(currentValue, goal);
+  const animatedWidth = useSharedValue(0);
 
-  const width = animatedWidth.interpolate({
-    inputRange: [0, 100],
-    outputRange: [0, barWidth],
-    extrapolate: "clamp",
-  });
+  const onEnd = () => onAnimationEnd?.(progress);
 
-  useEffect(() => {
-    Animated.timing(animatedWidth, {
-      toValue: progress,
-      duration: 1000,
-      useNativeDriver: false,
-    }).start(() => {
-      if (onAnimationEnd) {
-        onAnimationEnd(progress);
-      }
-    });
-  }, [progress]);
-
-  const handleLayout = (event: LayoutChangeEvent) => {
+  const handleLayout = (event: any) => {
     const { width } = event.nativeEvent.layout;
-    setBarWidth(width);
+
+    animatedWidth.value = withDelay(
+      delay,
+      withTiming(
+        (progress / 100) * width,
+        {
+          duration: 1000,
+        },
+        (finished) => {
+          "worklet";
+
+          if (finished) {
+            try {
+              runOnJS(onEnd)();
+            } catch (error) {}
+          }
+        },
+      ),
+    );
   };
 
   return (
@@ -72,7 +88,7 @@ const ProgressBar = (props: {
         style={[
           styles.bar,
           {
-            width: width,
+            width: animatedWidth,
             backgroundColor: barColor || "#000",
             height: height || 10,
             borderRadius: (height || 10) / 2,
@@ -84,7 +100,7 @@ const ProgressBar = (props: {
           style={[
             styles.icon,
             {
-              transform: [{ translateX: width }],
+              transform: [{ translateX: animatedWidth }],
             },
           ]}
         >

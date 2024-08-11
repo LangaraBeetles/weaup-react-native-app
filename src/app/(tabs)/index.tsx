@@ -136,6 +136,20 @@ const HomePage = () => {
               </Center>
             </Stack>
           </Stack>
+          {/* 
+            // Code for testing
+          <Button
+            title="summary"
+            onPress={() => {
+              router.push({
+                pathname: "/session-summary",
+                params: {
+                  sessionId: "66b790f4530d45bdbf9bde9b",
+                },
+              });
+            }}
+          /> */}
+
           <ScoreComponent />
           <Center p={15}>
             {Platform.OS === "ios" && <DeviceMotionViewiOS />}
