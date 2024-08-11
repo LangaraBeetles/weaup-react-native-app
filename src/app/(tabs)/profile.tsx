@@ -48,13 +48,13 @@ const ProfileScreen = () => {
 
   useEffect(() => {
     if (data) {
-      setDailyGoal(data.data.daily_goal);
-      setXP(data.data.xp);
-      setHP(data.data.hp);
-      setLevel(data.data.level);
+      setDailyGoal(data.data?.daily_goal);
+      setXP(data.data?.xp);
+      setHP(data.data?.hp);
+      setLevel(data.data?.level);
 
-      setDailyStreakCounter(data.data.daily_streak_counter || 0);
-      data.data.badges.forEach((element: { id: number; date: string }) => {
+      setDailyStreakCounter(data.data?.daily_streak_counter || 0);
+      data.data?.badges?.forEach((element: { id: number; date: string }) => {
         setBadge(element);
       });
     }
