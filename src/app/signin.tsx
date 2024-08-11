@@ -201,7 +201,17 @@ const SignIn = () => {
                 }}
               />
             </Center>
-            <GoogleButton />
+            <Stack
+              alignItems="center"
+              h={56}
+              w={"100%"}
+              border={1}
+              borderColor={"#000000"}
+              borderRadius={100}
+              justifyContent="center"
+            >
+              <GoogleButton />
+            </Stack>
           </Stack>
         </Stack>
       </Stack>
