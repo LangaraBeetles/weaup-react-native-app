@@ -48,6 +48,7 @@ export type MemberType = {
   user_id: string;
   joined_at: Date;
   left_at: Date | null;
+  points: number;
 };
 
 type ChallengeUserType = {

@@ -36,7 +36,9 @@ const ChallengeDetail = () => {
     enabled: path === "/challenges/challenge-details",
   });
 
-  const members = data?.members;
+  const members = data?.members.sort((a, b) =>
+    a?.points > b?.points ? -1 : 1,
+  );
   const color = data?.color ?? theme.colors.secondary[100];
   const { isOngoing } = isChallengeActive(data?.end_at ?? "");
 
@@ -52,7 +54,7 @@ const ChallengeDetail = () => {
           ? getShareChallengeLink(data._id, loggedUser)
           : urlWithUserId;
 
-      await Share.share({ message });
+      await Share.share({ message, url: urlWithUserId });
     } catch (error) {
       console.log(error);
     }
