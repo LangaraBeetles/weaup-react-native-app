@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import { useUser } from "@src/state/useUser";
 import { useRouter } from "expo-router";
 import Button from "@src/components/ui/Button";
@@ -15,7 +14,7 @@ import DailyGoalCard from "@src/components/profile/DailyGoalCard";
 import StreakCard from "@src/components/profile/StreakCard";
 import AppTutorialCard from "@root/src/components/profile/AppTutorialCard";
 import { getUserById } from "@root/src/services/userApi";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 
 const ProfileScreen = () => {
   const userId = useUser((data) => data.user.id);
@@ -41,29 +40,38 @@ const ProfileScreen = () => {
     router.navigate("/signin");
   };
 
-  const { data, refetch } = useQuery({
-    queryKey: ["get-user", userId],
-    queryFn: () => getUserById(userId),
+  const { mutate } = useMutation({
+    mutationKey: ["get-user", userId],
+    mutationFn: (userId: string) => getUserById(userId),
+    onSuccess: (data) => {
+      if (data) {
+        setDailyGoal(data.data?.daily_goal);
+        setXP(data.data?.xp);
+        setHP(data.data?.hp);
+        setLevel(data.data?.level);
+
+        setDailyStreakCounter(data.data?.daily_streak_counter || 0);
+        data.data?.badges?.forEach((element: { id: number; date: string }) => {
+          setBadge(element);
+        });
+      }
+    },
+    onError: (error) => {
+      console.log({ error });
+    },
+    onSettled: () => {},
   });
 
-  useEffect(() => {
-    if (data) {
-      setDailyGoal(data.data?.daily_goal);
-      setXP(data.data?.xp);
-      setHP(data.data?.hp);
-      setLevel(data.data?.level);
-
-      setDailyStreakCounter(data.data?.daily_streak_counter || 0);
-      data.data?.badges?.forEach((element: { id: number; date: string }) => {
-        setBadge(element);
-      });
-    }
-  }, [data]);
+  const refetchUserData = () => {
+    mutate(userId);
+  };
 
   return (
     <ScrollView
       style={styles.container}
-      refreshControl={<RefreshControl refreshing={false} onRefresh={refetch} />}
+      refreshControl={
+        <RefreshControl refreshing={false} onRefresh={refetchUserData} />
+      }
     >
       <View style={styles.background} />
       <View style={styles.innerContainer}>
