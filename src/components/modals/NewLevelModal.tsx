@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { View, StyleSheet, TouchableWithoutFeedback } from "react-native";
+import {
+  View,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  Dimensions,
+} from "react-native";
 import { Text } from "@src/components/ui/typography";
 import { Modal } from "react-native";
 import { theme } from "@src/styles/theme";
@@ -8,6 +13,9 @@ import Image, { ImageConfig, ImageName } from "../ui/Image";
 import Box from "../ui/Box";
 import ProgressBar from "../ui/ProgressBar";
 import Shimmer from "../ui/Shimmer";
+import Center from "../ui/Center";
+
+const { width } = Dimensions.get("window");
 
 interface NewLevelModalProps {
   isVisible: boolean;
@@ -44,14 +52,20 @@ const NewLevelModal: React.FC<NewLevelModalProps> = ({
         <View style={styles.centeredView}>
           <TouchableWithoutFeedback>
             <Box>
-              <Stack alignItems="center" gap={16} px={12} py={6}>
+              <Stack
+                alignItems="center"
+                gap={16}
+                px={12}
+                py={6}
+                w={width * 0.85}
+              >
                 <View style={styles.icon}>
                   <Image name="tada" />
                 </View>
 
                 <Stack flexDirection="row" gap={4}>
-                  <Text level="title_3">You have reached</Text>
-                  <Text style={styles.levelTitle} level="title_3">
+                  <Text level="title_2">You have reached</Text>
+                  <Text style={styles.levelTitle} level="title_2">
                     Level {level}
                   </Text>
                 </Stack>
@@ -77,7 +91,9 @@ const NewLevelModal: React.FC<NewLevelModalProps> = ({
                     </Text>
                   </Stack>
                 </Stack>
+              </Stack>
 
+              <Center>
                 <Shimmer
                   show={showShimmer}
                   width={180}
@@ -89,7 +105,7 @@ const NewLevelModal: React.FC<NewLevelModalProps> = ({
                     <Image name={getImageNameForLevel(level)} />
                   </View>
                 </Shimmer>
-              </Stack>
+              </Center>
             </Box>
           </TouchableWithoutFeedback>
         </View>

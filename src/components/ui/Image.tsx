@@ -18,7 +18,10 @@ import ProfileXpImage from "assets/img/profile-XP-image.svg";
 import LevelUpImage from "assets/img/level-up-image.svg";
 import Confeties from "assets/img/confeties.svg";
 import BadgeBackground from "assets/img/badge-background.svg";
+import SessionBackground from "assets/img/session-background.svg";
+import SessionConfetti from "assets/img/session-confetti.svg";
 import WeaselHeadTilt from "assets/img/weasel-head-tilt.svg";
+import WeaselPomPom from "assets/img/weasel-pom-pom.svg";
 import Tada from "assets/img/tada.svg";
 import WeaselFloating from "assets/img/weasel-floating.svg";
 import ElipseShadow from "assets/img/ellipse-shadow.svg";
@@ -64,6 +67,7 @@ export const ImageConfig = {
   "background-bad": BackGroundBadImage,
   "weasel-side-peaceful": WaeaselSideImage,
   "weasel-side-sad": WaeaselSideSadImage,
+  "weasel-pom-pom": WeaselPomPom,
   "tilt-arrow": TitltArrow,
   "tilt-correct": TiltCorrect,
   sparkling: Sparkling,
@@ -75,6 +79,8 @@ export const ImageConfig = {
   "level-up-image": LevelUpImage,
   confeties: Confeties,
   "badge-background": BadgeBackground,
+  "session-background": SessionBackground,
+  "session-confetti": SessionConfetti,
   "weasel-head-tilt": WeaselHeadTilt,
   tada: Tada,
   "weasel-floating": WeaselFloating,

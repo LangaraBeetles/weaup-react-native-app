@@ -13,6 +13,7 @@ import NewLevelModal from "../modals/NewLevelModal";
 type LevelSystemContextState = {
   unlockedLevels: Array<{ level: number }>;
   showLevelUpModal: () => void;
+  levelupFinished: boolean;
 };
 
 const LevelSystemContext = createContext<LevelSystemContextState | null>(null);
@@ -20,6 +21,8 @@ const LevelSystemContext = createContext<LevelSystemContextState | null>(null);
 const LevelSystemProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const [levelupFinished, setLevelupFinished] = useState<boolean>(false);
+
   const unlockedLevels = useRef<Array<{ level: number }>>([]);
   const userXP = useUser((state) => state.user.xp);
   const userLevel = useUser((state) => state.user.level);
@@ -40,7 +43,14 @@ const LevelSystemProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const showLevelUp = useCallback(() => {
     const availableLevelUp = unlockedLevels.current?.[0];
+
+    // Code used for testing level up
+    // const availableLevelUp = levels.find(
+    //   (value) => value.level == userLevel + 1
+    // );
+
     if (!availableLevelUp) {
+      setLevelupFinished(true);
       return;
     }
 
@@ -55,6 +65,8 @@ const LevelSystemProvider: React.FC<{ children: React.ReactNode }> = ({
     setLevelUpAfterSession(undefined);
     setUserLevel(level);
     unlockedLevels.current.shift();
+    // setLevelupFinished(true); // Code used for testing level up
+
     setTimeout(showLevelUp, 1000);
   };
 
@@ -89,6 +101,7 @@ const LevelSystemProvider: React.FC<{ children: React.ReactNode }> = ({
   return (
     <LevelSystemContext.Provider
       value={{
+        levelupFinished,
         unlockedLevels: unlockedLevels.current,
         showLevelUpModal: showLevelUp,
       }}
