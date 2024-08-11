@@ -54,7 +54,7 @@ const ChallengeDetail = () => {
           ? getShareChallengeLink(data._id, loggedUser)
           : urlWithUserId;
 
-      await Share.share({ message, url: urlWithUserId });
+      await Share.share({ message });
     } catch (error) {
       console.log(error);
     }

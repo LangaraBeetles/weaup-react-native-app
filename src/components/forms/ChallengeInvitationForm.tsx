@@ -63,7 +63,6 @@ const ChallengeInvitationForm = (props: {
 
       await Share.share({
         message,
-        url: urlWithUserId,
       });
       setHasShared(true);
     } catch (error: any) {

@@ -1,5 +1,5 @@
 const getShareChallengeLink = (challengeId: string, inviterId: string) => {
-  return `weaup://challenges/join-challenge?id=${challengeId}&user=${inviterId}`;
+  return `alignmend://challenges/join-challenge?id=${challengeId}&user=${inviterId}`;
 };
 
 export default getShareChallengeLink;
