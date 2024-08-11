@@ -82,6 +82,7 @@ const ButtonRoot = styled(Pressable, {
   gap: 8,
   borderRadius: 100,
   borderWidth: 1,
+  height: 56,
   variants: {
     category: {
       primary: {},
