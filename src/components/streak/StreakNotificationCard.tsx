@@ -49,6 +49,7 @@ const StreakFlames = styled(View, {
   width: 74,
   top: -60,
   right: 20,
+  paddingBottom: "25%",
 });
 
 const StreakCounter = styled(Text, {
