@@ -38,7 +38,6 @@ const FilterMenu = ({ defaultTab, tabs, onChange }: FilterMenuProps) => {
     const { x, width } = event.nativeEvent.layout;
     tabLayouts.current[value] = { x, width };
 
-    // If the layout is of the selected tab, update the indicator position immediately
     if (value === selectedFilter) {
       indicatorPosition.value = withTiming(x, { duration: 300 });
       indicatorWidth.value = withTiming(width, { duration: 300 });
@@ -68,7 +67,6 @@ const FilterMenu = ({ defaultTab, tabs, onChange }: FilterMenuProps) => {
             style={styles.filterButton}
             onPress={() => {
               setSelectedFilter(value);
-              console.log(`Selected tab: ${value}`);
               onChange?.(value);
             }}
             onLayout={(event) => handleTabLayout(event, value)}
