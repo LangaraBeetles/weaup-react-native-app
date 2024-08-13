@@ -52,7 +52,7 @@ const SessionSummaryScreen: React.FC = () => {
 
   return (
     <SafeAreaView
-      style={{ backgroundColor: theme.colors.primary[200], flex: 1 }}
+      style={{ backgroundColor: theme.colors.random.yellow, flex: 1 }}
     >
       {isLoading ? (
         <ActivityIndicator
@@ -208,23 +208,23 @@ const SessionSummaryContent = ({ sessionData }: { sessionData: any }) => {
     cardTranslateY.value = withDelay(
       100,
       withTiming(0, { duration: 1000 }, () => {
-        imageOpacity.value = withTiming(1, { duration: 600 });
-        imageTranslateY.value = withTiming(0, { duration: 600 });
+        imageOpacity.value = withTiming(1, { duration: 700 });
+        imageTranslateY.value = withTiming(0, { duration: 700 });
 
-        backgroundOpacity.value = withTiming(1, { duration: 600 });
-        backgroundTop.value = withTiming(-100, { duration: 600 });
+        backgroundOpacity.value = withTiming(1, { duration: 700 });
+        backgroundTop.value = withTiming(-100, { duration: 700 });
 
-        confettiTranslateY.value = withTiming(50, { duration: 600 });
-        confettiScale.value = withTiming(1, { duration: 600 }, () => {
-          confettiTranslateY.value = withTiming(100, { duration: 1000 });
-          confettiScale.value = withTiming(0, { duration: 1000 }, () => {
+        confettiTranslateY.value = withTiming(50, { duration: 2000 });
+        confettiScale.value = withTiming(1, { duration: 2000 }, () => {
+          confettiTranslateY.value = withTiming(100, { duration: 1500 });
+          confettiScale.value = withTiming(0, { duration: 1500 }, () => {
             progressBarWidth.value = withTiming(
               (progress / 100) * barWidth,
               {
                 duration: 1000,
               },
               (finished) => {
-                "worklet";
+                ("worklet");
                 runOnJS(triggerHaptics)();
                 if (finished && progress == 100) {
                   levelImageOpacity.value = withTiming(1, { duration: 800 });
@@ -232,7 +232,7 @@ const SessionSummaryContent = ({ sessionData }: { sessionData: any }) => {
                     1.1,
                     { duration: 1000 },
                     () => {
-                      "worklet";
+                      ("worklet");
 
                       runOnJS(showLevelUpModal)();
                       runOnJS(triggerHaptics)();
@@ -314,7 +314,6 @@ const SessionSummaryContent = ({ sessionData }: { sessionData: any }) => {
             alignItems: "center",
           }}
         >
-          {/* <XPCard xp={sessionData?.xp} /> */}
           <Box>
             <Stack flexDirection="row" gap={4}>
               <Stack w={width * 0.6}>
