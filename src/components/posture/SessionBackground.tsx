@@ -1,6 +1,6 @@
 import { useUser } from "@src/state/useUser";
 import { theme } from "@src/styles/theme";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Dimensions, StyleSheet } from "react-native";
 import Animated, {
   Easing,
@@ -13,6 +13,8 @@ import Stack from "@src/components/ui/Stack";
 import Image from "@src/components/ui/Image";
 import Center from "../ui/Center";
 import { LinearGradient as Gradient } from "expo-linear-gradient";
+import LottieView from "lottie-react-native";
+import { PostureStatus } from "@root/src/interfaces/posture.types";
 
 const { height, width } = Dimensions.get("screen");
 
@@ -22,8 +24,8 @@ const SessionBackground = () => {
   const currentPosture = useUser((state) => state.currentPosture);
   const sessionStatus = useUser((state) => state.sessionStatus);
 
-  const showGlow =
-    sessionStatus === "ACTIVE" && currentPosture !== "not_reading";
+  const isSessionActive = sessionStatus === "ACTIVE";
+  const showGlow = isSessionActive && currentPosture !== "not_reading";
   const goodPostureOpacity = useSharedValue<number>(1);
   const badPostureOpacity = useSharedValue<number>(0);
   const shadowRadius = useSharedValue<number>(10);
@@ -31,13 +33,13 @@ const SessionBackground = () => {
   useEffect(() => {
     if (
       (currentPosture === "good" || currentPosture === "not_reading") &&
-      sessionStatus === "ACTIVE"
+      isSessionActive
     ) {
       goodPostureOpacity.value = withTiming(1);
       badPostureOpacity.value = withTiming(0, { duration: 500 });
     }
 
-    if (currentPosture === "bad" && sessionStatus === "ACTIVE") {
+    if (currentPosture === "bad" && isSessionActive) {
       goodPostureOpacity.value = withTiming(0, { duration: 500 });
       badPostureOpacity.value = withTiming(1);
     }
@@ -108,13 +110,10 @@ const SessionBackground = () => {
             name="background-happy"
             style={[StyleSheet.absoluteFillObject, styles.backgroundImageFill]}
           />
-          <Center style={{ marginTop: 25 }}>
-            <Image
-              name="weasel-side-peaceful"
-              width={width * 0.5}
-              height={width * 0.6}
-            />
-          </Center>
+
+          <ActiveMonitoringAnimation
+            posture={isSessionActive ? currentPosture : "not_reading"}
+          />
         </Stack>
       </Animated.View>
       <Animated.View
@@ -146,16 +145,77 @@ const SessionBackground = () => {
             name="background-bad"
             style={[StyleSheet.absoluteFillObject, styles.backgroundImageFill]}
           />
-          <Center style={{ marginTop: 25 }}>
-            <Image
-              name="weasel-side-sad"
-              width={width * 0.5}
-              height={width * 0.6}
-            />
-          </Center>
+
+          <ActiveMonitoringAnimation
+            posture={isSessionActive ? currentPosture : "not_reading"}
+          />
         </Stack>
       </Animated.View>
     </Stack>
+  );
+};
+
+const ActiveMonitoringAnimation = ({ posture }: { posture: PostureStatus }) => {
+  const [status, setStatus] = useState<PostureStatus>(posture);
+  const [progress, setProgress] = useState<number>(0);
+
+  useEffect(() => {
+    let downtimer = null;
+    let uptimer = null;
+
+    if (posture === "bad") {
+      setStatus(posture);
+
+      downtimer = setTimeout(() => {
+        setProgress((prev) => {
+          const value = prev + 0.1;
+          if (value > 1) {
+            return 1;
+          }
+          return Number(value.toFixed(5));
+        });
+      }, 50);
+    }
+
+    if (posture === "good") {
+      setStatus(posture);
+
+      uptimer = setTimeout(() => {
+        setProgress((prev) => {
+          const value = prev - 0.1;
+          if (value < 0) {
+            return 0;
+          }
+          return Number(value.toFixed(5));
+        });
+      }, 50);
+    }
+
+    if (posture === "not_reading" && posture !== status) {
+      setProgress(0);
+      setStatus(posture);
+    }
+
+    return () => {
+      downtimer && clearTimeout(downtimer);
+      uptimer && clearTimeout(uptimer);
+    };
+  }, [posture, progress]);
+
+  return (
+    <Center style={{ position: "relative" }}>
+      <LottieView
+        progress={progress}
+        speed={0.5}
+        autoPlay={false}
+        style={{
+          width: width * 1.5,
+          height: width * 1.1,
+          top: 0,
+        }}
+        source={require("../../animations/weasel_session.json")}
+      />
+    </Center>
   );
 };
 

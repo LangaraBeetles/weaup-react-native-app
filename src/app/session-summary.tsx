@@ -105,7 +105,7 @@ const SessionSummaryContent = ({ sessionData }: { sessionData: any }) => {
 
   // Session XP Card
   const userLevel = useUser((state) => state.user.level);
-  const { showLevelUpModal, levelupFinished } = useLevelSystem();
+  const { showLevelUpModal } = useLevelSystem();
   const current = safenumber(sessionData?.xp?.final);
   const goal = safenumber(getNextLevel(userLevel + 1, levels)?.xp);
 
@@ -429,9 +429,9 @@ const SessionSummaryContent = ({ sessionData }: { sessionData: any }) => {
             <Button
               onPress={() => {
                 // Always get a streak yey!!
-                if (levelupFinished) {
-                  router.push("/streak");
-                }
+                // if (levelupFinished) {
+                router.push("/streak");
+                // }
               }}
               variant="primary"
               title="Back Home"
