@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Dimensions,
   Pressable,
@@ -20,6 +20,7 @@ import Animated, {
   withDelay,
   runOnJS,
 } from "react-native-reanimated";
+import LottieView from "lottie-react-native";
 
 const { height, width } = Dimensions.get("screen");
 
@@ -35,7 +36,9 @@ const Start: React.FC<StartProps> = ({ changePage, setBackGround }) => {
   const fadeInSunshine = useSharedValue(0);
   const fadeInStartSetup = useSharedValue(0);
   const fadeInHelloWally = useSharedValue(0);
+  const slideUpHelloWally = useSharedValue(height);
   const fadeInMain = useSharedValue(0);
+  const wallyRef = useRef<LottieView>(null);
 
   useEffect(() => {
     fadeInMain.value = withDelay(
@@ -46,7 +49,7 @@ const Start: React.FC<StartProps> = ({ changePage, setBackGround }) => {
           withTiming(1, { duration: 500 }, () => {
             fadeInHelloWally.value = withDelay(
               300,
-              withTiming(1, { duration: 500 }, () => {
+              withTiming(1, { duration: 100 }, () => {
                 fadeInStartSetup.value = withDelay(
                   400,
                   withTiming(1, { duration: 500 }),
@@ -58,7 +61,20 @@ const Start: React.FC<StartProps> = ({ changePage, setBackGround }) => {
       }),
     );
     setBackGround(theme.colors.other[300]);
+
+    slideUpHelloWally.value = withDelay(
+      300,
+      withTiming(height / 12, { duration: 1800 }, (isFinished) => {
+        if (isFinished) {
+          runOnJS(wallyWave)();
+        }
+      }),
+    );
   }, [fadeInMain, fadeInSunshine, fadeInStartSetup, fadeInHelloWally]);
+
+  const wallyWave = () => {
+    wallyRef.current?.play();
+  };
 
   const next = () => {
     fadeOut.value = withTiming(0, { duration: 500 }, () => {
@@ -84,6 +100,7 @@ const Start: React.FC<StartProps> = ({ changePage, setBackGround }) => {
 
   const helloWallyStyle = useAnimatedStyle(() => ({
     opacity: fadeInHelloWally.value,
+    transform: [{ translateY: slideUpHelloWally.value }],
   }));
 
   const contentStyle = useAnimatedStyle(() => ({
@@ -138,11 +155,22 @@ const Start: React.FC<StartProps> = ({ changePage, setBackGround }) => {
           <Animated.View
             style={[
               helloWallyStyle,
-              { position: "absolute", top: height * 0.15 },
+              {
+                position: "absolute",
+                left: width * 0.15,
+              },
             ]}
           >
             <Stack h={295} w={252}>
-              <Image name="hello-wally" />
+              <LottieView
+                source={require("../../animations/login_hello.json")}
+                ref={wallyRef}
+                loop={false}
+                style={{
+                  width: "120%",
+                  height: "110%",
+                }}
+              />
             </Stack>
           </Animated.View>
         </Stack>

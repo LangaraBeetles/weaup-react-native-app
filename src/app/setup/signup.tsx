@@ -66,7 +66,17 @@ const SignUp = () => {
               onPress={handleContinue}
               title="Continue"
             />
-            <GoogleButton />
+            <Stack
+              alignItems="center"
+              h={56}
+              w={"100%"}
+              border={1}
+              borderColor={"#000000"}
+              borderRadius={100}
+              justifyContent="center"
+            >
+              <GoogleButton />
+            </Stack>
             <TouchableOpacity onPress={handleContinueAsGuest}>
               <Text
                 level="title_3"

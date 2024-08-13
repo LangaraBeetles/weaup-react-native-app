@@ -8,35 +8,28 @@ import Animated, {
   useAnimatedStyle,
   withRepeat,
   withTiming,
-  runOnJS,
 } from "react-native-reanimated";
 import { router } from "expo-router";
 
 const { width, height } = Dimensions.get("window");
 
 const Welcome = () => {
+  setTimeout(() => {
+    router.navigate("/");
+  }, 2500);
+
   const wallyPosition = useSharedValue(0);
   const cloudsPosition = useSharedValue(0);
 
   useEffect(() => {
-    const next = () => router.navigate("/");
-
     wallyPosition.value = withRepeat(
       withTiming(40, { duration: 1000 }),
-      5,
+      -1,
       true,
-      () => {
-        "worklet";
-
-        try {
-          runOnJS(next)();
-        } catch (error) {}
-      },
     );
     cloudsPosition.value = withRepeat(
       withTiming(width, { duration: 5000 }),
       -1,
-      false,
     );
   }, []);
 
