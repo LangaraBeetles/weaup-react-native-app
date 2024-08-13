@@ -9,6 +9,9 @@ type UserState = {
   isSetupComplete: boolean;
   completeSetup: () => void;
 
+  isFirstSetup: boolean;
+  completeFirstSetup: () => void;
+
   isTrackingEnabled: boolean;
   setTrackingEnabled: (value: boolean) => void;
 
@@ -84,6 +87,9 @@ export const useUser = create<UserState>()(
       (set, get) => ({
         isSetupComplete: false,
         completeSetup: () => set({ isSetupComplete: true }),
+
+        isFirstSetup: false,
+        completeFirstSetup: () => set({ isFirstSetup: true }),
 
         isTrackingEnabled: false,
         setTrackingEnabled: (enabled) => set({ isTrackingEnabled: enabled }),

@@ -23,7 +23,8 @@ const GoogleButton = (props: { signUp?: boolean }) => {
   const { handleGoogleAuthCallback } = useAuth();
 
   const navigation = useNavigation();
-  const user = useUser.getState().user;
+  const user = useUser((state) => state.user);
+  const completeFirstSetup = useUser((state) => state.completeFirstSetup);
 
   const [, response, promptAsync] = GoogleSignIn.useAuthRequest({
     iosClientId: config.google_auth_ios,
@@ -44,7 +45,7 @@ const GoogleButton = (props: { signUp?: boolean }) => {
       await handleGoogleAuthCallback(
         result,
         () => {
-          //  We need to figure out a way to know when to redirect to the home screen and when to just go back to the prev screen aka together/profile
+          completeFirstSetup();
           navigation.reset({
             index: 0,
             routes: [

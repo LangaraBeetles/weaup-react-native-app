@@ -25,11 +25,10 @@ type GoalSliderProps = {
 const SetGoalSlider: React.FC<GoalSliderProps> = ({ changePage }) => {
   const [goal, setGoal] = useState<number>(80);
   const setDailyGoal = useUser((state) => state.setDailyGoal);
-  const completeSetup = useUser((state) => state.completeSetup);
 
   const updateGoal = () => {
     setDailyGoal(goal);
-    completeSetup();
+    // completeSetup();
     changePage("signup");
   };
 

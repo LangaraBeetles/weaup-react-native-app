@@ -2,6 +2,7 @@ import Gradient from "@root/src/components/ui/Gradient";
 import { theme } from "@root/src/styles/theme";
 import { router } from "expo-router";
 import { useUser } from "@src/state/useUser";
+import { useEffect } from "react";
 
 const initialPage = () => {
   const completeSetup = useUser((state) => state.isSetupComplete);
@@ -16,7 +17,9 @@ const initialPage = () => {
     }, 1000);
   };
 
-  navigate();
+  useEffect(() => {
+    navigate();
+  }, []);
 
   return (
     <Gradient
