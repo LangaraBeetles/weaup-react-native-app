@@ -68,6 +68,7 @@ const StreakScreen = () => {
         source={require("../animations/confetti.json")}
         autoPlay
         loop={false}
+        speed={1.4}
         style={styles.animation}
       />
       <View style={styles.content}>

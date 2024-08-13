@@ -19,6 +19,7 @@ const StreakNotificationCard: React.FC<{
           <LottieView
             autoPlay={true}
             loop={false}
+            speed={0.05}
             duration={13000}
             style={{
               width: 100,
