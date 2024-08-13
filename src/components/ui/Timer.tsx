@@ -75,16 +75,20 @@ const Timer = ({
 
   const showTimeSetup = useCallback(() => {
     setShowStartSessionModal(true);
-    offset.value = withRepeat(withSpring(0, { stiffness: 100 }), 1, true);
+    timerModalY.value = withRepeat(withSpring(0, { stiffness: 100 }), 1, true);
   }, []);
 
   const hideTimeSetup = useCallback(() => {
     {
-      offset.value = withTiming(height / 2, { duration: 250 }, (isFinished) => {
-        if (isFinished) {
-          runOnJS(setShowStartSessionModal)(false);
-        }
-      });
+      timerModalY.value = withTiming(
+        height / 2,
+        { duration: 150 },
+        (isFinished) => {
+          if (isFinished) {
+            runOnJS(setShowStartSessionModal)(false);
+          }
+        },
+      );
     }
   }, []);
 
@@ -105,7 +109,8 @@ const Timer = ({
   };
 
   const stopTimer = () => {
-    offset.value = height / 2;
+    timerModalY.value = height / 2;
+    endSessionModalY.value = height / 2;
     setShowStopSessionModal(false);
     clearInterval(timerInterval.current);
 
@@ -117,11 +122,28 @@ const Timer = ({
 
   const pauseTimer = () => {
     setShowStopSessionModal(true);
+    endSessionModalY.value = withRepeat(
+      withSpring(0, { stiffness: 100 }),
+      1,
+      true,
+    );
     onPauseCallback?.();
   };
 
   const resumeTimer = () => {
-    setShowStopSessionModal(false);
+    endSessionModalY.value = withTiming(
+      height / 2,
+      { duration: 150 },
+      (isFinished) => {
+        if (isFinished) {
+          runOnJS(setShowStopSessionModal)(false);
+          runOnJS(resumeCallback)();
+        }
+      },
+    );
+  };
+
+  const resumeCallback = () => {
     onResumeCallback?.();
   };
 
@@ -144,9 +166,14 @@ const Timer = ({
     };
   }, [timeInSeconds, showStopSessionModal]);
 
-  const offset = useSharedValue(height / 2);
-  const animatedModalStyle = useAnimatedStyle(() => ({
-    transform: [{ translateY: offset.value }],
+  const timerModalY = useSharedValue(height / 2);
+  const animatedTimerModalStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: timerModalY.value }],
+  }));
+
+  const endSessionModalY = useSharedValue(height / 2);
+  const animatedEndSessionModalStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: endSessionModalY.value }],
   }));
 
   return (
@@ -182,30 +209,32 @@ const Timer = ({
         animationType="fade"
       >
         <Pressable style={styles.modalBackground} onPress={resumeTimer}>
-          <Pressable
-            style={styles.modalContainer}
-            onTouchStart={(e) => {
-              e.stopPropagation();
-            }}
-          >
-            <Text>Are you sure you want to end the session?</Text>
-            <Button
-              title="Keep Going"
-              onPress={resumeTimer}
-              variant="primary"
-            />
-            <Button
-              title="End Session"
-              onPress={stopTimer}
-              variant="secondary"
-            />
-          </Pressable>
+          <Animated.View style={[animatedEndSessionModalStyle]}>
+            <Pressable
+              style={styles.modalContainer}
+              onTouchStart={(e) => {
+                e.stopPropagation();
+              }}
+            >
+              <Text>Are you sure you want to end the session?</Text>
+              <Button
+                title="Keep Going"
+                onPress={resumeTimer}
+                variant="primary"
+              />
+              <Button
+                title="End Session"
+                onPress={stopTimer}
+                variant="secondary"
+              />
+            </Pressable>
+          </Animated.View>
         </Pressable>
       </Modal>
 
       <Modal transparent={true} visible={showStartSessionModal}>
         <Pressable style={styles.modalBackground} onPress={hideTimeSetup}>
-          <Animated.View style={[animatedModalStyle]}>
+          <Animated.View style={[animatedTimerModalStyle]}>
             <Pressable
               style={styles.modalContainer}
               onTouchStart={(e) => {
