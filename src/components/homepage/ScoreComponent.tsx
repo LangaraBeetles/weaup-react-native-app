@@ -151,11 +151,13 @@ const ScoreComponent = () => {
               </Text>
             </Stack>
 
-            <Stack flexDirection="row">
-              <Text level="title_1">{userHP} </Text>
-              <Stack pt={19}>
-                <Text level="caption_1">/ 100</Text>
-              </Stack>
+            <Stack flexDirection="row" alignItems="center" h={27}>
+              <Text level="title_1" style={{ lineHeight: 31 }}>
+                {userHP}{" "}
+              </Text>
+              <Text level="caption_1" style={{ lineHeight: 31 }}>
+                / 100
+              </Text>
             </Stack>
           </Stack>
         </Stack>
