@@ -34,9 +34,11 @@ const PostureScoreCard = () => {
 const styles = StyleSheet.create({
   title: {
     color: globalStyles.colors.neutral[800],
+    lineHeight: 0,
   },
   caption1: {
     color: globalStyles.colors.neutral[400],
+    lineHeight: 0,
   },
 });
 
