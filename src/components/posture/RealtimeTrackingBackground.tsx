@@ -10,6 +10,8 @@ import Animated, {
   useSharedValue,
   withSequence,
   withTiming,
+  useAnimatedStyle,
+  withDelay,
 } from "react-native-reanimated";
 import LottieView from "lottie-react-native";
 import { PostureStatus } from "@root/src/interfaces/posture.types";
@@ -140,6 +142,15 @@ const ActiveMonitoringAnimation = ({ posture }: { posture: PostureStatus }) => {
   const animation = useRef<any>(null);
   const [speed, setSpeed] = useState<number>(Speed.IDLE);
   const progress = useSharedValue(0);
+  const fadeInSecondary = useSharedValue(0);
+
+  useEffect(() => {
+    fadeInSecondary.value = withDelay(600, withTiming(1, { duration: 500 }));
+  }, []);
+
+  const mainStyle = useAnimatedStyle(() => ({
+    opacity: fadeInSecondary.value,
+  }));
 
   const playIdle = () => {
     try {
@@ -260,21 +271,23 @@ const ActiveMonitoringAnimation = ({ posture }: { posture: PostureStatus }) => {
   }, [posture]);
 
   return (
-    <Pressable onPress={playCheering}>
-      <LottieView
-        ref={animation}
-        speed={speed}
-        style={{
-          width: width,
-          height: height,
-          position: "absolute",
-          top: -10,
-          aspectRatio: 2,
-          zIndex: layers.weasel,
-        }}
-        source={require("../../animations/idle_tap_tilt_v3.json")}
-      />
-    </Pressable>
+    <Animated.View style={[mainStyle]}>
+      <Pressable onPress={playCheering}>
+        <LottieView
+          ref={animation}
+          speed={speed}
+          style={{
+            width: width,
+            height: height,
+            position: "absolute",
+            top: -10,
+            aspectRatio: 2,
+            zIndex: layers.weasel,
+          }}
+          source={require("../../animations/idle_tap_tilt_v3.json")}
+        />
+      </Pressable>
+    </Animated.View>
   );
 };
 

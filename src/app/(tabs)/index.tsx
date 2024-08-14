@@ -23,6 +23,12 @@ import SessionBackground from "@src/components/posture/SessionBackground";
 import Avatar from "@src/components/ui/Avatar";
 import { LinearGradient as Gradient } from "expo-linear-gradient";
 import { router } from "expo-router";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  withDelay,
+} from "react-native-reanimated";
 
 const { height, width } = Dimensions.get("screen");
 
@@ -49,99 +55,116 @@ const HomePage = () => {
     }
   }, [isFirstSetup]);
 
-  return (
-    <SafeAreaView
-      style={{
-        backgroundColor: theme.colors.primary[400],
-      }}
-    >
-      <Stack>
-        {/* Yellow Gradient */}
-        <Gradient
-          colors={[theme.colors.primary[400], theme.colors.primary[50]]}
-          locations={[0, 0.5]}
-          style={{
-            position: "absolute",
-            left: 0,
-            right: 0,
-            top: 0,
-            height,
-            zIndex: layers.gradient,
-          }}
-        />
+  const fadeInMain = useSharedValue(0);
+  const fadeInSecondary = useSharedValue(0);
 
-        <Stack
-          style={{
-            position: "absolute",
-            width,
-            zIndex: layers.stats,
-          }}
-        >
+  useEffect(() => {
+    fadeInMain.value = withDelay(100, withTiming(1, { duration: 300 }));
+    fadeInSecondary.value = withDelay(600, withTiming(1, { duration: 500 }));
+  }, []);
+
+  const mainStyle = useAnimatedStyle(() => ({
+    opacity: fadeInMain.value,
+  }));
+
+  const secondaryStyle = useAnimatedStyle(() => ({
+    opacity: fadeInSecondary.value,
+  }));
+
+  return (
+    <Animated.View style={[mainStyle]}>
+      <SafeAreaView
+        style={{
+          backgroundColor: theme.colors.primary[400],
+        }}
+      >
+        <Stack>
+          {/* Yellow Gradient */}
+          <Gradient
+            colors={[theme.colors.primary[400], theme.colors.primary[50]]}
+            locations={[0, 0.5]}
+            style={{
+              position: "absolute",
+              left: 0,
+              right: 0,
+              top: 0,
+              height,
+              zIndex: layers.gradient,
+            }}
+          />
+
           <Stack
-            flexDirection="row"
-            justifyContent="space-between"
-            p={15}
-            pb={0}
-            alignItems="center"
+            style={{
+              position: "absolute",
+              width,
+              zIndex: layers.stats,
+            }}
           >
             <Stack
               flexDirection="row"
-              gap={6}
-              backgroundColor={theme.colors.white}
-              borderRadius={100}
-              px={10}
-              h={41}
+              justifyContent="space-between"
+              p={15}
+              pb={0}
               alignItems="center"
             >
-              <Stack flexDirection="row" gap={6} alignItems="center" h={25}>
-                <Avatar
-                  variant={avatarColor}
-                  content={userName?.[0] ?? "G"}
-                  size={30}
-                  fontSize={14}
-                  showDefault={isGuest}
-                  src={avatarImg}
-                />
-                {userName !== "null" ? (
-                  <Text
-                    style={{ color: theme.colors.neutral[800] }}
-                    level="footnote"
-                    weight="bold"
-                  >
-                    {userName !== null && userName?.split(" ")[0]}
-                  </Text>
-                ) : null}
-              </Stack>
-              <Text
-                style={{ color: theme.colors.neutral[400] }}
-                level="caption_1"
-                weight="bold"
+              <Stack
+                flexDirection="row"
+                gap={6}
+                backgroundColor={theme.colors.white}
+                borderRadius={100}
+                px={10}
+                h={41}
+                alignItems="center"
               >
-                Lv.{userLevel}
-              </Text>
-            </Stack>
-            <Stack flexDirection="row" gap={18} border={0} p={5}>
-              <TrackingModeIcon />
-
-              <Center>
-                <Link href="/notifications" asChild>
-                  <TouchableOpacity>
-                    <Stack
-                      backgroundColor={theme.colors.white}
-                      h={40}
-                      w={40}
-                      alignItems="center"
-                      justifyContent="center"
-                      borderRadius={20}
+                <Stack flexDirection="row" gap={6} alignItems="center" h={25}>
+                  <Avatar
+                    variant={avatarColor}
+                    content={userName?.[0] ?? "G"}
+                    size={30}
+                    fontSize={14}
+                    showDefault={isGuest}
+                    src={avatarImg}
+                  />
+                  {userName !== "null" ? (
+                    <Text
+                      style={{ color: theme.colors.neutral[800] }}
+                      level="footnote"
+                      weight="bold"
                     >
-                      <Icon name="notification-outline" />
-                    </Stack>
-                  </TouchableOpacity>
-                </Link>
-              </Center>
+                      {userName !== null && userName?.split(" ")[0]}
+                    </Text>
+                  ) : null}
+                </Stack>
+                <Text
+                  style={{ color: theme.colors.neutral[400] }}
+                  level="caption_1"
+                  weight="bold"
+                >
+                  Lv.{userLevel}
+                </Text>
+              </Stack>
+              <Stack flexDirection="row" gap={18} border={0} p={5}>
+                <TrackingModeIcon />
+
+                <Center>
+                  <Link href="/notifications" asChild>
+                    <TouchableOpacity>
+                      <Stack
+                        backgroundColor={theme.colors.white}
+                        h={40}
+                        w={40}
+                        alignItems="center"
+                        justifyContent="center"
+                        borderRadius={20}
+                      >
+                        <Icon name="notification-outline" />
+                      </Stack>
+                    </TouchableOpacity>
+                  </Link>
+                </Center>
+              </Stack>
             </Stack>
-          </Stack>
-          {/* 
+            {/* 
             // Code for testing
           <Button
             title="summary"
@@ -154,35 +177,39 @@ const HomePage = () => {
               });
             }}
           /> */}
+            <Animated.View style={[secondaryStyle]}>
+              <ScoreComponent />
+              <Center p={15}>
+                {Platform.OS === "ios" && <DeviceMotionViewiOS />}
+                {Platform.OS === "android" && <DeviceMotionViewAndroid />}
+              </Center>
+            </Animated.View>
+          </Stack>
 
-          <ScoreComponent />
-          <Center p={15}>
-            {Platform.OS === "ios" && <DeviceMotionViewiOS />}
-            {Platform.OS === "android" && <DeviceMotionViewAndroid />}
+          {sessionStatus === "INACTIVE" ? (
+            <RealtimeTrackingBackground />
+          ) : (
+            <Center>
+              <SessionBackground />
+            </Center>
+          )}
+          <Center
+            style={{
+              width: 250,
+              alignSelf: "center",
+              zIndex: layers.stats,
+              position: "absolute",
+              bottom: Platform.OS === "ios" ? height * 0.03 : height * 0.1,
+              justifyContent: "flex-end",
+            }}
+          >
+            <Animated.View style={[secondaryStyle]}>
+              <SessionControl />
+            </Animated.View>
           </Center>
         </Stack>
-
-        {sessionStatus === "INACTIVE" ? (
-          <RealtimeTrackingBackground />
-        ) : (
-          <Center>
-            <SessionBackground />
-          </Center>
-        )}
-        <Center
-          style={{
-            width: 250,
-            alignSelf: "center",
-            zIndex: layers.stats,
-            position: "absolute",
-            bottom: Platform.OS === "ios" ? height * 0.03 : height * 0.1,
-            justifyContent: "flex-end",
-          }}
-        >
-          <SessionControl />
-        </Center>
-      </Stack>
-    </SafeAreaView>
+      </SafeAreaView>
+    </Animated.View>
   );
 };
 
