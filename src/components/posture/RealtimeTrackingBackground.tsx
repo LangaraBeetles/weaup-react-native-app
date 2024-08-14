@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
 
 enum Speed {
   SLOW = 0.1,
-  IDLE = 0.3,
+  IDLE = 0.4,
   REGULAR = 1,
 }
 
@@ -171,58 +171,16 @@ const ActiveMonitoringAnimation = ({ posture }: { posture: PostureStatus }) => {
     } catch (error) {}
   };
 
-  const pause = () => {
-    try {
-      animation.current?.pause?.();
-    } catch (error) {}
-  };
-
-  // const playTilt = () => {
-  //   try {
-  //     const playSad = () => {
-  //       try {
-  //         setSpeed(Speed.IDLE);
-
-  //         animation.current?.play?.(140, 159);
-  //       } catch (error) {}
-  //     };
-
-  //     const playHappy = () => {
-  //       try {
-  //         setSpeed(Speed.IDLE);
-
-  //         animation.current?.play?.(159, 180);
-  //       } catch (error) {}
-  //     };
-
-  //     progress.value = withSequence(
-  //       withTiming(1, { duration: 500 }, () => {
-  //         "worklet";
-  //         try {
-  //           runOnJS(playSad)();
-  //         } catch (error) {}
-  //       }),
-  //       withTiming(0.5, { duration: 2000 }, () => {
-  //         "worklet";
-  //         try {
-  //           runOnJS(playHappy)();
-  //         } catch (error) {}
-  //       }),
-  //       withTiming(0, { duration: 2000 }, () => {
-  //         "worklet";
-  //         try {
-  //           runOnJS(pause)();
-  //         } catch (error) {}
-  //       })
-  //     );
-  //   } catch (error) {}
-  // };
-
   const playSad = () => {
     try {
       const play = () => {
         setSpeed(Speed.REGULAR);
-        animation.current?.play?.(135, 158);
+        animation.current?.play?.(135, 190);
+      };
+
+      const downIdle = () => {
+        setSpeed(Speed.IDLE);
+        animation.current?.play?.(156, 190);
       };
 
       progress.value = withSequence(
@@ -238,7 +196,7 @@ const ActiveMonitoringAnimation = ({ posture }: { posture: PostureStatus }) => {
           "worklet";
           try {
             if (finished) {
-              runOnJS(pause)();
+              runOnJS(downIdle)();
             }
           } catch (error) {}
         }),
@@ -246,11 +204,14 @@ const ActiveMonitoringAnimation = ({ posture }: { posture: PostureStatus }) => {
     } catch (error) {}
   };
 
-  const playHappy = () => {
+  const playHappy = (status: PostureStatus) => {
+    console.log({ status });
     try {
       const play = () => {
-        setSpeed(Speed.IDLE);
-        animation.current?.play?.(158, 180);
+        if (status === "bad") {
+          setSpeed(Speed.REGULAR);
+          animation.current?.play?.(207, 226);
+        }
       };
 
       progress.value = withSequence(
@@ -262,7 +223,7 @@ const ActiveMonitoringAnimation = ({ posture }: { posture: PostureStatus }) => {
             }
           } catch (error) {}
         }),
-        withTiming(1, { duration: 1000 }, (finished) => {
+        withTiming(1, { duration: 600 }, (finished) => {
           "worklet";
           try {
             if (finished) {
@@ -272,7 +233,7 @@ const ActiveMonitoringAnimation = ({ posture }: { posture: PostureStatus }) => {
         }),
       );
 
-      animation.current?.play?.(159, 180);
+      // animation.current?.play?.(159, 180);
     } catch (error) {}
   };
 
@@ -288,7 +249,7 @@ const ActiveMonitoringAnimation = ({ posture }: { posture: PostureStatus }) => {
     }
 
     if (posture === "good" && posture !== status) {
-      playHappy();
+      playHappy(status);
     }
 
     if (posture === "not_reading" && posture !== status) {
@@ -311,7 +272,7 @@ const ActiveMonitoringAnimation = ({ posture }: { posture: PostureStatus }) => {
           aspectRatio: 2,
           zIndex: layers.weasel,
         }}
-        source={require("../../animations/weasel_home.json")}
+        source={require("../../animations/idle_tap_tilt_v3.json")}
       />
     </Pressable>
   );
