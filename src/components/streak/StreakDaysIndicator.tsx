@@ -56,7 +56,7 @@ const StreakDaysIndicator: React.FC<{
   };
 
   return (
-    <Stack flexDirection="row" justifyContent="space-between">
+    <Stack flexDirection="row" justifyContent="space-between" w="100%">
       {renderDays()}
     </Stack>
   );

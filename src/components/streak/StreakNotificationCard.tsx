@@ -1,10 +1,12 @@
 import { styled } from "@fast-styles/react";
-import { View } from "react-native";
+import { Dimensions, View } from "react-native";
 import { Text } from "@src/components/ui/typography";
 import Spacer from "@src/components/ui/Spacer";
 import Stack from "@src/components/ui/Stack";
 import StreakDaysIndicator from "@src/components/streak/StreakDaysIndicator";
 import LottieView from "lottie-react-native";
+
+const { width } = Dimensions.get("screen");
 
 const StreakNotificationCard: React.FC<{
   streak: number;
@@ -12,48 +14,49 @@ const StreakNotificationCard: React.FC<{
   const streakVariant = streak === 4 ? "four" : "default";
 
   return (
-    <StreakNotificationRoot>
+    <View>
       <Stack alignItems="center" justifyContent="space-between">
-        <StreakFlames>
+        <View>
           <LottieView
             autoPlay={true}
             loop={false}
             speed={0.05}
             duration={13000}
             style={{
-              width: 100,
-              height: 200,
+              width: 200,
+              height: 220,
               zIndex: 2,
+              bottom: -10,
             }}
             source={require("../../animations/flame.json")}
           />
-        </StreakFlames>
-        <StreakCounter variant={streakVariant}>{streak}</StreakCounter>
+        </View>
+        <View
+          style={{
+            flex: 0,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <StreakCounter variant={streakVariant}>{streak}</StreakCounter>
+        </View>
+        <Spacer height={16} />
         <StreakText level="title_1">day streak!</StreakText>
+        <Spacer height={48} />
       </Stack>
-      <Spacer height={60} />
-      <StreakDaysIndicator streak={streak} />
-    </StreakNotificationRoot>
+      <View style={{ paddingHorizontal: width * 0.06 }}>
+        <StreakDaysIndicator streak={streak} />
+      </View>
+    </View>
   );
 };
 
 export default StreakNotificationCard;
 
-const StreakNotificationRoot = styled(View, {
-  width: "100%",
-  paddingHorizontal: 32,
-});
-
-const StreakFlames = styled(View, {
-  height: 74,
-  width: 74,
-  top: -60,
-  paddingBottom: "25%",
-  alignItems: "center",
-});
-
 const StreakCounter = styled(Text, {
   fontSize: 140,
+  height: 104,
+  lineHeight: 150,
   fontFamily: "NunitoBold",
   variants: {
     variant: {
@@ -68,6 +71,5 @@ const StreakCounter = styled(Text, {
 });
 
 const StreakText = styled(Text, {
-  position: "absolute",
-  bottom: -10,
+  height: 36,
 });
