@@ -9,6 +9,7 @@ export const globalStyles = {
       red: "#BC0D0D",
       green: "#549B32",
       blue: "#D3E7FF",
+      yellow: "#FFD564",
     },
     primary: {
       50: "#FFF8E6",
