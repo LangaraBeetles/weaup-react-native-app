@@ -150,14 +150,15 @@ const ScoreComponent = () => {
                 Posture Score
               </Text>
             </Stack>
-
-            <Stack flexDirection="row" alignItems="center" h={27}>
-              <Text level="title_1" style={{ lineHeight: 31 }}>
-                {userHP}{" "}
-              </Text>
-              <Text level="caption_1" style={{ lineHeight: 31 }}>
-                / 100
-              </Text>
+            <Stack alignItems="center" py={6}>
+              <Stack flexDirection="row" alignItems="center" h={27}>
+                <Text level="title_1" style={{ lineHeight: 31 }}>
+                  {userHP}{" "}
+                </Text>
+                <Text level="caption_1" style={{ lineHeight: 31 }}>
+                  / 100
+                </Text>
+              </Stack>
             </Stack>
           </Stack>
         </Stack>
