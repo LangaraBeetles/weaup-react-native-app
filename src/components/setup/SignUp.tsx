@@ -75,9 +75,9 @@ const SignUp: React.FC<SignUpProps> = ({ changePage, setBackGround }) => {
   });
 
   return (
-    <Stack h={height} px={16} alignItems="center">
+    <Stack h={height} px={16} gap={30} alignItems="center">
       <BackgroundGradient />
-      <Stack pt={height * 0.1} w={"100%"} style={{ zIndex: 5 }}>
+      <Stack pt={height * 0.06} w={"100%"} style={{ zIndex: 5 }}>
         <BackButton onBack={onBack} />
       </Stack>
 

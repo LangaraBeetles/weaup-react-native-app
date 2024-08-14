@@ -312,7 +312,7 @@ const SelectMode: React.FC<SelectModeProps> = ({ changePage }) => {
         <Stack
           flexDirection="row"
           px={16}
-          pt={height * 0.1}
+          pt={height * 0.06}
           w={"100%"}
           alignItems="center"
           justifyContent="space-between"
@@ -386,7 +386,7 @@ const SelectMode: React.FC<SelectModeProps> = ({ changePage }) => {
                   >
                     <Stack
                       alignItems="center"
-                      gap={12}
+                      gap={8}
                       w={"70%"}
                       style={{ top: "-10%" }}
                     >
@@ -460,6 +460,7 @@ const SelectMode: React.FC<SelectModeProps> = ({ changePage }) => {
                   backgroundColor: theme.colors.primary[50],
                   alignItems: "center",
                   borderRadius: 20,
+                  position: "relative",
                 }}
               >
                 <Center
@@ -467,33 +468,33 @@ const SelectMode: React.FC<SelectModeProps> = ({ changePage }) => {
                     width: "70%",
                     height: "18%",
                     position: "absolute",
-                    top: "3%",
+                    top: "3.5%",
                   }}
                 >
                   <Animated.View style={[chevronStyle]}>
-                    <Icon name="double-chevron-up" style={{ top: "32%" }} />
+                    <Icon name="double-chevron-up" />
                   </Animated.View>
 
                   <AnimatedImage
                     name="yellow-circle"
-                    height={"84%"}
+                    height="84%"
                     style={[
                       phoneYellowStyle,
-                      { position: "absolute", top: "2%" },
+                      { position: "absolute", top: "-5%" },
                     ]}
                   />
                   <AnimatedImage
                     name="phone-weasel"
-                    width={"100%"}
+                    width={"102%"}
                     height={"95%"}
-                    style={[phoneWeaselStyle, { top: "3%" }]}
+                    style={[phoneWeaselStyle, { right: 2 }]}
                   />
                   <Animated.View style={[phoneTextStyle]}>
                     <Stack
                       alignItems="center"
                       gap={12}
                       w={"70%"}
-                      style={{ top: "-40%" }}
+                      style={{ top: "-65%" }}
                     >
                       <Stack
                         py={4}
@@ -511,16 +512,25 @@ const SelectMode: React.FC<SelectModeProps> = ({ changePage }) => {
                         </Text>
                       </Stack>
 
-                      <Text
-                        align="center"
-                        level="footnote"
+                      <View
                         style={{
-                          color: theme.colors.neutral[600],
+                          display: "flex",
+                          width: "100%",
                         }}
                       >
-                        Use the motion sensors in your mobile phone to track
-                        posture
-                      </Text>
+                        <Text
+                          align="center"
+                          level="footnote"
+                          numberOfLines={2}
+                          style={{
+                            color: theme.colors.neutral[600],
+                            width: 230,
+                          }}
+                        >
+                          Use the motion sensors in your mobile phone to track
+                          posture
+                        </Text>
+                      </View>
                     </Stack>
                   </Animated.View>
                 </Center>
