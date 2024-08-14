@@ -57,7 +57,7 @@ const colorOptions = {
 };
 
 const Avatar = (props: {
-  content: string | number;
+  content?: string | number;
   backgroundColor?: string;
   textColor?: string;
   variant?: keyof typeof colorOptions;
