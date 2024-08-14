@@ -8,6 +8,10 @@ import Divider from "./Divider";
 import { theme } from "@src/styles/theme";
 
 const ToastMessage = (props: {
+  avatar?: {
+    name?: string;
+    image?: string;
+  };
   message: string;
   onHide: () => void;
   actionText: string;
@@ -81,8 +85,13 @@ const ToastMessage = (props: {
             alignItems="center"
             w="90%"
           >
-            <Avatar content="M" variant="blue2" showDefault={false} />
-            <Text>{props.message}</Text>
+            <Avatar
+              content={props.avatar?.name?.[0] ?? "W"}
+              src={props.avatar?.image as any}
+              variant="blue2"
+              showDefault={false}
+            />
+            <Text style={{ width: "90%" }}>{props.message}</Text>
           </Stack>
         </TouchableOpacity>
         <Divider />

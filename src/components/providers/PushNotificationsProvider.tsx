@@ -30,6 +30,7 @@ type NotificationContent = {
 type JoinedChallengeMessage = {
   data: {
     memberName: string;
+    memberAvatar: string;
     challengeName: string;
     challengeId: string;
     notificationId: string;
@@ -150,7 +151,7 @@ const PushNotificationsProvider: React.FC<{ children: React.ReactNode }> = ({
                     ...prev,
                     {
                       data: data?.data,
-                      message: `${data?.data?.memberName}  has joined the “${data?.data?.challengeName}” Challenge!`,
+                      message: `${data?.data?.memberName} has joined the “${data?.data?.challengeName}” Challenge!`,
                       actionText: "View Challenge",
                       counter: 0,
                       category: data.category,
@@ -211,6 +212,10 @@ const PushNotificationsProvider: React.FC<{ children: React.ReactNode }> = ({
           <ToastMessage
             key={displayMessage.data.notificationId}
             message={displayMessage.message}
+            avatar={{
+              name: displayMessage.data.memberName,
+              image: displayMessage.data.memberAvatar,
+            }}
             actionText={displayMessage.actionText}
             onActionClick={() => {
               if (displayMessage.category === "joined_challenge") {
