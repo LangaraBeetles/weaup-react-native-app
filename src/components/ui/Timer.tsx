@@ -216,9 +216,11 @@ const Timer = ({
                 e.stopPropagation();
               }}
             >
-              <Text level="title_3" align="center">
-                Are you sure you want to end the session?
-              </Text>
+              <View style={{ paddingHorizontal: "10%" }}>
+                <Text level="title_3" align="center">
+                  Are you sure you want to end the session?
+                </Text>
+              </View>
               <Button
                 title="Keep Going"
                 onPress={resumeTimer}
