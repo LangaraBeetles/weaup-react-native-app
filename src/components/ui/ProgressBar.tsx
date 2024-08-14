@@ -44,6 +44,11 @@ const ProgressBar = (props: {
 
   const progress = calculatePercentage(currentValue, goal);
   const animatedWidth = useSharedValue(0);
+  const iconOpacity = useSharedValue(0.7);
+
+  if (progress === 100) {
+    iconOpacity.value = withDelay(1800, withTiming(1, { duration: 500 }));
+  }
 
   const onEnd = () => onAnimationEnd?.(progress);
 
@@ -100,11 +105,11 @@ const ProgressBar = (props: {
           style={[
             styles.icon,
             {
-              transform: [{ translateX: animatedWidth }],
+              opacity: iconOpacity,
             },
           ]}
         >
-          <Icon name="star-circle" style={styles.iconImage} />
+          <Icon name="star-circle" size={32} />
         </Animated.View>
       )}
     </View>
@@ -122,14 +127,8 @@ const styles = StyleSheet.create({
   },
   icon: {
     position: "absolute",
-    top: 8,
-    left: -19,
-    height: 32,
-    width: 32,
-  },
-  iconImage: {
-    height: "100%",
-    width: "100%",
+    top: 2,
+    right: -5,
   },
 });
 
