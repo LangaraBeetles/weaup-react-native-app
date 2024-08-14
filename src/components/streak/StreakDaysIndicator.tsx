@@ -34,7 +34,7 @@ const StreakDaysIndicator: React.FC<{
     for (let i = 0; i < 7; i++) {
       const dayIndex = (startDay + i) % 7;
       daysToRender.push(
-        <Stack key={i} alignItems="center">
+        <Stack key={i} alignItems="center" gap={8}>
           <Text
             level="subhead"
             style={{ color: globalStyles.colors.neutral[500] }}
@@ -47,6 +47,7 @@ const StreakDaysIndicator: React.FC<{
                 ? "streak-checkmark-checked"
                 : "streak-checkmark-unchecked"
             }
+            size={28}
           />
         </Stack>,
       );
@@ -55,7 +56,7 @@ const StreakDaysIndicator: React.FC<{
   };
 
   return (
-    <Stack flexDirection="row" justifyContent="space-between">
+    <Stack flexDirection="row" justifyContent="space-between" w="100%">
       {renderDays()}
     </Stack>
   );

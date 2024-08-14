@@ -1,6 +1,5 @@
 import StreakNotificationCard from "@src/components/streak/StreakNotificationCard";
 import Button from "@src/components/ui/Button";
-import Spacer from "@src/components/ui/Spacer";
 // import { getAnalytics } from "@src/services/analyticsApi";
 import { useUser } from "@src/state/useUser";
 // import dayjs from "dayjs";
@@ -68,12 +67,12 @@ const StreakScreen = () => {
         source={require("../animations/confetti.json")}
         autoPlay
         loop={false}
+        speed={1.4}
         style={styles.animation}
       />
       <View style={styles.content}>
-        <Spacer height={160} />
         <StreakNotificationCard streak={userStreak} />
-        <Spacer height={115} />
+
         <View style={styles.button}>
           <Button title="Continue" onPress={() => router.replace("/")} />
         </View>
@@ -91,8 +90,10 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "space-between",
     alignItems: "center",
+    paddingBottom: 112,
+    paddingTop: 90,
   },
   button: {
     width: 230,
@@ -101,7 +102,7 @@ const styles = StyleSheet.create({
   animation: {
     position: "absolute",
     width: "100%",
-    height: "110%",
+    height: "98%",
     zIndex: -1,
     top: -150,
   },
