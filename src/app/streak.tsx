@@ -72,7 +72,7 @@ const StreakScreen = () => {
         style={styles.animation}
       />
       <View style={styles.content}>
-        <Spacer height={160} />
+        <Spacer height={120} />
         <StreakNotificationCard streak={userStreak} />
         <Spacer height={115} />
         <View style={styles.button}>
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   animation: {
     position: "absolute",
     width: "100%",
-    height: "110%",
+    height: "98%",
     zIndex: -1,
     top: -150,
   },

@@ -9,8 +9,7 @@ import LottieView from "lottie-react-native";
 const StreakNotificationCard: React.FC<{
   streak: number;
 }> = ({ streak }) => {
-  const streakVariant =
-    streak === 4 ? "four" : streak === 6 ? "six" : "default";
+  const streakVariant = streak === 4 ? "four" : "default";
 
   return (
     <StreakNotificationRoot>
@@ -49,22 +48,20 @@ const StreakFlames = styled(View, {
   height: 74,
   width: 74,
   top: -60,
-  right: 20,
   paddingBottom: "25%",
+  alignItems: "center",
 });
 
 const StreakCounter = styled(Text, {
   fontSize: 140,
+  fontFamily: "NunitoBold",
   variants: {
     variant: {
       default: {
-        right: 6,
-      },
-      six: {
-        right: 10,
+        right: 0,
       },
       four: {
-        right: 20,
+        right: 8,
       },
     },
   },
