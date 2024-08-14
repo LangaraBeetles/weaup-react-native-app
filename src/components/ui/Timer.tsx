@@ -216,7 +216,11 @@ const Timer = ({
                 e.stopPropagation();
               }}
             >
-              <Text>Are you sure you want to end the session?</Text>
+              <View style={{ paddingHorizontal: "10%" }}>
+                <Text level="title_3" align="center">
+                  Are you sure you want to end the session?
+                </Text>
+              </View>
               <Button
                 title="Keep Going"
                 onPress={resumeTimer}
@@ -300,7 +304,7 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 20,
     backgroundColor: theme.colors.white,
-    borderRadius: 16,
+    borderRadius: 18,
     alignItems: "center",
     gap: 16,
     zIndex: 2,
