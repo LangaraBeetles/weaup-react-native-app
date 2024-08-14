@@ -6,8 +6,10 @@ import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { Stack } from "expo-router/stack";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+import { Dimensions, Image, View } from "react-native";
 
 import HPSystem from "@src/components/scoring/HPSystem";
 import XPSystem from "@src/components/scoring/XPSystem";
@@ -24,6 +26,8 @@ console.error = (...args: any) => {
 
   error(...args);
 };
+
+const { width, height } = Dimensions.get("screen");
 
 const RootLayout = () => {
   const [fontsLoaded, fontError] = useFonts({
@@ -45,6 +49,7 @@ const RootLayout = () => {
     NunitoExtraLightItalic: require("../../assets/fonts/NunitoExtraLightItalic.ttf"),
     FredokaOneRegular: require("../../assets/fonts/FredokaOneRegular.ttf"),
   });
+  const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
     if (fontError) throw fontError;
@@ -53,8 +58,22 @@ const RootLayout = () => {
   useEffect(() => {
     if (fontsLoaded) {
       SplashScreen.hideAsync();
+      setTimeout(() => {
+        setShowSplash(false);
+      }, 2400);
     }
   }, [fontsLoaded]);
+
+  if (showSplash) {
+    return (
+      <View style={{ width, height }}>
+        <Image
+          source={require("../../assets/splash.gif")}
+          style={{ height: "100%", width: "100%" }}
+        />
+      </View>
+    );
+  }
 
   if (!fontsLoaded) {
     return null;
