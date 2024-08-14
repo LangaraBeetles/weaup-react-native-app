@@ -34,6 +34,8 @@ const SignUp: React.FC<SignUpProps> = ({ changePage, setBackGround }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const completeFirstSetup = useUser((state) => state.completeFirstSetup);
+
   const handleContinue = () => {
     // TODO: Implement sign up logic with email and password
   };
@@ -44,6 +46,7 @@ const SignUp: React.FC<SignUpProps> = ({ changePage, setBackGround }) => {
       createGuestUser();
     }
     setBackGround(theme.colors.other[500]);
+    completeFirstSetup();
     changePage("welcome");
   };
 

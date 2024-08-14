@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { Platform, Dimensions, TouchableOpacity } from "react-native";
-import { Link, Redirect } from "expo-router";
+import { Link } from "expo-router";
 import DeviceMotionViewiOS, {
   DeviceMotionViewAndroid,
 } from "@src/components/ui/DeviceMotionView";
@@ -22,6 +22,7 @@ import RealtimeTrackingBackground from "@src/components/posture/RealtimeTracking
 import SessionBackground from "@src/components/posture/SessionBackground";
 import Avatar from "@src/components/ui/Avatar";
 import { LinearGradient as Gradient } from "expo-linear-gradient";
+import { router } from "expo-router";
 
 const { height, width } = Dimensions.get("screen");
 
@@ -31,7 +32,7 @@ const layers = {
 };
 
 const HomePage = () => {
-  const isSetupComplete = useUser((state) => state.isSetupComplete);
+  const isFirstSetup = useUser((state) => state.isFirstSetup);
   const userName = useUser((state) => state.user.name);
   const avatarImg = useUser((state) => state.user.avatar_img);
   const avatarColor = useUser((state) => state.user.avatar_bg);
@@ -40,9 +41,13 @@ const HomePage = () => {
 
   const isGuest = useUser((state) => state.isGuest);
 
-  if (!isSetupComplete) {
-    return <Redirect href="/setup/initial-page" />;
-  }
+  useEffect(() => {
+    if (!isFirstSetup) {
+      setTimeout(() => {
+        router.navigate("/setup/initial-page");
+      }, 100);
+    }
+  }, [isFirstSetup]);
 
   return (
     <SafeAreaView
