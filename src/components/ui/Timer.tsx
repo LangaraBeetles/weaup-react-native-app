@@ -11,6 +11,14 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { theme } from "@src/styles/theme";
 import TimePicker from "./TimePicker";
 import { Text } from "./typography";
+import Animated, {
+  runOnJS,
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withSpring,
+  withTiming,
+} from "react-native-reanimated";
 
 const { height } = Dimensions.get("screen");
 
@@ -67,6 +75,21 @@ const Timer = ({
 
   const showTimeSetup = useCallback(() => {
     setShowStartSessionModal(true);
+    timerModalY.value = withRepeat(withSpring(0, { stiffness: 100 }), 1, true);
+  }, []);
+
+  const hideTimeSetup = useCallback(() => {
+    {
+      timerModalY.value = withTiming(
+        height / 2,
+        { duration: 150 },
+        (isFinished) => {
+          if (isFinished) {
+            runOnJS(setShowStartSessionModal)(false);
+          }
+        },
+      );
+    }
   }, []);
 
   const closePauseModal = () => {
@@ -86,6 +109,8 @@ const Timer = ({
   };
 
   const stopTimer = () => {
+    timerModalY.value = height / 2;
+    endSessionModalY.value = height / 2;
     setShowStopSessionModal(false);
     clearInterval(timerInterval.current);
 
@@ -97,11 +122,28 @@ const Timer = ({
 
   const pauseTimer = () => {
     setShowStopSessionModal(true);
+    endSessionModalY.value = withRepeat(
+      withSpring(0, { stiffness: 100 }),
+      1,
+      true,
+    );
     onPauseCallback?.();
   };
 
   const resumeTimer = () => {
-    setShowStopSessionModal(false);
+    endSessionModalY.value = withTiming(
+      height / 2,
+      { duration: 150 },
+      (isFinished) => {
+        if (isFinished) {
+          runOnJS(setShowStopSessionModal)(false);
+          runOnJS(resumeCallback)();
+        }
+      },
+    );
+  };
+
+  const resumeCallback = () => {
     onResumeCallback?.();
   };
 
@@ -123,6 +165,16 @@ const Timer = ({
       clearInterval(timerInterval.current);
     };
   }, [timeInSeconds, showStopSessionModal]);
+
+  const timerModalY = useSharedValue(height / 2);
+  const animatedTimerModalStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: timerModalY.value }],
+  }));
+
+  const endSessionModalY = useSharedValue(height / 2);
+  const animatedEndSessionModalStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: endSessionModalY.value }],
+  }));
 
   return (
     <View>
@@ -157,58 +209,55 @@ const Timer = ({
         animationType="fade"
       >
         <Pressable style={styles.modalBackground} onPress={resumeTimer}>
-          <Pressable
-            style={styles.modalContainer}
-            onTouchStart={(e) => {
-              e.stopPropagation();
-            }}
-          >
-            <Text>Are you sure you want to end the session?</Text>
-            <Button
-              title="Keep Going"
-              onPress={resumeTimer}
-              variant="primary"
-            />
-            <Button
-              title="End Session"
-              onPress={stopTimer}
-              variant="secondary"
-            />
-          </Pressable>
+          <Animated.View style={[animatedEndSessionModalStyle]}>
+            <Pressable
+              style={styles.modalContainer}
+              onTouchStart={(e) => {
+                e.stopPropagation();
+              }}
+            >
+              <Text>Are you sure you want to end the session?</Text>
+              <Button
+                title="Keep Going"
+                onPress={resumeTimer}
+                variant="primary"
+              />
+              <Button
+                title="End Session"
+                onPress={stopTimer}
+                variant="secondary"
+              />
+            </Pressable>
+          </Animated.View>
         </Pressable>
       </Modal>
 
-      <Modal
-        transparent={true}
-        visible={showStartSessionModal}
-        animationType="fade"
-      >
-        <Pressable
-          style={styles.modalBackground}
-          onPress={() => setShowStartSessionModal(false)}
-        >
-          <Pressable
-            style={styles.modalContainer}
-            onTouchStart={(e) => {
-              e.stopPropagation();
-            }}
-          >
-            <View>
-              <Text level="title_3" style={{ textAlign: "center" }}>
-                How long do you want the session to be?
-              </Text>
-              <TimePicker
-                data={minutesData}
-                onValueChange={(value) => setTimeInMinutes(Number(value))}
-                title="minutes"
+      <Modal transparent={true} visible={showStartSessionModal}>
+        <Pressable style={styles.modalBackground} onPress={hideTimeSetup}>
+          <Animated.View style={[animatedTimerModalStyle]}>
+            <Pressable
+              style={styles.modalContainer}
+              onTouchStart={(e) => {
+                e.stopPropagation();
+              }}
+            >
+              <View>
+                <Text level="title_3" style={{ textAlign: "center" }}>
+                  How long do you want the session to be?
+                </Text>
+                <TimePicker
+                  data={minutesData}
+                  onValueChange={(value) => setTimeInMinutes(Number(value))}
+                  title="minutes"
+                />
+              </View>
+              <Button
+                title="Start session"
+                onPress={startTimer}
+                variant="primary"
               />
-            </View>
-            <Button
-              title="Start session"
-              onPress={startTimer}
-              variant="primary"
-            />
-          </Pressable>
+            </Pressable>
+          </Animated.View>
         </Pressable>
       </Modal>
     </View>
