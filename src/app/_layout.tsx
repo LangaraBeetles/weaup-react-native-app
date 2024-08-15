@@ -60,7 +60,7 @@ const RootLayout = () => {
       SplashScreen.hideAsync();
       setTimeout(() => {
         setShowSplash(false);
-      }, 2600);
+      }, 2500);
     }
   }, [fontsLoaded]);
 
