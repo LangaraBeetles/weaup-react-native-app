@@ -61,7 +61,7 @@ const SetGoalSlider: React.FC<GoalSliderProps> = ({ changePage }) => {
   }));
 
   return (
-    <Stack py={16} pt={height * 0.1} flex={1}>
+    <Stack py={16} pt={height * 0.06} flex={1}>
       <ContentHeader onBack={goBack} />
       <Animated.View style={[imageStyle]}>
         <Stack h={height * 0.2} pt={height * 0.01}>
@@ -90,11 +90,13 @@ const ContentHeader: React.FC<ContentHeaderProps> = ({ onBack }) => (
     flexDirection="row"
     gap={32}
     alignItems="center"
+    justifyContent="space-between"
     flexGrow={0}
+    w="100%"
     style={styles.paddedContent}
   >
     <BackButton onBack={onBack} />
-    <Text style={styles.content} level="title_2">
+    <Text style={styles.content} level="title_2" align="center">
       Set your daily goal
     </Text>
     <Stack w={40} h={40} />

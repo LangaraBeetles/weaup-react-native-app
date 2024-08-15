@@ -118,7 +118,7 @@ const SetupGoal: React.FC<SetupGoalProps> = ({ changePage, setBackGround }) => {
     <Stack h={height} px={16} alignItems="center">
       <Stack
         flexDirection="row"
-        pt={height * 0.1}
+        pt={height * 0.06}
         w={"100%"}
         justifyContent="space-between"
         style={{ zIndex: 5 }}

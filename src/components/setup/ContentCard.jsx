@@ -18,9 +18,8 @@ const ContentCard = ({ title, text, section }) => {
             {section === "training" ? (
               <Text
                 align="center"
-                level="badge_title"
-                weight="semibold"
-                style={{ color: theme.colors.primary[900] }}
+                level="title_1"
+                style={{ color: theme.colors.primary[900], paddingHorizontal: 16 }}
               >
                 {title}
               </Text>
@@ -67,7 +66,6 @@ const styles = StyleSheet.create({
     zIndex: 4,
   },
   training: {
-    opacity: 0.9,
     width: width * 0.9,
     backgroundColor: theme.colors.white,
     paddingVertical: 30,

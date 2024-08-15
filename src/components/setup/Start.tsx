@@ -176,7 +176,7 @@ const Start: React.FC<StartProps> = ({ changePage, setBackGround }) => {
         </Stack>
 
         <Animated.View style={[style.mainContainer, contentStyle]}>
-          <Stack w={width} pt={height * 0.1} px={width * 0.05}>
+          <Stack w={width} pt={height * 0.06} px={width * 0.05}>
             <Stack gap={height * 0.05}>
               <Stack gap={8}>
                 <Text

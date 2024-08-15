@@ -17,7 +17,7 @@ import Animated, {
   Easing,
 } from "react-native-reanimated";
 
-const { height } = Dimensions.get("screen");
+const { height, width } = Dimensions.get("screen");
 
 type EarbudsTrainingProps = {
   changePage: React.Dispatch<React.SetStateAction<string>>;
@@ -35,16 +35,16 @@ const EarbudsTraining: React.FC<EarbudsTrainingProps> = ({ changePage }) => {
 
   const steps = [
     {
-      title: "Sit or stand up straight",
-      text: "WeaUp detects your posture by sensing the\n movement of your earbuds.\n Keep your head aligned and upright.",
+      title: "Sit or stand up\nstraight",
+      text: "WeaUp monitors your posture using earbud movement. Keep your head upright.",
     },
     {
-      title: "Try dropping your head",
-      text: "Notice the alerts or vibrations? WeaUp uses the movement of your earbuds to remind you to correct your posture.",
+      title: "Try dropping\nyour head",
+      text: "Notice the alerts or vibrations? It’s a reminder to correct your posture.",
     },
     {
       title: "A 10-degree tilt?\n It’s fine!",
-      text: "Don’t worry, we only alert you when your\n head angle becomes too steep.",
+      text: "Don’t worry, we only alert you when your head angle becomes too steep.",
     },
   ];
 
@@ -134,7 +134,7 @@ const EarbudsTraining: React.FC<EarbudsTrainingProps> = ({ changePage }) => {
       <Stack h={height} px={16} alignItems={"center"}>
         <Stack
           flexDirection="row"
-          pt={height * 0.1}
+          pt={height * 0.06}
           w={"100%"}
           justifyContent="space-between"
           style={{ zIndex: 5 }}
@@ -160,7 +160,7 @@ const EarbudsTraining: React.FC<EarbudsTrainingProps> = ({ changePage }) => {
           style={{ position: "absolute", bottom: height * 0.1 }}
         >
           <Animated.View style={[scaleBackgroundStyle]}>
-            <Stack w={340} h={340} style={{ top: 84, zIndex: -1 }}>
+            <Stack w={width * 0.9} h={width} style={{ top: 100, zIndex: -1 }}>
               <Image name="setup-image-background" />
             </Stack>
           </Animated.View>
@@ -172,7 +172,7 @@ const EarbudsTraining: React.FC<EarbudsTrainingProps> = ({ changePage }) => {
             />
           </Animated.View>
           <Animated.View style={[mainStyle]}>
-            <Stack w={"100%"}>
+            <Stack w={"100%"} py={"1.5%"}>
               <Button onPress={next} variant="primary" title={"Next"} />
             </Stack>
           </Animated.View>
@@ -189,7 +189,7 @@ const EarbudsTraining: React.FC<EarbudsTrainingProps> = ({ changePage }) => {
             </Stack>
           </Animated.View>
           <Animated.View
-            style={[slideUpStyle, { position: "absolute", top: 130 }]}
+            style={[slideUpStyle, { position: "absolute", top: 146 }]}
           >
             <LottieView
               autoPlay={false}
@@ -197,8 +197,8 @@ const EarbudsTraining: React.FC<EarbudsTrainingProps> = ({ changePage }) => {
               ref={animation}
               duration={1500}
               style={{
-                width: 340,
-                height: 340,
+                width: width,
+                height: width,
                 zIndex: 2,
               }}
               source={animations[step]}

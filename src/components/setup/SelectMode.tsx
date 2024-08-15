@@ -4,6 +4,7 @@ import Animated, {
   runOnJS,
   useAnimatedStyle,
   useSharedValue,
+  withDelay,
   withRepeat,
   withSpring,
   withTiming,
@@ -19,6 +20,7 @@ import { useUser } from "@root/src/state/useUser";
 import { TrackingModeEnum } from "@root/src/interfaces/user.types";
 import Icon from "@root/src/components/ui/Icon";
 import { useEffect } from "react";
+import BackButton from "../ui/BackButton";
 
 const { height: screenHeight } = Dimensions.get("window");
 const centerY = screenHeight / 2;
@@ -32,7 +34,7 @@ const SelectMode: React.FC<SelectModeProps> = ({ changePage }) => {
   const { height } = Dimensions.get("screen");
 
   const earbudsContainerOpacity = useSharedValue(1);
-  const earbudsContainerY = useSharedValue(0);
+  const earbudsContainerY = useSharedValue(-height);
   const earbudsWeaselY = useSharedValue(0);
   const earbudsYellowScale = useSharedValue(1);
   const earbudsYellowOpacity = useSharedValue(1);
@@ -40,12 +42,13 @@ const SelectMode: React.FC<SelectModeProps> = ({ changePage }) => {
   const earbudsTextOpacity = useSharedValue(1);
 
   const phoneContainerOpacity = useSharedValue(1);
-  const phoneContainerY = useSharedValue(0);
+  const phoneContainerY = useSharedValue(height);
   const phoneWeaselY = useSharedValue(0);
   const phoneYellowScale = useSharedValue(1);
   const phoneYellowOpacity = useSharedValue(1);
   const phoneTextOpacity = useSharedValue(1);
   const chevronOpacity = useSharedValue(0);
+  const midTextOpacity = useSharedValue(0);
   const duration = 1000;
 
   const AnimatedImage = Animated.createAnimatedComponent(Image);
@@ -89,6 +92,16 @@ const SelectMode: React.FC<SelectModeProps> = ({ changePage }) => {
       );
       yellowCardY.value = event.translationY * 1.5;
       earbudsContainerY.value = clamp(event.translationY, 0, centerY);
+      earbudsYellowOpacity.value = interpolate(
+        event.translationY,
+        [100, 0],
+        [1.5, 2],
+      );
+      earbudsYellowScale.value = interpolate(
+        earbudsContainerY.value,
+        [0, 50],
+        [1, 2],
+      );
       phoneContainerOpacity.value = withTiming(0);
     })
     .onFinalize(() => {
@@ -96,7 +109,7 @@ const SelectMode: React.FC<SelectModeProps> = ({ changePage }) => {
         earbudsContainerY.value = withTiming(0);
         earbudsWeaselY.value = withTiming(0);
         yellowCardY.value = withTiming(0);
-        earbudsYellowScale.value = withTiming(0);
+        earbudsYellowScale.value = withTiming(1);
         earbudsYellowOpacity.value = withTiming(1);
         earbudsTextOpacity.value = withTiming(1); // withSpring(1,  { stiffness: 100 });
         phoneContainerOpacity.value = withTiming(1, { duration: 1000 });
@@ -128,6 +141,16 @@ const SelectMode: React.FC<SelectModeProps> = ({ changePage }) => {
         0,
       );
       phoneContainerY.value = clamp(event.translationY, -centerY, 0);
+      phoneYellowOpacity.value = interpolate(
+        phoneContainerY.value,
+        [-200, 0],
+        [1, 2],
+      );
+      phoneYellowScale.value = interpolate(
+        phoneContainerY.value,
+        [-50, 0],
+        [2, 1],
+      );
       earbudsContainerOpacity.value = withTiming(0);
     })
     .onFinalize(() => {
@@ -191,10 +214,10 @@ const SelectMode: React.FC<SelectModeProps> = ({ changePage }) => {
 
   const earbudsYellowStyle = useAnimatedStyle(() => {
     return {
-      opacity: interpolate(earbudsContainerY.value, [100, 0], [1.5, 2]),
+      opacity: earbudsYellowOpacity.value,
       transform: [
         {
-          scale: interpolate(earbudsContainerY.value, [0, 50], [1, 2]),
+          scale: earbudsYellowScale.value,
         },
       ],
     };
@@ -238,10 +261,10 @@ const SelectMode: React.FC<SelectModeProps> = ({ changePage }) => {
 
   const phoneYellowStyle = useAnimatedStyle(() => {
     return {
-      opacity: interpolate(phoneContainerY.value, [-200, 0], [1.5, 2]),
+      opacity: phoneYellowOpacity.value,
       transform: [
         {
-          scale: interpolate(phoneContainerY.value, [-50, 0], [2, 1]),
+          scale: phoneYellowScale.value,
         },
       ],
     };
@@ -268,15 +291,38 @@ const SelectMode: React.FC<SelectModeProps> = ({ changePage }) => {
     };
   });
 
+  const midText = useAnimatedStyle(() => ({
+    opacity: midTextOpacity.value,
+  }));
+
+  const onBack = () => {
+    changePage("start");
+  };
+
   useEffect(() => {
     chevronOpacity.value = withRepeat(withTiming(1, { duration }), -1, true);
+    phoneContainerY.value = withSpring(0, { stiffness: 30 });
+    earbudsContainerY.value = withSpring(0, { stiffness: 30 });
+    midTextOpacity.value = withDelay(1000, withTiming(1, { duration: 500 }));
   }, []);
 
   return (
     <View>
       <Center justifyContent="center" height="100%" p={0}>
         <Stack
-          gap={22}
+          flexDirection="row"
+          px={16}
+          pt={height * 0.06}
+          w={"100%"}
+          alignItems="center"
+          justifyContent="space-between"
+          style={{ zIndex: 5, position: "absolute", top: 0 }}
+        >
+          <BackButton onBack={onBack} />
+        </Stack>
+
+        <Stack
+          gap={16}
           h="100%"
           w="100%"
           justifyContent="space-between"
@@ -323,11 +369,10 @@ const SelectMode: React.FC<SelectModeProps> = ({ changePage }) => {
                 >
                   <AnimatedImage
                     name="yellow-circle"
-                    width={"100%"}
-                    height={"85%"}
+                    height={"84%"}
                     style={[
                       earbudsYellowStyle,
-                      { position: "absolute", top: "-10%" },
+                      { position: "absolute", top: "-4%" },
                     ]}
                   />
                   <AnimatedImage
@@ -341,22 +386,26 @@ const SelectMode: React.FC<SelectModeProps> = ({ changePage }) => {
                   >
                     <Stack
                       alignItems="center"
-                      gap={12}
+                      gap={8}
                       w={"70%"}
-                      style={{ top: "-18%" }}
+                      style={{ top: "-10%" }}
                     >
-                      <Text
-                        level="title_3"
-                        style={{
-                          color: theme.colors.neutral[900],
-                          paddingVertical: 4,
-                          paddingHorizontal: 16,
-                          backgroundColor: theme.colors.white,
-                          borderRadius: 8,
-                        }}
+                      <Stack
+                        py={4}
+                        px={16}
+                        backgroundColor={theme.colors.white}
+                        borderRadius={10}
                       >
-                        Earbuds Mode
-                      </Text>
+                        <Text
+                          level="title_3"
+                          style={{
+                            color: theme.colors.primary[900],
+                          }}
+                        >
+                          Earbuds Mode
+                        </Text>
+                      </Stack>
+
                       <Text
                         align="center"
                         level="footnote"
@@ -379,10 +428,13 @@ const SelectMode: React.FC<SelectModeProps> = ({ changePage }) => {
             </Animated.View>
           </GestureDetector>
 
-          <View
-            style={{
-              zIndex: -5,
-            }}
+          <Animated.View
+            style={[
+              midText,
+              {
+                zIndex: -5,
+              },
+            ]}
           >
             <Text
               align="center"
@@ -391,7 +443,7 @@ const SelectMode: React.FC<SelectModeProps> = ({ changePage }) => {
             >
               Drag card to enter
             </Text>
-          </View>
+          </Animated.View>
 
           <GestureDetector gesture={onPhoneDrag}>
             <Animated.View
@@ -408,6 +460,7 @@ const SelectMode: React.FC<SelectModeProps> = ({ changePage }) => {
                   backgroundColor: theme.colors.primary[50],
                   alignItems: "center",
                   borderRadius: 20,
+                  position: "relative",
                 }}
               >
                 <Center
@@ -415,57 +468,69 @@ const SelectMode: React.FC<SelectModeProps> = ({ changePage }) => {
                     width: "70%",
                     height: "18%",
                     position: "absolute",
-                    top: "3%",
+                    top: "3.5%",
                   }}
                 >
                   <Animated.View style={[chevronStyle]}>
-                    <Icon name="double-chevron-up" style={{ top: "32%" }} />
+                    <Icon name="double-chevron-up" />
                   </Animated.View>
 
                   <AnimatedImage
                     name="yellow-circle"
-                    width={"100%"}
-                    height={"85%"}
+                    height="84%"
                     style={[
                       phoneYellowStyle,
-                      { position: "absolute", top: "-1%" },
+                      { position: "absolute", top: "-5%" },
                     ]}
                   />
                   <AnimatedImage
                     name="phone-weasel"
-                    width={"100%"}
+                    width={"102%"}
                     height={"95%"}
-                    style={[phoneWeaselStyle, { top: "3%" }]}
+                    style={[phoneWeaselStyle, { right: 2 }]}
                   />
                   <Animated.View style={[phoneTextStyle]}>
                     <Stack
                       alignItems="center"
                       gap={12}
                       w={"70%"}
-                      style={{ top: "-40%" }}
+                      style={{ top: "-65%" }}
                     >
-                      <Text
-                        level="title_3"
+                      <Stack
+                        py={4}
+                        px={16}
+                        backgroundColor={theme.colors.white}
+                        borderRadius={10}
+                      >
+                        <Text
+                          level="title_3"
+                          style={{
+                            color: theme.colors.primary[900],
+                          }}
+                        >
+                          Phone Mode
+                        </Text>
+                      </Stack>
+
+                      <View
                         style={{
-                          color: theme.colors.neutral[900],
-                          paddingVertical: 4,
-                          paddingHorizontal: 16,
-                          backgroundColor: theme.colors.white,
-                          borderRadius: 8,
+                          display: "flex",
+                          width: "100%",
                         }}
                       >
-                        Phone Mode
-                      </Text>
-                      <Text
-                        align="center"
-                        level="footnote"
-                        style={{
-                          color: theme.colors.neutral[600],
-                        }}
-                      >
-                        Use the motion sensors in your mobile phone to track
-                        posture
-                      </Text>
+                        <Text
+                          align="center"
+                          level="footnote"
+                          numberOfLines={2}
+                          style={{
+                            color: theme.colors.neutral[600],
+                            width: 230,
+                          }}
+                        >
+                          Use the motion sensors in your mobile phone to track
+                          posture
+                        </Text>
+                      </View>
                     </Stack>
                   </Animated.View>
                 </Center>
