@@ -46,14 +46,14 @@ const ProgressBar = (props: {
   const animatedWidth = useSharedValue(0);
   const iconOpacity = useSharedValue(0.7);
 
-  if (progress === 100) {
-    iconOpacity.value = withDelay(1800, withTiming(1, { duration: 500 }));
-  }
-
   const onEnd = () => onAnimationEnd?.(progress);
 
   const handleLayout = (event: any) => {
     const { width } = event.nativeEvent.layout;
+
+    if (progress === 100) {
+      iconOpacity.value = withDelay(delay, withTiming(1, { duration: 1000 }));
+    }
 
     animatedWidth.value = withDelay(
       delay,
