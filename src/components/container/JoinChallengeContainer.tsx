@@ -72,10 +72,7 @@ const JoinChallengeContainer = (props: {
         : "Started on " + startAt.format("MMM DD")
   }`;
   const remainingTime = `Ends in ${endAt.diff(dayjs(), "days")} days`;
-  const goalPoints =
-    safenumber(data?.goal) *
-    safenumber(data?.duration) *
-    safenumber(data?.members?.length, 1);
+  const goalPoints = safenumber(data?.goal) * safenumber(data?.duration) * 10;
   const progress = data?.members.reduce(
     (accu: any, curr: any) => accu + curr.points,
     0,
@@ -240,6 +237,8 @@ const JoinChallengeContainer = (props: {
                   <Text level="footnote">Invited by</Text>
                   <Stack flexDirection="row" gap={8} alignItems="center">
                     <Avatar
+                      showDefault={false}
+                      src={user?.data?.avatar_img}
                       content={user?.data?.name ? user?.data?.name?.[0] : "G"}
                       variant={user?.data?.avatar_bg}
                     />

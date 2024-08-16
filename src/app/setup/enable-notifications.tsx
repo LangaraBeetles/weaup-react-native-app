@@ -1,3 +1,4 @@
+import { usePushNotifications } from "@root/src/components/providers/PushNotificationsProvider";
 import BackgroundGradient from "@src/components/setup/BackgroundGradient";
 import ContentCard from "@src/components/setup/ContentCard";
 import Button from "@src/components/ui/Button";
@@ -10,7 +11,15 @@ import { Dimensions, Platform, SafeAreaView, StyleSheet } from "react-native";
 const { height, width } = Dimensions.get("screen");
 
 const EnableNotificationsScreen = () => {
+  const { registerForPushNotifications } = usePushNotifications();
+
   const next = () => {
+    registerForPushNotifications(() => {
+      router.push("/setup/set-up-goal");
+    });
+  };
+
+  const maybeLater = () => {
     router.push("/setup/set-up-goal");
   };
 
@@ -42,18 +51,20 @@ const EnableNotificationsScreen = () => {
         </Center>
         <ContentCard
           title="Get Real-time Alerts"
-          text={
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor."
-          }
+          text={"Wally will remind you when your posture needs correction."}
+          section={"setup"}
         />
-        {/* TODO: Allow notifications functionality */}
         <Stack w={width * 0.9} gap={12} style={styles.buttonStack}>
           <Button
             title="Allow Notifications"
             onPress={next}
             variant="primary"
           />
-          <Button title="Maybe Later" onPress={next} variant="secondary" />
+          <Button
+            title="Maybe Later"
+            onPress={maybeLater}
+            variant="secondary"
+          />
         </Stack>
       </Stack>
     </SafeAreaView>

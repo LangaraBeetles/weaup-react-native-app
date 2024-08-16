@@ -5,6 +5,9 @@ import Icon from "../ui/Icon";
 import { Text } from "../ui/typography";
 import { useUser } from "@src/state/useUser";
 import Divider from "../ui/Divider";
+import { Dimensions } from "react-native";
+
+const { width } = Dimensions.get("screen");
 
 const ScoreComponent = () => {
   const userHP = useUser((state) => state.user.hp);
@@ -27,8 +30,10 @@ const ScoreComponent = () => {
           flexDirection="row"
           border={1}
           borderRadius={20}
-          px={20}
+          pl={20}
+          pr={width * 0.1}
           py={16}
+          h={90}
           w="100%"
           justifyContent="space-between"
           borderColor={theme.colors.neutral[100]}
@@ -145,11 +150,14 @@ const ScoreComponent = () => {
                 Posture Score
               </Text>
             </Stack>
-
-            <Stack flexDirection="row">
-              <Text level="title_1">{userHP} </Text>
-              <Stack pt={19}>
-                <Text level="caption_1">/ 100</Text>
+            <Stack alignItems="center" py={6}>
+              <Stack flexDirection="row" alignItems="center" h={27}>
+                <Text level="title_1" style={{ lineHeight: 31 }}>
+                  {userHP}{" "}
+                </Text>
+                <Text level="caption_1" style={{ lineHeight: 31 }}>
+                  / 100
+                </Text>
               </Stack>
             </Stack>
           </Stack>

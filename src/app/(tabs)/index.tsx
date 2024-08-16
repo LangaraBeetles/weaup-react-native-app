@@ -1,13 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect } from "react";
 
-import {
-  Platform,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Dimensions,
-} from "react-native";
-import { Link, Redirect } from "expo-router";
+import { Platform, Dimensions, TouchableOpacity } from "react-native";
+import { Link } from "expo-router";
 import DeviceMotionViewiOS, {
   DeviceMotionViewAndroid,
 } from "@src/components/ui/DeviceMotionView";
@@ -24,191 +18,172 @@ import { Text } from "@src/components/ui/typography";
 
 import { theme } from "@src/styles/theme";
 import ScoreComponent from "@src/components/homepage/ScoreComponent";
-import Gradient from "@src/components/ui/Gradient";
 import RealtimeTrackingBackground from "@src/components/posture/RealtimeTrackingBackground";
 import SessionBackground from "@src/components/posture/SessionBackground";
 import Avatar from "@src/components/ui/Avatar";
-import LottieView from "lottie-react-native";
+import { LinearGradient as Gradient } from "expo-linear-gradient";
+import { router } from "expo-router";
 
 const { height, width } = Dimensions.get("screen");
 
+const layers = {
+  stats: 1,
+  gradient: -5,
+};
+
 const HomePage = () => {
-  const isSetupComplete = useUser((state) => state.isSetupComplete);
+  const isFirstSetup = useUser((state) => state.isFirstSetup);
   const userName = useUser((state) => state.user.name);
-  const avatarColor = useUser((state) => state.user.avatar);
+  const avatarImg = useUser((state) => state.user.avatar_img);
+  const avatarColor = useUser((state) => state.user.avatar_bg);
   const userLevel = useUser((state) => state.user.level);
   const sessionStatus = useUser((state) => state.sessionStatus);
-  const currentPosture = useUser((state) => state.currentPosture);
-  const isActiveMonitoring = useUser((state) => state.isTrackingEnabled);
 
-  const animation = useRef<any>(null);
-  const [progress, setProgress] = useState<number>(0.5);
+  const isGuest = useUser((state) => state.isGuest);
 
   useEffect(() => {
-    if (animation && isActiveMonitoring && sessionStatus === "INACTIVE") {
-      let value = progress;
-      if (currentPosture === "good") {
-        value = value - 0.2;
-      }
-      if (currentPosture === "mid") {
-        value = value + 0.2;
-      }
-      if (currentPosture === "bad") {
-        value = value + 0.5;
-      }
-      if (currentPosture === "not_reading") {
-        value = 0.05;
-      }
-
-      if (value > 1) {
-        setProgress(1);
-      } else if (value < 0) {
-        setProgress(0);
-      } else {
-        setProgress(value);
-      }
+    if (!isFirstSetup) {
+      setTimeout(() => {
+        router.navigate("/setup/initial-page");
+      }, 100);
     }
-  }, [isActiveMonitoring, sessionStatus, animation, currentPosture, progress]);
-
-  if (!isSetupComplete) {
-    return <Redirect href="/setup/start" />;
-  }
+  }, [isFirstSetup]);
 
   return (
     <SafeAreaView
       style={{
-        position: "relative",
-        height: height,
-        backgroundColor: theme.colors.white,
+        backgroundColor: theme.colors.primary[400],
       }}
     >
-      <Gradient
-        color1={theme.colors.primary[300]}
-        color2={theme.colors.white}
-        locations={[0, 0.8]}
-      />
+      <Stack>
+        {/* Yellow Gradient */}
+        <Gradient
+          colors={[theme.colors.primary[400], theme.colors.primary[50]]}
+          locations={[0, 0.5]}
+          style={{
+            position: "absolute",
+            left: 0,
+            right: 0,
+            top: 0,
+            height,
+            zIndex: layers.gradient,
+          }}
+        />
 
-      {sessionStatus === "INACTIVE" && <RealtimeTrackingBackground />}
-
-      <ScrollView style={{ flex: 1, zIndex: 2 }}>
         <Stack
-          style={styles.onTop}
-          flexDirection="row"
-          justifyContent="space-between"
-          p={15}
-          pb={0}
+          style={{
+            position: "absolute",
+            width,
+            zIndex: layers.stats,
+          }}
         >
           <Stack
             flexDirection="row"
-            gap={8}
-            backgroundColor={theme.colors.white}
-            borderRadius={100}
-            px={12}
-            h={41}
+            justifyContent="space-between"
+            p={15}
+            pb={0}
             alignItems="center"
           >
-            <Stack flexDirection="row" gap={4} alignItems="center" h={25}>
-              <Avatar
-                variant={avatarColor}
-                content={userName?.[0] ?? "G"}
-                size={25}
-                fontSize={10}
-              />
-              {userName !== "null" ? (
-                <Text
-                  style={{ color: theme.colors.neutral[800] }}
-                  level="footnote"
-                  weight="bold"
-                >
-                  {userName !== null && userName?.split(" ")[0]}
-                </Text>
-              ) : null}
-            </Stack>
-            <Text
-              style={{ color: theme.colors.neutral[400] }}
-              level="caption_1"
-              weight="bold"
+            <Stack
+              flexDirection="row"
+              gap={6}
+              backgroundColor={theme.colors.white}
+              borderRadius={100}
+              px={10}
+              h={41}
+              alignItems="center"
             >
-              Lv.{userLevel}
-            </Text>
-          </Stack>
-          <Stack flexDirection="row" gap={18} border={0} p={5}>
-            <TrackingModeIcon />
-
-            <Center>
-              <Stack
-                backgroundColor={theme.colors.white}
-                h={40}
-                w={40}
-                alignItems="center"
-                justifyContent="center"
-                borderRadius={20}
-              >
-                <Link href="/notifications" asChild>
-                  <Pressable>
-                    <Icon name="notification-outline" />
-                  </Pressable>
-                </Link>
+              <Stack flexDirection="row" gap={6} alignItems="center" h={25}>
+                <Avatar
+                  variant={avatarColor}
+                  content={userName?.[0] ?? "G"}
+                  size={30}
+                  fontSize={14}
+                  showDefault={isGuest}
+                  src={avatarImg}
+                />
+                {userName !== "null" ? (
+                  <Text
+                    style={{ color: theme.colors.neutral[800] }}
+                    level="footnote"
+                    weight="bold"
+                  >
+                    {userName !== null && userName?.split(" ")[0]}
+                  </Text>
+                ) : null}
               </Stack>
-            </Center>
-          </Stack>
-        </Stack>
-
-        <ScoreComponent />
-
-        <Center style={styles.onTop} p={15}>
-          {Platform.OS === "ios" && <DeviceMotionViewiOS />}
-          {Platform.OS === "android" && <DeviceMotionViewAndroid />}
-        </Center>
-
-        <Stack h={286} my={15}>
-          {sessionStatus === "INACTIVE" ? (
-            <Stack>
-              <LottieView
-                autoPlay={false}
-                ref={animation}
-                duration={1000}
-                progress={progress}
-                style={{
-                  width: width,
-                  height: height / 1.3,
-                  position: "absolute",
-                  top: -150,
-                  bottom: 0,
-                  aspectRatio: 2,
-                  zIndex: -1,
-                }}
-                source={require("../../animations/front_view.json")}
-              />
+              <Text
+                style={{ color: theme.colors.neutral[400] }}
+                level="caption_1"
+                weight="bold"
+              >
+                Lv.{userLevel}
+              </Text>
             </Stack>
-          ) : (
-            <Center>
-              <SessionBackground />
-            </Center>
-          )}
+            <Stack flexDirection="row" gap={18} border={0} p={5}>
+              <TrackingModeIcon />
+
+              <Center>
+                <Link href="/notifications" asChild>
+                  <TouchableOpacity>
+                    <Stack
+                      backgroundColor={theme.colors.white}
+                      h={40}
+                      w={40}
+                      alignItems="center"
+                      justifyContent="center"
+                      borderRadius={20}
+                    >
+                      <Icon name="notification-outline" />
+                    </Stack>
+                  </TouchableOpacity>
+                </Link>
+              </Center>
+            </Stack>
+          </Stack>
+          {/* 
+            // Code for testing
+          <Button
+            title="summary"
+            onPress={() => {
+              router.push({
+                pathname: "/session-summary",
+                params: {
+                  sessionId: "66b790f4530d45bdbf9bde9b",
+                },
+              });
+            }}
+          /> */}
+
+          <ScoreComponent />
+          <Center p={15}>
+            {Platform.OS === "ios" && <DeviceMotionViewiOS />}
+            {Platform.OS === "android" && <DeviceMotionViewAndroid />}
+          </Center>
         </Stack>
 
-        <Center style={styles.sessionButton}>
+        {sessionStatus === "INACTIVE" ? (
+          <RealtimeTrackingBackground />
+        ) : (
+          <Center>
+            <SessionBackground />
+          </Center>
+        )}
+        <Center
+          style={{
+            width: 250,
+            alignSelf: "center",
+            zIndex: layers.stats,
+            position: "absolute",
+            bottom: Platform.OS === "ios" ? height * 0.03 : height * 0.1,
+            justifyContent: "flex-end",
+          }}
+        >
           <SessionControl />
         </Center>
-      </ScrollView>
+      </Stack>
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  backgroundImageFill: {
-    flex: 1,
-    transform: [{ scale: 2 }, { translateY: 10 }],
-  },
-  sessionButton: {
-    width: 250,
-    alignSelf: "center",
-    zIndex: 2,
-  },
-  onTop: {
-    zIndex: 2,
-  },
-});
 
 export default HomePage;

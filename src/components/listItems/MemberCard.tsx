@@ -13,8 +13,10 @@ const MemberCard = (props: any) => {
       <Stack flexDirection="row" justifyContent="space-between" py={16}>
         <Stack flexDirection="row" gap={8} flex={4}>
           <Avatar
-            content={item?.user?.name?.[0]}
+            content={item?.user?.name?.[0] ?? "G"}
             variant={item?.user?.avatar_bg ?? "gray1"}
+            src={item?.user?.avatar_img}
+            showDefault={false}
           />
           <View>
             <Text level="headline">{item?.user?.name}</Text>

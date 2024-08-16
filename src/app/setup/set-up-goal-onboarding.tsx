@@ -15,10 +15,12 @@ const { height } = Dimensions.get("screen");
 
 const SetUpGoalScreenOnboarding = () => {
   const setDailyGoal = useUser((state) => state.setDailyGoal);
+  const completeSetup = useUser((state) => state.completeSetup);
   const [goal, setGoal] = useState(80);
 
   const updateGoal = () => {
     setDailyGoal(goal);
+    completeSetup();
     router.push("/setup/signup");
   };
 
@@ -70,7 +72,12 @@ const SetUpGoalScreenOnboarding = () => {
           </Stack>
 
           <Stack flexGrow={1} justifyContent="center" alignItems="center">
-            <GoalPicker flex={4} setGoal={setGoal} goal={goal} />
+            <GoalPicker
+              flex={4}
+              setGoal={setGoal}
+              goal={goal}
+              source={"profile"}
+            />
           </Stack>
 
           <Stack flexGrow={0} alignItems="center" style={styles.paddedContent}>

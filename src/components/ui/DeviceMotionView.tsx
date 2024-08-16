@@ -78,12 +78,12 @@ export default function DeviceMotionViewiOS() {
               setCurrentPosture("not_reading");
             }
           } catch (error: any) {
-            console.error(error.message);
+            console.log(error.message);
           }
         });
         DeviceMotion.setUpdateInterval(1000);
       } catch (error) {
-        console.error(error);
+        console.log(error);
       }
     };
 
@@ -118,7 +118,7 @@ export default function DeviceMotionViewiOS() {
           setTimeEnd(null);
         })
         .catch((error) => {
-          console.error(error);
+          console.log(error);
         });
     }
   }, [timeStart, timeEnd]);
@@ -209,7 +209,7 @@ export function DeviceMotionViewAndroid() {
 
       DeviceMotion.setUpdateInterval(1000);
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   };
 
@@ -262,7 +262,7 @@ export function DeviceMotionViewAndroid() {
           setTimeEnd(null);
         })
         .catch((error) => {
-          console.error(error);
+          console.log(error);
         });
     }
   }, [timeStart, timeEnd]);

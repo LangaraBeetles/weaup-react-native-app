@@ -99,10 +99,6 @@ const EarbudsTrainingScreen = () => {
                 >
                   You’re connected!
                 </Text>
-                <Text align="center">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor.
-                </Text>
               </Stack>
 
               <Button title="Confirm" onPress={next} variant="primary" />

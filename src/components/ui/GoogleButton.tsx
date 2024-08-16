@@ -11,6 +11,8 @@ import { googleAuth } from "@src/services/authApi";
 import useAuth from "@src/components/hooks/useAuth";
 
 import { useNavigation } from "expo-router";
+import { useUser } from "@root/src/state/useUser";
+import { UserType } from "@src/interfaces/user.types";
 
 WebBrowser.maybeCompleteAuthSession();
 const platform = Platform.OS;
@@ -21,6 +23,8 @@ const GoogleButton = (props: { signUp?: boolean }) => {
   const { handleGoogleAuthCallback } = useAuth();
 
   const navigation = useNavigation();
+  const user = useUser((state) => state.user);
+  const completeFirstSetup = useUser((state) => state.completeFirstSetup);
 
   const [, response, promptAsync] = GoogleSignIn.useAuthRequest({
     iosClientId: config.google_auth_ios,
@@ -36,13 +40,12 @@ const GoogleButton = (props: { signUp?: boolean }) => {
 
   const login = async (googleSignInResponse: any) => {
     const { access_token } = googleSignInResponse.params;
-
     try {
-      const result = await googleAuth(access_token as string);
+      const result = await googleAuth(access_token as string, user as UserType);
       await handleGoogleAuthCallback(
         result,
         () => {
-          //  We need to figure out a way to know when to redirect to the home screen and when to just go back to the prev screen aka together/profile
+          completeFirstSetup();
           navigation.reset({
             index: 0,
             routes: [
@@ -53,7 +56,7 @@ const GoogleButton = (props: { signUp?: boolean }) => {
           });
         },
         () => {
-          console.error(
+          console.log(
             "Login unsuccessful. Please verify your credentials and attempt to log in again.",
           );
         },
@@ -70,7 +73,10 @@ const GoogleButton = (props: { signUp?: boolean }) => {
   }, [response?.type]);
 
   return (
-    <TouchableOpacity onPress={() => promptAsync()}>
+    <TouchableOpacity
+      onPress={() => promptAsync()}
+      style={{ flex: 1, height: 40, width: "100%" }}
+    >
       {platform == "android" ? (
         signUp ? (
           <Image name="google-android-btn-su" height={52}></Image>

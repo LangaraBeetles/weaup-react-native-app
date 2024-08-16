@@ -2,7 +2,7 @@ import Button from "@src/components/ui/Button";
 import Center from "@src/components/ui/Center";
 import { useNavigation } from "@react-navigation/native";
 import Stack from "@src/components/ui/Stack";
-import { router } from "expo-router";
+import { router, usePathname } from "expo-router";
 import {
   Dimensions,
   Platform,
@@ -15,15 +15,26 @@ import Gradient from "@src/components/ui/Gradient";
 import { theme } from "@src/styles/theme";
 import Image from "@src/components/ui/Image";
 import Icon from "@src/components/ui/Icon";
+import { useUser } from "@root/src/state/useUser";
+import { useEffect } from "react";
 
 const { height, width } = Dimensions.get("screen");
 
 const EarbudsTrainingScreen = () => {
+  const mode = useUser((state) => state.mode);
+  const path = usePathname();
+
   const navigation = useNavigation();
 
   const next = () => {
     router.push("/setup/earbuds-connected");
   };
+
+  useEffect(() => {
+    if (mode === "earbuds" && path === "/setup/earbuds-mode-confirmation") {
+      router.push("/setup/earbuds-connected");
+    }
+  }, [mode, path]);
 
   return (
     <SafeAreaView>
@@ -91,7 +102,7 @@ const EarbudsTrainingScreen = () => {
                   level="title_1"
                   style={{ color: theme.colors.primary[900] }}
                 >
-                  Track posture with Earbuds
+                  Track posture with earbuds
                 </Text>
                 <Text align="center">
                   In order for WeaUp to successfully connect with you earbuds,

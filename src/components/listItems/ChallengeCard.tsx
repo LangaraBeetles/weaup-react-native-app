@@ -100,12 +100,13 @@ const ChallengeCard = (props: { challenge: ChallengeResponseType }) => {
                   borderWidth={3}
                   borderColor={theme.colors.white}
                   variant={member?.user?.avatar_bg}
+                  src={member?.user?.avatar_img}
                   fontSize={10}
                   style={{
                     right: index > 0 ? index * 10 : 0,
-                    height: 28,
-                    width: 28,
                   }}
+                  size={28}
+                  showDefault={false}
                 />
               );
             })}
@@ -118,9 +119,9 @@ const ChallengeCard = (props: { challenge: ChallengeResponseType }) => {
                 fontSize={10}
                 style={{
                   right: challenge.members.length + 22,
-                  height: 28,
-                  width: 28,
                 }}
+                size={28}
+                showDefault={false}
               />
             ) : null}
           </Stack>

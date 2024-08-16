@@ -15,7 +15,7 @@ const ShareButton = (props: {
       });
       setHasShared(true);
     } catch (error: any) {
-      console.error(error.message);
+      console.log(error.message);
     }
   };
 

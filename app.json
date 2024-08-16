@@ -4,9 +4,7 @@
     "slug": "weaup",
     "scheme": "weaup",
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "./assets/fonts/*"
-    ],
+    "assetBundlePatterns": ["./assets/fonts/*"],
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -17,9 +15,10 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.weaup",
+      "bundleIdentifier": "com.alignmend",
       "minSdkVersion": "15.0",
-      "runtimeVersion": "1.0.0"
+      "runtimeVersion": "1.0.0",
+      "buildNumber": "11"
     },
     "android": {
       "adaptiveIcon": {
@@ -43,9 +42,7 @@
       }
     },
     "plugins": [
-      [
-        "expo-router"
-      ],
+      ["expo-router"],
       [
         "expo-font",
         {

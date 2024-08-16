@@ -4,23 +4,33 @@ title: "[Bug]: "
 labels: ["bug"]
 body:
   - type: textarea
-    id: description
+    id: current
     attributes:
-      label: "Description"
-      description: Please enter an explicit description of your issue
-      placeholder: Short and explicit description of your incident...
+      label: "Current Behaviour"
+      description: Please describe what is currently happening.
+      value: |
+        When I press the power button (the one in the right top corner), the screen lights up and then it turns back off.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: "Expected Behaviour"
+      description: Please describe what you expect to happen.
+      value: |
+        - When I press the power button (the one in the right top corner), the screen should light up and display the login screen.
+        - The computer shouldn't turn off unless I click on the turn off button.
     validations:
       required: true
   - type: textarea
     id: reprod
     attributes:
       label: "Reproduction steps"
-      description: Please enter an explicit description of your issue
+      description: Please enter an explicit description of your issue.
       value: |
-        1. Go to '...'
-        2. Click on '....'
-        3. Scroll down to '....'
-        4. See error
+        1. Open the laptop
+        2. Press the power button (the one in the right top corner)
+        3. Screen turns on and then turns off
       render: bash
     validations:
       required: true
@@ -40,9 +50,22 @@ body:
       description: What device are you seeing the problem on?
       multiple: true
       options:
-        - iPhone
+        - iPhone 11
+        - iPhone 13
+        - iPhone 13 Pro Max
+        - iPhone 15
+        - iPhone 15 Pro Max
         - Android Phone
-        - iOS emulator
-        - Android emulator
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: "Operating System"
+      description: Which OS is on your device?
+      multiple: true
+      options:
+        - iOS 17.5.1
+        - Android
     validations:
       required: true

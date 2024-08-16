@@ -4,8 +4,10 @@ import {
   TouchableOpacity,
   View,
   ScrollView,
+  Platform,
+  RefreshControl,
 } from "react-native";
-import { router, useLocalSearchParams, usePathname } from "expo-router";
+import { useLocalSearchParams, usePathname } from "expo-router";
 import { useQuery } from "@tanstack/react-query";
 
 import { Text } from "@src/components/ui/typography";
@@ -20,6 +22,7 @@ import isChallengeActive from "@src/utils/is-challenge-active";
 import Skeleton from "@src/components/ui/Skeleton";
 import Icon from "@src/components/ui/Icon";
 import { useUser } from "@src/state/useUser";
+import getShareChallengeLink from "@root/src/utils/share-challenge-link";
 
 const ChallengeDetail = () => {
   const params = useLocalSearchParams();
@@ -27,44 +30,49 @@ const ChallengeDetail = () => {
   const path = usePathname();
   const loggedUser = useUser((state) => state.user.id);
 
-  const { data, isLoading } = useQuery({
+  const { data, refetch, isLoading } = useQuery({
     queryKey: ["getChallengeById", path, id],
     queryFn: () => getChallengeById(id),
     enabled: path === "/challenges/challenge-details",
   });
 
-  const members = data?.members;
+  const members = data?.members.sort((a, b) =>
+    a?.points > b?.points ? -1 : 1,
+  );
   const color = data?.color ?? theme.colors.secondary[100];
   const { isOngoing } = isChallengeActive(data?.end_at ?? "");
 
   const handleShare = async () => {
-    if (data) {
-      const urlWithUserId = data?.url.replace("[user_id]", loggedUser);
-      const shareOptions = {
-        message: urlWithUserId,
-        // url: Platform.OS === "ios" ? urlWithUserId : undefined,
-      };
+    if (!data) {
+      return;
+    }
+    try {
+      const urlWithUserId = data?.url?.replace?.("[user_id]", loggedUser);
 
-      try {
-        await Share.share(shareOptions);
-        //INFO: pretend earn badge
-        router.push({ pathname: "/earn-badge", params: { badgeId: 2 } });
-      } catch (error) {
-        console.error(error);
-      }
+      const message =
+        Platform.OS === "ios"
+          ? getShareChallengeLink(data._id, loggedUser)
+          : urlWithUserId;
+
+      await Share.share({ message });
+    } catch (error) {
+      console.log(error);
     }
   };
 
   return (
-    <ScrollView style={styles.body}>
+    <ScrollView
+      style={styles.body}
+      refreshControl={<RefreshControl refreshing={false} onRefresh={refetch} />}
+    >
       <View style={[styles.container, { backgroundColor: color }]}>
         <Stack flexDirection="row" p={16} alignItems="center" gap={40}>
           <BackButton />
 
-          <Text level="title_2">
+          <Text level="title_3" style={{ flex: 2 }}>
             {isOngoing ? `Challenge Progress` : `Challenge Summary`}
           </Text>
-          {isOngoing && !!data?.url && (
+          {isOngoing && !!data?._id && (
             <Stack
               w={40}
               h={40}

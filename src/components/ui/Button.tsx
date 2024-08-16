@@ -82,6 +82,7 @@ const ButtonRoot = styled(Pressable, {
   gap: 8,
   borderRadius: 100,
   borderWidth: 1,
+  height: 56,
   variants: {
     category: {
       primary: {},
@@ -129,7 +130,7 @@ const ButtonRoot = styled(Pressable, {
 const ButtonText = styled(Text, {
   fontSize: 20,
   fontFamily: "NunitoBold",
-  lineHeight: 24,
+  lineHeight: 23,
   variants: {
     category: {
       primary: {

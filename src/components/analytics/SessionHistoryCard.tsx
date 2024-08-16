@@ -68,7 +68,14 @@ const SessionHistoryCard = () => {
   }
 
   return (
-    <Card gap={12} style={{ paddingBottom: 0 }}>
+    <Card
+      gap={12}
+      style={{
+        paddingBottom: 0,
+        borderWidth: 1,
+        borderColor: theme.colors.neutral[100],
+      }}
+    >
       <Text level="headline" weight="bold">
         Session History
       </Text>

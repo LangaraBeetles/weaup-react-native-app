@@ -99,7 +99,11 @@ const PhoneTrainingScreen = () => {
             </>
           )}
         </Center>
-        <ContentCard title={steps[step].title} text={steps[step].text} />
+        <ContentCard
+          title={steps[step].title}
+          text={steps[step].text}
+          section={"setup"}
+        />
         <Stack style={styles.navigation} flexDirection={"row"} gap={8}>
           {steps.map((_, index) => (
             <Stack

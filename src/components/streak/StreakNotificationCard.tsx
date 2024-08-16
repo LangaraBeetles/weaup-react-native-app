@@ -1,50 +1,75 @@
 import { styled } from "@fast-styles/react";
-import Image from "@src/components/ui/Image";
-import { View } from "react-native";
+import { Dimensions, View } from "react-native";
 import { Text } from "@src/components/ui/typography";
 import Spacer from "@src/components/ui/Spacer";
 import Stack from "@src/components/ui/Stack";
 import StreakDaysIndicator from "@src/components/streak/StreakDaysIndicator";
+import LottieView from "lottie-react-native";
+
+const { width } = Dimensions.get("screen");
 
 const StreakNotificationCard: React.FC<{
   streak: number;
 }> = ({ streak }) => {
-  return (
-    <StreakNotificationRoot>
-      <Stack alignItems="center" justifyContent="space-between">
-        <StreakFlames>
-          <Image name="streak-flames" />
-        </StreakFlames>
-        <StreakCounter>{streak}</StreakCounter>
-        <StreakText level="title_1">day streak!</StreakText>
-      </Stack>
-      <Spacer height={60} />
+  const streakVariant = streak === 4 ? "four" : "default";
 
-      <StreakDaysIndicator streak={streak} />
-    </StreakNotificationRoot>
+  return (
+    <View>
+      <Stack alignItems="center" justifyContent="space-between">
+        <View>
+          <LottieView
+            autoPlay={true}
+            loop={false}
+            speed={0.05}
+            duration={13000}
+            style={{
+              width: 200,
+              height: 220,
+              zIndex: 2,
+              bottom: -10,
+            }}
+            source={require("../../animations/flame.json")}
+          />
+        </View>
+        <View
+          style={{
+            flex: 0,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <StreakCounter variant={streakVariant}>{streak}</StreakCounter>
+        </View>
+        <Spacer height={16} />
+        <StreakText level="title_1">day streak!</StreakText>
+        <Spacer height={48} />
+      </Stack>
+      <View style={{ paddingHorizontal: width * 0.06 }}>
+        <StreakDaysIndicator streak={streak} />
+      </View>
+    </View>
   );
 };
 
 export default StreakNotificationCard;
 
-const StreakNotificationRoot = styled(View, {
-  width: "100%",
-  paddingHorizontal: 32,
-});
-
-const StreakFlames = styled(View, {
-  height: 74,
-  width: 74,
-  position: "absolute",
-  top: -15,
-});
-
 const StreakCounter = styled(Text, {
   fontSize: 140,
-  position: "relative",
+  height: 104,
+  lineHeight: 150,
+  fontFamily: "NunitoBold",
+  variants: {
+    variant: {
+      default: {
+        right: 0,
+      },
+      four: {
+        right: 8,
+      },
+    },
+  },
 });
 
 const StreakText = styled(Text, {
-  position: "absolute",
-  bottom: -10,
+  height: 36,
 });

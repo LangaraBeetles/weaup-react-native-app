@@ -24,11 +24,18 @@
     <string>????</string>
     <key>CFBundleURLTypes</key>
     <array>
-      <dict>
+       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
           <string>weaup</string>
           <string>com.weaup</string>
+        </array>
+      </dict>
+      <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>weaup</string>
+          <string>com.alignmend</string>
         </array>
       </dict>
       <dict>
@@ -39,7 +46,7 @@
       </dict>
     </array>
     <key>CFBundleVersion</key>
-    <string>1</string>
+    <string>11</string>
     <key>LSRequiresIPhoneOS</key>
     <true/>
     <key>NSAppTransportSecurity</key>

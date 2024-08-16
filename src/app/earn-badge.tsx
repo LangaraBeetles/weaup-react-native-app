@@ -1,9 +1,8 @@
 import React, { useEffect, useRef } from "react";
-import { Animated, Easing, StyleSheet, View } from "react-native";
+import { Animated, Easing, SafeAreaView, StyleSheet, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Stack from "@src/components/ui/Stack";
 import { Text } from "@src/components/ui/typography";
-import Spacer from "@src/components/ui/Spacer";
 import Button from "@src/components/ui/Button";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import Badge, { BadgeName } from "@src/components/ui/Badge";
@@ -92,41 +91,50 @@ const EarnBadgeScreen = () => {
 
   return (
     <View style={styles.container}>
+      {/* Gradient */}
       <LinearGradient
-        colors={[theme.colors.white, theme.colors.primary[400]]}
-        start={{ x: 0.5, y: 1 }}
-        end={{ x: 0.5, y: 0.1199 }}
+        colors={[theme.colors.random.lightgreen, theme.colors.white]}
+        locations={[0, 0.8]}
         style={[StyleSheet.absoluteFill, { zIndex: -1 }]}
       />
-      <Stack alignItems="center">
-        <Text level="title_1">Congratulations!</Text>
-        <Spacer height={411} />
-
-        <View style={styles.message}>
-          <Text level="footnote" align="center">
-            {badge?.message}
-          </Text>
-        </View>
-      </Stack>
-
-      <View style={styles.badge}>
-        <Animated.View style={backgroundAnimatedStyles}>
-          <Badge
-            name={getUnlockedBadgeName(badge?.badge)}
-            unlocked={true}
-            size="large"
-            color={badge?.color}
-          />
-        </Animated.View>
-      </View>
+      {/* Shinning Background */}
       <View style={styles.backgroundContainer}>
         <Animated.View style={backgroundAnimatedStyles}>
           <Image name="badge-background" />
         </Animated.View>
       </View>
-      <Animated.View style={[styles.button, buttonAnimatedStyles]}>
-        <Button title="Collect Badge" onPress={router.back} />
-      </Animated.View>
+
+      {/* Content */}
+      <SafeAreaView style={[styles.container]}>
+        <Stack justifyContent="center" alignItems="center" gap={70}>
+          <Text level="title_1">Congratulations!</Text>
+
+          <View style={styles.badge}>
+            <Animated.View style={backgroundAnimatedStyles}>
+              <Badge
+                name={getUnlockedBadgeName(badge?.badge)}
+                unlocked={true}
+                size="large"
+                color={badge?.color}
+              />
+            </Animated.View>
+          </View>
+
+          <View style={styles.message}>
+            <Text
+              level="headline"
+              align="center"
+              style={{ color: theme.colors.neutral[600] }}
+            >
+              {badge?.message}
+            </Text>
+          </View>
+
+          <Animated.View style={[styles.button, buttonAnimatedStyles]}>
+            <Button title="Collect Badge" onPress={router.back} />
+          </Animated.View>
+        </Stack>
+      </SafeAreaView>
     </View>
   );
 };
@@ -141,13 +149,8 @@ const styles = StyleSheet.create({
   },
   button: {
     width: 230,
-    paddingTop: 37,
   },
-  badge: {
-    position: "absolute",
-    top: 300,
-    width: 200,
-  },
+  badge: {},
   message: {
     width: 230,
   },
@@ -155,7 +158,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     zIndex: -1,
     top: -40,
-    width: "100%",
+    width: "110%",
     height: "100%",
   },
 });

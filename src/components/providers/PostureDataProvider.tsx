@@ -3,9 +3,9 @@ import { updateUser } from "@src/services/userApi";
 import { useUser } from "@src/state/useUser";
 import { useEffect, useRef } from "react";
 
-// TODO: Replace 20sec with 1min
+// TODO: Replace 5sec with 1min
 // const ONE_MIN = 60000;
-const TWENTY_SEC = 20000;
+const INTERVAL_SEC = 5000;
 
 const PostureDataProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -50,7 +50,6 @@ const PostureDataProvider: React.FC<{ children: React.ReactNode }> = ({
                 xp: _user.xp,
                 hp: _user.hp,
                 level: _user.level,
-                daily_streak_counter: _user.dailyStreakCounter,
               })
                 .then(() => {
                   console.log("user data saved");
@@ -64,7 +63,7 @@ const PostureDataProvider: React.FC<{ children: React.ReactNode }> = ({
             });
         }
       },
-      TWENTY_SEC,
+      INTERVAL_SEC,
       user,
       postureData,
       preparePostureData,

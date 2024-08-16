@@ -11,6 +11,7 @@ type BodyTextVariant = {
     | "caption_1"
     | "caption_2"
     | "caption_3"
+    | "caption_4"
     | "title_1"
     | "title_2"
     | "title_3"
@@ -139,6 +140,13 @@ export const StyledText = styled(RNText, {
         fontFamily: "NunitoBold",
         // lineHeight: 13,
         textTransform: "uppercase",
+      },
+      caption_4: {
+        fontSize: 14,
+        fontStyle: "normal",
+        fontFamily: "NunitoRegular",
+        fontWeight: "regular",
+        // lineHeight: 13,
       },
       badge_title: {
         fontSize: 24,

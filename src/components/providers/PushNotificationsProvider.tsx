@@ -5,7 +5,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { Platform, View } from "react-native";
+import { Alert, Platform, View } from "react-native";
 import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";
 import { theme } from "@src/styles/theme";
@@ -13,12 +13,13 @@ import { Pusher, PusherEvent } from "@pusher/pusher-websocket-react-native";
 import ToastMessage from "@src/components/ui/ToastMessage";
 import { router } from "expo-router";
 import { useUser } from "@src/state/useUser";
-import config from "@root/src/config.example";
+import config from "@root/src/config";
 
 type PushNotificationsContextState = {
   sendPushNotification: (
     notificationContent: NotificationContent,
   ) => Promise<void>;
+  registerForPushNotifications: (callback: () => void) => Promise<void>;
 };
 
 type NotificationContent = {
@@ -29,6 +30,7 @@ type NotificationContent = {
 type JoinedChallengeMessage = {
   data: {
     memberName: string;
+    memberAvatar: string;
     challengeName: string;
     challengeId: string;
     notificationId: string;
@@ -41,6 +43,9 @@ type JoinedChallengeMessage = {
 
 const PushNotificationsContext = createContext<PushNotificationsContextState>({
   sendPushNotification: async () => {
+    throw new Error("sendPushNotification not implemented");
+  },
+  registerForPushNotifications: async () => {
     throw new Error("sendPushNotification not implemented");
   },
 });
@@ -63,42 +68,49 @@ const PushNotificationsProvider: React.FC<{ children: React.ReactNode }> = ({
         trigger: null,
       });
     } catch (error) {
-      console.error("Error sending push notification:", error);
+      console.log("Error sending push notification:", error);
+    }
+  };
+
+  const registerForPushNotifications = async (callback: () => void) => {
+    try {
+      if (!Device.isDevice) {
+        // Alert.alert("Must use physical device for Push Notifications");
+        return;
+      }
+
+      const { status: initialStatus } =
+        await Notifications.getPermissionsAsync();
+
+      if (initialStatus !== "granted") {
+        const { status } = await Notifications.requestPermissionsAsync();
+
+        if (status !== "granted") {
+          Alert.alert(
+            "Notifications Disabled",
+            "To receive notifications, please enable them in your device settings.",
+            [{ text: "OK" }],
+          );
+          console.log("Failed to get push token for push notification!");
+          return;
+        }
+      }
+
+      if (Platform.OS === "android") {
+        Notifications.setNotificationChannelAsync("default", {
+          name: "default",
+          importance: Notifications.AndroidImportance.MAX,
+          vibrationPattern: [0, 250, 250, 250],
+          lightColor: theme.colors.neutral[200],
+        });
+      }
+      callback();
+    } catch (error) {
+      console.log("Error during push notification registration:", error);
     }
   };
 
   useEffect(() => {
-    const registerForPushNotificationsAsync = async () => {
-      try {
-        if (!Device.isDevice) {
-          // Alert.alert("Must use physical device for Push Notifications");
-          return;
-        }
-
-        const { status: initialStatus } =
-          await Notifications.getPermissionsAsync();
-
-        if (initialStatus !== "granted") {
-          const { status } = await Notifications.requestPermissionsAsync();
-          if (status !== "granted") {
-            console.error("Failed to get push token for push notification!");
-            return;
-          }
-        }
-
-        if (Platform.OS === "android") {
-          Notifications.setNotificationChannelAsync("default", {
-            name: "default",
-            importance: Notifications.AndroidImportance.MAX,
-            vibrationPattern: [0, 250, 250, 250],
-            lightColor: theme.colors.neutral[200],
-          });
-        }
-      } catch (error) {
-        console.error("Error during push notification registration:", error);
-      }
-    };
-
     const setNotificationHandler = () => {
       Notifications.setNotificationHandler({
         handleNotification: async () => ({
@@ -108,7 +120,7 @@ const PushNotificationsProvider: React.FC<{ children: React.ReactNode }> = ({
         }),
       });
     };
-    registerForPushNotificationsAsync();
+    // registerForPushNotificationsAsync();
     setNotificationHandler();
   }, []);
 
@@ -139,7 +151,7 @@ const PushNotificationsProvider: React.FC<{ children: React.ReactNode }> = ({
                     ...prev,
                     {
                       data: data?.data,
-                      message: `${data?.data?.memberName}  has joined the “${data?.data?.challengeName}” Challenge!`,
+                      message: `${data?.data?.memberName} has joined the “${data?.data?.challengeName}” Challenge!`,
                       actionText: "View Challenge",
                       counter: 0,
                       category: data.category,
@@ -160,6 +172,8 @@ const PushNotificationsProvider: React.FC<{ children: React.ReactNode }> = ({
                   return ch;
                 });
               });
+              //INFO: pretend to earn badge
+              router.push({ pathname: "/earn-badge", params: { badgeId: 2 } });
             }
           } catch (error) {
             console.log(error);
@@ -181,6 +195,7 @@ const PushNotificationsProvider: React.FC<{ children: React.ReactNode }> = ({
     <PushNotificationsContext.Provider
       value={{
         sendPushNotification,
+        registerForPushNotifications,
       }}
     >
       {children}
@@ -197,6 +212,10 @@ const PushNotificationsProvider: React.FC<{ children: React.ReactNode }> = ({
           <ToastMessage
             key={displayMessage.data.notificationId}
             message={displayMessage.message}
+            avatar={{
+              name: displayMessage.data.memberName,
+              image: displayMessage.data.memberAvatar,
+            }}
             actionText={displayMessage.actionText}
             onActionClick={() => {
               if (displayMessage.category === "joined_challenge") {

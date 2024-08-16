@@ -9,6 +9,8 @@ export const globalStyles = {
       red: "#BC0D0D",
       green: "#549B32",
       blue: "#D3E7FF",
+      yellow: "#FFD564",
+      lightgreen: "#75D39D",
     },
     primary: {
       50: "#FFF8E6",
@@ -65,6 +67,10 @@ export const globalStyles = {
     other: {
       50: "#D3E7FF",
       100: "#545F71",
+      200: "#FDD64B",
+      300: "#FDDC85",
+      400: "#545151",
+      500: "#FFF5DA",
     },
   },
 };
